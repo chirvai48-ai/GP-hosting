@@ -1,0 +1,224 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  runtime  = "nodeJs"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Job {
+  id                 Int           @id @default(autoincrement())
+  title              String
+  salary_min         Int
+  salary_max         Int
+  currency           String        @default("YEN")
+  location           String
+  experience         Int //integer value means years of experience
+  contract           Contract      @default(Full_time)
+  shift_start        DateTime      @db.Time
+  shift_end          DateTime      @db.Time
+  workdays           Int
+  gender             String
+  benefits           String
+  requirements       String
+  application_method String
+  job_category_id    Int?
+  job_category       JobCategory?  @relation(fields: [job_category_id], references: [id])
+  created_at         DateTime      @default(now())
+  updated_at         DateTime      @updatedAt
+  applications       Application[]
+  languages          Language[]
+  technical_skills   Skill[]
+  soft_skills        String
+  status             JobStatus     @default(Draft)
+  image_key          String        @unique
+  image_type         String
+}
+
+enum JobStatus {
+  Draft
+  Published
+  Closed
+  Archived
+}
+
+model Skill {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  jobs        Job[]
+  application Application[]
+}
+
+model Language {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  jobs        Job[]
+  application Application[]
+}
+
+model JobCategory {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  jobs Job[]
+}
+
+enum Contract {
+  Full_time
+  Part_time
+  Internship
+  Flexible
+}
+
+//modified Admin table to match better auths user model
+
+model Admin {
+  id            String         @id @default(uuid())
+  name          String
+  email         String         @unique
+  role          Role           @default(Admin)
+  createdAt     DateTime       @default(now())
+  emailVerified Boolean        @default(false)
+  updatedAt     DateTime       @updatedAt
+  image         String?
+  news          News[]
+  replies       ContactReply[]
+  sessions      Session[]
+  accounts      Account[]
+
+  @@map("admin")
+}
+
+enum Role {
+  Admin
+  Editor
+  User
+}
+
+model Application {
+  id                 Int               @id @default(autoincrement())
+  full_name          String
+  date_of_birth      DateTime          @db.Date
+  phone_number       String
+  email              String
+  current_address    String
+  permanent_address  String
+  preferred_location String
+  availability       Contract
+  school_college     String
+  degree             String
+  languages          Language[]
+  technical_skills   Skill[]
+  soft_skills        String
+  job_id             Int
+  job                Job               @relation(fields: [job_id], references: [id])
+  status             ApplicationStatus @default(Pending)
+  created_at         DateTime          @default(now())
+  cover_letter       String?           @db.Text
+  resume_key         String            @unique
+}
+
+enum ApplicationStatus {
+  Pending
+  Reviewed
+  Rejected
+  Accepted
+}
+
+model News {
+  id           Int        @id @default(autoincrement())
+  title        String
+  body         String     @db.Text
+  summary      String
+  published_at DateTime   @default(now())
+  updated_at   DateTime   @updatedAt
+  admin_id     String?
+  admin        Admin?     @relation(fields: [admin_id], references: [id])
+  status       NewsStatus
+}
+
+model ContactRequest {
+  id              Int            @id @default(autoincrement())
+  name            String
+  email           String
+  phone_number    String
+  subject         String
+  message         String
+  status          Status         @default(Open)
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+  contact_replies ContactReply[]
+}
+
+model ContactReply {
+  id Int @id @default(autoincrement())
+
+  contact_request_id Int?
+  contact_request    ContactRequest? @relation(fields: [contact_request_id], references: [id])
+  message            String
+  created_at         DateTime        @default(now())
+  updated_at         DateTime        @updatedAt
+  admin              Admin?          @relation(fields: [adminId], references: [id])
+  adminId            String?
+}
+
+enum Status {
+  Open
+  Inprogress
+  Resolved
+  Closed
+}
+
+enum NewsStatus {
+  published
+  closed
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?  @db.Text
+  userAgent String?  @db.Text
+  userId    String
+  admin     Admin    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId(length: 191)])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String    @db.Text
+  providerId            String    @db.Text
+  userId                String
+  admin                 Admin     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?   @db.Text
+  refreshToken          String?   @db.Text
+  idToken               String?   @db.Text
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?   @db.Text
+  password              String?   @db.Text
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId(length: 191)])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String   @db.Text
+  value      String   @db.Text
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier(length: 191)])
+  @@map("verification")
+}
