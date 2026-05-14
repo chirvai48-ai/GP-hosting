@@ -1,6 +1,6 @@
 import { Modal, Button, Box, Typography, Grid, TextField } from "@mui/material";
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { CreateJobForm, createJobSchema } from "@/schemas/job.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +17,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 function AddVacancy() {
   const [open, setOpen] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(0);
+  const imageFileRef = useRef<File | null>(null);
   const steps = [
     "Add basic details",
     "Add additional details",
@@ -72,9 +73,16 @@ function AddVacancy() {
     )
 
   const onSubmit: SubmitHandler<CreateJobForm> = async (formData) => {
-    await mutateAsync(formData);
-    if(isSuccess)
-      alert("Job has been successfully created")
+    const result = await mutateAsync(formData);
+    const signedUrl = result?.data?.signed_url;
+    if (signedUrl && imageFileRef.current) {
+      await fetch(signedUrl, {
+        method: "PUT",
+        body: imageFileRef.current,
+        headers: { "Content-Type": imageFileRef.current.type },
+      });
+    }
+    alert("Job has been successfully created");
   };
   
 
@@ -150,7 +158,7 @@ function AddVacancy() {
             <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
               {activeStep === 0 && <JobPostingForm1 />}
               {activeStep === 1 && <JobPostingForm2 />}
-              {activeStep === 2 && <JobPostingForm3 />}
+              {activeStep === 2 && <JobPostingForm3 onFileChange={(f) => { imageFileRef.current = f; }} />}
             </form>
           </FormProvider>
 

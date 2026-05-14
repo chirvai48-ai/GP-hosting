@@ -1343,7 +1343,9 @@ export const NewsScalarFieldEnum = {
   published_at: 'published_at',
   updated_at: 'updated_at',
   admin_id: 'admin_id',
-  status: 'status'
+  status: 'status',
+  image_key: 'image_key',
+  image_type: 'image_type'
 } as const
 
 export type NewsScalarFieldEnum = (typeof NewsScalarFieldEnum)[keyof typeof NewsScalarFieldEnum]
@@ -1505,7 +1507,9 @@ export const NewsOrderByRelevanceFieldEnum = {
   title: 'title',
   body: 'body',
   summary: 'summary',
-  admin_id: 'admin_id'
+  admin_id: 'admin_id',
+  image_key: 'image_key',
+  image_type: 'image_type'
 } as const
 
 export type NewsOrderByRelevanceFieldEnum = (typeof NewsOrderByRelevanceFieldEnum)[keyof typeof NewsOrderByRelevanceFieldEnum]

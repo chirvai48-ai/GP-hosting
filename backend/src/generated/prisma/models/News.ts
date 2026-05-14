@@ -43,6 +43,8 @@ export type NewsMinAggregateOutputType = {
   updated_at: Date | null
   admin_id: string | null
   status: $Enums.NewsStatus | null
+  image_key: string | null
+  image_type: string | null
 }
 
 export type NewsMaxAggregateOutputType = {
@@ -54,6 +56,8 @@ export type NewsMaxAggregateOutputType = {
   updated_at: Date | null
   admin_id: string | null
   status: $Enums.NewsStatus | null
+  image_key: string | null
+  image_type: string | null
 }
 
 export type NewsCountAggregateOutputType = {
@@ -65,6 +69,8 @@ export type NewsCountAggregateOutputType = {
   updated_at: number
   admin_id: number
   status: number
+  image_key: number
+  image_type: number
   _all: number
 }
 
@@ -86,6 +92,8 @@ export type NewsMinAggregateInputType = {
   updated_at?: true
   admin_id?: true
   status?: true
+  image_key?: true
+  image_type?: true
 }
 
 export type NewsMaxAggregateInputType = {
@@ -97,6 +105,8 @@ export type NewsMaxAggregateInputType = {
   updated_at?: true
   admin_id?: true
   status?: true
+  image_key?: true
+  image_type?: true
 }
 
 export type NewsCountAggregateInputType = {
@@ -108,6 +118,8 @@ export type NewsCountAggregateInputType = {
   updated_at?: true
   admin_id?: true
   status?: true
+  image_key?: true
+  image_type?: true
   _all?: true
 }
 
@@ -206,6 +218,8 @@ export type NewsGroupByOutputType = {
   updated_at: Date
   admin_id: string | null
   status: $Enums.NewsStatus
+  image_key: string | null
+  image_type: string | null
   _count: NewsCountAggregateOutputType | null
   _avg: NewsAvgAggregateOutputType | null
   _sum: NewsSumAggregateOutputType | null
@@ -240,6 +254,8 @@ export type NewsWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"News"> | Date | string
   admin_id?: Prisma.StringNullableFilter<"News"> | string | null
   status?: Prisma.EnumNewsStatusFilter<"News"> | $Enums.NewsStatus
+  image_key?: Prisma.StringNullableFilter<"News"> | string | null
+  image_type?: Prisma.StringNullableFilter<"News"> | string | null
   admin?: Prisma.XOR<Prisma.AdminNullableScalarRelationFilter, Prisma.AdminWhereInput> | null
 }
 
@@ -252,6 +268,8 @@ export type NewsOrderByWithRelationInput = {
   updated_at?: Prisma.SortOrder
   admin_id?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  image_key?: Prisma.SortOrderInput | Prisma.SortOrder
+  image_type?: Prisma.SortOrderInput | Prisma.SortOrder
   admin?: Prisma.AdminOrderByWithRelationInput
   _relevance?: Prisma.NewsOrderByRelevanceInput
 }
@@ -268,6 +286,8 @@ export type NewsWhereUniqueInput = Prisma.AtLeast<{
   updated_at?: Prisma.DateTimeFilter<"News"> | Date | string
   admin_id?: Prisma.StringNullableFilter<"News"> | string | null
   status?: Prisma.EnumNewsStatusFilter<"News"> | $Enums.NewsStatus
+  image_key?: Prisma.StringNullableFilter<"News"> | string | null
+  image_type?: Prisma.StringNullableFilter<"News"> | string | null
   admin?: Prisma.XOR<Prisma.AdminNullableScalarRelationFilter, Prisma.AdminWhereInput> | null
 }, "id">
 
@@ -280,6 +300,8 @@ export type NewsOrderByWithAggregationInput = {
   updated_at?: Prisma.SortOrder
   admin_id?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  image_key?: Prisma.SortOrderInput | Prisma.SortOrder
+  image_type?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.NewsCountOrderByAggregateInput
   _avg?: Prisma.NewsAvgOrderByAggregateInput
   _max?: Prisma.NewsMaxOrderByAggregateInput
@@ -299,6 +321,8 @@ export type NewsScalarWhereWithAggregatesInput = {
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"News"> | Date | string
   admin_id?: Prisma.StringNullableWithAggregatesFilter<"News"> | string | null
   status?: Prisma.EnumNewsStatusWithAggregatesFilter<"News"> | $Enums.NewsStatus
+  image_key?: Prisma.StringNullableWithAggregatesFilter<"News"> | string | null
+  image_type?: Prisma.StringNullableWithAggregatesFilter<"News"> | string | null
 }
 
 export type NewsCreateInput = {
@@ -308,6 +332,8 @@ export type NewsCreateInput = {
   published_at?: Date | string
   updated_at?: Date | string
   status: $Enums.NewsStatus
+  image_key?: string | null
+  image_type?: string | null
   admin?: Prisma.AdminCreateNestedOneWithoutNewsInput
 }
 
@@ -320,6 +346,8 @@ export type NewsUncheckedCreateInput = {
   updated_at?: Date | string
   admin_id?: string | null
   status: $Enums.NewsStatus
+  image_key?: string | null
+  image_type?: string | null
 }
 
 export type NewsUpdateInput = {
@@ -329,6 +357,8 @@ export type NewsUpdateInput = {
   published_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNewsStatusFieldUpdateOperationsInput | $Enums.NewsStatus
+  image_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admin?: Prisma.AdminUpdateOneWithoutNewsNestedInput
 }
 
@@ -341,6 +371,8 @@ export type NewsUncheckedUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   admin_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumNewsStatusFieldUpdateOperationsInput | $Enums.NewsStatus
+  image_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type NewsCreateManyInput = {
@@ -352,6 +384,8 @@ export type NewsCreateManyInput = {
   updated_at?: Date | string
   admin_id?: string | null
   status: $Enums.NewsStatus
+  image_key?: string | null
+  image_type?: string | null
 }
 
 export type NewsUpdateManyMutationInput = {
@@ -361,6 +395,8 @@ export type NewsUpdateManyMutationInput = {
   published_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNewsStatusFieldUpdateOperationsInput | $Enums.NewsStatus
+  image_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type NewsUncheckedUpdateManyInput = {
@@ -372,6 +408,8 @@ export type NewsUncheckedUpdateManyInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   admin_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumNewsStatusFieldUpdateOperationsInput | $Enums.NewsStatus
+  image_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type NewsListRelationFilter = {
@@ -399,6 +437,8 @@ export type NewsCountOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   admin_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  image_key?: Prisma.SortOrder
+  image_type?: Prisma.SortOrder
 }
 
 export type NewsAvgOrderByAggregateInput = {
@@ -414,6 +454,8 @@ export type NewsMaxOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   admin_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  image_key?: Prisma.SortOrder
+  image_type?: Prisma.SortOrder
 }
 
 export type NewsMinOrderByAggregateInput = {
@@ -425,6 +467,8 @@ export type NewsMinOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   admin_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  image_key?: Prisma.SortOrder
+  image_type?: Prisma.SortOrder
 }
 
 export type NewsSumOrderByAggregateInput = {
@@ -484,6 +528,8 @@ export type NewsCreateWithoutAdminInput = {
   published_at?: Date | string
   updated_at?: Date | string
   status: $Enums.NewsStatus
+  image_key?: string | null
+  image_type?: string | null
 }
 
 export type NewsUncheckedCreateWithoutAdminInput = {
@@ -494,6 +540,8 @@ export type NewsUncheckedCreateWithoutAdminInput = {
   published_at?: Date | string
   updated_at?: Date | string
   status: $Enums.NewsStatus
+  image_key?: string | null
+  image_type?: string | null
 }
 
 export type NewsCreateOrConnectWithoutAdminInput = {
@@ -534,6 +582,8 @@ export type NewsScalarWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"News"> | Date | string
   admin_id?: Prisma.StringNullableFilter<"News"> | string | null
   status?: Prisma.EnumNewsStatusFilter<"News"> | $Enums.NewsStatus
+  image_key?: Prisma.StringNullableFilter<"News"> | string | null
+  image_type?: Prisma.StringNullableFilter<"News"> | string | null
 }
 
 export type NewsCreateManyAdminInput = {
@@ -544,6 +594,8 @@ export type NewsCreateManyAdminInput = {
   published_at?: Date | string
   updated_at?: Date | string
   status: $Enums.NewsStatus
+  image_key?: string | null
+  image_type?: string | null
 }
 
 export type NewsUpdateWithoutAdminInput = {
@@ -553,6 +605,8 @@ export type NewsUpdateWithoutAdminInput = {
   published_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNewsStatusFieldUpdateOperationsInput | $Enums.NewsStatus
+  image_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type NewsUncheckedUpdateWithoutAdminInput = {
@@ -563,6 +617,8 @@ export type NewsUncheckedUpdateWithoutAdminInput = {
   published_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNewsStatusFieldUpdateOperationsInput | $Enums.NewsStatus
+  image_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type NewsUncheckedUpdateManyWithoutAdminInput = {
@@ -573,6 +629,8 @@ export type NewsUncheckedUpdateManyWithoutAdminInput = {
   published_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumNewsStatusFieldUpdateOperationsInput | $Enums.NewsStatus
+  image_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -586,6 +644,8 @@ export type NewsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updated_at?: boolean
   admin_id?: boolean
   status?: boolean
+  image_key?: boolean
+  image_type?: boolean
   admin?: boolean | Prisma.News$adminArgs<ExtArgs>
 }, ExtArgs["result"]["news"]>
 
@@ -600,9 +660,11 @@ export type NewsSelectScalar = {
   updated_at?: boolean
   admin_id?: boolean
   status?: boolean
+  image_key?: boolean
+  image_type?: boolean
 }
 
-export type NewsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "body" | "summary" | "published_at" | "updated_at" | "admin_id" | "status", ExtArgs["result"]["news"]>
+export type NewsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "body" | "summary" | "published_at" | "updated_at" | "admin_id" | "status" | "image_key" | "image_type", ExtArgs["result"]["news"]>
 export type NewsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   admin?: boolean | Prisma.News$adminArgs<ExtArgs>
 }
@@ -621,6 +683,8 @@ export type $NewsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     updated_at: Date
     admin_id: string | null
     status: $Enums.NewsStatus
+    image_key: string | null
+    image_type: string | null
   }, ExtArgs["result"]["news"]>
   composites: {}
 }
@@ -999,6 +1063,8 @@ export interface NewsFieldRefs {
   readonly updated_at: Prisma.FieldRef<"News", 'DateTime'>
   readonly admin_id: Prisma.FieldRef<"News", 'String'>
   readonly status: Prisma.FieldRef<"News", 'NewsStatus'>
+  readonly image_key: Prisma.FieldRef<"News", 'String'>
+  readonly image_type: Prisma.FieldRef<"News", 'String'>
 }
     
 

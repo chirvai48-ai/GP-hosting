@@ -2,7 +2,7 @@ import { NextFunction } from "express";
 import { prisma } from "../lib/prisma";
 import type { createJob, updateJob } from "../schemas/job.schema";
 import { Job as PrismaJob } from "../generated/prisma/client";
-import { putUrl } from "../configs/cloudflare";
+import { putUrl, deleteObject, getUrl } from "../configs/cloudflare";
 export const createJobs = async (jobs: createJob): Promise<PrismaJob& { signed_url: string }> => {
   const { languages, technical_skills, job_category, ...rest } = jobs;
 
@@ -41,7 +41,7 @@ export const createJobs = async (jobs: createJob): Promise<PrismaJob& { signed_u
   return {...result,signed_url:signed_url};
 };
 
-export const fetchJobs = async (): Promise<PrismaJob[]> => {
+export const fetchJobs = async () => {
   const jobs = await prisma.job.findMany({
     include: {
       job_category: true,
@@ -49,7 +49,14 @@ export const fetchJobs = async (): Promise<PrismaJob[]> => {
       technical_skills: true,
     },
   });
-  return jobs;
+
+  return Promise.all(
+    jobs.map(async (job) => {
+      if (!job.image_key) return job;
+      const image_url = await getUrl("glowingpartner", `vacancy/${job.image_key}`);
+      return { ...job, image_url };
+    })
+  );
 };
 
 export const fetchJobsById = async (id: number): Promise<PrismaJob[]> => {
@@ -64,11 +71,13 @@ export const fetchJobsById = async (id: number): Promise<PrismaJob[]> => {
 };
 
 export const removeJobs = async (id: number) => {
-  const deletedJob = await prisma.job.delete({
-    where: {
-      id: id,
-    },
-  });
+  const job = await prisma.job.findUnique({ where: { id } });
+
+  if (job?.image_key) {
+    await deleteObject("glowingpartner", `vacancy/${job.image_key}`);
+  }
+
+  const deletedJob = await prisma.job.delete({ where: { id } });
   return deletedJob;
 };
 

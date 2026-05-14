@@ -12,6 +12,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 import {
   Menu,
   BriefcaseBusiness,
@@ -28,7 +29,12 @@ const NAV_SECTIONS = [
   {
     label: "Overview",
     items: [
-      { text: "Dashboard", icon: <LayoutDashboard size={16} />, badge: null },
+      {
+        text: "Dashboard",
+        icon: <LayoutDashboard size={16} />,
+        badge: null,
+        href: "/admin/dashboard/overview",
+      },
     ],
   },
   {
@@ -38,18 +44,36 @@ const NAV_SECTIONS = [
         text: "Jobs & Vacancies",
         icon: <BriefcaseBusiness size={16} />,
         badge: null,
+        href: "/admin/dashboard/vacancies",
       },
-      { text: "Applications", icon: <FileText size={16} />, badge: "12" },
+      {
+        text: "Applications",
+        icon: <FileText size={16} />,
+        badge: "12",
+        href: "/admin/dashboard/applications",
+      },
     ],
   },
   {
     label: "Communications",
-    items: [{ text: "Messages", icon: <Mail size={16} />, badge: "5" }],
+    items: [
+      {
+        text: "Messages",
+        icon: <Mail size={16} />,
+        badge: "5",
+        href: "/admin/dashboard/messages",
+      },
+    ],
   },
   {
     label: "Content",
     items: [
-      { text: "Blog & News", icon: <Newspaper size={16} />, badge: null },
+      {
+        text: "Blog & News",
+        icon: <Newspaper size={16} />,
+        badge: null,
+        href: "/admin/dashboard/blogs",
+      },
     ],
   },
 ];
@@ -156,65 +180,67 @@ export default function ResponsiveDrawer() {
                 const isActive = activeItem === item.text;
                 return (
                   <ListItem key={item.text} disablePadding>
-                    <ListItemButton
-                      onClick={() => setActiveItem(item.text)}
-                      sx={{
-                        px: 2,
-                        py: 0.9,
-                        borderLeft: isActive
-                          ? "3px solid var(--color-secondary)"
-                          : "3px solid transparent",
-                        backgroundColor: isActive
-                          ? "rgba(255,255,255,0.13)"
-                          : "transparent",
-                        "&:hover": {
-                          backgroundColor: "rgba(255,255,255,0.08)",
-                        },
-                        transition: "all 0.15s",
-                      }}
-                    >
-                      <ListItemIcon
+                    <Link href={item.href}>
+                      <ListItemButton
+                        onClick={() => setActiveItem(item.text)}
                         sx={{
-                          minWidth: 32,
-                          color: isActive ? "white" : "rgba(255,255,255,0.7)",
+                          px: 2,
+                          py: 0.9,
+                          borderLeft: isActive
+                            ? "3px solid var(--color-secondary)"
+                            : "3px solid transparent",
+                          backgroundColor: isActive
+                            ? "rgba(255,255,255,0.13)"
+                            : "transparent",
+                          "&:hover": {
+                            backgroundColor: "rgba(255,255,255,0.08)",
+                          },
+                          transition: "all 0.15s",
                         }}
                       >
-                        {item.icon}
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={item.text}
-                        slotProps={{
-                          primary: {
-                            sx: {
-                              fontFamily: "var(--font-label)",
-                              fontSize: "0.8125rem",
-                              fontWeight: isActive ? 500 : 400,
-                              color: isActive
-                                ? "white"
-                                : "rgba(255,255,255,0.75)",
-                            },
-                          },
-                        }}
-                      />
-                      {/* Badge */}
-                      {item.badge && (
-                        <Box
+                        <ListItemIcon
                           sx={{
-                            backgroundColor: "var(--color-secondary)",
-                            color: "white",
-                            fontSize: "0.6rem",
-                            fontWeight: 600,
-                            fontFamily: "var(--font-label)",
-                            px: 0.8,
-                            py: 0.1,
-                            borderRadius: "8px",
-                            lineHeight: 1.6,
+                            minWidth: 32,
+                            color: isActive ? "white" : "rgba(255,255,255,0.7)",
                           }}
                         >
-                          {item.badge}
-                        </Box>
-                      )}
-                    </ListItemButton>
+                          {item.icon}
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={item.text}
+                          slotProps={{
+                            primary: {
+                              sx: {
+                                fontFamily: "var(--font-label)",
+                                fontSize: "0.8125rem",
+                                fontWeight: isActive ? 500 : 400,
+                                color: isActive
+                                  ? "white"
+                                  : "rgba(255,255,255,0.75)",
+                              },
+                            },
+                          }}
+                        />
+                        {/* Badge */}
+                        {item.badge && (
+                          <Box
+                            sx={{
+                              backgroundColor: "var(--color-secondary)",
+                              color: "white",
+                              fontSize: "0.6rem",
+                              fontWeight: 600,
+                              fontFamily: "var(--font-label)",
+                              px: 0.8,
+                              py: 0.1,
+                              borderRadius: "8px",
+                              lineHeight: 1.6,
+                            }}
+                          >
+                            {item.badge}
+                          </Box>
+                        )}
+                      </ListItemButton>
+                    </Link>
                   </ListItem>
                 );
               })}

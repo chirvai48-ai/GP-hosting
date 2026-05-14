@@ -1,94 +1,166 @@
-import StackList from "@/components/lightswind/stack-list";
-import Image from "next/image";
-import { Paper,Container } from "@mui/material";
-const news = [
-  {
-    icon: (
-      <Image
-        src="/News1.jpg"
-        alt="Product Launch"
-        width={200}
-        height={200}
-        className="rounded-md object-cover"
-      />
-    ),
-    title: "New Product Launch",
-    subtitle: "Version 2.0 Released and will be available to public soon",
-    date: "12 April",
-  },
-  {
-    icon: (
-      <Image
-        src="/News2.jpg"
-        alt="Partnership"
-        width={40}
-        height={40}
-        className="rounded-md object-cover"
-      />
-    ),
-    title: "Strategic Partnership",
-    subtitle: "Collaboration with TechCorp is set to begin this April",
-    date: "8 April",
-  },
-  {
-    icon: (
-      <Image
-        src="/News3.jpg"
-        alt="Award"
-        width={40}
-        height={40}
-        className="rounded-md object-cover"
-      />
-    ),
-    title: "Industry Recognition",
-    subtitle: "Best Startup Award 2026 goes to Glowing partner",
-    date: "2 April",
-  },
-  {
-    icon: (
-      <Image
-        src="/News3.jpg"
-        alt="Award"
-        width={40}
-        height={40}
-        className="rounded-md object-cover"
-      />
-    ),
-    title: "Industry Recognition",
-    subtitle: "Best Startup Award 2026",
-    date: "2 April",
-  },
-  {
-    icon: (
-      <Image
-        src="/News3.jpg"
-        alt="Award"
-        width={40}
-        height={40}
-        className="rounded-md object-cover"
-      />
-    ),
-    title: "Industry Recognition",
-    subtitle: "Best Startup Award 2026",
-    date: "2 April",
-  },
-];
+"use client";
 
-function News() {
+import { useQuery } from "@tanstack/react-query";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import type { News, NewsResponse } from "@/types/table";
+
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+async function getNews(): Promise<NewsResponse> {
+  const res = await fetch(`${API_URL}/api/news`);
+  if (!res.ok) throw new Error("Failed to fetch news");
+  return res.json();
+}
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function ArticleDetail({ article }: { article: News }) {
   return (
-    <Container className="p-12">
-    <div className="flex flex-row">
-      <div className="flex-1">Main News will be displayed here fully</div>
-      <Paper className="max-h-[400px] overflow-auto">
-        <StackList
-          items={news}
-          initialVisible={3}
-          className="w-full sm:max-w-md md:max-w-xl p-4"
+    <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+      {article.image_url && (
+        <img
+          src={article.image_url}
+          alt={article.title}
+          className="w-full max-h-80 object-cover"
         />
-      </Paper>
+      )}
+      <div className="p-8">
+        <p className="text-xs font-headline tracking-widest uppercase text-[var(--color-secondary)] mb-3">
+          {formatDate(article.published_at)}
+        </p>
+        <h2 className="text-3xl font-light font-headline text-[var(--color-primary)] leading-snug mb-4">
+          {article.title}
+        </h2>
+        <p className="text-base font-headline italic text-[var(--color-on-surface-variant)] mb-6 leading-relaxed">
+          {article.summary}
+        </p>
+        <div className="w-12 h-px bg-[var(--color-secondary)] mb-6" />
+        <p className="text-sm font-body text-[var(--color-on-surface)] leading-7 whitespace-pre-wrap">
+          {article.body}
+        </p>
+      </div>
     </div>
-    </Container>
   );
 }
 
-export default News;
+function ArticleListItem({
+  article,
+  isActive,
+  onClick,
+}: {
+  article: News;
+  isActive: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`w-full text-left p-4 rounded-xl border transition-all duration-200 ${
+        isActive
+          ? "border-[var(--color-primary)] bg-white shadow-sm"
+          : "border-transparent bg-white/60 hover:bg-white hover:shadow-sm"
+      }`}
+    >
+      <p className="text-[10px] font-headline tracking-widest uppercase text-[var(--color-secondary)] mb-1">
+        {formatDate(article.published_at)}
+      </p>
+      <p
+        className={`text-sm font-headline leading-snug mb-1 ${
+          isActive ? "text-[var(--color-primary)]" : "text-[var(--color-on-surface)]"
+        }`}
+      >
+        {article.title}
+      </p>
+      <p className="text-xs text-[var(--color-on-surface-variant)] font-body line-clamp-2 leading-relaxed">
+        {article.summary}
+      </p>
+    </button>
+  );
+}
+
+function NewsPageInner() {
+  const searchParams = useSearchParams();
+  const urlId = searchParams.get("id");
+
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["news-public"],
+    queryFn: getNews,
+  });
+
+  const articles = (data?.data ?? []).filter((n) => n.status === "published");
+
+  const [selectedId, setSelectedId] = useState<number | null>(
+    urlId ? Number(urlId) : null
+  );
+
+  const selected = articles.find((a) => a.id === selectedId) ?? articles[0];
+
+  if (isPending) {
+    return (
+      <div className="min-h-screen bg-[#f2f4f3] flex items-center justify-center">
+        <p className="text-[var(--color-on-surface-variant)] font-headline">Loading...</p>
+      </div>
+    );
+  }
+
+  if (isError || articles.length === 0) {
+    return (
+      <div className="min-h-screen bg-[#f2f4f3] flex items-center justify-center">
+        <p className="text-[var(--color-on-surface-variant)] font-headline">
+          {isError ? "Failed to load news." : "No news published yet."}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#f2f4f3] pt-24 pb-16">
+      <div className="max-w-7xl mx-auto px-6">
+        <h1 className="text-5xl font-light tracking-tight font-headline text-[var(--color-primary)] mb-2">
+          News
+        </h1>
+        <div className="w-16 h-0.5 bg-[var(--color-secondary)] mb-10" />
+
+        <div className="flex gap-8 items-start">
+          {/* Left: full article view */}
+          <div className="flex-[3] sticky top-24 self-start">
+            {selected && <ArticleDetail article={selected} />}
+          </div>
+
+          {/* Right: article list */}
+          <div className="flex-[2] max-h-[calc(100vh-9rem)] overflow-y-auto space-y-2 pr-1">
+            {articles.map((a) => (
+              <ArticleListItem
+                key={a.id}
+                article={a}
+                isActive={a.id === (selected?.id ?? -1)}
+                onClick={() => setSelectedId(a.id)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function NewsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#f2f4f3] flex items-center justify-center">
+          <p className="text-[var(--color-on-surface-variant)] font-headline">Loading...</p>
+        </div>
+      }
+    >
+      <NewsPageInner />
+    </Suspense>
+  );
+}

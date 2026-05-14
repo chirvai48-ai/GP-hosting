@@ -136,6 +136,8 @@ model News {
   admin_id     String?
   admin        Admin?     @relation(fields: [admin_id], references: [id])
   status       NewsStatus
+  image_key    String?
+  image_type   String?
 }
 
 model ContactRequest {

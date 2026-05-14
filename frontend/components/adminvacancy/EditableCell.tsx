@@ -1,7 +1,6 @@
 import { flexRender, Cell } from "@tanstack/react-table";
 import { Job } from "@/types/table";
-import CreatableSelect from "react-select/creatable";
-
+import { TagInput,ImageUpload } from "../Reusables/Reusables";
 interface Props {
   cell: Cell<Job, unknown>;
   isEditing: boolean;
@@ -14,17 +13,20 @@ function EditableCell({ cell, isEditing, rowEdit, onFieldChange }: Props) {
     | { editable?: boolean; inputType?: string; options?: string[] }
     | undefined;
 
-  type SelectOption = { value: number; label: string };
-
-  const toSelectOptions = (
+  const toTagOptions = (
     items: { id: number; name: string }[],
-  ): SelectOption[] =>
-    items.map((item) => ({ value: item.id, label: item.name }));
+  ):string[] => {
+    return items.map((item) => item.name);
+  }
 
-  const fromSelectOptions = (
-    options: SelectOption[],
-  ): { id: number; name: string }[] =>
-    options.map((opt) => ({ id: opt.value, name: opt.label }));
+  const fromTagOptions = (items:string[]):{ id: number; name: string }[] => {
+    return items.map((item,index) => {
+      return{
+        id:index,
+        name:item
+      }
+    })
+  }
 
   if (!isEditing || !meta?.editable) {
     return <>{flexRender(cell.column.columnDef.cell, cell.getContext())}</>;
@@ -78,7 +80,7 @@ function EditableCell({ cell, isEditing, rowEdit, onFieldChange }: Props) {
           value={timeValue}
           onChange={(e) => {
             // Convert "09:00" back to the full ISO string the API expects
-            const iso = `1970-01-01T${e.target.value}:00.000Z`;
+            const iso = `${e.target.value}`;
             onFieldChange(field, iso);
           }}
           className={inputClass}
@@ -127,46 +129,23 @@ function EditableCell({ cell, isEditing, rowEdit, onFieldChange }: Props) {
       );
 
     case "multi_select":
-      const multiValue = toSelectOptions(
+      const multiValue = toTagOptions(
         (currentValue as { id: number; name: string }[]) ?? [],
       );
 
       return (
-        <CreatableSelect
-          isMulti
-          value={multiValue}
-          options={[]}
-          onChange={(selected) =>
-            onFieldChange(field, fromSelectOptions(selected as SelectOption[]))
-          }
-          components={{
-            DropdownIndicator: () => null,
-            ClearIndicator: () => null,
-          }}
-          styles={{
-            control: (base) => ({
-              ...base,
-              fontSize: 12,
-              minHeight: 32,
-              borderColor: "var(--color-container-low)",
-              fontFamily: "var(--font-label)",
-              boxShadow: "none",
-              "&:hover": { borderColor: "var(--color-primary)" },
-            }),
-            multiValue: (base) => ({
-              ...base,
-              fontSize: 11,
-              backgroundColor: "var(--color-container-low)",
-            }),
-            multiValueLabel: (base) => ({
-              ...base,
-              color: "var(--color-on-surface)",
-              fontFamily: "var(--font-label)",
-            }),
-          }}
-          menuPortalTarget={document.body}
-        />
+        <TagInput placeholder="Type and press enter" value={multiValue} onChange={(val:string[]) => {
+          onFieldChange(field,fromTagOptions(val))
+        }} />
       );
+    case "image":
+        return(
+          <ImageUpload value={currentValue as string} onChange={(val:File) => {
+            onFieldChange(field,val.name)
+            onFieldChange(cell.row.original.image_type as keyof Job,val.type)
+          }} type="table" />
+        )
+      
   }
 }
 

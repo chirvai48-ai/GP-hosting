@@ -1,7 +1,7 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Job, JobsResponse } from "@/types/table";
-import EditableCell from "./EditableCell";
+import EditableCell from "@/components/adminvacancy/EditableCell";
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -9,7 +9,28 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import { useState } from "react";
-import AddVacancy from "./AddVacancy";
+import AddVacancy from "@/components/adminvacancy/AddVacancy";
+
+type transformedData = Partial<Job> & {
+  job_category?:string,
+  languages?:string[],
+  technical_skills?:string[]
+}
+
+const TransformData = (updatedFields:Partial<Job> | null) => ({
+  ...updatedFields,
+  ...(updatedFields?.job_category && {job_category : updatedFields?.job_category?.name}),
+  ...(updatedFields?.technical_skills && {
+    technical_skills: updatedFields.technical_skills.map(item => item.name),
+  }),
+  ...(updatedFields?.languages && {
+    languages: updatedFields.languages.map(item => item.name),
+  }),
+}
+) 
+
+
+
 
 const columnHelper = createColumnHelper<Job>();
 
@@ -19,9 +40,45 @@ async function getJobs(): Promise<JobsResponse> {
   return response.json();
 }
 
-function AdminVacancy() {
-  const [editingRow, setEditingRow] = useState<Job | null>(null);
+async function patchJobs({id,data}:{id:number,data:Partial<Job>}) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jobs/${id}`,
+    {
+      method:'PATCH',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body: JSON.stringify(data)
+    }
+  )
+  if (!response.ok) throw new Error("Network response was not ok");
+  return response.json();
+}
 
+async function deleteJob(id: number) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jobs/${id}`, {
+    method: 'DELETE',
+  });
+  if (!response.ok) throw new Error("Network response was not ok");
+  return response.json();
+}
+
+
+
+function AdminVacancy() {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: patchJobs,
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteJob,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["jobs"] }),
+  });
+
+  const [editingRow, setEditingRow] = useState<Job | null>(null);
+  const [updatedFields,setUpdatedFields] = useState<Partial<Job>|null>(null);
+  const [deletingRowId, setDeletingRowId] = useState<number | null>(null);
   const { data, isPending } = useQuery({
     queryKey: ["jobs"],
     queryFn: getJobs,
@@ -32,7 +89,8 @@ function AdminVacancy() {
   const startEdit = (row: Job) => setEditingRow({ ...row });
   const cancelEdit = () => setEditingRow(null);
   const updateEdit = <K extends keyof Job>(id: number, field: K, value: unknown) => {
-    setEditingRow(prev => prev ? { ...prev, [field]: value } : prev);
+    setUpdatedFields(prev => prev ? { ...prev,id, [field]: value } : {id,[field]: value} );
+    setEditingRow(prev => prev? {...prev,id,[field]:value }:prev)
   };
 
   const columns = [
@@ -109,11 +167,12 @@ function AdminVacancy() {
       meta: { editable: true, inputType: "select", options: ["Any", "Male", "Female"] },
     }),
     columnHelper.accessor((row) => row.job_category.name, {
-      id: "job_category",
+      id: "job_category.name",
       header: "Category",
       size: 120,
       enableSorting: true,
       enableColumnFilter: true,
+      meta: {editable: true, inputType:"text"}
     }),
     columnHelper.accessor("status", {
       header: "Status",
@@ -198,18 +257,32 @@ function AdminVacancy() {
       cell: ({ getValue }) => new Date(getValue()).toLocaleDateString(),
       enableColumnFilter: false,
     }),
+    columnHelper.accessor("image_key",{
+      header:"Vacancy Image",
+      size:120,
+      enableSorting:false,
+      meta:{editable: true, inputType: "image"}
+    }),
     columnHelper.display({
       id: "actions",
       header: "",
-      size: 140,
+      size: 180,
       cell: ({ row }) => {
         const job = row.original;
         const isEditing = editingRow?.id === job.id;
+        const isDeleting = deletingRowId === job.id;
+        const isBusy = editingRow !== null || deletingRowId !== null;
 
         if (isEditing) return (
           <div className="flex gap-2">
             <button
-              onClick={() => console.log("save", editingRow)}
+              onClick={() => {
+                const transformedData = TransformData(updatedFields);
+                if (transformedData.id)
+                  mutation.mutate({ id: transformedData.id, data: transformedData });
+                setEditingRow(null);
+                setUpdatedFields(null);
+              }}
               className="px-3 py-1 text-xs rounded bg-[var(--color-primary)] text-white font-[var(--font-label)] hover:opacity-90 transition-opacity"
             >
               Save
@@ -223,14 +296,43 @@ function AdminVacancy() {
           </div>
         );
 
+        if (isDeleting) return (
+          <div className="flex gap-2">
+            <button
+              onClick={() => {
+                deleteMutation.mutate(job.id);
+                setDeletingRowId(null);
+              }}
+              className="px-3 py-1 text-xs rounded bg-red-600 text-white font-[var(--font-label)] hover:opacity-90 transition-opacity"
+            >
+              Confirm
+            </button>
+            <button
+              onClick={() => setDeletingRowId(null)}
+              className="px-3 py-1 text-xs rounded border border-[var(--color-on-surface-variant)] text-[var(--color-on-surface-variant)] font-[var(--font-label)] hover:bg-[var(--color-container-low)] transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        );
+
         return (
-          <button
-            onClick={() => startEdit(job)}
-            disabled={editingRow !== null}
-            className="px-3 py-1 text-xs rounded border border-[var(--color-secondary)] text-[var(--color-secondary)] font-[var(--font-label)] hover:bg-[var(--color-secondary)] hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-          >
-            Edit
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => startEdit(job)}
+              disabled={isBusy}
+              className="px-3 py-1 text-xs rounded border border-[var(--color-secondary)] text-[var(--color-secondary)] font-[var(--font-label)] hover:bg-[var(--color-secondary)] hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => setDeletingRowId(job.id)}
+              disabled={isBusy}
+              className="px-3 py-1 text-xs rounded border border-red-500 text-red-500 font-[var(--font-label)] hover:bg-red-500 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              Delete
+            </button>
+          </div>
         );
       },
     }),

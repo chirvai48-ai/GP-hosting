@@ -36,6 +36,7 @@ export type Job = {
   status: "Draft" | "Published" | string;
   image_key: string;
   image_type: string;
+  image_url?: string;
 
   job_category: JobCategory;
   languages: Language[];
@@ -45,4 +46,40 @@ export type Job = {
 export type JobsResponse = {
   message: string;
   data: Job[];
+};
+
+
+export type NewsStatus = "published" | "closed";
+
+export type Role = "Admin" | "Editor" | "User";
+
+export type Admin = {
+  id: string;
+  name: string;
+  email: string;
+  role: Role;
+  createdAt: string;
+  emailVerified: boolean;
+  updatedAt: string;
+  image: string | null;
+};
+
+export type News = {
+  id: number;
+  title: string;
+  body: string;
+  summary: string;
+  published_at: string;
+  updated_at: string;
+  admin_id: string | null;
+  status: NewsStatus;
+  admin: Admin | null;
+  image_key: string;
+  image_type: string;
+  image_url?: string;
+};
+
+export type NewsResponse = {
+  message: string;
+  data: News[];
 };

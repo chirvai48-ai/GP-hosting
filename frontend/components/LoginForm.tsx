@@ -45,7 +45,7 @@ export function LoginForm() {
     const {data,error} = await authClient.signIn.email({
         email,
         password,
-        callbackURL:"/admin/dashboard",
+        callbackURL:"/admin/dashboard/vacancies",
         rememberMe:remember
     })
     setIsLoading(false);

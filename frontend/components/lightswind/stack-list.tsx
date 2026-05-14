@@ -9,6 +9,7 @@ type StackListItem = {
   title: string;
   subtitle: string;
   date: string;
+  onClick?: () => void;
 };
 
 type StackListProps = {
@@ -40,7 +41,8 @@ export default function StackList({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
               transition={{ duration: 0.3, delay: index * 0.05 }}
-              className="flex items-center gap-4 p-4 bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-2xl shadow-sm hover:scale-105 transition duration-300"
+              onClick={item.onClick}
+              className={`flex items-center gap-4 p-4 bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-2xl shadow-sm hover:scale-105 transition duration-300 ${item.onClick ? "cursor-pointer" : ""}`}
             >
               <div className="w-12 h-12 bg-background rounded-xl 
               flex items-center justify-center text-foreground">
