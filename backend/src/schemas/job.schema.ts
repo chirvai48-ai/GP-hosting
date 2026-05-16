@@ -10,7 +10,7 @@ const baseJobSchema = z
 
     location: z.string().min(1),
 
-    experience: z.number().int().min(0),
+    experience: z.number().int().min(-1),
 
     contract: z.enum(Contract),
 

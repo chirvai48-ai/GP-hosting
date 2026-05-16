@@ -1329,7 +1329,15 @@ export const ApplicationScalarFieldEnum = {
   status: 'status',
   created_at: 'created_at',
   cover_letter: 'cover_letter',
-  resume_key: 'resume_key'
+  resume_key: 'resume_key',
+  resume_type: 'resume_type',
+  gender: 'gender',
+  facebook_url: 'facebook_url',
+  country: 'country',
+  nearest_station: 'nearest_station',
+  residence_status: 'residence_status',
+  japanese_ability: 'japanese_ability',
+  working_days: 'working_days'
 } as const
 
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
@@ -1431,6 +1439,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const NullsOrder = {
   first: 'first',
   last: 'last'
@@ -1486,6 +1502,23 @@ export const AdminOrderByRelevanceFieldEnum = {
 export type AdminOrderByRelevanceFieldEnum = (typeof AdminOrderByRelevanceFieldEnum)[keyof typeof AdminOrderByRelevanceFieldEnum]
 
 
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
 export const ApplicationOrderByRelevanceFieldEnum = {
   full_name: 'full_name',
   phone_number: 'phone_number',
@@ -1497,7 +1530,11 @@ export const ApplicationOrderByRelevanceFieldEnum = {
   degree: 'degree',
   soft_skills: 'soft_skills',
   cover_letter: 'cover_letter',
-  resume_key: 'resume_key'
+  resume_key: 'resume_key',
+  resume_type: 'resume_type',
+  facebook_url: 'facebook_url',
+  country: 'country',
+  nearest_station: 'nearest_station'
 } as const
 
 export type ApplicationOrderByRelevanceFieldEnum = (typeof ApplicationOrderByRelevanceFieldEnum)[keyof typeof ApplicationOrderByRelevanceFieldEnum]
@@ -1628,6 +1665,41 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'ApplicationStatus'
  */
 export type EnumApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApplicationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'Gender'
+ */
+export type EnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Gender'>
+    
+
+
+/**
+ * Reference to a field of type 'ResidenceStatus'
+ */
+export type EnumResidenceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResidenceStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'JapaneseAbility'
+ */
+export type EnumJapaneseAbilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JapaneseAbility'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 

@@ -10,7 +10,7 @@ import StepLabel from "@mui/material/StepLabel";
 import React from "react";
 import { JobPostingForm1, JobPostingForm2, JobPostingForm3 } from "./Forms";
 import { FieldErrors } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -25,10 +25,8 @@ function AddVacancy() {
   ];
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    if (activeStep === steps.length - 1){
-      setOpen(!open);
-      methods.reset()
+    if (activeStep < steps.length - 1) {
+      setActiveStep((prev) => prev + 1);
     }
   };
 
@@ -50,39 +48,52 @@ function AddVacancy() {
     },
   });
 
-  const createJob = async(formData:unknown) =>{
-    try{
-      const res = await fetch(`${API_URL}/api/jobs`,{
-            method:"POST",
-            body:JSON.stringify(formData),
-            headers:{
-              "Content-Type":"application/json"
-            }
-          })
-          return res.json()
-    }
-    catch(error){
-      console.log(error);
-    }
-  }
+  const queryClient = useQueryClient();
 
-  const {mutateAsync,isSuccess} = useMutation(
-      {
-       mutationFn:createJob
+  const createJob = async (formData: CreateJobForm) => {
+    const res = await fetch(`${API_URL}/api/jobs`, {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: { "Content-Type": "application/json" },
+    });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      const fieldErrors = body?.error?.fieldErrors as
+        | Record<string, string[]>
+        | undefined;
+      if (fieldErrors) {
+        const first = Object.entries(fieldErrors)[0];
+        if (first) throw new Error(`${first[0]}: ${first[1][0]}`);
       }
-    )
+      throw new Error(body?.messagge || body?.message || `Request failed (${res.status})`);
+    }
+    return body;
+  };
+
+  const { mutateAsync } = useMutation({
+    mutationFn: createJob,
+  });
 
   const onSubmit: SubmitHandler<CreateJobForm> = async (formData) => {
-    const result = await mutateAsync(formData);
-    const signedUrl = result?.data?.signed_url;
-    if (signedUrl && imageFileRef.current) {
-      await fetch(signedUrl, {
-        method: "PUT",
-        body: imageFileRef.current,
-        headers: { "Content-Type": imageFileRef.current.type },
-      });
+    try {
+      const result = await mutateAsync(formData);
+      const signedUrl = result?.data?.signed_url;
+      if (signedUrl && imageFileRef.current) {
+        const putRes = await fetch(signedUrl, {
+          method: "PUT",
+          body: imageFileRef.current,
+          headers: { "Content-Type": imageFileRef.current.type },
+        });
+        if (!putRes.ok) throw new Error("Image upload failed");
+      }
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      alert("Job has been successfully created");
+      methods.reset();
+      setActiveStep(0);
+      setOpen(false);
+    } catch (err) {
+      alert((err as Error).message || "Failed to create job");
     }
-    alert("Job has been successfully created");
   };
   
 
@@ -173,7 +184,13 @@ function AddVacancy() {
                 Back
               </Button>
               <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleNext}>
+              <Button
+                onClick={
+                  activeStep === steps.length - 1
+                    ? methods.handleSubmit(onSubmit, onError)
+                    : handleNext
+                }
+              >
                 {activeStep === steps.length - 1 ? "Finish" : "Next"}
               </Button>
             </Box>

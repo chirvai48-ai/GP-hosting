@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { MapPin, CalendarDays, X, Clock, Briefcase, Users, Star, Award, FileText, Send } from "lucide-react";
 import type { Job, JobsResponse } from "@/types/table";
@@ -102,9 +103,13 @@ function JobDetailModal({ job, onClose }: { job: Job; onClose: () => void }) {
                 {job.title}
               </h2>
             </div>
-            <button className="shrink-0 px-3 py-1 text-xs rounded border border-[var(--color-secondary)] text-[var(--color-secondary)] font-[family-name:var(--font-label)] hover:bg-[var(--color-secondary)] hover:text-white transition-colors whitespace-nowrap">
+            <Link
+              href={`/vacancy/${job.id}/apply`}
+              onClick={onClose}
+              className="shrink-0 px-3 py-1 text-xs rounded border border-[var(--color-secondary)] text-[var(--color-secondary)] font-[family-name:var(--font-label)] hover:bg-[var(--color-secondary)] hover:text-white transition-colors whitespace-nowrap"
+            >
               Apply to this job →
-            </button>
+            </Link>
           </div>
 
           {/* Key info grid */}
@@ -265,15 +270,17 @@ function VacancyCard({ job, onClick }: { job: Job; onClick: () => void }) {
 
       {/* Apply button */}
       <div className="px-5 pb-5">
-        <button
-          className={`w-full font-[family-name:var(--font-label)] text-[12px] font-medium tracking-wide border rounded-md py-2 transition-all duration-200 ${
+        <Link
+          href={`/vacancy/${job.id}/apply`}
+          onClick={(e) => e.stopPropagation()}
+          className={`block text-center w-full font-[family-name:var(--font-label)] text-[12px] font-medium tracking-wide border rounded-md py-2 transition-all duration-200 ${
             hovered
               ? "bg-[color:var(--color-primary)] text-[#e0f0ef] border-[color:var(--color-primary)]"
               : "bg-transparent text-[color:var(--color-primary)] border-[color:var(--color-primary)]"
           }`}
         >
           Apply Now →
-        </button>
+        </Link>
       </div>
 
       <div className={`absolute bottom-0 left-0 h-[3px] bg-[color:var(--color-secondary)] transition-all duration-300 ${hovered ? "w-full" : "w-0"}`} />

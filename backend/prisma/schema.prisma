@@ -117,6 +117,14 @@ model Application {
   created_at         DateTime          @default(now())
   cover_letter       String?           @db.Text
   resume_key         String            @unique
+  resume_type        String?
+  gender             Gender?
+  facebook_url       String?
+  country            String?
+  nearest_station    String?
+  residence_status   ResidenceStatus?
+  japanese_ability   JapaneseAbility?
+  working_days       Json?
 }
 
 enum ApplicationStatus {
@@ -124,6 +132,29 @@ enum ApplicationStatus {
   Reviewed
   Rejected
   Accepted
+}
+
+enum Gender {
+  Male
+  Female
+  Other
+}
+
+enum ResidenceStatus {
+  Permanent_Resident
+  Work_Visa
+  Student_Visa
+  Spouse_Visa
+  Other
+}
+
+enum JapaneseAbility {
+  N1
+  N2
+  N3
+  N4
+  N5
+  None
 }
 
 model News {

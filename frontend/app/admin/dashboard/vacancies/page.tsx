@@ -142,7 +142,7 @@ function AdminVacancy() {
     columnHelper.accessor("contract", {
       header: "Contract",
       size: 110,
-      meta: { editable: true, inputType: "select", options: ["Full_time", "Part_time", "Contract", "Freelance"] },
+      meta: { editable: true, inputType: "select", options: ["Full_time", "Part_time", "Internship", "Flexible"] },
     }),
     columnHelper.accessor("workdays", {
       header: "Days/wk",
@@ -164,7 +164,7 @@ function AdminVacancy() {
     columnHelper.accessor("gender", {
       header: "Gender",
       size: 90,
-      meta: { editable: true, inputType: "select", options: ["Any", "Male", "Female"] },
+      meta: { editable: true, inputType: "select", options: ["Any", "Male", "Female", "Other"] },
     }),
     columnHelper.accessor((row) => row.job_category.name, {
       id: "job_category.name",
@@ -177,7 +177,7 @@ function AdminVacancy() {
     columnHelper.accessor("status", {
       header: "Status",
       size: 90,
-      meta: { editable: true, inputType: "select", options: ["Draft", "Active", "Archived"] },
+      meta: { editable: true, inputType: "select", options: ["Draft", "Published", "Closed", "Archived"] },
       cell: ({ getValue }) => {
         const status = getValue();
         const styles: Record<string, string> = {

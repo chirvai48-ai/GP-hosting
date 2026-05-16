@@ -48,6 +48,38 @@ export const ApplicationStatus = {
 export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof ApplicationStatus]
 
 
+export const Gender = {
+  Male: 'Male',
+  Female: 'Female',
+  Other: 'Other'
+} as const
+
+export type Gender = (typeof Gender)[keyof typeof Gender]
+
+
+export const ResidenceStatus = {
+  Permanent_Resident: 'Permanent_Resident',
+  Work_Visa: 'Work_Visa',
+  Student_Visa: 'Student_Visa',
+  Spouse_Visa: 'Spouse_Visa',
+  Other: 'Other'
+} as const
+
+export type ResidenceStatus = (typeof ResidenceStatus)[keyof typeof ResidenceStatus]
+
+
+export const JapaneseAbility = {
+  N1: 'N1',
+  N2: 'N2',
+  N3: 'N3',
+  N4: 'N4',
+  N5: 'N5',
+  None: 'None'
+} as const
+
+export type JapaneseAbility = (typeof JapaneseAbility)[keyof typeof JapaneseAbility]
+
+
 export const Status = {
   Open: 'Open',
   Inprogress: 'Inprogress',

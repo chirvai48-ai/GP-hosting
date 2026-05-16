@@ -54,6 +54,13 @@ export type ApplicationMinAggregateOutputType = {
   created_at: Date | null
   cover_letter: string | null
   resume_key: string | null
+  resume_type: string | null
+  gender: $Enums.Gender | null
+  facebook_url: string | null
+  country: string | null
+  nearest_station: string | null
+  residence_status: $Enums.ResidenceStatus | null
+  japanese_ability: $Enums.JapaneseAbility | null
 }
 
 export type ApplicationMaxAggregateOutputType = {
@@ -74,6 +81,13 @@ export type ApplicationMaxAggregateOutputType = {
   created_at: Date | null
   cover_letter: string | null
   resume_key: string | null
+  resume_type: string | null
+  gender: $Enums.Gender | null
+  facebook_url: string | null
+  country: string | null
+  nearest_station: string | null
+  residence_status: $Enums.ResidenceStatus | null
+  japanese_ability: $Enums.JapaneseAbility | null
 }
 
 export type ApplicationCountAggregateOutputType = {
@@ -94,6 +108,14 @@ export type ApplicationCountAggregateOutputType = {
   created_at: number
   cover_letter: number
   resume_key: number
+  resume_type: number
+  gender: number
+  facebook_url: number
+  country: number
+  nearest_station: number
+  residence_status: number
+  japanese_ability: number
+  working_days: number
   _all: number
 }
 
@@ -126,6 +148,13 @@ export type ApplicationMinAggregateInputType = {
   created_at?: true
   cover_letter?: true
   resume_key?: true
+  resume_type?: true
+  gender?: true
+  facebook_url?: true
+  country?: true
+  nearest_station?: true
+  residence_status?: true
+  japanese_ability?: true
 }
 
 export type ApplicationMaxAggregateInputType = {
@@ -146,6 +175,13 @@ export type ApplicationMaxAggregateInputType = {
   created_at?: true
   cover_letter?: true
   resume_key?: true
+  resume_type?: true
+  gender?: true
+  facebook_url?: true
+  country?: true
+  nearest_station?: true
+  residence_status?: true
+  japanese_ability?: true
 }
 
 export type ApplicationCountAggregateInputType = {
@@ -166,6 +202,14 @@ export type ApplicationCountAggregateInputType = {
   created_at?: true
   cover_letter?: true
   resume_key?: true
+  resume_type?: true
+  gender?: true
+  facebook_url?: true
+  country?: true
+  nearest_station?: true
+  residence_status?: true
+  japanese_ability?: true
+  working_days?: true
   _all?: true
 }
 
@@ -273,6 +317,14 @@ export type ApplicationGroupByOutputType = {
   created_at: Date
   cover_letter: string | null
   resume_key: string
+  resume_type: string | null
+  gender: $Enums.Gender | null
+  facebook_url: string | null
+  country: string | null
+  nearest_station: string | null
+  residence_status: $Enums.ResidenceStatus | null
+  japanese_ability: $Enums.JapaneseAbility | null
+  working_days: runtime.JsonValue | null
   _count: ApplicationCountAggregateOutputType | null
   _avg: ApplicationAvgAggregateOutputType | null
   _sum: ApplicationSumAggregateOutputType | null
@@ -316,6 +368,14 @@ export type ApplicationWhereInput = {
   created_at?: Prisma.DateTimeFilter<"Application"> | Date | string
   cover_letter?: Prisma.StringNullableFilter<"Application"> | string | null
   resume_key?: Prisma.StringFilter<"Application"> | string
+  resume_type?: Prisma.StringNullableFilter<"Application"> | string | null
+  gender?: Prisma.EnumGenderNullableFilter<"Application"> | $Enums.Gender | null
+  facebook_url?: Prisma.StringNullableFilter<"Application"> | string | null
+  country?: Prisma.StringNullableFilter<"Application"> | string | null
+  nearest_station?: Prisma.StringNullableFilter<"Application"> | string | null
+  residence_status?: Prisma.EnumResidenceStatusNullableFilter<"Application"> | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.EnumJapaneseAbilityNullableFilter<"Application"> | $Enums.JapaneseAbility | null
+  working_days?: Prisma.JsonNullableFilter<"Application">
   languages?: Prisma.LanguageListRelationFilter
   technical_skills?: Prisma.SkillListRelationFilter
   job?: Prisma.XOR<Prisma.JobScalarRelationFilter, Prisma.JobWhereInput>
@@ -339,6 +399,14 @@ export type ApplicationOrderByWithRelationInput = {
   created_at?: Prisma.SortOrder
   cover_letter?: Prisma.SortOrderInput | Prisma.SortOrder
   resume_key?: Prisma.SortOrder
+  resume_type?: Prisma.SortOrderInput | Prisma.SortOrder
+  gender?: Prisma.SortOrderInput | Prisma.SortOrder
+  facebook_url?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrderInput | Prisma.SortOrder
+  nearest_station?: Prisma.SortOrderInput | Prisma.SortOrder
+  residence_status?: Prisma.SortOrderInput | Prisma.SortOrder
+  japanese_ability?: Prisma.SortOrderInput | Prisma.SortOrder
+  working_days?: Prisma.SortOrderInput | Prisma.SortOrder
   languages?: Prisma.LanguageOrderByRelationAggregateInput
   technical_skills?: Prisma.SkillOrderByRelationAggregateInput
   job?: Prisma.JobOrderByWithRelationInput
@@ -366,6 +434,14 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
   created_at?: Prisma.DateTimeFilter<"Application"> | Date | string
   cover_letter?: Prisma.StringNullableFilter<"Application"> | string | null
+  resume_type?: Prisma.StringNullableFilter<"Application"> | string | null
+  gender?: Prisma.EnumGenderNullableFilter<"Application"> | $Enums.Gender | null
+  facebook_url?: Prisma.StringNullableFilter<"Application"> | string | null
+  country?: Prisma.StringNullableFilter<"Application"> | string | null
+  nearest_station?: Prisma.StringNullableFilter<"Application"> | string | null
+  residence_status?: Prisma.EnumResidenceStatusNullableFilter<"Application"> | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.EnumJapaneseAbilityNullableFilter<"Application"> | $Enums.JapaneseAbility | null
+  working_days?: Prisma.JsonNullableFilter<"Application">
   languages?: Prisma.LanguageListRelationFilter
   technical_skills?: Prisma.SkillListRelationFilter
   job?: Prisma.XOR<Prisma.JobScalarRelationFilter, Prisma.JobWhereInput>
@@ -389,6 +465,14 @@ export type ApplicationOrderByWithAggregationInput = {
   created_at?: Prisma.SortOrder
   cover_letter?: Prisma.SortOrderInput | Prisma.SortOrder
   resume_key?: Prisma.SortOrder
+  resume_type?: Prisma.SortOrderInput | Prisma.SortOrder
+  gender?: Prisma.SortOrderInput | Prisma.SortOrder
+  facebook_url?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrderInput | Prisma.SortOrder
+  nearest_station?: Prisma.SortOrderInput | Prisma.SortOrder
+  residence_status?: Prisma.SortOrderInput | Prisma.SortOrder
+  japanese_ability?: Prisma.SortOrderInput | Prisma.SortOrder
+  working_days?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ApplicationCountOrderByAggregateInput
   _avg?: Prisma.ApplicationAvgOrderByAggregateInput
   _max?: Prisma.ApplicationMaxOrderByAggregateInput
@@ -417,6 +501,14 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
   cover_letter?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   resume_key?: Prisma.StringWithAggregatesFilter<"Application"> | string
+  resume_type?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
+  gender?: Prisma.EnumGenderNullableWithAggregatesFilter<"Application"> | $Enums.Gender | null
+  facebook_url?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
+  country?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
+  nearest_station?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
+  residence_status?: Prisma.EnumResidenceStatusNullableWithAggregatesFilter<"Application"> | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.EnumJapaneseAbilityNullableWithAggregatesFilter<"Application"> | $Enums.JapaneseAbility | null
+  working_days?: Prisma.JsonNullableWithAggregatesFilter<"Application">
 }
 
 export type ApplicationCreateInput = {
@@ -435,6 +527,14 @@ export type ApplicationCreateInput = {
   created_at?: Date | string
   cover_letter?: string | null
   resume_key: string
+  resume_type?: string | null
+  gender?: $Enums.Gender | null
+  facebook_url?: string | null
+  country?: string | null
+  nearest_station?: string | null
+  residence_status?: $Enums.ResidenceStatus | null
+  japanese_ability?: $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   languages?: Prisma.LanguageCreateNestedManyWithoutApplicationInput
   technical_skills?: Prisma.SkillCreateNestedManyWithoutApplicationInput
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
@@ -458,6 +558,14 @@ export type ApplicationUncheckedCreateInput = {
   created_at?: Date | string
   cover_letter?: string | null
   resume_key: string
+  resume_type?: string | null
+  gender?: $Enums.Gender | null
+  facebook_url?: string | null
+  country?: string | null
+  nearest_station?: string | null
+  residence_status?: $Enums.ResidenceStatus | null
+  japanese_ability?: $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutApplicationInput
   technical_skills?: Prisma.SkillUncheckedCreateNestedManyWithoutApplicationInput
 }
@@ -478,6 +586,14 @@ export type ApplicationUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearest_station?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   languages?: Prisma.LanguageUpdateManyWithoutApplicationNestedInput
   technical_skills?: Prisma.SkillUpdateManyWithoutApplicationNestedInput
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
@@ -501,6 +617,14 @@ export type ApplicationUncheckedUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearest_station?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   languages?: Prisma.LanguageUncheckedUpdateManyWithoutApplicationNestedInput
   technical_skills?: Prisma.SkillUncheckedUpdateManyWithoutApplicationNestedInput
 }
@@ -523,6 +647,14 @@ export type ApplicationCreateManyInput = {
   created_at?: Date | string
   cover_letter?: string | null
   resume_key: string
+  resume_type?: string | null
+  gender?: $Enums.Gender | null
+  facebook_url?: string | null
+  country?: string | null
+  nearest_station?: string | null
+  residence_status?: $Enums.ResidenceStatus | null
+  japanese_ability?: $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ApplicationUpdateManyMutationInput = {
@@ -541,6 +673,14 @@ export type ApplicationUpdateManyMutationInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearest_station?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ApplicationUncheckedUpdateManyInput = {
@@ -561,6 +701,14 @@ export type ApplicationUncheckedUpdateManyInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearest_station?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ApplicationListRelationFilter = {
@@ -597,6 +745,14 @@ export type ApplicationCountOrderByAggregateInput = {
   created_at?: Prisma.SortOrder
   cover_letter?: Prisma.SortOrder
   resume_key?: Prisma.SortOrder
+  resume_type?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  facebook_url?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  nearest_station?: Prisma.SortOrder
+  residence_status?: Prisma.SortOrder
+  japanese_ability?: Prisma.SortOrder
+  working_days?: Prisma.SortOrder
 }
 
 export type ApplicationAvgOrderByAggregateInput = {
@@ -622,6 +778,13 @@ export type ApplicationMaxOrderByAggregateInput = {
   created_at?: Prisma.SortOrder
   cover_letter?: Prisma.SortOrder
   resume_key?: Prisma.SortOrder
+  resume_type?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  facebook_url?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  nearest_station?: Prisma.SortOrder
+  residence_status?: Prisma.SortOrder
+  japanese_ability?: Prisma.SortOrder
 }
 
 export type ApplicationMinOrderByAggregateInput = {
@@ -642,6 +805,13 @@ export type ApplicationMinOrderByAggregateInput = {
   created_at?: Prisma.SortOrder
   cover_letter?: Prisma.SortOrder
   resume_key?: Prisma.SortOrder
+  resume_type?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  facebook_url?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  nearest_station?: Prisma.SortOrder
+  residence_status?: Prisma.SortOrder
+  japanese_ability?: Prisma.SortOrder
 }
 
 export type ApplicationSumOrderByAggregateInput = {
@@ -771,6 +941,18 @@ export type EnumApplicationStatusFieldUpdateOperationsInput = {
   set?: $Enums.ApplicationStatus
 }
 
+export type NullableEnumGenderFieldUpdateOperationsInput = {
+  set?: $Enums.Gender | null
+}
+
+export type NullableEnumResidenceStatusFieldUpdateOperationsInput = {
+  set?: $Enums.ResidenceStatus | null
+}
+
+export type NullableEnumJapaneseAbilityFieldUpdateOperationsInput = {
+  set?: $Enums.JapaneseAbility | null
+}
+
 export type ApplicationCreateWithoutJobInput = {
   full_name: string
   date_of_birth: Date | string
@@ -787,6 +969,14 @@ export type ApplicationCreateWithoutJobInput = {
   created_at?: Date | string
   cover_letter?: string | null
   resume_key: string
+  resume_type?: string | null
+  gender?: $Enums.Gender | null
+  facebook_url?: string | null
+  country?: string | null
+  nearest_station?: string | null
+  residence_status?: $Enums.ResidenceStatus | null
+  japanese_ability?: $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   languages?: Prisma.LanguageCreateNestedManyWithoutApplicationInput
   technical_skills?: Prisma.SkillCreateNestedManyWithoutApplicationInput
 }
@@ -808,6 +998,14 @@ export type ApplicationUncheckedCreateWithoutJobInput = {
   created_at?: Date | string
   cover_letter?: string | null
   resume_key: string
+  resume_type?: string | null
+  gender?: $Enums.Gender | null
+  facebook_url?: string | null
+  country?: string | null
+  nearest_station?: string | null
+  residence_status?: $Enums.ResidenceStatus | null
+  japanese_ability?: $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutApplicationInput
   technical_skills?: Prisma.SkillUncheckedCreateNestedManyWithoutApplicationInput
 }
@@ -859,6 +1057,14 @@ export type ApplicationScalarWhereInput = {
   created_at?: Prisma.DateTimeFilter<"Application"> | Date | string
   cover_letter?: Prisma.StringNullableFilter<"Application"> | string | null
   resume_key?: Prisma.StringFilter<"Application"> | string
+  resume_type?: Prisma.StringNullableFilter<"Application"> | string | null
+  gender?: Prisma.EnumGenderNullableFilter<"Application"> | $Enums.Gender | null
+  facebook_url?: Prisma.StringNullableFilter<"Application"> | string | null
+  country?: Prisma.StringNullableFilter<"Application"> | string | null
+  nearest_station?: Prisma.StringNullableFilter<"Application"> | string | null
+  residence_status?: Prisma.EnumResidenceStatusNullableFilter<"Application"> | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.EnumJapaneseAbilityNullableFilter<"Application"> | $Enums.JapaneseAbility | null
+  working_days?: Prisma.JsonNullableFilter<"Application">
 }
 
 export type ApplicationCreateWithoutTechnical_skillsInput = {
@@ -877,6 +1083,14 @@ export type ApplicationCreateWithoutTechnical_skillsInput = {
   created_at?: Date | string
   cover_letter?: string | null
   resume_key: string
+  resume_type?: string | null
+  gender?: $Enums.Gender | null
+  facebook_url?: string | null
+  country?: string | null
+  nearest_station?: string | null
+  residence_status?: $Enums.ResidenceStatus | null
+  japanese_ability?: $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   languages?: Prisma.LanguageCreateNestedManyWithoutApplicationInput
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
 }
@@ -899,6 +1113,14 @@ export type ApplicationUncheckedCreateWithoutTechnical_skillsInput = {
   created_at?: Date | string
   cover_letter?: string | null
   resume_key: string
+  resume_type?: string | null
+  gender?: $Enums.Gender | null
+  facebook_url?: string | null
+  country?: string | null
+  nearest_station?: string | null
+  residence_status?: $Enums.ResidenceStatus | null
+  japanese_ability?: $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutApplicationInput
 }
 
@@ -939,6 +1161,14 @@ export type ApplicationCreateWithoutLanguagesInput = {
   created_at?: Date | string
   cover_letter?: string | null
   resume_key: string
+  resume_type?: string | null
+  gender?: $Enums.Gender | null
+  facebook_url?: string | null
+  country?: string | null
+  nearest_station?: string | null
+  residence_status?: $Enums.ResidenceStatus | null
+  japanese_ability?: $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   technical_skills?: Prisma.SkillCreateNestedManyWithoutApplicationInput
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
 }
@@ -961,6 +1191,14 @@ export type ApplicationUncheckedCreateWithoutLanguagesInput = {
   created_at?: Date | string
   cover_letter?: string | null
   resume_key: string
+  resume_type?: string | null
+  gender?: $Enums.Gender | null
+  facebook_url?: string | null
+  country?: string | null
+  nearest_station?: string | null
+  residence_status?: $Enums.ResidenceStatus | null
+  japanese_ability?: $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   technical_skills?: Prisma.SkillUncheckedCreateNestedManyWithoutApplicationInput
 }
 
@@ -1002,6 +1240,14 @@ export type ApplicationCreateManyJobInput = {
   created_at?: Date | string
   cover_letter?: string | null
   resume_key: string
+  resume_type?: string | null
+  gender?: $Enums.Gender | null
+  facebook_url?: string | null
+  country?: string | null
+  nearest_station?: string | null
+  residence_status?: $Enums.ResidenceStatus | null
+  japanese_ability?: $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ApplicationUpdateWithoutJobInput = {
@@ -1020,6 +1266,14 @@ export type ApplicationUpdateWithoutJobInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearest_station?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   languages?: Prisma.LanguageUpdateManyWithoutApplicationNestedInput
   technical_skills?: Prisma.SkillUpdateManyWithoutApplicationNestedInput
 }
@@ -1041,6 +1295,14 @@ export type ApplicationUncheckedUpdateWithoutJobInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearest_station?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   languages?: Prisma.LanguageUncheckedUpdateManyWithoutApplicationNestedInput
   technical_skills?: Prisma.SkillUncheckedUpdateManyWithoutApplicationNestedInput
 }
@@ -1062,6 +1324,14 @@ export type ApplicationUncheckedUpdateManyWithoutJobInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearest_station?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ApplicationUpdateWithoutTechnical_skillsInput = {
@@ -1080,6 +1350,14 @@ export type ApplicationUpdateWithoutTechnical_skillsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearest_station?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   languages?: Prisma.LanguageUpdateManyWithoutApplicationNestedInput
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
 }
@@ -1102,6 +1380,14 @@ export type ApplicationUncheckedUpdateWithoutTechnical_skillsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearest_station?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   languages?: Prisma.LanguageUncheckedUpdateManyWithoutApplicationNestedInput
 }
 
@@ -1123,6 +1409,14 @@ export type ApplicationUncheckedUpdateManyWithoutTechnical_skillsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearest_station?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type ApplicationUpdateWithoutLanguagesInput = {
@@ -1141,6 +1435,14 @@ export type ApplicationUpdateWithoutLanguagesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearest_station?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   technical_skills?: Prisma.SkillUpdateManyWithoutApplicationNestedInput
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
 }
@@ -1163,6 +1465,14 @@ export type ApplicationUncheckedUpdateWithoutLanguagesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearest_station?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   technical_skills?: Prisma.SkillUncheckedUpdateManyWithoutApplicationNestedInput
 }
 
@@ -1184,6 +1494,14 @@ export type ApplicationUncheckedUpdateManyWithoutLanguagesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearest_station?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
+  working_days?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 
@@ -1244,6 +1562,14 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   created_at?: boolean
   cover_letter?: boolean
   resume_key?: boolean
+  resume_type?: boolean
+  gender?: boolean
+  facebook_url?: boolean
+  country?: boolean
+  nearest_station?: boolean
+  residence_status?: boolean
+  japanese_ability?: boolean
+  working_days?: boolean
   languages?: boolean | Prisma.Application$languagesArgs<ExtArgs>
   technical_skills?: boolean | Prisma.Application$technical_skillsArgs<ExtArgs>
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
@@ -1270,9 +1596,17 @@ export type ApplicationSelectScalar = {
   created_at?: boolean
   cover_letter?: boolean
   resume_key?: boolean
+  resume_type?: boolean
+  gender?: boolean
+  facebook_url?: boolean
+  country?: boolean
+  nearest_station?: boolean
+  residence_status?: boolean
+  japanese_ability?: boolean
+  working_days?: boolean
 }
 
-export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "full_name" | "date_of_birth" | "phone_number" | "email" | "current_address" | "permanent_address" | "preferred_location" | "availability" | "school_college" | "degree" | "soft_skills" | "job_id" | "status" | "created_at" | "cover_letter" | "resume_key", ExtArgs["result"]["application"]>
+export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "full_name" | "date_of_birth" | "phone_number" | "email" | "current_address" | "permanent_address" | "preferred_location" | "availability" | "school_college" | "degree" | "soft_skills" | "job_id" | "status" | "created_at" | "cover_letter" | "resume_key" | "resume_type" | "gender" | "facebook_url" | "country" | "nearest_station" | "residence_status" | "japanese_ability" | "working_days", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   languages?: boolean | Prisma.Application$languagesArgs<ExtArgs>
   technical_skills?: boolean | Prisma.Application$technical_skillsArgs<ExtArgs>
@@ -1305,6 +1639,14 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     created_at: Date
     cover_letter: string | null
     resume_key: string
+    resume_type: string | null
+    gender: $Enums.Gender | null
+    facebook_url: string | null
+    country: string | null
+    nearest_station: string | null
+    residence_status: $Enums.ResidenceStatus | null
+    japanese_ability: $Enums.JapaneseAbility | null
+    working_days: runtime.JsonValue | null
   }, ExtArgs["result"]["application"]>
   composites: {}
 }
@@ -1694,6 +2036,14 @@ export interface ApplicationFieldRefs {
   readonly created_at: Prisma.FieldRef<"Application", 'DateTime'>
   readonly cover_letter: Prisma.FieldRef<"Application", 'String'>
   readonly resume_key: Prisma.FieldRef<"Application", 'String'>
+  readonly resume_type: Prisma.FieldRef<"Application", 'String'>
+  readonly gender: Prisma.FieldRef<"Application", 'Gender'>
+  readonly facebook_url: Prisma.FieldRef<"Application", 'String'>
+  readonly country: Prisma.FieldRef<"Application", 'String'>
+  readonly nearest_station: Prisma.FieldRef<"Application", 'String'>
+  readonly residence_status: Prisma.FieldRef<"Application", 'ResidenceStatus'>
+  readonly japanese_ability: Prisma.FieldRef<"Application", 'JapaneseAbility'>
+  readonly working_days: Prisma.FieldRef<"Application", 'Json'>
 }
     
 

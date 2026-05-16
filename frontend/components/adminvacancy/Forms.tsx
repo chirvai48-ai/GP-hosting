@@ -52,7 +52,7 @@ export function JobPostingForm1() {
             <input
               className={inputCls}
               type="number"
-              {...register("salary_min")}
+              {...register("salary_min", { valueAsNumber: true })}
             />
             <p className="text-xs text-red-500 mt-0.5 min-h-[16px]">{errors.salary_min?.message as string}</p>
           </div>
@@ -61,7 +61,7 @@ export function JobPostingForm1() {
             <input
               className={inputCls}
               type="number"
-              {...register("salary_max")}
+              {...register("salary_max", { valueAsNumber: true })}
             />
             <p className="text-xs text-red-500 mt-0.5 min-h-[16px]">{errors.salary_max?.message as string}</p>
           </div>
@@ -79,7 +79,7 @@ export function JobPostingForm1() {
           </div>
           <div className="flex flex-col gap-1">
             <label className={labelCls}>Experience</label>
-            <select className={inputCls} {...register("experience")}>
+            <select className={inputCls} {...register("experience", { valueAsNumber: true })}>
               {EXPERIENCE_OPTIONS.map((o) => (
                 <option key={o.value} value={o.value}>
                   {o.label}
@@ -119,7 +119,7 @@ export function JobPostingForm1() {
   );
 }
 
-const GENDER_OPTIONS = ["Male", "Female", "Other"];
+const GENDER_OPTIONS = ["Any", "Male", "Female", "Other"];
 
 export function JobPostingForm2() {
   const { register,formState:{errors}  } = useFormContext();
@@ -160,7 +160,7 @@ export function JobPostingForm2() {
               placeholder="e.g. 5"
               min={1}
               max={7}
-              {...register("workdays")}
+              {...register("workdays", { valueAsNumber: true })}
             />
             <p className="text-xs text-red-500 mt-0.5 min-h-[16px]">{errors.workdays?.message as string}</p>
           </div>
@@ -169,7 +169,7 @@ export function JobPostingForm2() {
             <select className={inputCls} {...register("gender")}>
               <option value="">Select gender</option>
               {GENDER_OPTIONS.map((g) => (
-                <option key={g} value={g.toLowerCase()}>
+                <option key={g} value={g}>
                   {g}
                 </option>
               ))}
