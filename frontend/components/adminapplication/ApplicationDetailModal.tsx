@@ -3,6 +3,7 @@
 import { Modal, Box } from "@mui/material";
 import { ExternalLink, X } from "lucide-react";
 import type { Application } from "@/types/table";
+import NotesPanel from "./NotesPanel";
 
 const RESIDENCE_LABELS: Record<string, string> = {
   Permanent_Resident: "Permanent Resident",
@@ -190,6 +191,8 @@ export default function ApplicationDetailModal({
                   />
                 </div>
               </section>
+
+              <NotesPanel applicationId={application.id} />
             </div>
 
             <div className="sticky bottom-0 flex justify-end gap-2 px-6 py-3 bg-white border-t border-[var(--color-container-low)]">

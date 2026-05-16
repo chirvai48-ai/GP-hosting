@@ -86,6 +86,8 @@ model Admin {
   replies       ContactReply[]
   sessions      Session[]
   accounts      Account[]
+  notes_created Note[]         @relation("NotesCreatedBy")
+  notes_edited  Note[]         @relation("NotesEditedBy")
 
   @@map("admin")
 }
@@ -127,6 +129,23 @@ model Application {
   residence_status   ResidenceStatus?
   japanese_ability   JapaneseAbility?
   working_days       Json?
+  notes              Note[]
+}
+
+model Note {
+  id                      Int         @id @default(autoincrement())
+  text                    String      @db.Text
+  application_id          Int
+  application             Application @relation(fields: [application_id], references: [id], onDelete: Cascade)
+  created_by_admin_id     String
+  last_edited_by_admin_id String
+  created_by_admin        Admin       @relation("NotesCreatedBy", fields: [created_by_admin_id], references: [id])
+  last_edited_by_admin    Admin       @relation("NotesEditedBy", fields: [last_edited_by_admin_id], references: [id])
+  created_at              DateTime    @default(now())
+  updated_at              DateTime    @updatedAt
+
+  @@index([application_id])
+  @@map("note")
 }
 
 enum ApplicationStage {

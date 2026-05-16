@@ -138,3 +138,26 @@ export type ApplicationResponse = {
   message: string;
   data: Application;
 };
+
+export type NoteAuthor = {
+  id: string;
+  name: string;
+  email: string;
+};
+
+export type Note = {
+  id: number;
+  text: string;
+  application_id: number;
+  created_by_admin_id: string;
+  last_edited_by_admin_id: string;
+  created_by_admin: NoteAuthor;
+  last_edited_by_admin: NoteAuthor;
+  created_at: string;
+  updated_at: string;
+};
+
+export type NotesResponse = {
+  message: string;
+  data: Note[];
+};
