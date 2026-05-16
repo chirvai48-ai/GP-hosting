@@ -1,9 +1,30 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Modal, Box } from "@mui/material";
-import { ExternalLink, X } from "lucide-react";
-import type { Application } from "@/types/table";
+import { ExternalLink, X, Pencil, XCircle, PauseCircle, Archive } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { Application, ApplicationStatus } from "@/types/table";
 import NotesPanel from "./NotesPanel";
+import EditApplicationForm from "./EditApplicationForm";
+
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+async function patchStatus({
+  id,
+  status,
+}: {
+  id: number;
+  status: ApplicationStatus;
+}) {
+  const res = await fetch(`${API_URL}/api/applications/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status }),
+  });
+  if (!res.ok) throw new Error("Failed to update status");
+  return res.json();
+}
 
 const RESIDENCE_LABELS: Record<string, string> = {
   Permanent_Resident: "Permanent Resident",
@@ -41,6 +62,38 @@ export default function ApplicationDetailModal({
   onClose: () => void;
 }) {
   const open = application !== null;
+  const [editing, setEditing] = useState(false);
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (!open) setEditing(false);
+  }, [open]);
+
+  const statusMutation = useMutation({
+    mutationFn: patchStatus,
+    onSuccess: () => {
+      if (application) {
+        queryClient.invalidateQueries({ queryKey: ["applications", application.job_id] });
+        queryClient.invalidateQueries({ queryKey: ["jobs"] });
+        queryClient.invalidateQueries({ queryKey: ["talent-pool"] });
+      }
+    },
+    onError: (err) => alert((err as Error).message),
+  });
+
+  const handleStatusAction = (status: ApplicationStatus, confirmMsg: string) => {
+    if (!application) return;
+    if (!confirm(confirmMsg)) return;
+    statusMutation.mutate(
+      { id: application.id, status },
+      {
+        onSuccess: () => {
+          // Reject / TalentPool remove the row from the per-vacancy view, so close.
+          if (status !== "OnHold") onClose();
+        },
+      }
+    );
+  };
 
   return (
     <Modal
@@ -92,6 +145,13 @@ export default function ApplicationDetailModal({
               </button>
             </div>
 
+            {editing ? (
+              <EditApplicationForm
+                application={application}
+                onCancel={() => setEditing(false)}
+                onSaved={() => setEditing(false)}
+              />
+            ) : (
             <div className="px-6 py-5 space-y-6">
               <section>
                 <h3 className={sectionTitle}>Personal</h3>
@@ -194,15 +254,57 @@ export default function ApplicationDetailModal({
 
               <NotesPanel applicationId={application.id} />
             </div>
+            )}
 
-            <div className="sticky bottom-0 flex justify-end gap-2 px-6 py-3 bg-white border-t border-[var(--color-container-low)]">
-              <button
-                onClick={onClose}
-                className="px-4 py-1.5 text-xs rounded border border-[var(--color-on-surface-variant)] text-[var(--color-on-surface-variant)] font-[var(--font-label)] hover:bg-[var(--color-container-low)]"
-              >
-                Close
-              </button>
-            </div>
+            {!editing && (
+              <div className="sticky bottom-0 flex flex-wrap justify-end gap-2 px-6 py-3 bg-white border-t border-[var(--color-container-low)]">
+                <button
+                  onClick={() => setEditing(true)}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded border border-[var(--color-secondary)] text-[var(--color-secondary)] font-[var(--font-label)] hover:bg-[var(--color-secondary)] hover:text-white"
+                >
+                  <Pencil size={12} /> Edit
+                </button>
+                <button
+                  onClick={() =>
+                    handleStatusAction(
+                      "OnHold",
+                      "Put this application on hold?"
+                    )
+                  }
+                  disabled={statusMutation.isPending || application.status === "OnHold"}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded border border-[#854F0B] text-[#854F0B] font-[var(--font-label)] hover:bg-[#FAEEDA] disabled:opacity-40"
+                >
+                  <PauseCircle size={12} /> On hold
+                </button>
+                <button
+                  onClick={() =>
+                    handleStatusAction(
+                      "TalentPool",
+                      "Move this applicant to the talent pool? They'll be removed from this vacancy's list."
+                    )
+                  }
+                  disabled={statusMutation.isPending || application.status === "TalentPool"}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded border border-[#185FA5] text-[#185FA5] font-[var(--font-label)] hover:bg-[#E6F1FB] disabled:opacity-40"
+                >
+                  <Archive size={12} /> Talent pool
+                </button>
+                <button
+                  onClick={() =>
+                    handleStatusAction("Rejected", "Reject this application?")
+                  }
+                  disabled={statusMutation.isPending || application.status === "Rejected"}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded border border-red-500 text-red-500 font-[var(--font-label)] hover:bg-red-500 hover:text-white disabled:opacity-40"
+                >
+                  <XCircle size={12} /> Reject
+                </button>
+                <button
+                  onClick={onClose}
+                  className="px-4 py-1.5 text-xs rounded border border-[var(--color-on-surface-variant)] text-[var(--color-on-surface-variant)] font-[var(--font-label)] hover:bg-[var(--color-container-low)]"
+                >
+                  Close
+                </button>
+              </div>
+            )}
           </>
         )}
       </Box>

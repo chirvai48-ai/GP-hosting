@@ -60,6 +60,29 @@ export const createApplicationSchema = z.object({
 
 export type CreateApplicationForm = z.infer<typeof createApplicationSchema>;
 
+export const APPLICATION_STAGE_OPTIONS = [
+  "Pending",
+  "ApplicantCalled",
+  "InterviewScheduling",
+  "Hired",
+] as const;
+export const APPLICATION_STATUS_OPTIONS = [
+  "Active",
+  "OnHold",
+  "TalentPool",
+  "Rejected",
+] as const;
+
+export const editApplicationSchema = createApplicationSchema
+  .omit({ resume_key: true, resume_type: true, job_id: true })
+  .extend({
+    stage: z.enum(APPLICATION_STAGE_OPTIONS),
+    status: z.enum(APPLICATION_STATUS_OPTIONS),
+  })
+  .partial();
+
+export type EditApplicationForm = z.infer<typeof editApplicationSchema>;
+
 export const RESIDENCE_STATUS_LABELS: Record<
   (typeof RESIDENCE_STATUS_OPTIONS)[number],
   string
