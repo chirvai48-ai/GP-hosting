@@ -21,6 +21,7 @@ import {
   Newspaper,
   LayoutDashboard,
   ChevronRight,
+  Users,
 } from "lucide-react";
 
 const drawerWidth = 240;
@@ -49,8 +50,14 @@ const NAV_SECTIONS = [
       {
         text: "Applications",
         icon: <FileText size={16} />,
-        badge: "12",
+        badge: null,
         href: "/admin/dashboard/applications",
+      },
+      {
+        text: "Talent Pool",
+        icon: <Users size={16} />,
+        badge: null,
+        href: "/admin/dashboard/talent-pool",
       },
     ],
   },

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Modal, Box } from "@mui/material";
-import { ExternalLink, X, Pencil, XCircle, PauseCircle, Archive } from "lucide-react";
+import { ExternalLink, X, Pencil, XCircle, PauseCircle, Archive, RotateCcw } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Application, ApplicationStatus } from "@/types/table";
 import NotesPanel from "./NotesPanel";
@@ -264,6 +264,23 @@ export default function ApplicationDetailModal({
                 >
                   <Pencil size={12} /> Edit
                 </button>
+                {(application.status === "TalentPool" ||
+                  application.status === "Rejected") && (
+                  <button
+                    onClick={() =>
+                      handleStatusAction(
+                        "Active",
+                        application.status === "TalentPool"
+                          ? "Restore this applicant to their original vacancy?"
+                          : "Restore this applicant to active status?"
+                      )
+                    }
+                    disabled={statusMutation.isPending}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded border border-[#0F6E56] text-[#0F6E56] font-[var(--font-label)] hover:bg-[#E1F5EE] disabled:opacity-40"
+                  >
+                    <RotateCcw size={12} /> Restore
+                  </button>
+                )}
                 <button
                   onClick={() =>
                     handleStatusAction(
