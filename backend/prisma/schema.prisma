@@ -113,8 +113,10 @@ model Application {
   soft_skills        String
   job_id             Int
   job                Job               @relation(fields: [job_id], references: [id])
-  status             ApplicationStatus @default(Pending)
+  stage              ApplicationStage  @default(Pending)
+  status             ApplicationStatus @default(Active)
   created_at         DateTime          @default(now())
+  updated_at         DateTime          @updatedAt
   cover_letter       String?           @db.Text
   resume_key         String            @unique
   resume_type        String?
@@ -127,11 +129,18 @@ model Application {
   working_days       Json?
 }
 
-enum ApplicationStatus {
+enum ApplicationStage {
   Pending
-  Reviewed
+  ApplicantCalled
+  InterviewScheduling
+  Hired
+}
+
+enum ApplicationStatus {
+  Active
+  OnHold
+  TalentPool
   Rejected
-  Accepted
 }
 
 enum Gender {

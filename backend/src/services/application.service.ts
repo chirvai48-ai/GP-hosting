@@ -1,6 +1,9 @@
 import { prisma } from "../lib/prisma";
 import { putUrl, getUrl, deleteObject } from "../configs/cloudflare";
-import type { createApplication as createApplicationInput } from "../schemas/application.schema";
+import type {
+  createApplication as createApplicationInput,
+  updateApplication as updateApplicationInput,
+} from "../schemas/application.schema";
 
 const BUCKET = "glowingpartner";
 const RESUME_PREFIX = "resume";
@@ -22,8 +25,12 @@ export const createApplication = async (data: createApplicationInput) => {
   return { ...result, signed_url };
 };
 
-export const fetchApplications = async () => {
+export const fetchApplications = async (jobId?: number) => {
   const applications = await prisma.application.findMany({
+    where: {
+      status: { not: "TalentPool" },
+      ...(jobId && { job_id: jobId }),
+    },
     include: { job: true },
     orderBy: { created_at: "desc" },
   });
@@ -34,6 +41,32 @@ export const fetchApplications = async () => {
       return { ...app, resume_url };
     })
   );
+};
+
+export const fetchTalentPool = async () => {
+  const applications = await prisma.application.findMany({
+    where: { status: "TalentPool" },
+    include: { job: true },
+    orderBy: { updated_at: "desc" },
+  });
+
+  return Promise.all(
+    applications.map(async (app) => {
+      const resume_url = await getUrl(BUCKET, `${RESUME_PREFIX}/${app.resume_key}`);
+      return { ...app, resume_url };
+    })
+  );
+};
+
+export const patchApplication = async (id: number, data: updateApplicationInput) => {
+  const { date_of_birth, ...rest } = data;
+  return prisma.application.update({
+    where: { id },
+    data: {
+      ...rest,
+      ...(date_of_birth && { date_of_birth: new Date(date_of_birth) }),
+    },
+  });
 };
 
 export const fetchApplicationById = async (id: number) => {

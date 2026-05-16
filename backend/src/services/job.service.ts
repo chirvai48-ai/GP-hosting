@@ -47,6 +47,7 @@ export const fetchJobs = async () => {
       job_category: true,
       languages: true,
       technical_skills: true,
+      _count: { select: { applications: true } },
     },
   });
 

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 type SubItem = {
   label: string;
@@ -70,6 +71,7 @@ const navItems: NavItem[] = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [dark,setDark] = useState(false);
   useEffect(() => {
@@ -95,6 +97,8 @@ export default function Navbar() {
 
     window.addEventListener('scroll',handleScroll);
   },[])
+
+  if (pathname?.startsWith("/admin")) return null;
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 bg-transparent `}>

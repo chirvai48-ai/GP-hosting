@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Gender, ResidenceStatus, JapaneseAbility, Contract } from "../generated/prisma/enums";
+import { Gender, ResidenceStatus, JapaneseAbility, Contract, ApplicationStatus, ApplicationStage } from "../generated/prisma/enums";
 
 const workingDayEnum = z.enum([
   "Monday",
@@ -37,3 +37,13 @@ export const createApplicationSchema = z.object({
 });
 
 export type createApplication = z.infer<typeof createApplicationSchema>;
+
+export const updateApplicationSchema = createApplicationSchema
+  .omit({ resume_key: true, resume_type: true, job_id: true })
+  .extend({
+    stage: z.enum(ApplicationStage),
+    status: z.enum(ApplicationStatus),
+  })
+  .partial();
+
+export type updateApplication = z.infer<typeof updateApplicationSchema>;
