@@ -7,6 +7,10 @@ import {
   patchApplication as patchApplicationService,
   fetchTalentPool,
 } from "../services/application.service";
+import {
+  fetchApplicationForResume,
+  generateResumeDocx,
+} from "../services/resume.service";
 
 export const postApplication = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -55,6 +59,30 @@ export const patchApplication = async (req: Request, res: Response, next: NextFu
     const id: number = Number(req.params.id);
     const updated = await patchApplicationService(id, req.body);
     res.status(200).json({ message: `Application with id ${id} updated successfully`, data: updated });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const exportResume = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = Number(req.params.id);
+    const app = await fetchApplicationForResume(id);
+    if (!app) {
+      res.status(404).json({ message: `Application with id ${id} not found` });
+      return;
+    }
+    const buffer = await generateResumeDocx(app);
+    const safeName = app.full_name.replace(/[^a-zA-Z0-9_-]+/g, "_");
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    );
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${safeName}_resume.docx"`
+    );
+    res.send(buffer);
   } catch (err) {
     next(err);
   }

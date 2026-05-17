@@ -25,14 +25,18 @@ const STAGE_LABELS: Record<(typeof APPLICATION_STAGE_OPTIONS)[number], string> =
   ApplicantCalled: "Applicant called",
   InterviewScheduling: "Interview scheduling",
   Hired: "Hired",
+  Rejected: "Rejected",
 };
 
 const STATUS_LABELS: Record<(typeof APPLICATION_STATUS_OPTIONS)[number], string> = {
   Active: "Active",
   OnHold: "On hold",
   TalentPool: "Talent pool",
-  Rejected: "Rejected",
 };
+
+// Status dropdown in the edit form is constrained — TalentPool is only reachable from
+// the modal's "Move to Talent Pool" action button.
+const STATUS_EDIT_OPTIONS = ["Active", "OnHold"] as const;
 
 const inputCls =
   "w-full bg-[var(--color-container-low)] border-b border-b-[#c0cbc9] rounded-t-sm px-3 py-2 font-[var(--font-body)] text-sm text-[var(--color-on-surface)] outline-none focus:border-b-[var(--color-secondary)]";
@@ -178,7 +182,7 @@ export default function EditApplicationForm({
           </Field>
           <Field label="Status" error={errors.status?.message}>
             <select className={inputCls} {...register("status")}>
-              {APPLICATION_STATUS_OPTIONS.map((s) => (
+              {STATUS_EDIT_OPTIONS.map((s) => (
                 <option key={s} value={s}>
                   {STATUS_LABELS[s]}
                 </option>

@@ -210,6 +210,8 @@ export type AdminWhereInput = {
   replies?: Prisma.ContactReplyListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  notes_created?: Prisma.NoteListRelationFilter
+  notes_edited?: Prisma.NoteListRelationFilter
 }
 
 export type AdminOrderByWithRelationInput = {
@@ -225,6 +227,8 @@ export type AdminOrderByWithRelationInput = {
   replies?: Prisma.ContactReplyOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
+  notes_created?: Prisma.NoteOrderByRelationAggregateInput
+  notes_edited?: Prisma.NoteOrderByRelationAggregateInput
   _relevance?: Prisma.AdminOrderByRelevanceInput
 }
 
@@ -244,6 +248,8 @@ export type AdminWhereUniqueInput = Prisma.AtLeast<{
   replies?: Prisma.ContactReplyListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  notes_created?: Prisma.NoteListRelationFilter
+  notes_edited?: Prisma.NoteListRelationFilter
 }, "id" | "email">
 
 export type AdminOrderByWithAggregationInput = {
@@ -287,6 +293,8 @@ export type AdminCreateInput = {
   replies?: Prisma.ContactReplyCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAdminInput
   accounts?: Prisma.AccountCreateNestedManyWithoutAdminInput
+  notes_created?: Prisma.NoteCreateNestedManyWithoutCreated_by_adminInput
+  notes_edited?: Prisma.NoteCreateNestedManyWithoutLast_edited_by_adminInput
 }
 
 export type AdminUncheckedCreateInput = {
@@ -302,6 +310,8 @@ export type AdminUncheckedCreateInput = {
   replies?: Prisma.ContactReplyUncheckedCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAdminInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutAdminInput
+  notes_created?: Prisma.NoteUncheckedCreateNestedManyWithoutCreated_by_adminInput
+  notes_edited?: Prisma.NoteUncheckedCreateNestedManyWithoutLast_edited_by_adminInput
 }
 
 export type AdminUpdateInput = {
@@ -317,6 +327,8 @@ export type AdminUpdateInput = {
   replies?: Prisma.ContactReplyUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAdminNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutAdminNestedInput
+  notes_created?: Prisma.NoteUpdateManyWithoutCreated_by_adminNestedInput
+  notes_edited?: Prisma.NoteUpdateManyWithoutLast_edited_by_adminNestedInput
 }
 
 export type AdminUncheckedUpdateInput = {
@@ -332,6 +344,8 @@ export type AdminUncheckedUpdateInput = {
   replies?: Prisma.ContactReplyUncheckedUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAdminNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutAdminNestedInput
+  notes_created?: Prisma.NoteUncheckedUpdateManyWithoutCreated_by_adminNestedInput
+  notes_edited?: Prisma.NoteUncheckedUpdateManyWithoutLast_edited_by_adminNestedInput
 }
 
 export type AdminCreateManyInput = {
@@ -406,14 +420,14 @@ export type AdminMinOrderByAggregateInput = {
   image?: Prisma.SortOrder
 }
 
-export type AdminNullableScalarRelationFilter = {
-  is?: Prisma.AdminWhereInput | null
-  isNot?: Prisma.AdminWhereInput | null
-}
-
 export type AdminScalarRelationFilter = {
   is?: Prisma.AdminWhereInput
   isNot?: Prisma.AdminWhereInput
+}
+
+export type AdminNullableScalarRelationFilter = {
+  is?: Prisma.AdminWhereInput | null
+  isNot?: Prisma.AdminWhereInput | null
 }
 
 export type EnumRoleFieldUpdateOperationsInput = {
@@ -426,6 +440,34 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type AdminCreateNestedOneWithoutNotes_createdInput = {
+  create?: Prisma.XOR<Prisma.AdminCreateWithoutNotes_createdInput, Prisma.AdminUncheckedCreateWithoutNotes_createdInput>
+  connectOrCreate?: Prisma.AdminCreateOrConnectWithoutNotes_createdInput
+  connect?: Prisma.AdminWhereUniqueInput
+}
+
+export type AdminCreateNestedOneWithoutNotes_editedInput = {
+  create?: Prisma.XOR<Prisma.AdminCreateWithoutNotes_editedInput, Prisma.AdminUncheckedCreateWithoutNotes_editedInput>
+  connectOrCreate?: Prisma.AdminCreateOrConnectWithoutNotes_editedInput
+  connect?: Prisma.AdminWhereUniqueInput
+}
+
+export type AdminUpdateOneRequiredWithoutNotes_createdNestedInput = {
+  create?: Prisma.XOR<Prisma.AdminCreateWithoutNotes_createdInput, Prisma.AdminUncheckedCreateWithoutNotes_createdInput>
+  connectOrCreate?: Prisma.AdminCreateOrConnectWithoutNotes_createdInput
+  upsert?: Prisma.AdminUpsertWithoutNotes_createdInput
+  connect?: Prisma.AdminWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AdminUpdateToOneWithWhereWithoutNotes_createdInput, Prisma.AdminUpdateWithoutNotes_createdInput>, Prisma.AdminUncheckedUpdateWithoutNotes_createdInput>
+}
+
+export type AdminUpdateOneRequiredWithoutNotes_editedNestedInput = {
+  create?: Prisma.XOR<Prisma.AdminCreateWithoutNotes_editedInput, Prisma.AdminUncheckedCreateWithoutNotes_editedInput>
+  connectOrCreate?: Prisma.AdminCreateOrConnectWithoutNotes_editedInput
+  upsert?: Prisma.AdminUpsertWithoutNotes_editedInput
+  connect?: Prisma.AdminWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AdminUpdateToOneWithWhereWithoutNotes_editedInput, Prisma.AdminUpdateWithoutNotes_editedInput>, Prisma.AdminUncheckedUpdateWithoutNotes_editedInput>
 }
 
 export type AdminCreateNestedOneWithoutNewsInput = {
@@ -488,6 +530,166 @@ export type AdminUpdateOneRequiredWithoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AdminUpdateToOneWithWhereWithoutAccountsInput, Prisma.AdminUpdateWithoutAccountsInput>, Prisma.AdminUncheckedUpdateWithoutAccountsInput>
 }
 
+export type AdminCreateWithoutNotes_createdInput = {
+  id?: string
+  name: string
+  email: string
+  role?: $Enums.Role
+  createdAt?: Date | string
+  emailVerified?: boolean
+  updatedAt?: Date | string
+  image?: string | null
+  news?: Prisma.NewsCreateNestedManyWithoutAdminInput
+  replies?: Prisma.ContactReplyCreateNestedManyWithoutAdminInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAdminInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutAdminInput
+  notes_edited?: Prisma.NoteCreateNestedManyWithoutLast_edited_by_adminInput
+}
+
+export type AdminUncheckedCreateWithoutNotes_createdInput = {
+  id?: string
+  name: string
+  email: string
+  role?: $Enums.Role
+  createdAt?: Date | string
+  emailVerified?: boolean
+  updatedAt?: Date | string
+  image?: string | null
+  news?: Prisma.NewsUncheckedCreateNestedManyWithoutAdminInput
+  replies?: Prisma.ContactReplyUncheckedCreateNestedManyWithoutAdminInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAdminInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutAdminInput
+  notes_edited?: Prisma.NoteUncheckedCreateNestedManyWithoutLast_edited_by_adminInput
+}
+
+export type AdminCreateOrConnectWithoutNotes_createdInput = {
+  where: Prisma.AdminWhereUniqueInput
+  create: Prisma.XOR<Prisma.AdminCreateWithoutNotes_createdInput, Prisma.AdminUncheckedCreateWithoutNotes_createdInput>
+}
+
+export type AdminCreateWithoutNotes_editedInput = {
+  id?: string
+  name: string
+  email: string
+  role?: $Enums.Role
+  createdAt?: Date | string
+  emailVerified?: boolean
+  updatedAt?: Date | string
+  image?: string | null
+  news?: Prisma.NewsCreateNestedManyWithoutAdminInput
+  replies?: Prisma.ContactReplyCreateNestedManyWithoutAdminInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAdminInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutAdminInput
+  notes_created?: Prisma.NoteCreateNestedManyWithoutCreated_by_adminInput
+}
+
+export type AdminUncheckedCreateWithoutNotes_editedInput = {
+  id?: string
+  name: string
+  email: string
+  role?: $Enums.Role
+  createdAt?: Date | string
+  emailVerified?: boolean
+  updatedAt?: Date | string
+  image?: string | null
+  news?: Prisma.NewsUncheckedCreateNestedManyWithoutAdminInput
+  replies?: Prisma.ContactReplyUncheckedCreateNestedManyWithoutAdminInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAdminInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutAdminInput
+  notes_created?: Prisma.NoteUncheckedCreateNestedManyWithoutCreated_by_adminInput
+}
+
+export type AdminCreateOrConnectWithoutNotes_editedInput = {
+  where: Prisma.AdminWhereUniqueInput
+  create: Prisma.XOR<Prisma.AdminCreateWithoutNotes_editedInput, Prisma.AdminUncheckedCreateWithoutNotes_editedInput>
+}
+
+export type AdminUpsertWithoutNotes_createdInput = {
+  update: Prisma.XOR<Prisma.AdminUpdateWithoutNotes_createdInput, Prisma.AdminUncheckedUpdateWithoutNotes_createdInput>
+  create: Prisma.XOR<Prisma.AdminCreateWithoutNotes_createdInput, Prisma.AdminUncheckedCreateWithoutNotes_createdInput>
+  where?: Prisma.AdminWhereInput
+}
+
+export type AdminUpdateToOneWithWhereWithoutNotes_createdInput = {
+  where?: Prisma.AdminWhereInput
+  data: Prisma.XOR<Prisma.AdminUpdateWithoutNotes_createdInput, Prisma.AdminUncheckedUpdateWithoutNotes_createdInput>
+}
+
+export type AdminUpdateWithoutNotes_createdInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  news?: Prisma.NewsUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.ContactReplyUpdateManyWithoutAdminNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAdminNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutAdminNestedInput
+  notes_edited?: Prisma.NoteUpdateManyWithoutLast_edited_by_adminNestedInput
+}
+
+export type AdminUncheckedUpdateWithoutNotes_createdInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  news?: Prisma.NewsUncheckedUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.ContactReplyUncheckedUpdateManyWithoutAdminNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAdminNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutAdminNestedInput
+  notes_edited?: Prisma.NoteUncheckedUpdateManyWithoutLast_edited_by_adminNestedInput
+}
+
+export type AdminUpsertWithoutNotes_editedInput = {
+  update: Prisma.XOR<Prisma.AdminUpdateWithoutNotes_editedInput, Prisma.AdminUncheckedUpdateWithoutNotes_editedInput>
+  create: Prisma.XOR<Prisma.AdminCreateWithoutNotes_editedInput, Prisma.AdminUncheckedCreateWithoutNotes_editedInput>
+  where?: Prisma.AdminWhereInput
+}
+
+export type AdminUpdateToOneWithWhereWithoutNotes_editedInput = {
+  where?: Prisma.AdminWhereInput
+  data: Prisma.XOR<Prisma.AdminUpdateWithoutNotes_editedInput, Prisma.AdminUncheckedUpdateWithoutNotes_editedInput>
+}
+
+export type AdminUpdateWithoutNotes_editedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  news?: Prisma.NewsUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.ContactReplyUpdateManyWithoutAdminNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAdminNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutAdminNestedInput
+  notes_created?: Prisma.NoteUpdateManyWithoutCreated_by_adminNestedInput
+}
+
+export type AdminUncheckedUpdateWithoutNotes_editedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  news?: Prisma.NewsUncheckedUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.ContactReplyUncheckedUpdateManyWithoutAdminNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAdminNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutAdminNestedInput
+  notes_created?: Prisma.NoteUncheckedUpdateManyWithoutCreated_by_adminNestedInput
+}
+
 export type AdminCreateWithoutNewsInput = {
   id?: string
   name: string
@@ -500,6 +702,8 @@ export type AdminCreateWithoutNewsInput = {
   replies?: Prisma.ContactReplyCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAdminInput
   accounts?: Prisma.AccountCreateNestedManyWithoutAdminInput
+  notes_created?: Prisma.NoteCreateNestedManyWithoutCreated_by_adminInput
+  notes_edited?: Prisma.NoteCreateNestedManyWithoutLast_edited_by_adminInput
 }
 
 export type AdminUncheckedCreateWithoutNewsInput = {
@@ -514,6 +718,8 @@ export type AdminUncheckedCreateWithoutNewsInput = {
   replies?: Prisma.ContactReplyUncheckedCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAdminInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutAdminInput
+  notes_created?: Prisma.NoteUncheckedCreateNestedManyWithoutCreated_by_adminInput
+  notes_edited?: Prisma.NoteUncheckedCreateNestedManyWithoutLast_edited_by_adminInput
 }
 
 export type AdminCreateOrConnectWithoutNewsInput = {
@@ -544,6 +750,8 @@ export type AdminUpdateWithoutNewsInput = {
   replies?: Prisma.ContactReplyUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAdminNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutAdminNestedInput
+  notes_created?: Prisma.NoteUpdateManyWithoutCreated_by_adminNestedInput
+  notes_edited?: Prisma.NoteUpdateManyWithoutLast_edited_by_adminNestedInput
 }
 
 export type AdminUncheckedUpdateWithoutNewsInput = {
@@ -558,6 +766,8 @@ export type AdminUncheckedUpdateWithoutNewsInput = {
   replies?: Prisma.ContactReplyUncheckedUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAdminNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutAdminNestedInput
+  notes_created?: Prisma.NoteUncheckedUpdateManyWithoutCreated_by_adminNestedInput
+  notes_edited?: Prisma.NoteUncheckedUpdateManyWithoutLast_edited_by_adminNestedInput
 }
 
 export type AdminCreateWithoutRepliesInput = {
@@ -572,6 +782,8 @@ export type AdminCreateWithoutRepliesInput = {
   news?: Prisma.NewsCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAdminInput
   accounts?: Prisma.AccountCreateNestedManyWithoutAdminInput
+  notes_created?: Prisma.NoteCreateNestedManyWithoutCreated_by_adminInput
+  notes_edited?: Prisma.NoteCreateNestedManyWithoutLast_edited_by_adminInput
 }
 
 export type AdminUncheckedCreateWithoutRepliesInput = {
@@ -586,6 +798,8 @@ export type AdminUncheckedCreateWithoutRepliesInput = {
   news?: Prisma.NewsUncheckedCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAdminInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutAdminInput
+  notes_created?: Prisma.NoteUncheckedCreateNestedManyWithoutCreated_by_adminInput
+  notes_edited?: Prisma.NoteUncheckedCreateNestedManyWithoutLast_edited_by_adminInput
 }
 
 export type AdminCreateOrConnectWithoutRepliesInput = {
@@ -616,6 +830,8 @@ export type AdminUpdateWithoutRepliesInput = {
   news?: Prisma.NewsUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAdminNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutAdminNestedInput
+  notes_created?: Prisma.NoteUpdateManyWithoutCreated_by_adminNestedInput
+  notes_edited?: Prisma.NoteUpdateManyWithoutLast_edited_by_adminNestedInput
 }
 
 export type AdminUncheckedUpdateWithoutRepliesInput = {
@@ -630,6 +846,8 @@ export type AdminUncheckedUpdateWithoutRepliesInput = {
   news?: Prisma.NewsUncheckedUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAdminNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutAdminNestedInput
+  notes_created?: Prisma.NoteUncheckedUpdateManyWithoutCreated_by_adminNestedInput
+  notes_edited?: Prisma.NoteUncheckedUpdateManyWithoutLast_edited_by_adminNestedInput
 }
 
 export type AdminCreateWithoutSessionsInput = {
@@ -644,6 +862,8 @@ export type AdminCreateWithoutSessionsInput = {
   news?: Prisma.NewsCreateNestedManyWithoutAdminInput
   replies?: Prisma.ContactReplyCreateNestedManyWithoutAdminInput
   accounts?: Prisma.AccountCreateNestedManyWithoutAdminInput
+  notes_created?: Prisma.NoteCreateNestedManyWithoutCreated_by_adminInput
+  notes_edited?: Prisma.NoteCreateNestedManyWithoutLast_edited_by_adminInput
 }
 
 export type AdminUncheckedCreateWithoutSessionsInput = {
@@ -658,6 +878,8 @@ export type AdminUncheckedCreateWithoutSessionsInput = {
   news?: Prisma.NewsUncheckedCreateNestedManyWithoutAdminInput
   replies?: Prisma.ContactReplyUncheckedCreateNestedManyWithoutAdminInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutAdminInput
+  notes_created?: Prisma.NoteUncheckedCreateNestedManyWithoutCreated_by_adminInput
+  notes_edited?: Prisma.NoteUncheckedCreateNestedManyWithoutLast_edited_by_adminInput
 }
 
 export type AdminCreateOrConnectWithoutSessionsInput = {
@@ -688,6 +910,8 @@ export type AdminUpdateWithoutSessionsInput = {
   news?: Prisma.NewsUpdateManyWithoutAdminNestedInput
   replies?: Prisma.ContactReplyUpdateManyWithoutAdminNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutAdminNestedInput
+  notes_created?: Prisma.NoteUpdateManyWithoutCreated_by_adminNestedInput
+  notes_edited?: Prisma.NoteUpdateManyWithoutLast_edited_by_adminNestedInput
 }
 
 export type AdminUncheckedUpdateWithoutSessionsInput = {
@@ -702,6 +926,8 @@ export type AdminUncheckedUpdateWithoutSessionsInput = {
   news?: Prisma.NewsUncheckedUpdateManyWithoutAdminNestedInput
   replies?: Prisma.ContactReplyUncheckedUpdateManyWithoutAdminNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutAdminNestedInput
+  notes_created?: Prisma.NoteUncheckedUpdateManyWithoutCreated_by_adminNestedInput
+  notes_edited?: Prisma.NoteUncheckedUpdateManyWithoutLast_edited_by_adminNestedInput
 }
 
 export type AdminCreateWithoutAccountsInput = {
@@ -716,6 +942,8 @@ export type AdminCreateWithoutAccountsInput = {
   news?: Prisma.NewsCreateNestedManyWithoutAdminInput
   replies?: Prisma.ContactReplyCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAdminInput
+  notes_created?: Prisma.NoteCreateNestedManyWithoutCreated_by_adminInput
+  notes_edited?: Prisma.NoteCreateNestedManyWithoutLast_edited_by_adminInput
 }
 
 export type AdminUncheckedCreateWithoutAccountsInput = {
@@ -730,6 +958,8 @@ export type AdminUncheckedCreateWithoutAccountsInput = {
   news?: Prisma.NewsUncheckedCreateNestedManyWithoutAdminInput
   replies?: Prisma.ContactReplyUncheckedCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAdminInput
+  notes_created?: Prisma.NoteUncheckedCreateNestedManyWithoutCreated_by_adminInput
+  notes_edited?: Prisma.NoteUncheckedCreateNestedManyWithoutLast_edited_by_adminInput
 }
 
 export type AdminCreateOrConnectWithoutAccountsInput = {
@@ -760,6 +990,8 @@ export type AdminUpdateWithoutAccountsInput = {
   news?: Prisma.NewsUpdateManyWithoutAdminNestedInput
   replies?: Prisma.ContactReplyUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAdminNestedInput
+  notes_created?: Prisma.NoteUpdateManyWithoutCreated_by_adminNestedInput
+  notes_edited?: Prisma.NoteUpdateManyWithoutLast_edited_by_adminNestedInput
 }
 
 export type AdminUncheckedUpdateWithoutAccountsInput = {
@@ -774,6 +1006,8 @@ export type AdminUncheckedUpdateWithoutAccountsInput = {
   news?: Prisma.NewsUncheckedUpdateManyWithoutAdminNestedInput
   replies?: Prisma.ContactReplyUncheckedUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAdminNestedInput
+  notes_created?: Prisma.NoteUncheckedUpdateManyWithoutCreated_by_adminNestedInput
+  notes_edited?: Prisma.NoteUncheckedUpdateManyWithoutLast_edited_by_adminNestedInput
 }
 
 
@@ -786,6 +1020,8 @@ export type AdminCountOutputType = {
   replies: number
   sessions: number
   accounts: number
+  notes_created: number
+  notes_edited: number
 }
 
 export type AdminCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -793,6 +1029,8 @@ export type AdminCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   replies?: boolean | AdminCountOutputTypeCountRepliesArgs
   sessions?: boolean | AdminCountOutputTypeCountSessionsArgs
   accounts?: boolean | AdminCountOutputTypeCountAccountsArgs
+  notes_created?: boolean | AdminCountOutputTypeCountNotes_createdArgs
+  notes_edited?: boolean | AdminCountOutputTypeCountNotes_editedArgs
 }
 
 /**
@@ -833,6 +1071,20 @@ export type AdminCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.AccountWhereInput
 }
 
+/**
+ * AdminCountOutputType without action
+ */
+export type AdminCountOutputTypeCountNotes_createdArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NoteWhereInput
+}
+
+/**
+ * AdminCountOutputType without action
+ */
+export type AdminCountOutputTypeCountNotes_editedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NoteWhereInput
+}
+
 
 export type AdminSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -847,6 +1099,8 @@ export type AdminSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   replies?: boolean | Prisma.Admin$repliesArgs<ExtArgs>
   sessions?: boolean | Prisma.Admin$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.Admin$accountsArgs<ExtArgs>
+  notes_created?: boolean | Prisma.Admin$notes_createdArgs<ExtArgs>
+  notes_edited?: boolean | Prisma.Admin$notes_editedArgs<ExtArgs>
   _count?: boolean | Prisma.AdminCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["admin"]>
 
@@ -869,6 +1123,8 @@ export type AdminInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   replies?: boolean | Prisma.Admin$repliesArgs<ExtArgs>
   sessions?: boolean | Prisma.Admin$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.Admin$accountsArgs<ExtArgs>
+  notes_created?: boolean | Prisma.Admin$notes_createdArgs<ExtArgs>
+  notes_edited?: boolean | Prisma.Admin$notes_editedArgs<ExtArgs>
   _count?: boolean | Prisma.AdminCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -879,6 +1135,8 @@ export type $AdminPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     replies: Prisma.$ContactReplyPayload<ExtArgs>[]
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     accounts: Prisma.$AccountPayload<ExtArgs>[]
+    notes_created: Prisma.$NotePayload<ExtArgs>[]
+    notes_edited: Prisma.$NotePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1233,6 +1491,8 @@ export interface Prisma__AdminClient<T, Null = never, ExtArgs extends runtime.Ty
   replies<T extends Prisma.Admin$repliesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Admin$repliesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.Admin$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Admin$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accounts<T extends Prisma.Admin$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Admin$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notes_created<T extends Prisma.Admin$notes_createdArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Admin$notes_createdArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notes_edited<T extends Prisma.Admin$notes_editedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Admin$notes_editedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1711,6 +1971,54 @@ export type Admin$accountsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
+}
+
+/**
+ * Admin.notes_created
+ */
+export type Admin$notes_createdArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Note
+   */
+  select?: Prisma.NoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Note
+   */
+  omit?: Prisma.NoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NoteInclude<ExtArgs> | null
+  where?: Prisma.NoteWhereInput
+  orderBy?: Prisma.NoteOrderByWithRelationInput | Prisma.NoteOrderByWithRelationInput[]
+  cursor?: Prisma.NoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NoteScalarFieldEnum | Prisma.NoteScalarFieldEnum[]
+}
+
+/**
+ * Admin.notes_edited
+ */
+export type Admin$notes_editedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Note
+   */
+  select?: Prisma.NoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Note
+   */
+  omit?: Prisma.NoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NoteInclude<ExtArgs> | null
+  where?: Prisma.NoteWhereInput
+  orderBy?: Prisma.NoteOrderByWithRelationInput | Prisma.NoteOrderByWithRelationInput[]
+  cursor?: Prisma.NoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NoteScalarFieldEnum | Prisma.NoteScalarFieldEnum[]
 }
 
 /**

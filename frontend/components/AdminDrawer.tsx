@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { usePathname } from "next/navigation";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -67,7 +68,7 @@ const NAV_SECTIONS = [
       {
         text: "Messages",
         icon: <Mail size={16} />,
-        badge: "5",
+        badge: null,
         href: "/admin/dashboard/messages",
       },
     ],
@@ -88,7 +89,15 @@ const NAV_SECTIONS = [
 export default function ResponsiveDrawer() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
-  const [activeItem, setActiveItem] = React.useState("Jobs & Vacancies");
+  const pathname = usePathname();
+  const activeItem = React.useMemo(() => {
+    for (const section of NAV_SECTIONS) {
+      for (const item of section.items) {
+        if (pathname?.startsWith(item.href)) return item.text;
+      }
+    }
+    return "";
+  }, [pathname]);
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -187,9 +196,10 @@ export default function ResponsiveDrawer() {
                 const isActive = activeItem === item.text;
                 return (
                   <ListItem key={item.text} disablePadding>
-                    <Link href={item.href}>
                       <ListItemButton
-                        onClick={() => setActiveItem(item.text)}
+                        component={Link}
+                        href={item.href}
+                        onClick={() => mobileOpen && handleDrawerClose()}
                         sx={{
                           px: 2,
                           py: 0.9,
@@ -247,7 +257,6 @@ export default function ResponsiveDrawer() {
                           </Box>
                         )}
                       </ListItemButton>
-                    </Link>
                   </ListItem>
                 );
               })}

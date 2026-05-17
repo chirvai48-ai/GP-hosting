@@ -85,8 +85,13 @@ export type NewsResponse = {
   data: News[];
 };
 
-export type ApplicationStatus = "Active" | "OnHold" | "TalentPool" | "Rejected";
-export type ApplicationStage = "Pending" | "ApplicantCalled" | "InterviewScheduling" | "Hired";
+export type ApplicationStatus = "Active" | "OnHold" | "TalentPool";
+export type ApplicationStage =
+  | "Pending"
+  | "ApplicantCalled"
+  | "InterviewScheduling"
+  | "Hired"
+  | "Rejected";
 export type Gender = "Male" | "Female" | "Other";
 export type ResidenceStatus =
   | "Permanent_Resident"

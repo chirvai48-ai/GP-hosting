@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import type { Job, JobsResponse } from "@/types/table";
@@ -40,9 +41,12 @@ export default function ApplicationsVacancyList() {
     queryFn: getJobs,
   });
 
-  const jobs = (data?.data ?? []).filter((j) => j.status === "Published");
+  const jobs = useMemo(
+    () => (data?.data ?? []).filter((j) => j.status === "Published"),
+    [data]
+  );
 
-  const columns = [
+  const columns = useMemo(() => [
     columnHelper.accessor("id", { header: "ID", size: 60 }),
     columnHelper.accessor("title", { header: "Job Title" }),
     columnHelper.accessor("location", { header: "Location", size: 140 }),
@@ -92,13 +96,14 @@ export default function ApplicationsVacancyList() {
       cell: ({ row }) => (
         <Link
           href={`/admin/dashboard/applications/${row.original.id}`}
+          prefetch={false}
           className="inline-block px-3 py-1 text-xs rounded border border-[var(--color-secondary)] text-[var(--color-secondary)] font-[var(--font-label)] hover:bg-[var(--color-secondary)] hover:text-white transition-colors"
         >
           View applications →
         </Link>
       ),
     }),
-  ];
+  ], []);
 
   const table = useReactTable({
     data: jobs,

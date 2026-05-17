@@ -38,11 +38,21 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
-export const ApplicationStatus = {
+export const ApplicationStage = {
   Pending: 'Pending',
-  Reviewed: 'Reviewed',
-  Rejected: 'Rejected',
-  Accepted: 'Accepted'
+  ApplicantCalled: 'ApplicantCalled',
+  InterviewScheduling: 'InterviewScheduling',
+  Hired: 'Hired',
+  Rejected: 'Rejected'
+} as const
+
+export type ApplicationStage = (typeof ApplicationStage)[keyof typeof ApplicationStage]
+
+
+export const ApplicationStatus = {
+  Active: 'Active',
+  OnHold: 'OnHold',
+  TalentPool: 'TalentPool'
 } as const
 
 export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof ApplicationStatus]

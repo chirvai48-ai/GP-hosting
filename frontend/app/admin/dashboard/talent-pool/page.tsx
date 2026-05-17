@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useQuery } from "@tanstack/react-query";
 import {
   createColumnHelper,
@@ -11,7 +12,11 @@ import {
 } from "@tanstack/react-table";
 import { ExternalLink } from "lucide-react";
 import type { Application, ApplicationsResponse } from "@/types/table";
-import ApplicationDetailModal from "@/components/adminapplication/ApplicationDetailModal";
+
+const ApplicationDetailModal = dynamic(
+  () => import("@/components/adminapplication/ApplicationDetailModal"),
+  { ssr: false }
+);
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -39,9 +44,9 @@ export default function TalentPoolPage() {
     queryFn: fetchTalentPool,
   });
 
-  const applications = data?.data ?? [];
+  const applications = useMemo(() => data?.data ?? [], [data]);
 
-  const columns = [
+  const columns = useMemo(() => [
     columnHelper.accessor("full_name", {
       header: "Name",
       cell: ({ row, getValue }) => (
@@ -65,6 +70,7 @@ export default function TalentPoolPage() {
         return (
           <Link
             href={`/admin/dashboard/applications/${job.id}`}
+            prefetch={false}
             className="text-[var(--color-secondary)] hover:underline inline-flex items-center gap-1 font-[var(--font-label)]"
           >
             {job.title} <ExternalLink size={11} />
@@ -124,7 +130,7 @@ export default function TalentPoolPage() {
         </button>
       ),
     }),
-  ];
+  ], []);
 
   const table = useReactTable({
     data: applications,
@@ -214,10 +220,12 @@ export default function TalentPoolPage() {
         </table>
       </div>
 
-      <ApplicationDetailModal
-        application={viewing}
-        onClose={() => setViewing(null)}
-      />
+      {viewing && (
+        <ApplicationDetailModal
+          application={viewing}
+          onClose={() => setViewing(null)}
+        />
+      )}
     </div>
   );
 }

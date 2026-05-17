@@ -2,27 +2,27 @@
 
 import { useEffect, useState } from "react";
 import { Modal, Box } from "@mui/material";
-import { ExternalLink, X, Pencil, XCircle, PauseCircle, Archive, RotateCcw } from "lucide-react";
+import { ExternalLink, X, Pencil, XCircle, PauseCircle, Archive, RotateCcw, FileDown } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { Application, ApplicationStatus } from "@/types/table";
+import type { Application, ApplicationStatus, ApplicationStage } from "@/types/table";
 import NotesPanel from "./NotesPanel";
 import EditApplicationForm from "./EditApplicationForm";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-async function patchStatus({
+async function patchApplication({
   id,
-  status,
+  changes,
 }: {
   id: number;
-  status: ApplicationStatus;
+  changes: Partial<{ status: ApplicationStatus; stage: ApplicationStage }>;
 }) {
   const res = await fetch(`${API_URL}/api/applications/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ status }),
+    body: JSON.stringify(changes),
   });
-  if (!res.ok) throw new Error("Failed to update status");
+  if (!res.ok) throw new Error("Failed to update application");
   return res.json();
 }
 
@@ -39,6 +39,21 @@ const CONTRACT_LABELS: Record<string, string> = {
   Part_time: "Part-time",
   Internship: "Internship",
   Flexible: "Flexible",
+};
+
+const PIPELINE_STAGES: ApplicationStage[] = [
+  "Pending",
+  "ApplicantCalled",
+  "InterviewScheduling",
+  "Hired",
+];
+
+const STAGE_LABELS: Record<ApplicationStage, string> = {
+  Pending: "Pending",
+  ApplicantCalled: "Called",
+  InterviewScheduling: "Interview",
+  Hired: "Hired",
+  Rejected: "Rejected",
 };
 
 const sectionTitle = "font-[var(--font-headline)] text-base text-[var(--color-on-surface)] mb-3 pb-1 border-b border-[var(--color-container-low)]";
@@ -69,8 +84,8 @@ export default function ApplicationDetailModal({
     if (!open) setEditing(false);
   }, [open]);
 
-  const statusMutation = useMutation({
-    mutationFn: patchStatus,
+  const patchMutation = useMutation({
+    mutationFn: patchApplication,
     onSuccess: () => {
       if (application) {
         queryClient.invalidateQueries({ queryKey: ["applications", application.job_id] });
@@ -81,19 +96,25 @@ export default function ApplicationDetailModal({
     onError: (err) => alert((err as Error).message),
   });
 
-  const handleStatusAction = (status: ApplicationStatus, confirmMsg: string) => {
+  const handleAction = (
+    changes: Partial<{ status: ApplicationStatus; stage: ApplicationStage }>,
+    confirmMsg: string,
+    closeAfter: boolean
+  ) => {
     if (!application) return;
     if (!confirm(confirmMsg)) return;
-    statusMutation.mutate(
-      { id: application.id, status },
-      {
-        onSuccess: () => {
-          // Reject / TalentPool remove the row from the per-vacancy view, so close.
-          if (status !== "OnHold") onClose();
-        },
-      }
+    patchMutation.mutate(
+      { id: application.id, changes },
+      { onSuccess: () => { if (closeAfter) onClose(); } }
     );
   };
+
+  const pipelineIdx = application ? PIPELINE_STAGES.indexOf(application.stage) : -1;
+  const prevStage: ApplicationStage | null = pipelineIdx > 0 ? PIPELINE_STAGES[pipelineIdx - 1] : null;
+  const nextStage: ApplicationStage | null =
+    pipelineIdx >= 0 && pipelineIdx < PIPELINE_STAGES.length - 1
+      ? PIPELINE_STAGES[pipelineIdx + 1]
+      : null;
 
   return (
     <Modal
@@ -264,18 +285,49 @@ export default function ApplicationDetailModal({
                 >
                   <Pencil size={12} /> Edit
                 </button>
-                {(application.status === "TalentPool" ||
-                  application.status === "Rejected") && (
+                <a
+                  href={`${API_URL}/api/applications/${application.id}/resume.docx`}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded border border-[var(--color-primary)] text-[var(--color-primary)] font-[var(--font-label)] hover:bg-[var(--color-primary)] hover:text-white"
+                >
+                  <FileDown size={12} /> Export resume
+                </a>
+                {prevStage && (
                   <button
-                    onClick={() =>
-                      handleStatusAction(
-                        "Active",
-                        application.status === "TalentPool"
-                          ? "Restore this applicant to their original vacancy?"
-                          : "Restore this applicant to active status?"
-                      )
-                    }
-                    disabled={statusMutation.isPending}
+                    onClick={() => handleAction({ stage: prevStage }, `Move to ${STAGE_LABELS[prevStage]}?`, true)}
+                    disabled={patchMutation.isPending}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded border border-[var(--color-on-surface-variant)] text-[var(--color-on-surface-variant)] font-[var(--font-label)] hover:bg-[var(--color-container-low)] disabled:opacity-40"
+                  >
+                    ← {STAGE_LABELS[prevStage]}
+                  </button>
+                )}
+                {nextStage && (
+                  <button
+                    onClick={() => handleAction({ stage: nextStage }, `Move to ${STAGE_LABELS[nextStage]}?`, true)}
+                    disabled={patchMutation.isPending}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded border border-[var(--color-on-surface-variant)] text-[var(--color-on-surface-variant)] font-[var(--font-label)] hover:bg-[var(--color-container-low)] disabled:opacity-40"
+                  >
+                    {STAGE_LABELS[nextStage]} →
+                  </button>
+                )}
+                {(application.status === "TalentPool" ||
+                  application.stage === "Rejected") && (
+                  <button
+                    onClick={() => {
+                      if (application.status === "TalentPool") {
+                        handleAction(
+                          { status: "Active" },
+                          "Restore this applicant to their original vacancy?",
+                          true
+                        );
+                      } else {
+                        handleAction(
+                          { stage: "Pending" },
+                          "Restore this applicant back to the Pending stage?",
+                          true
+                        );
+                      }
+                    }}
+                    disabled={patchMutation.isPending}
                     className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded border border-[#0F6E56] text-[#0F6E56] font-[var(--font-label)] hover:bg-[#E1F5EE] disabled:opacity-40"
                   >
                     <RotateCcw size={12} /> Restore
@@ -283,33 +335,39 @@ export default function ApplicationDetailModal({
                 )}
                 <button
                   onClick={() =>
-                    handleStatusAction(
-                      "OnHold",
-                      "Put this application on hold?"
+                    handleAction(
+                      { status: "OnHold" },
+                      "Put this application on hold?",
+                      false
                     )
                   }
-                  disabled={statusMutation.isPending || application.status === "OnHold"}
+                  disabled={patchMutation.isPending || application.status === "OnHold"}
                   className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded border border-[#854F0B] text-[#854F0B] font-[var(--font-label)] hover:bg-[#FAEEDA] disabled:opacity-40"
                 >
                   <PauseCircle size={12} /> On hold
                 </button>
                 <button
                   onClick={() =>
-                    handleStatusAction(
-                      "TalentPool",
-                      "Move this applicant to the talent pool? They'll be removed from this vacancy's list."
+                    handleAction(
+                      { status: "TalentPool" },
+                      "Move this applicant to the talent pool? They'll be removed from this vacancy's list.",
+                      true
                     )
                   }
-                  disabled={statusMutation.isPending || application.status === "TalentPool"}
+                  disabled={patchMutation.isPending || application.status === "TalentPool"}
                   className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded border border-[#185FA5] text-[#185FA5] font-[var(--font-label)] hover:bg-[#E6F1FB] disabled:opacity-40"
                 >
                   <Archive size={12} /> Talent pool
                 </button>
                 <button
                   onClick={() =>
-                    handleStatusAction("Rejected", "Reject this application?")
+                    handleAction(
+                      { stage: "Rejected" },
+                      "Reject this application? It will move to the Rejected tab and auto-delete after 7 days.",
+                      true
+                    )
                   }
-                  disabled={statusMutation.isPending || application.status === "Rejected"}
+                  disabled={patchMutation.isPending || application.stage === "Rejected"}
                   className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded border border-red-500 text-red-500 font-[var(--font-label)] hover:bg-red-500 hover:text-white disabled:opacity-40"
                 >
                   <XCircle size={12} /> Reject

@@ -57,6 +57,7 @@ export const ModelName = {
   JobCategory: 'JobCategory',
   Admin: 'Admin',
   Application: 'Application',
+  Note: 'Note',
   News: 'News',
   ContactRequest: 'ContactRequest',
   ContactReply: 'ContactReply',
@@ -161,8 +162,10 @@ export const ApplicationScalarFieldEnum = {
   degree: 'degree',
   soft_skills: 'soft_skills',
   job_id: 'job_id',
+  stage: 'stage',
   status: 'status',
   created_at: 'created_at',
+  updated_at: 'updated_at',
   cover_letter: 'cover_letter',
   resume_key: 'resume_key',
   resume_type: 'resume_type',
@@ -176,6 +179,19 @@ export const ApplicationScalarFieldEnum = {
 } as const
 
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
+
+
+export const NoteScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  application_id: 'application_id',
+  created_by_admin_id: 'created_by_admin_id',
+  last_edited_by_admin_id: 'last_edited_by_admin_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type NoteScalarFieldEnum = (typeof NoteScalarFieldEnum)[keyof typeof NoteScalarFieldEnum]
 
 
 export const NewsScalarFieldEnum = {
@@ -373,6 +389,15 @@ export const ApplicationOrderByRelevanceFieldEnum = {
 } as const
 
 export type ApplicationOrderByRelevanceFieldEnum = (typeof ApplicationOrderByRelevanceFieldEnum)[keyof typeof ApplicationOrderByRelevanceFieldEnum]
+
+
+export const NoteOrderByRelevanceFieldEnum = {
+  text: 'text',
+  created_by_admin_id: 'created_by_admin_id',
+  last_edited_by_admin_id: 'last_edited_by_admin_id'
+} as const
+
+export type NoteOrderByRelevanceFieldEnum = (typeof NoteOrderByRelevanceFieldEnum)[keyof typeof NoteOrderByRelevanceFieldEnum]
 
 
 export const NewsOrderByRelevanceFieldEnum = {

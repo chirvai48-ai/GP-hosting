@@ -390,6 +390,7 @@ export const ModelName = {
   JobCategory: 'JobCategory',
   Admin: 'Admin',
   Application: 'Application',
+  Note: 'Note',
   News: 'News',
   ContactRequest: 'ContactRequest',
   ContactReply: 'ContactReply',
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "job" | "skill" | "language" | "jobCategory" | "admin" | "application" | "news" | "contactRequest" | "contactReply" | "session" | "account" | "verification"
+    modelProps: "job" | "skill" | "language" | "jobCategory" | "admin" | "application" | "note" | "news" | "contactRequest" | "contactReply" | "session" | "account" | "verification"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -808,6 +809,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ApplicationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ApplicationCountAggregateOutputType> | number
+        }
+      }
+    }
+    Note: {
+      payload: Prisma.$NotePayload<ExtArgs>
+      fields: Prisma.NoteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NoteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NoteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>
+        }
+        findFirst: {
+          args: Prisma.NoteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NoteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>
+        }
+        findMany: {
+          args: Prisma.NoteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>[]
+        }
+        create: {
+          args: Prisma.NoteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>
+        }
+        createMany: {
+          args: Prisma.NoteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.NoteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>
+        }
+        update: {
+          args: Prisma.NoteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>
+        }
+        deleteMany: {
+          args: Prisma.NoteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NoteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.NoteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotePayload>
+        }
+        aggregate: {
+          args: Prisma.NoteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNote>
+        }
+        groupBy: {
+          args: Prisma.NoteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NoteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NoteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NoteCountAggregateOutputType> | number
         }
       }
     }
@@ -1326,8 +1393,10 @@ export const ApplicationScalarFieldEnum = {
   degree: 'degree',
   soft_skills: 'soft_skills',
   job_id: 'job_id',
+  stage: 'stage',
   status: 'status',
   created_at: 'created_at',
+  updated_at: 'updated_at',
   cover_letter: 'cover_letter',
   resume_key: 'resume_key',
   resume_type: 'resume_type',
@@ -1341,6 +1410,19 @@ export const ApplicationScalarFieldEnum = {
 } as const
 
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
+
+
+export const NoteScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  application_id: 'application_id',
+  created_by_admin_id: 'created_by_admin_id',
+  last_edited_by_admin_id: 'last_edited_by_admin_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type NoteScalarFieldEnum = (typeof NoteScalarFieldEnum)[keyof typeof NoteScalarFieldEnum]
 
 
 export const NewsScalarFieldEnum = {
@@ -1540,6 +1622,15 @@ export const ApplicationOrderByRelevanceFieldEnum = {
 export type ApplicationOrderByRelevanceFieldEnum = (typeof ApplicationOrderByRelevanceFieldEnum)[keyof typeof ApplicationOrderByRelevanceFieldEnum]
 
 
+export const NoteOrderByRelevanceFieldEnum = {
+  text: 'text',
+  created_by_admin_id: 'created_by_admin_id',
+  last_edited_by_admin_id: 'last_edited_by_admin_id'
+} as const
+
+export type NoteOrderByRelevanceFieldEnum = (typeof NoteOrderByRelevanceFieldEnum)[keyof typeof NoteOrderByRelevanceFieldEnum]
+
+
 export const NewsOrderByRelevanceFieldEnum = {
   title: 'title',
   body: 'body',
@@ -1658,6 +1749,13 @@ export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'ApplicationStage'
+ */
+export type EnumApplicationStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApplicationStage'>
     
 
 
@@ -1824,6 +1922,7 @@ export type GlobalOmitConfig = {
   jobCategory?: Prisma.JobCategoryOmit
   admin?: Prisma.AdminOmit
   application?: Prisma.ApplicationOmit
+  note?: Prisma.NoteOmit
   news?: Prisma.NewsOmit
   contactRequest?: Prisma.ContactRequestOmit
   contactReply?: Prisma.ContactReplyOmit

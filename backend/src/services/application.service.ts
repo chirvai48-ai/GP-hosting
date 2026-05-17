@@ -81,6 +81,25 @@ export const fetchApplicationById = async (id: number) => {
   return { ...application, resume_url };
 };
 
+export const cleanupRejectedApplications = async () => {
+  const cutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  const stale = await prisma.application.findMany({
+    where: { stage: "Rejected", updated_at: { lt: cutoff } },
+    select: { id: true, resume_key: true },
+  });
+  for (const app of stale) {
+    if (app.resume_key) {
+      try {
+        await deleteObject(BUCKET, `${RESUME_PREFIX}/${app.resume_key}`);
+      } catch {
+        // R2 errors shouldn't block the DB delete — log via console once we have a logger
+      }
+    }
+    await prisma.application.delete({ where: { id: app.id } });
+  }
+  return stale.length;
+};
+
 export const removeApplication = async (id: number) => {
   const application = await prisma.application.findUnique({ where: { id } });
 

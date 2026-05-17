@@ -73,10 +73,14 @@ backend/
       job.schema.ts        ← createJobSchema, updateJobSchema (Zod)
       news.schema.ts       ← createNewsSchema, updateNewsSchema (Zod)
     services/
-      job.service.ts       ← Prisma queries + HH:MM→DateTime + R2 URL gen
+      job.service.ts       ← Prisma queries + HH:MM→DateTime + R2 URL gen + _count.applications
       news.service.ts      ← Prisma queries for news
-      application.service.ts  ← EMPTY STUB
+      application.service.ts  ← create/fetch/patch/delete + talent-pool filter + cleanupRejectedApplications
+      note.service.ts      ← admin-attributed notes per application
+      resume.service.ts    ← server-side DOCX resume generation (docx package)
       contacts.service.ts     ← EMPTY STUB
+    lib/
+      cron.ts              ← node-cron registration; daily 03:00 sweeps rejected apps
     types/
       api.ts               ← ApiResponse<T> { messagge: string; data: T }
                              ⚠ "messagge" is a typo — do not correct without
@@ -95,6 +99,9 @@ frontend/
         layout.tsx         ← AdminDrawer sidebar + content slot
         vacancies/page.tsx ← Job CRUD table (TanStack Table, inline editing)
         blogs/page.tsx     ← News CRUD table (TanStack Table)
+        applications/page.tsx              ← Vacancy list with applicant counts
+        applications/[jobId]/page.tsx      ← Drill-down: stage tabs + applicants
+        talent-pool/page.tsx               ← Cross-vacancy talent pool list
   components/
     Navbar.tsx             ← Scroll-aware, background changes past hero
     HeroSection.tsx        ← Full-screen video hero ("Different Is Good")
@@ -111,6 +118,13 @@ frontend/
     adminnews/
       AddNews.tsx          ← New article form/dialog; uploads image to
                              glowingpartner/news/ via r2-upload before form submit
+    adminapplication/
+      AdminApplicationsTable.tsx   ← Drill-down: stage tabs, status dropdown, modal trigger
+      ApplicationDetailModal.tsx   ← View / Edit / Reject / Restore / On hold / Talent pool / Export
+      EditApplicationForm.tsx      ← RHF + Zod form, partial PATCH via dirtyFields
+      NotesPanel.tsx               ← Notes list + add/edit/delete with admin attribution
+    application/
+      ApplicationForm.tsx  ← Public 3-step wizard at /vacancy/[id]/apply
     news/News.tsx          ← Homepage news section with StackList sidebar
     Footer/                ← FooterSection + Column1/2 + Helpers
     Reusables/             ← Shared UI primitives
@@ -140,8 +154,10 @@ Job          >── JobCategory         (many Jobs → one Category; connectOrC
 Job          >──< Language           (many-to-many; connectOrCreate by name)
 Job          >──< TechnicalSkill     (many-to-many; connectOrCreate by name)
 Job          ──< Application         (one Job receives many Applications)
+Application  ──< Note                (one Application has many admin notes; ON DELETE CASCADE)
 Application  >──< Language           (many-to-many)
 Application  >──< Skill              (many-to-many)
+Admin        ──< Note (NotesCreatedBy)  + Note (NotesEditedBy)  ← two named relations
 ContactRequest ──< ContactReply      (one Request → many Replies)
 Admin        — Session, Account, Verification  (Better-Auth managed)
 ```
@@ -149,7 +165,11 @@ Admin        — Session, Account, Verification  (Better-Auth managed)
 **Enums:**
 - `JobStatus`: `Draft` (default) | `Published` | `Closed` | `Archived`
 - `Contract`: `Full_time` | `Part_time` | `Internship` | `Flexible`
-- `ApplicationStatus`: `Pending` | `Reviewed` | `Rejected` | `Accepted`
+- `ApplicationStage`: `Pending` (default) | `ApplicantCalled` | `InterviewScheduling` | `Hired` | `Rejected`
+- `ApplicationStatus`: `Active` (default) | `OnHold` | `TalentPool` *(set only via modal action — not in inline dropdown)*
+- `Gender`: `Male` | `Female` | `Other`
+- `ResidenceStatus`: `Permanent_Resident` | `Work_Visa` | `Student_Visa` | `Spouse_Visa` | `Other`
+- `JapaneseAbility`: `N1` | `N2` | `N3` | `N4` | `N5` | `None`
 - `NewsStatus`: `published` | `closed`
 
 **News model image fields:** `image_key String?`, `image_type String?` — nullable to support existing rows. Frontend always sends both when creating. Key format stored: `news/<uuid>.<ext>` (full path; no prefix added by the backend service).
@@ -159,10 +179,11 @@ Admin        — Session, Account, Verification  (Better-Auth managed)
 
 | Model | Endpoint | Status |
 |---|---|---|
-| Job | `/api/jobs` | Fully implemented |
+| Job | `/api/jobs` | Fully implemented; `fetchJobs` includes `_count.applications` |
 | News | `/api/news` | Fully implemented |
 | Admin | `/api/auth/*` | Managed by Better-Auth |
-| Application | — | Schema + empty stub only |
+| Application | `/api/applications` | Fully implemented incl. PATCH, talent-pool filter, DOCX export, daily auto-cleanup of rejections |
+| Note | `/api/applications/:id/notes`, `/api/notes/:id` | Fully implemented; admin attribution via client-passed UUID |
 | ContactRequest / ContactReply | — | Schema + empty stub only |
 | JobCategory, Skill, Language | — | Embedded in Job; no standalone endpoint |
 
@@ -215,6 +236,31 @@ Note the double-g typo — it is in production and must be preserved until all c
 | `status` | enum | no | `Draft \| Published \| Closed \| Archived`; defaults to `Draft` |
 
 `updateJobSchema` is a full `.partial()` of the above — any subset is valid.
+
+### Applications — `/api/applications`
+
+| Method | Path | Middleware | Description |
+|---|---|---|---|
+| GET | `/api/applications` | — | All non-talent-pool applications; supports `?job_id=N` filter; each row includes signed R2 `resume_url` |
+| GET | `/api/applications/talent-pool` | — | Only `status='TalentPool'` rows, includes `job` relation |
+| GET | `/api/applications/:id/resume.docx` | — | Streams a polished `.docx` resume (sets `Content-Disposition: attachment`) |
+| GET | `/api/applications/:id` | — | Single application, includes `job` + `resume_url` |
+| POST | `/api/applications` | `validateCreate(createApplicationSchema)` | Public submission from `/vacancy/[id]/apply`; response includes signed R2 PUT URL for resume upload |
+| PATCH | `/api/applications/:id` | `validateUpdate(updateApplicationSchema)` | Partial update; accepts any editable field + `stage` + `status` |
+| DELETE | `/api/applications/:id` | — | Hard delete + R2 resume cleanup |
+
+**State model:** two orthogonal fields. `stage` is the pipeline step; `status` is the decision/outcome. Reject is a stage transition (`stage='Rejected'`), not a status. TalentPool is set only via the modal's "Move to Talent Pool" action — not via the inline status dropdown. Per-vacancy `GET /api/applications?job_id=N` filters out `status='TalentPool'` server-side.
+
+**Auto-cleanup:** node-cron daily at 03:00 runs `cleanupRejectedApplications`, which deletes rejected applications whose `updated_at > 7 days ago` along with their R2 resume objects. Triggered from `backend/src/lib/cron.ts`.
+
+### Notes — `/api/applications/:applicationId/notes` + `/api/notes/:id`
+
+| Method | Path | Middleware | Description |
+|---|---|---|---|
+| GET | `/api/applications/:applicationId/notes` | — | All notes for an application, newest first, includes both admin relations |
+| POST | `/api/applications/:applicationId/notes` | `validateCreate(createNoteSchema)` | Body: `{ text, created_by_admin_id }` |
+| PATCH | `/api/notes/:id` | `validateUpdate(updateNoteSchema)` | Body: `{ text, last_edited_by_admin_id }` |
+| DELETE | `/api/notes/:id` | — | Hard delete (cascade also fires when parent Application is deleted) |
 
 ### News — `/api/news`
 
@@ -308,10 +354,12 @@ Images are uploaded **directly from the browser to Cloudflare R2** before the AP
 | R2 credentials exposed in frontend | `NEXT_PUBLIC_R2_*` env vars are bundled into the client JS. Acceptable for an internal admin tool; do not use for public-facing upload flows. |
 | R2 CORS not auto-configured | The `glowingpartner` bucket needs a CORS rule allowing `PUT` + `Content-Type` from the app's origin before browser uploads will succeed. |
 | `shift_start`/`shift_end` stored as DateTime | Arbitrary date component is baked in at write time. Frontend must extract time only. Changing the date component would corrupt existing records. |
-| `Vacancies.tsx` uses dummy data | Public vacancy grid is not connected to `/api/jobs`. Admin dashboard is. |
 | `app/news/page.tsx` is a placeholder | Public news listing is not connected to `/api/news`. Admin blogs dashboard is. |
 | `frontend/types/table.ts` is manual | Not auto-generated from Prisma schema. Must be updated by hand after every migration or types silently diverge. |
-| `application.service.ts` / `contacts.service.ts` are empty | `Application`, `ContactRequest`, `ContactReply` models exist in the DB but have zero API surface. |
+| `contacts.service.ts` is empty | `ContactRequest`, `ContactReply` models exist in the DB but have zero API surface. (Application is now fully implemented.) |
+| TanStack Table needs memoized data + columns | New array literals from inline JSX or `.filter()` re-trigger the table's internal `useMemo`s every render. On admin pages with state changes (modals, mutations) this pegged the main thread until clicks were dropped. Fix: `useMemo` for both `data` and `columns`. |
+| Browser extensions mutate `<body>` pre-hydration | Password managers / autofill tools add attributes like `data-atm-ext-installed` to `<body>` before React hydrates. `<body suppressHydrationWarning>` in root `app/layout.tsx` silences the noise. |
+| Heavy modals must be conditionally mounted | `{viewing && <Modal>}` plus `next/dynamic(... ssr:false)` for the modal. Mounting a closed Modal sets up portal + scroll-lock infrastructure that leaks on route nav. |
 | No pagination | `GET /api/jobs` and `GET /api/news` return all records. No `take`/`skip`. |
 | `connectOrCreate` is case-sensitive | Skills, languages, categories deduplicate by exact name only. `"React"` ≠ `"react"`. |
 | `callbackURL` redirect after login | Relies on Better-Auth client behaviour. If the client version doesn't support it, login silently succeeds but no redirect fires. |
@@ -348,7 +396,7 @@ NEXT_PUBLIC_R2_PUBLIC_URL=https://pub-<hash>.r2.dev
 ```bash
 # Backend
 cd backend && npm install
-npx prisma migrate dev   # applies 7 migrations, regenerates client
+npx prisma migrate dev   # applies all migrations, regenerates client
 npm run dev              # ts-node-dev, port 4000
 
 # Frontend
@@ -389,6 +437,23 @@ npx prisma studio        # http://localhost:5555
 ---
 
 ## Recent Changes
+
+### Application Pipeline v3 — stage tabs, simplified status, auto-cleanup (2026-05-17)
+- **MODIFIED** `backend/prisma/schema.prisma` — `ApplicationStage` gains `Rejected`; `ApplicationStatus` drops `Rejected` (now `Active | OnHold | TalentPool`).
+- **NEW** migration `20260517100000_status_stage_v2` — widens both enums, migrates existing `status='Rejected'` rows to `stage='Rejected', status='Active'`, narrows status enum.
+- **NEW** `backend/src/lib/cron.ts` + `node-cron` dep — daily 03:00 sweep deletes rejected applications older than 7 days (and their R2 resumes) via `cleanupRejectedApplications`.
+- **MODIFIED** `backend/src/server.ts` — starts the cron after `app.listen`.
+- **MODIFIED** `frontend/components/adminapplication/AdminApplicationsTable.tsx` — adds stage tabs row above the table (5 tabs with live counts), removes Stage column, narrows Status dropdown to Active/OnHold (TalentPool renders read-only).
+- **MODIFIED** `frontend/components/adminapplication/ApplicationDetailModal.tsx` — Reject button now sets `stage='Rejected'` (not status). Restore button handles both `status='TalentPool'` and `stage='Rejected'` and routes to the right transition.
+- **MODIFIED** `frontend/components/adminapplication/EditApplicationForm.tsx` — Stage dropdown adds Rejected; Status dropdown drops TalentPool (only reachable via modal action).
+- Manual delete keeps its two-step inline confirm. Talent Pool flow unchanged.
+
+### Admin Application Management v2 — notes, edit, talent pool, DOCX (2026-05-16)
+- **NEW** `Note` model (FK cascade to Application; two admin relations: `NotesCreatedBy`, `NotesEditedBy`).
+- **NEW** routes: notes CRUD, talent-pool list, DOCX export.
+- **NEW** `frontend/app/admin/dashboard/applications/page.tsx` (vacancy list) + `[jobId]/page.tsx` (drill-down) + `frontend/app/admin/dashboard/talent-pool/page.tsx`.
+- **NEW** modal supports edit mode (RHF + Zod), action footer (Edit / Export / Restore / On hold / Talent pool / Reject / Close), and a notes panel with admin attribution.
+- **NEW** `backend/src/services/resume.service.ts` + `docx` dep — server-side DOCX generation.
 
 ### Direct R2 Image Upload from Browser (2026-05-13)
 - **NEW** `frontend/lib/r2-upload.ts` — `uploadToR2(file, "news"|"vacancy")`: generates presigned PUT URL client-side, uploads via `fetch`, returns `{ key, publicUrl }`.

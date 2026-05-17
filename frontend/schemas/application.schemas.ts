@@ -65,12 +65,12 @@ export const APPLICATION_STAGE_OPTIONS = [
   "ApplicantCalled",
   "InterviewScheduling",
   "Hired",
+  "Rejected",
 ] as const;
 export const APPLICATION_STATUS_OPTIONS = [
   "Active",
   "OnHold",
   "TalentPool",
-  "Rejected",
 ] as const;
 
 export const editApplicationSchema = createApplicationSchema

@@ -153,13 +153,13 @@ enum ApplicationStage {
   ApplicantCalled
   InterviewScheduling
   Hired
+  Rejected
 }
 
 enum ApplicationStatus {
   Active
   OnHold
   TalentPool
-  Rejected
 }
 
 enum Gender {

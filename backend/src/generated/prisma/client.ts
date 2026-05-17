@@ -70,6 +70,11 @@ export type Admin = Prisma.AdminModel
  */
 export type Application = Prisma.ApplicationModel
 /**
+ * Model Note
+ * 
+ */
+export type Note = Prisma.NoteModel
+/**
  * Model News
  * 
  */
