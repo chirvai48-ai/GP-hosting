@@ -3,7 +3,6 @@ import Navbar from '@/components/Navbar';
 import PhilosophyPage from '@/components/Philosophy';
 import PartnerRibbon from '@/components/Swiper';
 import { Infopoint } from '@/components/InfoPoint';
-import FooterSection from '@/components/footer/FooterSection';
 import EmployeeSection from '@/components/Employee';
 import NewsSection from '@/components/news/News';
 export default function Home() {
@@ -15,7 +14,6 @@ export default function Home() {
       <Infopoint />
       <EmployeeSection />
       <NewsSection />
-      <FooterSection />
     </div>
   );
 }

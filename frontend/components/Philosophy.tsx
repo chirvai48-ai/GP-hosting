@@ -34,37 +34,45 @@ const philosophyData = [
 
 export default function PhilosophySection() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [imageIndex, setImageIndex] = useState(0);
-  const [animatingImage, setAnimatingImage] = useState<number | null>(null);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const observers: IntersectionObserver[] = [];
+    // Pick the section whose center is closest to the viewport center.
+    // Avoids the dual-intersection flicker you get from per-section observers.
+    let ticking = false;
 
-    sectionRefs.current.forEach((section, i) => {
-      if (!section) return;
+    const update = () => {
+      ticking = false;
+      const viewportCenter = window.innerHeight / 2;
+      let bestIndex = 0;
+      let bestDistance = Infinity;
+      sectionRefs.current.forEach((section, i) => {
+        if (!section) return;
+        const rect = section.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const distance = Math.abs(center - viewportCenter);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestIndex = i;
+        }
+      });
+      setActiveIndex((prev) => (prev === bestIndex ? prev : bestIndex));
+    };
 
-      const isLast = i === philosophyData.length - 1;
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
 
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveIndex(i);
-            setAnimatingImage(i);
-            setTimeout(() => {
-              setImageIndex(i);
-              setAnimatingImage(null);
-            }, 750);
-          }
-        },
-        { threshold: isLast ? 0.2 : 0.35, }
-      );
-
-      obs.observe(section);
-      observers.push(obs);
-    });
-
-    return () => observers.forEach((o) => o.disconnect());
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   return (
@@ -169,21 +177,18 @@ export default function PhilosophySection() {
           {String(philosophyData.length).padStart(2, "0")}
         </div>
 
-        {/* Stacked images */}
+        {/* Stacked images — position is a pure function of activeIndex */}
         {philosophyData.map((item, i) => {
-          const isActive = imageIndex === i;
-          const isAnimating = animatingImage === i;
+          const isActive = activeIndex === i;
+          // Already-seen cards (i <= activeIndex) sit on stage; later cards wait off-screen right.
+          const onStage = i <= activeIndex;
 
-          // Off-screen right with slight tilt → slides in flat on scroll
-          const transform = isAnimating || isActive
+          const transform = onStage
             ? "translateX(0%) rotate(0deg)"
             : "translateX(108%) rotate(4deg)";
 
-          const transition = isAnimating
-            ? "transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
-            : "none";
-
-          const zIndex = isAnimating ? 10 : isActive ? 5 : 1;
+          // Later cards stack on top of earlier ones so the newest slide-in covers the previous.
+          const zIndex = i + 1;
 
           return (
             <div
@@ -191,9 +196,10 @@ export default function PhilosophySection() {
               className="absolute inset-0 flex items-center justify-center"
               style={{
                 transform,
-                transition,
+                transition: "transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)",
                 zIndex,
                 transformOrigin: "right center",
+                willChange: "transform",
               }}
             >
               <img
@@ -202,14 +208,12 @@ export default function PhilosophySection() {
                 className="w-3/5 h-4/5 object-cover block rounded-md"
               />
 
-
-
               {/* Bottom caption */}
               <div
                 className="absolute bottom-10 left-30"
                 style={{
-                  opacity: isActive && !isAnimating ? 1 : 0,
-                  transition: "opacity 0.45s 0.45s",
+                  opacity: isActive ? 1 : 0,
+                  transition: "opacity 0.45s 0.25s",
                 }}
               >
                 <div

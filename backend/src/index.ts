@@ -12,12 +12,13 @@ import { auth } from './lib/auth';
 import {newsRouter} from './routes/news.route'
 import applicationRouter from './routes/application.route'
 import noteRouter from './routes/note.route'
+import contactsRouter from './routes/contacts.route'
 
 const app = express();
 
 
 app.use(cors({
-  origin: "http://localhost:3000", 
+  origin: ["http://localhost:3000", "http://localhost:3001"],
   credentials: true,  
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],         
 }))
@@ -40,6 +41,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/news",newsRouter);
 app.use("/api/jobs",jobsRouter);
 app.use("/api/applications",applicationRouter);
+app.use("/api/contacts", contactsRouter);
 app.use("/api", noteRouter);
 app.use(errorMiddleware);
 

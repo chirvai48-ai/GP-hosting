@@ -47,7 +47,9 @@ export const getApplicationById = async (req: Request, res: Response, next: Next
 
 export const getTalentPool = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const applications = await fetchTalentPool();
+    const { search, location, japanese_ability, job_category } =
+      req.query as Record<string, string | undefined>;
+    const applications = await fetchTalentPool({ search, location, japanese_ability, job_category });
     res.status(200).json({ message: "Talent pool fetched successfully", data: applications });
   } catch (err) {
     next(err);

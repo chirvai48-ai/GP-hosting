@@ -90,6 +90,16 @@ export const JapaneseAbility = {
 export type JapaneseAbility = (typeof JapaneseAbility)[keyof typeof JapaneseAbility]
 
 
+export const CandidateInquiryState = {
+  New: 'New',
+  Reviewing: 'Reviewing',
+  MovedToTalentPool: 'MovedToTalentPool',
+  Rejected: 'Rejected'
+} as const
+
+export type CandidateInquiryState = (typeof CandidateInquiryState)[keyof typeof CandidateInquiryState]
+
+
 export const Status = {
   Open: 'Open',
   Inprogress: 'Inprogress',

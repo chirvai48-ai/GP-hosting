@@ -26,6 +26,7 @@ export default function HeroSection() {
   return (
     <section
       id="scrollArea"
+      data-navbar-tint="light"
       className="relative h-screen min-h-[600px] w-full overflow-hidden flex items-center justify-center"
     >
       {/* ── Poster / blur-up placeholder ── */}

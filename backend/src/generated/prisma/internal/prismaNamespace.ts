@@ -393,6 +393,7 @@ export const ModelName = {
   Note: 'Note',
   News: 'News',
   ContactRequest: 'ContactRequest',
+  CandidateInquiry: 'CandidateInquiry',
   ContactReply: 'ContactReply',
   Session: 'Session',
   Account: 'Account',
@@ -412,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "job" | "skill" | "language" | "jobCategory" | "admin" | "application" | "note" | "news" | "contactRequest" | "contactReply" | "session" | "account" | "verification"
+    modelProps: "job" | "skill" | "language" | "jobCategory" | "admin" | "application" | "note" | "news" | "contactRequest" | "candidateInquiry" | "contactReply" | "session" | "account" | "verification"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1010,6 +1011,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CandidateInquiry: {
+      payload: Prisma.$CandidateInquiryPayload<ExtArgs>
+      fields: Prisma.CandidateInquiryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CandidateInquiryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CandidateInquiryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CandidateInquiryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CandidateInquiryPayload>
+        }
+        findFirst: {
+          args: Prisma.CandidateInquiryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CandidateInquiryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CandidateInquiryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CandidateInquiryPayload>
+        }
+        findMany: {
+          args: Prisma.CandidateInquiryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CandidateInquiryPayload>[]
+        }
+        create: {
+          args: Prisma.CandidateInquiryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CandidateInquiryPayload>
+        }
+        createMany: {
+          args: Prisma.CandidateInquiryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.CandidateInquiryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CandidateInquiryPayload>
+        }
+        update: {
+          args: Prisma.CandidateInquiryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CandidateInquiryPayload>
+        }
+        deleteMany: {
+          args: Prisma.CandidateInquiryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CandidateInquiryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.CandidateInquiryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CandidateInquiryPayload>
+        }
+        aggregate: {
+          args: Prisma.CandidateInquiryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCandidateInquiry>
+        }
+        groupBy: {
+          args: Prisma.CandidateInquiryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CandidateInquiryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CandidateInquiryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CandidateInquiryCountAggregateOutputType> | number
+        }
+      }
+    }
     ContactReply: {
       payload: Prisma.$ContactReplyPayload<ExtArgs>
       fields: Prisma.ContactReplyFieldRefs
@@ -1456,6 +1523,30 @@ export const ContactRequestScalarFieldEnum = {
 export type ContactRequestScalarFieldEnum = (typeof ContactRequestScalarFieldEnum)[keyof typeof ContactRequestScalarFieldEnum]
 
 
+export const CandidateInquiryScalarFieldEnum = {
+  id: 'id',
+  full_name: 'full_name',
+  email: 'email',
+  phone_number: 'phone_number',
+  date_of_birth: 'date_of_birth',
+  gender: 'gender',
+  current_address: 'current_address',
+  preferred_location: 'preferred_location',
+  residence_status: 'residence_status',
+  japanese_ability: 'japanese_ability',
+  cover_letter: 'cover_letter',
+  resume_key: 'resume_key',
+  resume_type: 'resume_type',
+  state: 'state',
+  moved_to_pool_at: 'moved_to_pool_at',
+  rejected_at: 'rejected_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type CandidateInquiryScalarFieldEnum = (typeof CandidateInquiryScalarFieldEnum)[keyof typeof CandidateInquiryScalarFieldEnum]
+
+
 export const ContactReplyScalarFieldEnum = {
   id: 'id',
   contact_request_id: 'contact_request_id',
@@ -1654,6 +1745,20 @@ export const ContactRequestOrderByRelevanceFieldEnum = {
 export type ContactRequestOrderByRelevanceFieldEnum = (typeof ContactRequestOrderByRelevanceFieldEnum)[keyof typeof ContactRequestOrderByRelevanceFieldEnum]
 
 
+export const CandidateInquiryOrderByRelevanceFieldEnum = {
+  full_name: 'full_name',
+  email: 'email',
+  phone_number: 'phone_number',
+  current_address: 'current_address',
+  preferred_location: 'preferred_location',
+  cover_letter: 'cover_letter',
+  resume_key: 'resume_key',
+  resume_type: 'resume_type'
+} as const
+
+export type CandidateInquiryOrderByRelevanceFieldEnum = (typeof CandidateInquiryOrderByRelevanceFieldEnum)[keyof typeof CandidateInquiryOrderByRelevanceFieldEnum]
+
+
 export const ContactReplyOrderByRelevanceFieldEnum = {
   message: 'message',
   adminId: 'adminId'
@@ -1816,6 +1921,13 @@ export type EnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'CandidateInquiryState'
+ */
+export type EnumCandidateInquiryStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CandidateInquiryState'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1925,6 +2037,7 @@ export type GlobalOmitConfig = {
   note?: Prisma.NoteOmit
   news?: Prisma.NewsOmit
   contactRequest?: Prisma.ContactRequestOmit
+  candidateInquiry?: Prisma.CandidateInquiryOmit
   contactReply?: Prisma.ContactReplyOmit
   session?: Prisma.SessionOmit
   account?: Prisma.AccountOmit

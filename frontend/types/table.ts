@@ -166,3 +166,65 @@ export type NotesResponse = {
   message: string;
   data: Note[];
 };
+
+export type ContactStatus = "Open" | "Inprogress" | "Resolved" | "Closed";
+
+export type CompanyInquiry = {
+  id: number;
+  name: string;
+  email: string;
+  phone_number: string;
+  subject: string;
+  message: string;
+  status: ContactStatus;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CompanyInquiriesResponse = {
+  message: string;
+  data: CompanyInquiry[];
+};
+
+export type CompanyInquiryResponse = {
+  message: string;
+  data: CompanyInquiry;
+};
+
+export type CandidateInquiryState =
+  | "New"
+  | "Reviewing"
+  | "MovedToTalentPool"
+  | "Rejected";
+
+export type CandidateInquiry = {
+  id: number;
+  full_name: string;
+  email: string;
+  phone_number: string;
+  date_of_birth: string;
+  gender: Gender | null;
+  current_address: string;
+  preferred_location: string;
+  residence_status: ResidenceStatus | null;
+  japanese_ability: JapaneseAbility | null;
+  cover_letter: string | null;
+  resume_key: string;
+  resume_type: string | null;
+  resume_url?: string;
+  state: CandidateInquiryState;
+  moved_to_pool_at: string | null;
+  rejected_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CandidateInquiriesResponse = {
+  message: string;
+  data: CandidateInquiry[];
+};
+
+export type CandidateInquiryResponse = {
+  message: string;
+  data: CandidateInquiry & { signed_url?: string };
+};

@@ -189,7 +189,7 @@ model News {
   id           Int        @id @default(autoincrement())
   title        String
   body         String     @db.Text
-  summary      String
+  summary      String     @db.VarChar(500)
   published_at DateTime   @default(now())
   updated_at   DateTime   @updatedAt
   admin_id     String?
@@ -205,11 +205,41 @@ model ContactRequest {
   email           String
   phone_number    String
   subject         String
-  message         String
+  message         String         @db.Text
   status          Status         @default(Open)
   created_at      DateTime       @default(now())
   updated_at      DateTime       @updatedAt
   contact_replies ContactReply[]
+}
+
+model CandidateInquiry {
+  id                 Int                   @id @default(autoincrement())
+  full_name          String
+  email              String
+  phone_number       String
+  date_of_birth      DateTime              @db.Date
+  gender             Gender?
+  current_address    String
+  preferred_location String
+  residence_status   ResidenceStatus?
+  japanese_ability   JapaneseAbility?
+  cover_letter       String?               @db.Text
+  resume_key         String                @unique
+  resume_type        String?
+  state              CandidateInquiryState @default(New)
+  moved_to_pool_at   DateTime?
+  rejected_at        DateTime?
+  created_at         DateTime              @default(now())
+  updated_at         DateTime              @updatedAt
+
+  @@map("candidate_inquiry")
+}
+
+enum CandidateInquiryState {
+  New
+  Reviewing
+  MovedToTalentPool
+  Rejected
 }
 
 model ContactReply {

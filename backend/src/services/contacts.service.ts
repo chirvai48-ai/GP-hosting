@@ -1,0 +1,134 @@
+import { prisma } from "../lib/prisma";
+import { putUrl, getUrl, deleteObject } from "../configs/cloudflare";
+import type {
+  createCompanyInquiry as createCompanyInquiryInput,
+  updateCompanyInquiry as updateCompanyInquiryInput,
+  createCandidateInquiry as createCandidateInquiryInput,
+  updateCandidateInquiry as updateCandidateInquiryInput,
+} from "../schemas/contact.schema";
+
+const BUCKET = "glowingpartner";
+const CANDIDATE_RESUME_PREFIX = "candidate-resume";
+
+export const createCompanyInquiry = async (data: createCompanyInquiryInput) => {
+  return prisma.contactRequest.create({ data });
+};
+
+export const fetchCompanyInquiries = async () => {
+  return prisma.contactRequest.findMany({ orderBy: { created_at: "desc" } });
+};
+
+export const fetchCompanyInquiryById = async (id: number) => {
+  return prisma.contactRequest.findUnique({ where: { id } });
+};
+
+export const patchCompanyInquiry = async (id: number, data: updateCompanyInquiryInput) => {
+  return prisma.contactRequest.update({ where: { id }, data });
+};
+
+export const removeCompanyInquiry = async (id: number) => {
+  return prisma.contactRequest.delete({ where: { id } });
+};
+
+export const createCandidateInquiry = async (data: createCandidateInquiryInput) => {
+  const signed_url = await putUrl(
+    BUCKET,
+    `${CANDIDATE_RESUME_PREFIX}/${data.resume_key}`,
+    data.resume_type
+  );
+
+  const { date_of_birth, ...rest } = data;
+
+  const result = await prisma.candidateInquiry.create({
+    data: {
+      ...rest,
+      date_of_birth: new Date(date_of_birth),
+    },
+  });
+
+  return { ...result, signed_url };
+};
+
+export const fetchCandidateInquiries = async () => {
+  const inquiries = await prisma.candidateInquiry.findMany({
+    orderBy: { created_at: "desc" },
+  });
+
+  return Promise.all(
+    inquiries.map(async (inquiry) => {
+      const resume_url = await getUrl(
+        BUCKET,
+        `${CANDIDATE_RESUME_PREFIX}/${inquiry.resume_key}`
+      );
+      return { ...inquiry, resume_url };
+    })
+  );
+};
+
+export const fetchCandidateTalentPool = async () => {
+  const inquiries = await prisma.candidateInquiry.findMany({
+    where: { state: "MovedToTalentPool" },
+    orderBy: { moved_to_pool_at: "desc" },
+  });
+
+  return Promise.all(
+    inquiries.map(async (inquiry) => {
+      const resume_url = await getUrl(
+        BUCKET,
+        `${CANDIDATE_RESUME_PREFIX}/${inquiry.resume_key}`
+      );
+      return { ...inquiry, resume_url };
+    })
+  );
+};
+
+export const fetchCandidateInquiryById = async (id: number) => {
+  const inquiry = await prisma.candidateInquiry.findUnique({ where: { id } });
+  if (!inquiry) return null;
+
+  const resume_url = await getUrl(
+    BUCKET,
+    `${CANDIDATE_RESUME_PREFIX}/${inquiry.resume_key}`
+  );
+  return { ...inquiry, resume_url };
+};
+
+export const patchCandidateInquiry = async (id: number, data: updateCandidateInquiryInput) => {
+  const { date_of_birth, state, ...rest } = data;
+
+  const stateTransition: Record<string, Date | null> = {};
+  if (state === "MovedToTalentPool") {
+    stateTransition.moved_to_pool_at = new Date();
+    stateTransition.rejected_at = null;
+  } else if (state === "Rejected") {
+    stateTransition.rejected_at = new Date();
+    stateTransition.moved_to_pool_at = null;
+  } else if (state === "Reviewing" || state === "New") {
+    stateTransition.moved_to_pool_at = null;
+    stateTransition.rejected_at = null;
+  }
+
+  return prisma.candidateInquiry.update({
+    where: { id },
+    data: {
+      ...rest,
+      ...(date_of_birth && { date_of_birth: new Date(date_of_birth) }),
+      ...(state && { state }),
+      ...stateTransition,
+    },
+  });
+};
+
+export const removeCandidateInquiry = async (id: number) => {
+  const inquiry = await prisma.candidateInquiry.findUnique({ where: { id } });
+
+  if (inquiry?.resume_key) {
+    try {
+      await deleteObject(BUCKET, `${CANDIDATE_RESUME_PREFIX}/${inquiry.resume_key}`);
+    } catch {
+      // R2 errors shouldn't block the DB delete
+    }
+  }
+
+  return prisma.candidateInquiry.delete({ where: { id } });
+};

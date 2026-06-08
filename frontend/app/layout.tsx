@@ -4,6 +4,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { TanStackProvider } from "./tanstack-provider";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import ConditionalFooter from "@/components/footer/ConditionalFooter";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -34,6 +35,7 @@ export default function RootLayout({
         <TanStackProvider>
           <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
         </TanStackProvider>
+        <ConditionalFooter />
       </body>
     </html>
   );

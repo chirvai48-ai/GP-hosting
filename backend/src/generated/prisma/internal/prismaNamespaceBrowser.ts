@@ -60,6 +60,7 @@ export const ModelName = {
   Note: 'Note',
   News: 'News',
   ContactRequest: 'ContactRequest',
+  CandidateInquiry: 'CandidateInquiry',
   ContactReply: 'ContactReply',
   Session: 'Session',
   Account: 'Account',
@@ -223,6 +224,30 @@ export const ContactRequestScalarFieldEnum = {
 } as const
 
 export type ContactRequestScalarFieldEnum = (typeof ContactRequestScalarFieldEnum)[keyof typeof ContactRequestScalarFieldEnum]
+
+
+export const CandidateInquiryScalarFieldEnum = {
+  id: 'id',
+  full_name: 'full_name',
+  email: 'email',
+  phone_number: 'phone_number',
+  date_of_birth: 'date_of_birth',
+  gender: 'gender',
+  current_address: 'current_address',
+  preferred_location: 'preferred_location',
+  residence_status: 'residence_status',
+  japanese_ability: 'japanese_ability',
+  cover_letter: 'cover_letter',
+  resume_key: 'resume_key',
+  resume_type: 'resume_type',
+  state: 'state',
+  moved_to_pool_at: 'moved_to_pool_at',
+  rejected_at: 'rejected_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type CandidateInquiryScalarFieldEnum = (typeof CandidateInquiryScalarFieldEnum)[keyof typeof CandidateInquiryScalarFieldEnum]
 
 
 export const ContactReplyScalarFieldEnum = {
@@ -421,6 +446,20 @@ export const ContactRequestOrderByRelevanceFieldEnum = {
 } as const
 
 export type ContactRequestOrderByRelevanceFieldEnum = (typeof ContactRequestOrderByRelevanceFieldEnum)[keyof typeof ContactRequestOrderByRelevanceFieldEnum]
+
+
+export const CandidateInquiryOrderByRelevanceFieldEnum = {
+  full_name: 'full_name',
+  email: 'email',
+  phone_number: 'phone_number',
+  current_address: 'current_address',
+  preferred_location: 'preferred_location',
+  cover_letter: 'cover_letter',
+  resume_key: 'resume_key',
+  resume_type: 'resume_type'
+} as const
+
+export type CandidateInquiryOrderByRelevanceFieldEnum = (typeof CandidateInquiryOrderByRelevanceFieldEnum)[keyof typeof CandidateInquiryOrderByRelevanceFieldEnum]
 
 
 export const ContactReplyOrderByRelevanceFieldEnum = {

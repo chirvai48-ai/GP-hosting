@@ -2,17 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useQuery } from "@tanstack/react-query";
 import { MapPin, CalendarDays, X, Clock, Briefcase, Users, Star, Award, FileText, Send } from "lucide-react";
-import type { Job, JobsResponse } from "@/types/table";
-
-const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-async function getJobs(): Promise<JobsResponse> {
-  const res = await fetch(`${API_URL}/api/jobs`);
-  if (!res.ok) throw new Error("Failed to fetch jobs");
-  return res.json();
-}
+import type { Job } from "@/types/table";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", {
@@ -289,32 +280,45 @@ function VacancyCard({ job, onClick }: { job: Job; onClick: () => void }) {
 }
 
 // ── VacancySection ─────────────────────────────────────────────────────────
-export default function VacancySection() {
-  const { data, isPending, isError } = useQuery({
-    queryKey: ["jobs-public"],
-    queryFn: getJobs,
-  });
+type VacancySectionProps = {
+  jobs: Job[];
+  totalCount: number;
+  isPending: boolean;
+  isError: boolean;
+  onClearFilters: () => void;
+};
 
-  const jobs = (data?.data ?? []).filter((j) => j.status === "Published");
+export default function VacancySection({
+  jobs,
+  totalCount,
+  isPending,
+  isError,
+  onClearFilters,
+}: VacancySectionProps) {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const isFiltered = jobs.length !== totalCount;
 
   return (
-    <section className="min-h-screen bg-[color:var(--color-surface)] px-6 py-6 md:px-12 lg:px-20">
-      <div className="max-w-6xl mx-auto mb-6">
+    <section className="flex-1 min-w-0 py-6">
+      <div className="mb-6">
         <div className="border-l-[3px] border-[color:var(--color-secondary)] pl-5">
           <p className="font-[family-name:var(--font-label)] text-[10px] md:text-[11px] font-semibold tracking-[0.12em] uppercase text-[color:var(--color-secondary)] mb-1">
-            We're hiring
+            We&apos;re hiring
           </p>
           <h1 className="font-[family-name:var(--font-headline)] text-[24px] md:text-[32px] font-normal italic text-[color:var(--color-primary)] leading-[1.1]">
             Open Positions
           </h1>
           <p className="font-[family-name:var(--font-label)] text-[10px] md:text-[11px] text-[color:var(--color-on-surface-variant)] mt-2">
-            {isPending ? "Loading…" : `${jobs.length} vacancies across all departments`}
+            {isPending
+              ? "Loading…"
+              : isFiltered
+              ? `${jobs.length} of ${totalCount} vacancies match your filters`
+              : `${totalCount} vacancies across all departments`}
           </p>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto">
+      <div>
         {isPending && (
           <div className="flex items-center justify-center py-24 text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-label)]">
             Loading positions…
@@ -325,13 +329,26 @@ export default function VacancySection() {
             Failed to load vacancies.
           </div>
         )}
-        {!isPending && !isError && jobs.length === 0 && (
+        {!isPending && !isError && jobs.length === 0 && totalCount === 0 && (
           <div className="flex items-center justify-center py-24 text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-label)]">
             No open positions at the moment.
           </div>
         )}
+        {!isPending && !isError && jobs.length === 0 && totalCount > 0 && (
+          <div className="flex flex-col items-center justify-center py-24 gap-3">
+            <p className="text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-label)]">
+              No vacancies match your current filters.
+            </p>
+            <button
+              onClick={onClearFilters}
+              className="px-4 py-2 text-xs rounded border border-[var(--color-primary)] text-[var(--color-primary)] font-[family-name:var(--font-label)] tracking-widest uppercase hover:bg-[var(--color-primary)] hover:text-white transition-colors"
+            >
+              Clear filters
+            </button>
+          </div>
+        )}
         {jobs.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {jobs.map((job) => (
               <VacancyCard key={job.id} job={job} onClick={() => setSelectedJob(job)} />
             ))}

@@ -22,7 +22,21 @@ async function postNews(data: CreateNewsForm) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error("Failed to create article");
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    const fieldErrs = body?.error?.fieldErrors;
+    const formErrs = body?.error?.formErrors;
+    const firstFieldErr =
+      fieldErrs && Object.entries(fieldErrs)[0]
+        ? `${Object.entries(fieldErrs)[0][0]}: ${(Object.entries(fieldErrs)[0][1] as string[])?.[0]}`
+        : null;
+    const msg =
+      firstFieldErr ||
+      formErrs?.[0] ||
+      body?.message ||
+      `Request failed (HTTP ${res.status})`;
+    throw new Error(msg);
+  }
   return res.json();
 }
 
@@ -174,8 +188,10 @@ function AddNews() {
                     <ImageUpload
                       value={field.value}
                       onChange={(file: File) => {
-                        field.onChange(file.name);
-                        setValue("image_type", file.type);
+                        const ext = file.name.split(".").pop() ?? "bin";
+                        const key = `${crypto.randomUUID()}.${ext}`;
+                        field.onChange(key);
+                        setValue("image_type", file.type, { shouldValidate: true });
                         imageFileRef.current = file;
                       }}
                     />

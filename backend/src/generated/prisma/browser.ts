@@ -63,6 +63,11 @@ export type News = Prisma.NewsModel
  */
 export type ContactRequest = Prisma.ContactRequestModel
 /**
+ * Model CandidateInquiry
+ * 
+ */
+export type CandidateInquiry = Prisma.CandidateInquiryModel
+/**
  * Model ContactReply
  * 
  */

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Search, MapPin, BriefcaseBusiness } from "lucide-react";
 import Slider from "@mui/material/Slider";
 import InputLabel from "@mui/material/InputLabel";
@@ -7,13 +8,40 @@ import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Typography } from "@mui/material";
 import type { Searchtype } from "@/types/search";
+import { SALARY_SLIDER_MAX } from "@/lib/jobFilter";
 
 type Props = {
   searchState: Searchtype;
-  onChange: (updatedValue: Searchtype) => void; //because setter function gets updated filters type but returns nothing
+  onChange: (updatedValue: Searchtype) => void;
+  onClear: () => void;
 };
 
-function SearchBar({searchState, onChange}:Props) {
+function formatYen(value: number) {
+  if (value >= 1000) {
+    const m = value / 1000;
+    return `¥${m % 1 === 0 ? m.toFixed(0) : m.toFixed(1)}M`;
+  }
+  return `¥${value}k`;
+}
+
+function SearchBar({ searchState, onChange, onClear }: Props) {
+  const [keyword, setKeyword] = useState(searchState.searchValue);
+
+  // Sync local keyword when parent resets (e.g. clear-filters)
+  useEffect(() => {
+    setKeyword(searchState.searchValue);
+  }, [searchState.searchValue]);
+
+  // Debounce keyword push to parent
+  useEffect(() => {
+    if (keyword === searchState.searchValue) return;
+    const t = setTimeout(() => {
+      onChange({ ...searchState, searchValue: keyword });
+    }, 250);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [keyword]);
+
   const cityValue: string[] = [
     "All cities",
     "Tokyo",
@@ -70,14 +98,13 @@ function SearchBar({searchState, onChange}:Props) {
   };
   const handleFormInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target) return;
-     onChange({
-      ...searchState,searchValue:e.target.value
-    })
+    setKeyword(e.target.value);
   };
-  const handleSliderChange = (_: Event, newValue: number[]) => {
+  const handleSliderChange = (_: Event, newValue: number | number[]) => {
     onChange({
-      ...searchState,sliderValue:newValue
-    })
+      ...searchState,
+      sliderValue: Array.isArray(newValue) ? newValue : [newValue, newValue],
+    });
   };
   return (
     <div className="p-2 bg-[var(--color-surface)]">
@@ -88,14 +115,15 @@ function SearchBar({searchState, onChange}:Props) {
           <div className="flex flex-row w-full justify-center items-center bg-[#f0f2f1] rounded-full p-2 gap-2">
             <Search className="w-4 h-5 shrink-0" color="#145652" />
             <input
-              className="flex-1 min-w-0 outline-1 bg-white rounded-md font-headline italic"
-              placeholder=" Job title, keyword..."
-              onChange={(e) => handleFormInput(e)}
-              value={searchState.searchValue}
+              className="flex-1 min-w-0 outline-1 bg-white rounded-md font-headline italic px-2"
+              placeholder=" Job title, keyword, skill..."
+              onChange={handleFormInput}
+              value={keyword}
             />
             <Button
               variant="outlined"
               size="small"
+              onClick={onClear}
               sx={{
                 fontFamily: "Cormorant Garamond",
                 fontSize: 12,
@@ -108,7 +136,7 @@ function SearchBar({searchState, onChange}:Props) {
                 textTransform: "none",
               }}
             >
-              Search
+              Clear filters
             </Button>
           </div>
         </div>
@@ -186,9 +214,10 @@ function SearchBar({searchState, onChange}:Props) {
               value={searchState.sliderValue}
               onChange={handleSliderChange}
               valueLabelDisplay="auto"
+              valueLabelFormat={(v) => formatYen(v)}
               min={0}
-              max={100}
-              step={1}
+              max={SALARY_SLIDER_MAX}
+              step={100}
               size="small"
               sx={{
                 "& .MuiSlider-track": {
@@ -214,7 +243,7 @@ function SearchBar({searchState, onChange}:Props) {
               Salary range:{" "}
               <span className="text-secondary font-black text-sm">
                 {" "}
-                ¥{searchState.sliderValue[0]}k – ¥{searchState.sliderValue[1]}k{" "}
+                {formatYen(searchState.sliderValue[0])} – {formatYen(searchState.sliderValue[1])}{" "}
               </span>
             </Typography>
           </div>

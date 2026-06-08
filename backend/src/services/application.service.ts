@@ -4,6 +4,7 @@ import type {
   createApplication as createApplicationInput,
   updateApplication as updateApplicationInput,
 } from "../schemas/application.schema";
+import { JapaneseAbility } from "../generated/prisma/enums";
 
 const BUCKET = "glowingpartner";
 const RESUME_PREFIX = "resume";
@@ -43,10 +44,32 @@ export const fetchApplications = async (jobId?: number) => {
   );
 };
 
-export const fetchTalentPool = async () => {
+interface TalentPoolFilters {
+  search?: string;
+  location?: string;
+  japanese_ability?: string;
+  job_category?: string;
+}
+
+export const fetchTalentPool = async (filters: TalentPoolFilters = {}) => {
+  const { search, location, japanese_ability, job_category } = filters;
+
   const applications = await prisma.application.findMany({
-    where: { status: "TalentPool" },
-    include: { job: true },
+    where: {
+      status: "TalentPool",
+      ...(search && {
+        OR: [
+          { full_name: { contains: search } },
+          { email: { contains: search } },
+        ],
+      }),
+      ...(location && { current_address: { contains: location } }),
+      ...(japanese_ability && { japanese_ability: japanese_ability as JapaneseAbility }),
+      ...(job_category && {
+        job: { job_category: { name: { contains: job_category } } },
+      }),
+    },
+    include: { job: { include: { job_category: true } } },
     orderBy: { updated_at: "desc" },
   });
 
@@ -87,16 +110,14 @@ export const cleanupRejectedApplications = async () => {
     where: { stage: "Rejected", updated_at: { lt: cutoff } },
     select: { id: true, resume_key: true },
   });
-  for (const app of stale) {
-    if (app.resume_key) {
-      try {
-        await deleteObject(BUCKET, `${RESUME_PREFIX}/${app.resume_key}`);
-      } catch {
-        // R2 errors shouldn't block the DB delete — log via console once we have a logger
-      }
-    }
-    await prisma.application.delete({ where: { id: app.id } });
-  }
+  await Promise.all(
+    stale
+      .filter((app) => app.resume_key)
+      .map((app) =>
+        deleteObject(BUCKET, `${RESUME_PREFIX}/${app.resume_key!}`).catch(() => null)
+      )
+  );
+  await prisma.application.deleteMany({ where: { id: { in: stale.map((a) => a.id) } } });
   return stale.length;
 };
 

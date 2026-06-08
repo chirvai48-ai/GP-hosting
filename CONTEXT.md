@@ -60,6 +60,9 @@ backend/
     controllers/           ← Thin HTTP layer; calls service, sends JSON
       jobController.ts
       newsController.ts
+      applicationController.ts
+      noteController.ts
+      contactController.ts ← company-inquiry + candidate-inquiry handlers
     lib/
       auth.ts              ← Better-Auth instance (Prisma adapter, email/pw)
       prisma.ts            ← Singleton PrismaClient, pool: 5
@@ -69,16 +72,22 @@ backend/
     routes/
       jobs.route.ts        ← Express Router + Swagger JSDoc for /api/jobs
       news.route.ts        ← Express Router + Swagger JSDoc for /api/news
+      application.route.ts ← /api/applications + /api/applications/talent-pool + /api/applications/:id/resume.docx
+      note.route.ts        ← /api/applications/:applicationId/notes + /api/notes/:id
+      contacts.route.ts    ← /api/contacts/company-inquiries/* + /api/contacts/candidate-inquiries/*
     schemas/
       job.schema.ts        ← createJobSchema, updateJobSchema (Zod)
       news.schema.ts       ← createNewsSchema, updateNewsSchema (Zod)
+      application.schema.ts ← createApplicationSchema, updateApplicationSchema
+      note.schema.ts       ← createNoteSchema, updateNoteSchema
+      contact.schema.ts    ← createCompanyInquirySchema, updateCompanyInquirySchema, createCandidateInquirySchema, updateCandidateInquirySchema
     services/
       job.service.ts       ← Prisma queries + HH:MM→DateTime + R2 URL gen + _count.applications
       news.service.ts      ← Prisma queries for news
       application.service.ts  ← create/fetch/patch/delete + talent-pool filter + cleanupRejectedApplications
       note.service.ts      ← admin-attributed notes per application
       resume.service.ts    ← server-side DOCX resume generation (docx package)
-      contacts.service.ts     ← EMPTY STUB
+      contacts.service.ts  ← company-inquiry + candidate-inquiry CRUD + state transitions + R2 resume URLs
     lib/
       cron.ts              ← node-cron registration; daily 03:00 sweeps rejected apps
     types/
@@ -134,9 +143,7 @@ frontend/
   lib/
     auth-client.ts         ← createAuthClient({ baseURL: ":4000", credentials: "include" })
                              Exports: signIn, signUp, signOut, useSession
-    r2-upload.ts           ← uploadToR2(file, folder) — generates presigned PUT URL client-side,
-                             PUTs file directly to R2, returns { key, publicUrl }
-                             Bucket: glowingpartner; folders: "news" | "vacancy"
+    utils.js / utils.d.ts  ← cn() and other UI helpers
   types/
     table.ts               ← Manual mirrors of Prisma models (Job, News, Admin, etc.)
                              ⚠ NOT auto-generated — must be updated after every migration
@@ -158,7 +165,8 @@ Application  ──< Note                (one Application has many admin notes; 
 Application  >──< Language           (many-to-many)
 Application  >──< Skill              (many-to-many)
 Admin        ──< Note (NotesCreatedBy)  + Note (NotesEditedBy)  ← two named relations
-ContactRequest ──< ContactReply      (one Request → many Replies)
+ContactRequest ──< ContactReply      (one Request → many Replies; ContactRequest = "company inquiry" surface)
+CandidateInquiry                     (standalone; B2C resume submissions for future jobs; can be promoted to talent pool)
 Admin        — Session, Account, Verification  (Better-Auth managed)
 ```
 
@@ -171,6 +179,8 @@ Admin        — Session, Account, Verification  (Better-Auth managed)
 - `ResidenceStatus`: `Permanent_Resident` | `Work_Visa` | `Student_Visa` | `Spouse_Visa` | `Other`
 - `JapaneseAbility`: `N1` | `N2` | `N3` | `N4` | `N5` | `None`
 - `NewsStatus`: `published` | `closed`
+- `Status` (ContactRequest): `Open` (default) | `Inprogress` | `Resolved` | `Closed`
+- `CandidateInquiryState`: `New` (default) | `Reviewing` | `MovedToTalentPool` | `Rejected`
 
 **News model image fields:** `image_key String?`, `image_type String?` — nullable to support existing rows. Frontend always sends both when creating. Key format stored: `news/<uuid>.<ext>` (full path; no prefix added by the backend service).
 - `Role`: `Admin` | `Editor` | `User` (default: `User`)
@@ -184,7 +194,9 @@ Admin        — Session, Account, Verification  (Better-Auth managed)
 | Admin | `/api/auth/*` | Managed by Better-Auth |
 | Application | `/api/applications` | Fully implemented incl. PATCH, talent-pool filter, DOCX export, daily auto-cleanup of rejections |
 | Note | `/api/applications/:id/notes`, `/api/notes/:id` | Fully implemented; admin attribution via client-passed UUID |
-| ContactRequest / ContactReply | — | Schema + empty stub only |
+| ContactRequest | `/api/contacts/company-inquiries` | Fully implemented (B2B company contact form intake) |
+| CandidateInquiry | `/api/contacts/candidate-inquiries` | Fully implemented (B2C resume submissions; state lifecycle with talent-pool promotion) |
+| ContactReply | — | Schema only; no API surface yet (reply thread is post-MVP) |
 | JobCategory, Skill, Language | — | Embedded in Job; no standalone endpoint |
 
 ---
@@ -262,6 +274,59 @@ Note the double-g typo — it is in production and must be preserved until all c
 | PATCH | `/api/notes/:id` | `validateUpdate(updateNoteSchema)` | Body: `{ text, last_edited_by_admin_id }` |
 | DELETE | `/api/notes/:id` | — | Hard delete (cascade also fires when parent Application is deleted) |
 
+### Contacts — `/api/contacts/*`
+
+Two parallel surfaces under one router: **Company inquiries** (B2B, reuses existing `ContactRequest` model) and **Candidate inquiries** (B2C resume submissions, new `CandidateInquiry` model).
+
+#### Company inquiries
+
+| Method | Path | Middleware | Description |
+|---|---|---|---|
+| GET | `/api/contacts/company-inquiries` | — | All company inquiries, newest first |
+| POST | `/api/contacts/company-inquiries` | `validateCreate(createCompanyInquirySchema)` | Public submission from `/contact/company` |
+| GET | `/api/contacts/company-inquiries/:id` | — | Single inquiry |
+| PATCH | `/api/contacts/company-inquiries/:id` | `validateUpdate(updateCompanyInquirySchema)` | Partial update incl. `status` (Open/Inprogress/Resolved/Closed) |
+| DELETE | `/api/contacts/company-inquiries/:id` | — | Hard delete |
+
+**`createCompanyInquirySchema` fields:** `name`, `email`, `phone_number`, `subject` (≤255), `message`. All required.
+
+#### Candidate inquiries
+
+| Method | Path | Middleware | Description |
+|---|---|---|---|
+| GET | `/api/contacts/candidate-inquiries` | — | All candidate inquiries, newest first; each row includes signed R2 `resume_url` |
+| GET | `/api/contacts/candidate-inquiries/talent-pool` | — | Only `state='MovedToTalentPool'` rows; orderBy `moved_to_pool_at DESC` |
+| POST | `/api/contacts/candidate-inquiries` | `validateCreate(createCandidateInquirySchema)` | Public submission from `/contact/customer`; response includes signed R2 PUT URL for resume upload |
+| GET | `/api/contacts/candidate-inquiries/:id` | — | Single inquiry, includes signed `resume_url` |
+| PATCH | `/api/contacts/candidate-inquiries/:id` | `validateUpdate(updateCandidateInquirySchema)` | Partial update incl. `state` transitions (auto-stamps `moved_to_pool_at` / `rejected_at`) |
+| DELETE | `/api/contacts/candidate-inquiries/:id` | — | Hard delete + R2 resume cleanup |
+
+**`createCandidateInquirySchema` fields:**
+
+| Field | Type | Required | Rule |
+|---|---|---|---|
+| `full_name` | string | yes | — |
+| `email` | string | yes | Valid email |
+| `phone_number` | string | yes | — |
+| `date_of_birth` | string | yes | ISO date (`YYYY-MM-DD`) |
+| `gender` | enum | no | `Male \| Female \| Other` |
+| `current_address` | string | yes | — |
+| `preferred_location` | string | yes | — |
+| `residence_status` | enum | no | `Permanent_Resident \| Work_Visa \| Student_Visa \| Spouse_Visa \| Other` |
+| `japanese_ability` | enum | no | `N1 \| N2 \| N3 \| N4 \| N5 \| None` |
+| `cover_letter` | string | no | — |
+| `resume_key` | string | yes | UUID `<uuid>.<ext>` — client-generated, unique constraint in DB |
+| `resume_type` | string | yes | MIME type, e.g. `application/pdf` |
+
+`updateCandidateInquirySchema` is `.omit({ resume_key, resume_type }).extend({ state }).partial()` — clients cannot change the resume after submission.
+
+**State transition logic** (in `contacts.service.patchCandidateInquiry`):
+- `state='MovedToTalentPool'` → stamps `moved_to_pool_at = NOW()`, clears `rejected_at`
+- `state='Rejected'` → stamps `rejected_at = NOW()`, clears `moved_to_pool_at`
+- `state='Reviewing'` or `'New'` → clears both timestamps
+
+**Resume storage:** Bucket `glowingpartner`, prefix `candidate-resume/` (deliberately separate from Application's `resume/` prefix so the two pipelines can be cleaned up / audited independently).
+
 ### News — `/api/news`
 
 | Method | Path | Middleware | Description |
@@ -290,16 +355,17 @@ Note the double-g typo — it is in production and must be preserved until all c
 
 ## Key Data Flows
 
-### Image Upload (Vacancy and News)
-Images are uploaded **directly from the browser to Cloudflare R2** before the API form is submitted. The backend never receives the binary.
+### Resume / Image Upload (server-issued presigned URL)
+Binaries are uploaded **directly from the browser to Cloudflare R2** — the backend never receives the file. Two variants live in the codebase:
 
-**Frontend flow (both vacancy and news):**
-1. Admin selects a file in the `ImageUpload` component → preview renders immediately via `createObjectURL`.
-2. `uploadToR2(file, folder)` in `frontend/lib/r2-upload.ts` runs:
-   - Generates a presigned PUT URL **client-side** using `@aws-sdk/client-s3` + credentials from `NEXT_PUBLIC_R2_*` env vars.
-   - PUTs the file to R2 via `fetch`.
-3. On success, `image_key` and `image_type` are written into the react-hook-form state. The submit button is disabled while uploading.
-4. Form submits to the API with the key already set.
+**Variant 1: Server-issued presigned PUT (Applications + CandidateInquiry resumes)**
+1. Client generates a key client-side (`${crypto.randomUUID()}.${ext}`) and sets it in the form state.
+2. POST to the API (`/api/applications` or `/api/contacts/candidate-inquiries`) — the backend service calls `putUrl(bucket, key, contentType)` and returns the presigned URL as `data.signed_url` in the JSON response.
+3. On success, the client PUTs the file body to `signed_url`. See `ApplicationForm.tsx:147-161` for the canonical implementation.
+4. Bucket: `glowingpartner`. Prefixes: `resume/` (Applications), `candidate-resume/` (CandidateInquiry).
+
+**Variant 2: Client-generated presigned PUT (Vacancy + News images — legacy path)**
+Older News/Vacancy image flow generated presigned URLs in the browser using `NEXT_PUBLIC_R2_*` credentials. The helper file referenced in earlier docs (`frontend/lib/r2-upload.ts`) has since been removed; current image upload in `AddNews.tsx` / `Forms.tsx` posts to the API and relies on the backend service's returned URL. Treat the server-issued pattern (Variant 1) as the canonical one for all new features.
 
 **Key formats:**
 | Resource | R2 path | `image_key` stored in DB |
@@ -356,7 +422,7 @@ Images are uploaded **directly from the browser to Cloudflare R2** before the AP
 | `shift_start`/`shift_end` stored as DateTime | Arbitrary date component is baked in at write time. Frontend must extract time only. Changing the date component would corrupt existing records. |
 | `app/news/page.tsx` is a placeholder | Public news listing is not connected to `/api/news`. Admin blogs dashboard is. |
 | `frontend/types/table.ts` is manual | Not auto-generated from Prisma schema. Must be updated by hand after every migration or types silently diverge. |
-| `contacts.service.ts` is empty | `ContactRequest`, `ContactReply` models exist in the DB but have zero API surface. (Application is now fully implemented.) |
+| `ContactReply` has no API surface yet | The reply-thread feature is post-MVP — admins triage company inquiries via the `status` enum only for now. |
 | TanStack Table needs memoized data + columns | New array literals from inline JSX or `.filter()` re-trigger the table's internal `useMemo`s every render. On admin pages with state changes (modals, mutations) this pegged the main thread until clicks were dropped. Fix: `useMemo` for both `data` and `columns`. |
 | Browser extensions mutate `<body>` pre-hydration | Password managers / autofill tools add attributes like `data-atm-ext-installed` to `<body>` before React hydrates. `<body suppressHydrationWarning>` in root `app/layout.tsx` silences the noise. |
 | Heavy modals must be conditionally mounted | `{viewing && <Modal>}` plus `next/dynamic(... ssr:false)` for the modal. Mounting a closed Modal sets up portal + scroll-lock infrastructure that leaks on route nav. |
@@ -437,6 +503,67 @@ npx prisma studio        # http://localhost:5555
 ---
 
 ## Recent Changes
+
+### Business + Services marketing pages (2026-06-08)
+Five new public marketing pages, two distinct layout systems, shared component families, full mobile responsiveness.
+
+**Navbar restructure** (`frontend/components/Navbar.tsx`)
+- "Our Business" dropdown reduced to **3 categories** (was 4): Career Counseling, Temporary Staffing, Paid Employment Placement — each linking to a `/business/<slug>` page.
+- "Services" sub-items (For Recruiter / For Job Seeker) now have working `href`s pointing to `/services/<slug>`.
+- **Mobile menu added** (visible below `lg` breakpoint): animated hamburger button that morphs into an X, full-screen overlay with accordion sub-items showing 14×14 image thumbnails. Body scroll locks while open; closes on route change. Dynamic dark/light text colour also honors `mobileOpen` state.
+
+**Business pages — magazine layout** (`frontend/app/business/[slug]/page.tsx`)
+- `/business/career-counseling` — 3 sections: GPNA, Seminar Business (with feature spread), Career Consulting (Ms. Uenaka + Shiki Satellite).
+- `/business/staffing` — Part-time (cleaning specialty, feature spread) + Full-time.
+- `/business/placement` — Part-time, Specified Skilled Worker (特定技能), Technical Intern Training (技能実習), Job Hunting & Career Change (feature spread).
+- **Shared components** in `frontend/components/business/`:
+  - `BusinessHero.tsx` — full-bleed image, kicker chip with animated underline, word-by-word title reveal, parallax scroll, animated side rail, "Scroll" cue with pulsing line. Multi-layer overlay (flat `bg-black/40` + bottom gradient + radial vignette at lower-left + text-shadow) for headline legibility on bright photos.
+  - `MagazineSection.tsx` — asymmetric 12-col grid: oversized italic gold numeral, Work Sans label, serif headline, body, optional bullets, optional pull-quote, optional feature spread. **4 rotating animation variants** keyed by section index (classic lift / lateral slide & mask / blur & scale / drop curtain). Variants drive headline reveal mode (words-up / mask-right / blur / letter-by-letter), image entry direction/blur, panel-wipe origin, number entry, and bullet direction. Feature spreads use only **subtle** motion (long fade + reduced parallax ±6%, no wipe/blur/scale) since they're large and shouldn't dominate.
+  - `BusinessChrome.tsx` exports `BusinessProgressRail` (spring-smoothed gold scroll progress bar + right-edge vertical pager for desktop, `hidden lg:flex`) and `NextBusinessCue` (animated link to the next business in the 3-page cycle).
+- `frontend/app/business/layout.tsx` mounts the progress rail across all 3 routes.
+
+**Services pages — diagonal split layout** (`frontend/app/services/[slug]/page.tsx`)
+- `/services/for-recruiter` — Why partner / Breadth of talent / Compliance → CTA to `/contact/company`.
+- `/services/for-job-seeker` — How we help / Counseling (GPNA + Ms. Uenaka) / Breadth of opportunities → CTA to `/contact/customer`.
+- **Shared components** in `frontend/components/services/`:
+  - `DiagonalHero.tsx` — diagonal-clipped photo on the right (static `clip-path`), gold seam traces the cut, ghost "Glowing" word peeks behind text, word-by-word title reveal.
+  - `DiagonalPanel.tsx` — full-viewport panels alternating photo-left/photo-right; static diagonal clip; massive ghost numeral parallaxes behind text; gold seam fades in along the cut.
+  - `DiagonalCTA.tsx` — closing CTA on teal background with diagonal photo on the left and a CTA button that sweeps gold from left to right on hover.
+- **Static-clip pattern**: Initial implementation animated `clip-path` from degenerate polygon to the diagonal — caused photos to render invisible on some loads. Switched to **static CSS `clipPath` + `WebkitClipPath` on a plain div**, with only the image's opacity/scale/x animating. Robust across browsers.
+
+**Text readability over dark diagonal photos**
+- Headline and intro on the hero originally sat over the dark photo bleed → low contrast.
+- **Solution**: surface-tinted horizontal gradient overlay above the photo on desktop only. Stops: solid `var(--color-surface)` 0–30%, fade through `rgba(248,250,248,0.85)` at 42%, fully transparent by 55%. Direction flips per panel (`90deg` or `270deg` based on `photoLeft`). The diagonal seam at 25–40% sits inside the fade zone, so the text column is always on a continuous light surface but the photo's far side stays untouched.
+- Applied to all `DiagonalHero` + all `DiagonalPanel` sections. CTA didn't need it (white text on teal). Mobile uses a different stacked layout and doesn't apply the fade.
+
+**Mobile responsiveness**
+- Navbar: hamburger + full-screen accordion overlay below `lg`.
+- Business pages: `MagazineSection` already used `col-span-12` defaults that stack; hero title sizes scaled down (`text-5xl sm:text-6xl md:text-7xl lg:text-8xl`).
+- Services pages: below `md`, `DiagonalHero` renders photo as full background + dark overlay + white text; `DiagonalPanel` stacks photo (52vh, diagonal-clipped bottom edge) above text block; `DiagonalCTA` stacks photo banner (40vh) above teal text block.
+
+**Image zoom calibration (services pages)**
+- Initial implementation used `h-[120%]` image overscan + `scale: 1.12` entry — caused photos to look zoomed-in on laptop screens.
+- Final: `h-[105–108%]` overscan, removed entry scale, parallax range trimmed to `±3%` on panels and `0–8%` on hero. Photos render at their natural framing inside the diagonal cut.
+
+**Assets:** All photos reused from existing `/public/*` (`forrecruiter.jpg`, `recruiters.jpg`, `Employe2.jpg`, `Employe3.jpg`, `forjobseeker.jpg`, `jobseekers.jpg`, `careercounseling.jpg`, `meiter.jpg`, `seminal.jpg`, `schoolbusiness.jpg`, `CEO.jpg`, `company.jpg`, `customer.jpg`).
+
+**Routes added:**
+- `GET /business/career-counseling`
+- `GET /business/staffing`
+- `GET /business/placement`
+- `GET /services/for-recruiter`
+- `GET /services/for-job-seeker`
+
+### Contact Forms Phase A — backend foundation (2026-05-21)
+- **NEW** `CandidateInquiry` model + `CandidateInquiryState` enum (`New | Reviewing | MovedToTalentPool | Rejected`). Holds B2C resume submissions for future jobs, decoupled from any specific `Job`.
+- **NEW** migration `20260521120000_add_candidate_inquiry` — creates `candidate_inquiry` table with unique `resume_key`, plus widens `ContactRequest.message` to `TEXT`.
+- **NEW** `backend/src/schemas/contact.schema.ts` — Zod create/update schemas for both company and candidate inquiries.
+- **REPLACED** `backend/src/services/contacts.service.ts` (was empty stub) — full CRUD for both surfaces, R2 presigned URL generation for resumes, state-transition timestamping for candidate inquiries, cascading R2 delete on candidate delete.
+- **NEW** `backend/src/controllers/contactController.ts` — 10 handlers spanning company and candidate inquiries + talent-pool slice.
+- **NEW** `backend/src/routes/contacts.route.ts` — mounted at `/api/contacts` in `backend/src/index.ts`.
+- **MODIFIED** `frontend/types/table.ts` — added `CompanyInquiry`, `CandidateInquiry`, `CandidateInquiryState`, `ContactStatus`, and their response types.
+- **OUT OF SCOPE THIS PHASE** (Phases B–D): public `/contact/company` + `/contact/customer` forms, admin `/admin/dashboard/messages` inbox UI, talent-pool page union with CandidateInquiry source.
+- Pre-existing failed migration `20260521035855_contact` (unrelated alter+index that errored on duplicate-key) was resolved as `--applied` after verifying the DB end-state already matched.
 
 ### Application Pipeline v3 — stage tabs, simplified status, auto-cleanup (2026-05-17)
 - **MODIFIED** `backend/prisma/schema.prisma` — `ApplicationStage` gains `Rejected`; `ApplicationStatus` drops `Rejected` (now `Active | OnHold | TalentPool`).
