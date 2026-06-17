@@ -5,10 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const businesses = [
-  { slug: "career-counseling", label: "Career Counseling", number: "01" },
+  { slug: "career-counseling", label: "Job Search Support", number: "01" },
   { slug: "staffing", label: "Temporary Staffing", number: "02" },
-  { slug: "placement", label: "Paid Placement", number: "03" },
+  { slug: "placement", label: "Recruitment & Placement", number: "03" },
+  { slug: "ssw-support", label: "Specified Skilled Worker Support", number: "04" },
 ];
+
+const totalLabel = String(businesses.length).padStart(2, "0");
 
 export function BusinessProgressRail() {
   const pathname = usePathname();
@@ -81,7 +84,7 @@ export function NextBusinessCue() {
         className="group block max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-28"
       >
         <p className="font-[var(--font-label)] text-[10px] tracking-[0.4em] uppercase text-[color:var(--color-on-surface-variant)] mb-4">
-          Next &mdash; {next.number} / 03
+          Next &mdash; {next.number} / {totalLabel}
         </p>
         <div className="flex items-baseline justify-between gap-6">
           <h3 className="font-display text-4xl md:text-6xl text-[color:var(--color-on-surface)] transition-colors duration-500 group-hover:text-[color:var(--color-primary)]">

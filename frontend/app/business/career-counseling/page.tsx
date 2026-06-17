@@ -7,50 +7,34 @@ import MagazineSection, {
 const sections: MagazineSectionData[] = [
   {
     number: "01",
-    label: "Glowing Partner Naitei Academy",
-    headline: "A school for the offer letter — GPNA.",
+    label: 'Job-Hunting School "GP Naitei Academy"',
+    headline: "A school for the offer letter.",
     body:
-      "Glowing Partner Naitei Academy (GPNA) is our flagship career preparation program. We walk students through self-analysis, industry research, ES writing, and interview practice — every step calibrated to the realities of the Japanese job-hunting calendar. Students leave with a clear narrative, a target list, and the confidence to defend their choices in a final interview.",
+      "This program was launched during the COVID-19 pandemic when job opportunities sharply declined. It was driven by a strong desire to help talented individuals who were struggling simply because they did not know how to navigate the job-hunting process. As a result, the academy has helped participants secure job offers from more than 500 companies, contributing significantly to their career development. One of our key strengths is providing personalized guidance and support — including interview preparation and practical job-search strategies — enabling participants to conduct their job search with confidence and satisfaction. We teach effective methods for presenting their experiences and strengths to potential employers. Our nationally certified professional career consultants provide comprehensive support tailored to each job seeker.",
     image: "/meiter.jpg",
     quote: {
       text: "An offer letter is not the goal. The goal is to know why you accepted it.",
-      attribution: "GPNA program philosophy",
+      attribution: "GP Naitei Academy philosophy",
     },
     bullets: [
-      "1-on-1 mentorship with industry-experienced advisors",
-      "Mock interviews recorded and reviewed line-by-line",
-      "ES and resume workshops in Japanese and English",
+      "500+ companies have extended offers to our participants",
+      "1-on-1 mentorship with nationally certified career consultants",
+      "Interview preparation, ES coaching, and self-presentation training",
+      "Personalized strategies for each job seeker's strengths",
     ],
   },
   {
     number: "02",
-    label: "Seminar Business",
+    label: "Job Hunting Seminars",
     headline: "Brought directly into the classroom.",
     body:
-      "We run career seminars at high schools, vocational schools, and universities across the region. Sessions cover everything from how an interview is actually scored, to how to read a job posting, to what employers wish students knew before graduation. Photos from recent on-site seminars below — the conversations rarely end when the slides do.",
+      "We provide job-hunting know-how to universities, vocational schools, and Japanese language schools with large international student populations, helping improve overall employment rates for the institutions. We have also conducted job-hunting seminars for two consecutive years as part of a subsidized project sponsored by the Hokkaido government — including delivery in October 2025 and January 2026.",
     image: "/seminal.jpg",
-    spreadImage: "/schoolbusiness.jpg",
     bullets: [
-      "On-site delivery at partner schools",
-      "Curricula tailored per grade level and faculty",
-      "Follow-up office hours for individual questions",
-    ],
-  },
-  {
-    number: "03",
-    label: "Career Consulting",
-    headline: "Ms. Uenaka, and a quiet office in Shiki.",
-    body:
-      "Our career consulting practice is led by Ms. Uenaka, a nationally certified career consultant with over a decade of experience guiding mid-career professionals, returners, and bilingual candidates. Sessions are held at our Shiki Satellite Office — a deliberately small space where confidentiality and unhurried conversation matter more than throughput.",
-    image: "/CEO.jpg",
-    quote: {
-      text: "Career change is rarely about the next job. It is about deciding what the next ten years should feel like.",
-      attribution: "Ms. Uenaka, Certified Career Consultant",
-    },
-    bullets: [
-      "Certified career consultant (キャリアコンサルタント)",
-      "Shiki Satellite Office — by appointment",
-      "Mid-career, returners, and bilingual specialization",
+      "Universities, vocational schools, and Japanese language schools",
+      "Specialized programs for international student populations",
+      "Two consecutive years of Hokkaido government subsidized projects",
+      "On-site delivery — October 2025 and January 2026",
     ],
   },
 ];
@@ -59,11 +43,33 @@ export default function CareerCounselingPage() {
   return (
     <main className="bg-[color:var(--color-surface)] text-[color:var(--color-on-surface)]">
       <BusinessHero
-        kicker="Business — 01 / 03"
-        title="Career Counseling."
-        intro="Three practices, one belief: the right work begins with the right question. From classroom seminars to one-on-one consulting, we build the conversations that lead to better careers."
+        kicker="Business — 01 / 04"
+        title="Job Search Support Services."
+        intro="Led by our representative, Kaminaka, who holds Japan's national Career Consultant qualification, we provide job-hunting expertise and guidance to both individuals and educational institutions."
         image="/careercounseling.jpg"
       />
+
+      <section className="border-t border-[color:var(--color-on-surface)]/10 py-16 md:py-20">
+        <div className="max-w-3xl mx-auto px-6 md:px-10 text-center">
+          <p className="font-[var(--font-label)] text-[10px] tracking-[0.4em] uppercase text-[color:var(--color-on-surface-variant)] mb-4">
+            What is a Career Consultant?
+          </p>
+          <p className="font-display text-lg md:text-xl leading-relaxed text-[color:var(--color-on-surface-variant)]">
+            For more information about Japan&apos;s national Career Consultant qualification, please refer to the
+            {" "}
+            <a
+              href="https://www.career-cc.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[color:var(--color-primary)] underline underline-offset-4 decoration-[color:var(--color-secondary)] hover:decoration-[color:var(--color-primary)] transition-colors"
+            >
+              Japan Career Development Association
+            </a>
+            .
+          </p>
+        </div>
+      </section>
+
       {sections.map((s, i) => (
         <MagazineSection key={s.number} data={s} index={i} />
       ))}

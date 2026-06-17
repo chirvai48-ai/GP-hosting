@@ -7,34 +7,34 @@ import MagazineSection, {
 const sections: MagazineSectionData[] = [
   {
     number: "01",
-    label: "Part-time — Cleaning Specialty",
-    headline: "Cleaning work, taken seriously.",
+    label: "International Student Dispatch",
+    headline: "Strong school ties, lower dispatch fees.",
     body:
-      "Our part-time staffing practice has a particular strength: cleaning. Office buildings, commercial facilities, hotels, and post-construction sites — we dispatch trained, reliable cleaning staff at the scale clients need, when they need them. We treat cleaning as skilled labor, because it is: the difference between adequate and excellent is visible the moment a guest walks in.",
+      "By leveraging our strong relationships with educational institutions, we primarily recruit and dispatch international students. Because international students are generally exempt from certain social insurance costs, we can offer staffing services with lower dispatch fees — one of our key advantages. We primarily dispatch staff to building maintenance and cleaning companies for cleaning-related work.",
     image: "/forrecruiter.jpg",
     spreadImage: "/recruiters.jpg",
     quote: {
-      text: "A clean space is the first thing people notice and the last thing they thank you for. We make sure both happen.",
-      attribution: "Operations team",
+      text: "Strong school relationships are the quiet edge — they translate directly into lower fees for our clients.",
+      attribution: "Staffing operations",
     },
     bullets: [
-      "Cleaning crews for offices, hotels, and commercial sites",
-      "Same-week dispatch for short-notice requests",
-      "Trained staff with on-site supervision available",
-      "Daily, weekly, and one-off engagements",
+      "Primary focus: international students from partner institutions",
+      "Lower dispatch fees via social insurance exemptions",
+      "Building maintenance and cleaning specialization",
+      "Same-week dispatch available for short-notice needs",
     ],
   },
   {
     number: "02",
-    label: "Full-time Dispatch",
-    headline: "Full-time hands, on your team.",
+    label: "Multilingual Support & Manuals",
+    headline: "Communication that doesn't break on the shift floor.",
     body:
-      "When part-time isn't enough, we place full-time dispatched staff who integrate into your operations. From back-office roles to facility management to specialist positions, we screen for fit before we send anyone — because a placement that doesn't last serves nobody.",
+      "Beyond placement, we provide creation of work manuals in the native languages of dispatched foreign staff, plus interpretation support between client companies and foreign staff through a 365-day multilingual call center. The goal is simple: remove the language friction that turns a good hire into an avoidable problem.",
     image: "/Employe2.jpg",
     bullets: [
-      "Long-term dispatch with attentive HR support",
-      "Bilingual candidates available across roles",
-      "Replacement guarantees during onboarding period",
+      "Native-language work manuals for dispatched staff",
+      "365-day multilingual call center for client–staff communication",
+      "Real-time interpretation support during operations",
     ],
   },
 ];
@@ -43,9 +43,9 @@ export default function StaffingPage() {
   return (
     <main className="bg-[color:var(--color-surface)] text-[color:var(--color-on-surface)]">
       <BusinessHero
-        kicker="Business — 02 / 03"
-        title="Temporary Staffing."
-        intro="From a cleaning crew tomorrow morning to a full-time dispatched specialist, we match the right hands to the right shift — at the scale your operation actually runs."
+        kicker="Business — 02 / 04"
+        title="Temporary Staffing Services."
+        intro="By leveraging our strong relationships with educational institutions, we primarily recruit and dispatch international students — backed by native-language manuals and a 365-day multilingual call center."
         image="/recruiters.jpg"
       />
       {sections.map((s, i) => (

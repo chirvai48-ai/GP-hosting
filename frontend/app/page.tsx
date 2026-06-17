@@ -5,6 +5,7 @@ import PartnerRibbon from '@/components/Swiper';
 import { Infopoint } from '@/components/InfoPoint';
 import EmployeeSection from '@/components/Employee';
 import NewsSection from '@/components/news/News';
+import FAQ from '@/components/FAQ';
 export default function Home() {
   return (
     <div>
@@ -14,6 +15,7 @@ export default function Home() {
       <Infopoint />
       <EmployeeSection />
       <NewsSection />
+      <FAQ />
     </div>
   );
 }

@@ -38,7 +38,7 @@ const navItems: NavItem[] = [
     href: "#",
     subItems: [
       {
-        label: "Career Counseling",
+        label: "Job Search Support",
         image: "/careercounseling.jpg",
         href: "/business/career-counseling",
       },
@@ -48,9 +48,14 @@ const navItems: NavItem[] = [
         href: "/business/staffing",
       },
       {
-        label: "Paid Employment Placement",
+        label: "Recruitment & Placement",
         image: "/jobseekers.jpg",
         href: "/business/placement",
+      },
+      {
+        label: "Specified Skilled Worker Support",
+        image: "/forrecruiter.jpg",
+        href: "/business/ssw-support",
       },
     ],
   },
