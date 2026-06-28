@@ -1,14 +1,10 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 
 interface Leader {
   id: number;
   name: string;
   title: string;
-  description: string;
-  email: string;
   imageUrl: string;
   logo: string;
   href?: string;
@@ -19,44 +15,20 @@ const leaders: Leader[] = [
     id: 1,
     name: "Narayan Pokhrel",
     title: "CEO, World Partner",
-    description: `I believe in always moving forward — working hard and taking on new challenges. You never know what's possible until you try, and true results come through persistence.
-
-What seems difficult often becomes achievable once you take that first step. Don't be afraid to fail — every experience leads to future success.
-
-Through 12 years of experience in Japan, I've learned and grown in many ways. I hope to share those insights with people interested in Japan and inspire new challenges ahead.
-
-Driven by a desire to help others, I have also been actively involved in volunteer activities. Contributing to others' happiness is my greatest motivation.
-
-Together, let's continue to grow and build a better future.`,
-    email: "ramesh@worldpartners.com",
-    imageUrl: "/CEO.jpg",
+    href: "https://world-partner.com.np",
+    imageUrl: "/Narayan.jpeg",
     logo: "/logogreen.jpeg",
   },
   {
     id: 2,
     name: "Go Uenaka",
     title: "CEO, Glowing Partner",
-    href: "https://www.glowing-partner.jp/",
-    description: `First of all, as a Japanese national, I would like to express my sincere appreciation for your interest in Japan.
-
-Glowing Partner Co., Ltd., based in Japan, is a company in which all employees are foreign nationals, and approximately 95% of them are from Nepal.
-I hold great admiration for Nepalese people. They are friendly, place strong value on family and community, and I believe they possess a deep understanding of the "truly important things in life," which many Japanese may have begun to overlook.
-By utilizing the bridge we have established between Nepal and Japan through the collaboration of World Partner Pvt. Ltd. and Glowing Partner Co., Ltd., we hope to welcome many more Nepali individuals to Japan.
-
-Furthermore, after your arrival in Japan, we will provide our fullest support to ensure that you genuinely feel, "I am truly glad I came to Japan."`,
-    email: "sita@worldpartners.com",
-    imageUrl: "/CEO.jpg",
+    imageUrl: "/UenkaGO.jpg",
     logo: "/GpLogoTransparent.png",
   },
 ];
 
 const LeadershipSection: React.FC = () => {
-  const [expanded, setExpanded] = useState<Record<number, boolean>>({});
-
-  const toggleExpand = (id: number): void => {
-    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
   return (
     <section className="w-full bg-[color:var(--color-surface)] py-16 md:py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1200px] mx-auto">
@@ -106,12 +78,13 @@ const LeadershipSection: React.FC = () => {
                   {/* Profile image */}
                   <div className="relative mb-8">
                     <div className="relative">
-                      <div className="relative w-34 h-34 md:w-42 md:h-42 rounded-full overflow-hidden border-4 border-white shadow-xl ring-2 ring-[color:var(--color-secondary)]/30">
+                      <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-4 border-white shadow-xl ring-2 ring-[color:var(--color-secondary)]/30">
                         <Image
                           src={leader.imageUrl}
                           alt={leader.name}
                           fill
-                          className="object-cover transform scale-125 hover:scale-105 transition-transform duration-300"
+                          sizes="176px"
+                          className="object-cover object-top"
                         />
                       </div>
                       {/* Logo badge */}
@@ -147,44 +120,6 @@ const LeadershipSection: React.FC = () => {
                       </p>
                     </div>
 
-                    {/* Expandable description */}
-                    <div className="mb-2">
-                      <div className="relative">
-                        <p
-                          className={`font-body text-base md:text-lg leading-relaxed text-left whitespace-pre-line text-[color:var(--color-on-surface-variant)] ${
-                            !expanded[leader.id] ? "line-clamp-5" : ""
-                          }`}
-                        >
-                          {leader.description}
-                        </p>
-
-                        {!expanded[leader.id] && (
-                          <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent pointer-events-none" />
-                        )}
-                      </div>
-
-                      <button
-                        onClick={() => toggleExpand(leader.id)}
-                        className="mt-4 inline-flex items-center gap-1.5 font-label text-sm text-[color:var(--color-primary)] hover:text-[color:var(--color-secondary)] font-medium transition-colors duration-200"
-                      >
-                        {expanded[leader.id] ? "Show Less" : "Read More"}
-                        <svg
-                          className={`w-4 h-4 transition-transform duration-300 ${
-                            expanded[leader.id] ? "rotate-180" : ""
-                          }`}
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 9l-7 7-7-7"
-                          />
-                        </svg>
-                      </button>
-                    </div>
                   </div>
                 </div>
               ))}

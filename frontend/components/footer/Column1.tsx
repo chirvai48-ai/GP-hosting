@@ -17,12 +17,18 @@ export default function BrandColumn() {
           label: "Our Address",
           value: (
             <>
-              1-16-21 Yakyucho, Higashimatsuyama, Saitama
-              
+              6th Floor, 2-36-1 Ikebukuro, Toshima City, Tokyo 171-0014, Japan
             </>
           ),
         },
-        { label: "Call Us", value: "+81 50-1790-3742" },
+        {
+          label: "Call Us",
+          value: (
+            <a href="tel:+81368419101" className="hover:underline">
+              +81-3-6841-9101
+            </a>
+          ),
+        },
         { label: "Email Us", value: "info@glowing-partner.jp" },
       ].map(({ label, value }) => (
         <div key={label} className="flex items-start gap-3 mb-3">

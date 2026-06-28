@@ -20,6 +20,7 @@ export interface ThreeDCarouselItem {
   tags: string[];
   imageUrl: string;
   link: string;
+  isFeatured?: boolean;
 }
 
 interface ThreeDCarouselProps {
@@ -127,34 +128,39 @@ const ThreeDCarousel = ({
                 )}`}
               >
                 <Card
-                  className={`overflow-hidden bg-background h-[${cardHeight}px] border shadow-sm 
-                hover:shadow-md flex flex-col`}
+                  className={`overflow-hidden bg-background h-[${cardHeight}px] flex flex-col transition-shadow ${
+                    item.isFeatured
+                      ? "border-2 border-secondary shadow-[0_8px_30px_-8px_rgba(201,168,76,0.45)] hover:shadow-[0_12px_36px_-8px_rgba(201,168,76,0.55)]"
+                      : "border shadow-sm hover:shadow-md"
+                  }`}
                 >
                   <div
-                    className="relative bg-black flex items-center justify-center h-100 overflow-hidden"
+                    className="relative bg-black flex items-end justify-center h-[460px] overflow-hidden"
                     style={{
                       backgroundImage: `url(${item.imageUrl})`,
                       backgroundSize: "cover",
-                      backgroundPosition: "center",
+                      backgroundPosition: "top center",
                     }}
                   >
-                    <div className="absolute inset-0 bg-black/50" />
-                    <div className="relative z-10 text-center text-white">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                    {item.isFeatured && (
+                      <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 text-[10px] font-label font-semibold tracking-[0.18em] uppercase text-primary border border-secondary/60 shadow-sm">
+                        <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
+                        Chief Executive
+                      </span>
+                    )}
+                    <div className="relative z-10 text-center text-white pb-6 px-4 w-full">
                       <h3 className="text-2xl font-bold mb-2 font-headline">
                         {item.brand.toUpperCase()}
                       </h3>
-                      <div className="w-22 h-1 mx-auto mb-2 bg-secondary" />
-                      <p className="text-sm font-label ">{item.title}</p>
+                      <div className="w-16 h-0.5 mx-auto mb-2 bg-secondary" />
+                      <p className="text-xs font-label tracking-[0.2em] uppercase opacity-90">
+                        {item.title}
+                      </p>
                     </div>
                   </div>
 
                   <CardContent className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-xl font-bold mb-1 text-primary font-headline">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-500 text-md font-medium mb-2 font-label">
-                      {item.brand}
-                    </p>
                     <p className="text-gray-600 text-sm flex-grow font-headline">
                       {item.description}
                     </p>

@@ -1,14 +1,9 @@
-import { BusinessProgressRail } from "@/components/business/BusinessChrome";
+import PageShell from "@/components/business/PageShell";
 
 export default function BusinessLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <>
-      <BusinessProgressRail />
-      {children}
-    </>
-  );
+  return <PageShell>{children}</PageShell>;
 }

@@ -157,9 +157,9 @@ export default function CompanyContactPage() {
             </div>
 
             <div className="hidden lg:flex flex-col gap-2 text-sm text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-body)]">
-              <div className="flex items-center gap-2"><MapPin size={14} className="text-[var(--color-primary)]" /> Tokyo, Japan</div>
-              <div className="flex items-center gap-2"><Mail size={14} className="text-[var(--color-primary)]" /> business@glowingpartner.jp</div>
-              <div className="flex items-center gap-2"><Phone size={14} className="text-[var(--color-primary)]" /> +81 3 1234 5678</div>
+              <div className="flex items-start gap-2"><MapPin size={14} className="mt-1 shrink-0 text-[var(--color-primary)]" /> 6th Floor, 2-36-1 Ikebukuro, Toshima City, Tokyo 171-0014, Japan</div>
+              <div className="flex items-center gap-2"><Mail size={14} className="text-[var(--color-primary)]" /> info@glowing-partner.jp</div>
+              <div className="flex items-center gap-2"><Phone size={14} className="text-[var(--color-primary)]" /> <a href="tel:+81368419101" className="hover:text-[var(--color-primary)]">+81-3-6841-9101</a></div>
             </div>
           </aside>
 
