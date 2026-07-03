@@ -42,7 +42,7 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--color-surface)]">
+    <div className="min-h-screen bg-[var(--color-surface)] pt-16 md:pt-20">
       <SearchBar searchState={searchState} onChange={setSearchState} onClear={resetAll} />
       <div className="flex flex-row items-start gap-6 px-4 md:px-8 lg:px-12">
         <Filters filters={filters} onChange={setFilters} />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Search, MapPin, BriefcaseBusiness } from "lucide-react";
 import Slider from "@mui/material/Slider";
 import InputLabel from "@mui/material/InputLabel";
@@ -27,6 +27,14 @@ function formatYen(value: number) {
 function SearchBar({ searchState, onChange, onClear }: Props) {
   const [keyword, setKeyword] = useState(searchState.searchValue);
 
+  // Latest searchState in a ref so the debounced push never uses a stale
+  // snapshot (which would silently overwrite filters the user changed
+  // during the 250ms debounce window).
+  const searchStateRef = useRef(searchState);
+  useEffect(() => {
+    searchStateRef.current = searchState;
+  });
+
   // Sync local keyword when parent resets (e.g. clear-filters)
   useEffect(() => {
     setKeyword(searchState.searchValue);
@@ -34,13 +42,20 @@ function SearchBar({ searchState, onChange, onClear }: Props) {
 
   // Debounce keyword push to parent
   useEffect(() => {
-    if (keyword === searchState.searchValue) return;
+    if (keyword === searchStateRef.current.searchValue) return;
     const t = setTimeout(() => {
-      onChange({ ...searchState, searchValue: keyword });
+      onChange({ ...searchStateRef.current, searchValue: keyword });
     }, 250);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyword]);
+
+  const handleClear = () => {
+    // Reset local input immediately so any pending debounce cleanup runs
+    // and clears its timeout before it can re-push the old keyword.
+    setKeyword("");
+    onClear();
+  };
 
   const cityValue: string[] = [
     "All cities",
@@ -123,7 +138,7 @@ function SearchBar({ searchState, onChange, onClear }: Props) {
             <Button
               variant="outlined"
               size="small"
-              onClick={onClear}
+              onClick={handleClear}
               sx={{
                 fontFamily: "Cormorant Garamond",
                 fontSize: 12,
