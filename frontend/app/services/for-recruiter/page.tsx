@@ -1,4 +1,3 @@
-import DiagonalHero from "@/components/services/DiagonalHero";
 import DiagonalPanel, {
   DiagonalPanelData,
 } from "@/components/services/DiagonalPanel";
@@ -11,7 +10,7 @@ const panels: DiagonalPanelData[] = [
     headline: "Recruitment, with fewer surprises.",
     body:
       "Hiring decisions are expensive and noisy. We sit between the posting and the offer letter and absorb the noise — screening, scheduling, cultural fit checks, language assessment — so the people who reach your interview room are the ones worth your time.",
-    image: "/forrecruiter.jpg",
+    image: "/Panel01.jpg",
     bullets: [
       "Pre-screened, role-matched candidates only",
       "Bilingual sourcing across Japan and overseas",
@@ -24,7 +23,8 @@ const panels: DiagonalPanelData[] = [
     headline: "From cleaning crews to specified skilled workers.",
     body:
       "Whatever your headcount looks like — a shift of part-time cleaning staff, a full-time bilingual back-office hire, an SSW visa cohort, or a technical intern training program — we have the pipeline. One agency, one point of contact, end-to-end coverage.",
-    image: "/recruiters.jpg",
+    image: "/panel02.jpg",
+    imagePosition: "0% center",
     bullets: [
       "Part-time dispatch — cleaning specialty",
       "Full-time dispatch and direct placement",
@@ -38,7 +38,7 @@ const panels: DiagonalPanelData[] = [
     headline: "We don't disappear after the offer letter.",
     body:
       "Recruitment is the easy part — retention is the work. We stay involved through onboarding, first-month check-ins, and the inevitable first issues. For visa-based hires, we coordinate with sending and supervising organizations so compliance never lands on your HR team unprepared.",
-    image: "/Employe2.jpg",
+    image: "/panel03.jpg",
     bullets: [
       "Post-placement check-ins for the first 12 months",
       "Replacement guarantees during probation",
@@ -50,12 +50,6 @@ const panels: DiagonalPanelData[] = [
 export default function ForRecruiterPage() {
   return (
     <main className="bg-[color:var(--color-surface)] text-[color:var(--color-on-surface)]">
-      <DiagonalHero
-        kicker="For Recruiters"
-        title="Hiring partners, not job boards."
-        intro="We work alongside HR teams across Japan to fill roles that matter — from a same-week cleaning shift to a long-horizon specialist hire."
-        image="/forrecruiter.jpg"
-      />
       {panels.map((p, i) => (
         <DiagonalPanel key={p.number} data={p} index={i} />
       ))}

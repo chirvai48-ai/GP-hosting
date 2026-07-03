@@ -10,6 +10,7 @@ export type DiagonalPanelData = {
   body: string;
   image: string;
   bullets?: string[];
+  imagePosition?: string;
 };
 
 type Props = {
@@ -59,10 +60,11 @@ export default function DiagonalPanel({ data, index }: Props) {
           <motion.img
             src={data.image}
             alt={data.label}
-            initial={{ opacity: 0, scale: 1.1 }}
+            initial={{ opacity: 0, scale: 1.05 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 1.1, ease: easeOut }}
+            style={{ objectPosition: "center 30%" }}
             className="absolute inset-0 h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-black/30" />
@@ -176,9 +178,15 @@ export default function DiagonalPanel({ data, index }: Props) {
             }}
             whileInView={{ opacity: 1, x: "0%" }}
             viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 1.2, ease: easeOut }}
-            style={{ y: imageY }}
-            className="absolute inset-0 h-[106%] w-full object-cover will-change-transform"
+            style={{
+              y: imageY,
+              objectPosition:
+                data.imagePosition ??
+                (photoLeft ? "80% center" : "20% center"),
+            }}
+            className={`absolute inset-y-0 h-[108%] w-[70%] object-cover will-change-transform ${
+              photoLeft ? "left-0" : "right-0"
+            }`}
           />
           <div className="absolute inset-0 bg-black/35" />
         </div>

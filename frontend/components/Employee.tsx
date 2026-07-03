@@ -29,7 +29,7 @@ const items: ThreeDCarouselItem[] = [
     description:
       "Arun supports the full employment journey — from recruiting foreign talent to labor management, training, and long-term follow-up for client companies.",
     tags: ["Recruitment", "Labor Management", "Training", "Follow-up"],
-    imageUrl: "/CEO.jpg",
+    imageUrl: "/Arun.jpeg",
     link: "/about#arun",
   },
   {

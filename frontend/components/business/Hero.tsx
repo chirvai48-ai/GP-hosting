@@ -1,15 +1,20 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "motion/react";
 
 export default function Hero({
   eyebrow,
   title,
   lede,
+  image,
+  imageAlt,
 }: {
   eyebrow: string;
   title: string;
   lede?: string;
+  image?: string;
+  imageAlt?: string;
 }) {
   return (
     <section className="max-w-6xl mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-16 md:pb-24">
@@ -38,6 +43,23 @@ export default function Hero({
         >
           {lede}
         </motion.p>
+      )}
+      {image && (
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="mt-12 md:mt-16 relative aspect-[21/9] overflow-hidden bg-[color:var(--color-container-low)]"
+        >
+          <Image
+            src={image}
+            alt={imageAlt || title}
+            fill
+            className="object-cover"
+            sizes="(min-width: 1024px) 1024px, 100vw"
+            priority
+          />
+        </motion.div>
       )}
     </section>
   );

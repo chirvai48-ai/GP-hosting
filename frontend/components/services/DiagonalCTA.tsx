@@ -30,10 +30,11 @@ export default function DiagonalCTA({
           <motion.img
             src={image}
             alt=""
-            initial={{ opacity: 0, scale: 1.1 }}
+            initial={{ opacity: 0, scale: 1.05 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 1.2, ease: easeOut }}
+            style={{ objectPosition: "center 30%" }}
             className="absolute inset-0 h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-black/45" />
@@ -130,6 +131,7 @@ export default function DiagonalCTA({
             whileInView={{ opacity: 1, x: "0%" }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 1.3, ease: easeOut }}
+            style={{ objectPosition: "20% center" }}
             className="absolute inset-0 h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-black/50" />

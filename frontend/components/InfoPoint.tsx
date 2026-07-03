@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useRef, useEffect, ReactNode } from "react";
 import SvgComponent from "./ExploreButtonSVG";
 import { motion, AnimatePresence } from "motion/react";
@@ -164,9 +165,11 @@ interface StepsPanelProps {
   heading: string;
   steps: Step[];
   onClose: () => void;
+  moreHref: string;
+  moreLabel: string;
 }
 
-function StepsPanel({ heading, steps, onClose }: StepsPanelProps) {
+function StepsPanel({ heading, steps, onClose, moreHref, moreLabel }: StepsPanelProps) {
   return (
     <div className="relative flex flex-col max-w-md w-full px-2">
       <button
@@ -265,6 +268,26 @@ function StepsPanel({ heading, steps, onClose }: StepsPanelProps) {
           </div>
         </div>
       ))}
+
+      <Link
+        href={moreHref}
+        className="group mt-6 ml-13 inline-flex items-center gap-3 self-start px-5 py-2.5 border transition-colors"
+        style={{
+          borderColor: "var(--color-primary)",
+          color: "var(--color-primary)",
+          fontFamily: "var(--font-label)",
+        }}
+      >
+        <span className="text-[11px] tracking-[0.28em] uppercase">
+          {moreLabel}
+        </span>
+        <span
+          aria-hidden="true"
+          className="text-sm transition-transform duration-300 group-hover:translate-x-1"
+        >
+          →
+        </span>
+      </Link>
     </div>
   );
 }
@@ -458,6 +481,8 @@ export const Infopoint = () => {
                       heading="Hiring with us"
                       steps={recruiterSteps}
                       onClose={() => setExpand(false)}
+                      moreHref="/services/for-recruiter"
+                      moreLabel="More details for companies"
                     />
                   </motion.div>
                 )}
@@ -476,6 +501,8 @@ export const Infopoint = () => {
                       heading="Your journey to Japan"
                       steps={seekerSteps}
                       onClose={() => setExpand(false)}
+                      moreHref="/services/for-job-seeker"
+                      moreLabel="More details for job seekers"
                     />
                   </motion.div>
                 )}

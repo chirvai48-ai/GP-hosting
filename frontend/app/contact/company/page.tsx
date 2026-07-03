@@ -117,7 +117,7 @@ export default function CompanyContactPage() {
           <aside className="lg:sticky lg:top-10 flex flex-col gap-5">
             <div className="relative w-full aspect-[4/5] sm:aspect-[16/10] lg:aspect-[4/5] rounded-3xl overflow-hidden shadow-lg">
               <Image
-                src="/forrecruiter.jpg"
+                src="/Panel01.jpg"
                 alt="Hiring partners"
                 fill
                 priority

@@ -53,7 +53,7 @@ I am also one of the many foreigners who crossed the sea to come to Japan 12 yea
     id: "arun",
     name: "Arun Gurung",
     role: "Employment Support Lead",
-    photo: null,
+    photo: "/Arun.jpeg",
     bio: `I provide comprehensive support throughout the entire employment process — from recruiting foreign talent to labor management, employee training after hiring, and ongoing follow-up support for companies.
 
 As a foreign worker in Japan myself, I have grown with the help and kindness of the people around me. Because of that experience, I can truly understand the concerns and anxieties of job seekers and offer practical, personalized advice.
