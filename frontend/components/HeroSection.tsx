@@ -114,7 +114,7 @@ export default function HeroSection() {
             textShadow: "0 2px 40px rgba(20,86,82,0.6)",
           }}
         >
-          Different{" "}
+          Differences{" "}
           <em
             className="not-italic"
             style={{
@@ -122,10 +122,10 @@ export default function HeroSection() {
               fontStyle: "italic",
             }}
           >
-            Is
+            Create
           </em>
           <br />
-          Good
+          New Opportunities
         </h1>
 
         {/* Sub-copy 

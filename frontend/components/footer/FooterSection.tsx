@@ -154,8 +154,8 @@ export default function FooterSection() {
         style={{ background: "rgba(201,168,76,0.35)" }}
       />
 
-      {/* Three-column grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-0 px-10 md:px-10 pt-4 pb-10">
+      {/* Two-column grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-0 px-10 md:px-10 pt-4 pb-10">
         {/* Col 1 */}
         <div
           className="pb-10 md:pb-0 md:pr-6 md:border-r"
@@ -166,18 +166,11 @@ export default function FooterSection() {
 
         {/* Col 2 */}
         <div
-          className="py-10 md:py-0 md:px-6 md:border-r border-t md:border-t-0"
-          style={{ borderColor: "rgba(201,168,76,0.15)" }}
-        >
-          <HoursNewsletterColumn />
-        </div>
-
-        {/* Col 3 */}
-        <div
-          className="pt-10 md:pt-0 md:pl-10 border-t md:border-t-0"
+          className="pt-10 md:pt-0 md:pl-10 border-t md:border-t-0 flex flex-col gap-10"
           style={{ borderColor: "rgba(201,168,76,0.15)" }}
         >
           <FacebookColumn />
+          <HoursNewsletterColumn />
         </div>
       </div>
 

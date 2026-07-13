@@ -10,7 +10,7 @@ export default function IntroSection() {
 
         {/* Headline */}
         <h1 className="font-headline text-6xl sm:text-7xl lg:text-8xl font-light italic text-[color:var(--color-primary)] leading-[1.05] mb-6">
-          Different is Good!
+          Differences create new opportunities
         </h1>
 
         {/* Gold accent */}

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { SectionLabel,officeHours,GoldDivider } from "./Helpers";
+import { SectionLabel,GoldDivider } from "./Helpers";
 
 
 export default function HoursNewsletterColumn() {
@@ -13,35 +13,7 @@ export default function HoursNewsletterColumn() {
 
   return (
     <div className="flex flex-col">
-        
-      {/* Office Hours */}
-      <SectionLabel>Office Hours</SectionLabel>
-      <div className="space-y-[7px] mb-1">
-        {officeHours.map(({ day, time }) => (
-          <div key={day} className="flex justify-between items-baseline">
-            <span
-              className="text-[13px]"
-              style={{
-                fontFamily: "var(--font-body)",
-                color: "rgba(248,250,248,0.5)",
-              }}
-            >
-              {day}
-            </span>
-            <span
-              className="text-[13px]"
-              style={{
-                fontFamily: "var(--font-body)",
-                color: "rgba(248,250,248,0.8)",
-              }}
-            >
-              {time}
-            </span>
-          </div>
-        ))}
-      </div>
 
-      <GoldDivider />
 
       {/* Newsletter */}
       <SectionLabel>Subscribe to Newsletter</SectionLabel>

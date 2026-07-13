@@ -41,7 +41,7 @@ Instead, we strive to help your international employees become valuable members 
   {
     id: "narayan",
     name: "Narayan Pokhrel",
-    role: "CEO, World Partner",
+    role: "",
     photo: "/Narayan.jpeg",
     bio: `I have been living in Japan for the past 12 years. Thanks to this experience, I have a deep understanding of the expectations, perspectives, and needs of both Japanese companies and foreign employees.
 
@@ -52,7 +52,7 @@ I am also one of the many foreigners who crossed the sea to come to Japan 12 yea
   {
     id: "arun",
     name: "Arun Gurung",
-    role: "Employment Support Lead",
+    role: "",
     photo: "/Arun.jpeg",
     bio: `I provide comprehensive support throughout the entire employment process — from recruiting foreign talent to labor management, employee training after hiring, and ongoing follow-up support for companies.
 
@@ -65,7 +65,7 @@ Above all, I value building strong human relationships, and I dedicate myself to
   {
     id: "sanyukta",
     name: "Sanyukta Amatya",
-    role: "Career Support Specialist",
+    role: "",
     photo: "/Amatya.jpeg",
     bio: `At Glowing Partner, we are committed to supporting each individual by understanding their goals and aspirations and helping them find workplaces where they can grow with confidence and peace of mind.
 
@@ -74,7 +74,7 @@ We believe that every new challenge and every fresh start holds great potential.
   {
     id: "norin",
     name: "Norin Shrestha",
-    role: "Client Support",
+    role: "",
     photo: "/Norin.jpeg",
     bio: `For me, teamwork, respect for others, and continuous learning are extremely important.
 
@@ -85,7 +85,7 @@ My goal is to be someone my colleagues and clients can trust by providing kind, 
   {
     id: "nirajan",
     name: "Nirajan Pokhrel",
-    role: "Account & Staff Relations",
+    role: "",
     photo: "/Nirajan.jpeg",
     bio: `In my daily work, I value building trusting relationships with both our client companies and our staff above all else.
 

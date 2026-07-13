@@ -6,8 +6,8 @@ export default function BrandColumn() {
     <div className="flex flex-col">
         <SectionLabel>Our company</SectionLabel>
       {/* Logo */}
-      <div className="flex justify-center items-center">
-      <Image alt="GP LOGO" src={"/GpLogoTransparent.png"} width={100} height={100} />
+      <div className="flex justify-start items-center">
+      <Image alt="GP LOGO" src={"/GpLogoTransparent.png"} width={130} height={130} />
       </div> 
       
 
@@ -19,14 +19,6 @@ export default function BrandColumn() {
             <>
               6th Floor, 2-36-1 Ikebukuro, Toshima City, Tokyo 171-0014, Japan
             </>
-          ),
-        },
-        {
-          label: "Call Us",
-          value: (
-            <a href="tel:+81368419101" className="hover:underline">
-              +81-3-6841-9101
-            </a>
           ),
         },
         { label: "Email Us", value: "info@glowing-partner.jp" },
@@ -72,7 +64,7 @@ export default function BrandColumn() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={label}
-            className="w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300"
+            className="w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300"
             style={{
               border: "0.5px solid rgba(201,168,76,0.5)",
               color: "var(--color-secondary)",

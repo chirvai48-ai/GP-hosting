@@ -54,6 +54,9 @@ export default function SswSupportPage() {
         eyebrow="Business 04"
         title="Support Services for Specified Skilled Workers"
         lede="As a Registered Support Organization, we recruit and develop human resources directly in Nepal through our group company, World Partner Pvt. Ltd., and provide ongoing support after employment in Japan."
+        image="/Business4.jpeg"
+        imageAlt="SSW Support Services"
+        sideBySide
       />
 
       <Section

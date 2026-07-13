@@ -45,6 +45,8 @@ export default function PlacementPage() {
         eyebrow="Business 03"
         title="Recruitment and Placement Services"
         lede="For companies seeking direct-hire employees, we provide recruitment and placement services on a fully success-fee basis — meaning fees are charged only upon successful placement."
+        image="/Business3.jpeg"
+        imageAlt="Recruitment and Placement Services"
       />
 
       <StatGraphic

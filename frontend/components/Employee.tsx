@@ -14,7 +14,7 @@ const items: ThreeDCarouselItem[] = [
   },
   {
     id: 2,
-    title: "CEO, World Partner",
+    title: "",
     brand: "Narayan Pokhrel",
     description:
       "Twelve years in Japan shape Narayan's role as the bridge between Japanese companies and foreign employees, championing 100% mutual understanding through two-way communication.",
@@ -24,7 +24,7 @@ const items: ThreeDCarouselItem[] = [
   },
   {
     id: 3,
-    title: "Employment Support Lead",
+    title: "",
     brand: "Arun Gurung",
     description:
       "Arun supports the full employment journey — from recruiting foreign talent to labor management, training, and long-term follow-up for client companies.",
@@ -34,7 +34,7 @@ const items: ThreeDCarouselItem[] = [
   },
   {
     id: 4,
-    title: "Career Support Specialist",
+    title: "",
     brand: "Sanyukta Amatya",
     description:
       "Sanyukta partners with each candidate to understand their aspirations and connect them with workplaces where they can grow with confidence and peace of mind.",
@@ -44,7 +44,7 @@ const items: ThreeDCarouselItem[] = [
   },
   {
     id: 5,
-    title: "Client Support",
+    title: "",
     brand: "Norin Shrestha",
     description:
       "Guided by teamwork, respect, and continuous learning, Norin offers kind, attentive, and reliable support to colleagues and clients alike.",
@@ -54,7 +54,7 @@ const items: ThreeDCarouselItem[] = [
   },
   {
     id: 6,
-    title: "Account & Staff Relations",
+    title: "",
     brand: "Nirajan Pokhrel",
     description:
       "Nirajan builds trusting relationships with client companies and staff, approaching every consultation with sincerity and full responsibility.",

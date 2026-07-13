@@ -53,6 +53,8 @@ export default function StaffingPage() {
         eyebrow="Business 02"
         title="Temporary Staffing Services"
         lede="Leveraging our strong relationships with educational institutions, we primarily recruit and dispatch international students — pairing client companies with motivated, capable staff while keeping dispatch fees competitive."
+        image="/Business2.jpeg"
+        imageAlt="Temporary Staffing Services"
       />
 
       <Section

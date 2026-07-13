@@ -63,8 +63,3 @@ export const socialLinks = [
   },
 ];
 
-export const officeHours = [
-  { day: "Monday – Friday", time: "9:00 – 18:00" },
-  { day: "Saturday", time: "10:00 – 15:00" },
-  { day: "Sunday", time: "Closed" },
-];
