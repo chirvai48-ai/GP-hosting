@@ -42,3 +42,7 @@ yarn-error.log*
 next-env.d.ts
 
 /alternativeComponents
+e2e/.auth
+test-results/
+playwright-report/
+playwright/.cache/
