@@ -9,7 +9,7 @@ import {
 } from "../services/application.service";
 import {
   fetchApplicationForResume,
-  generateResumeDocx,
+  generateResumeXlsx,
 } from "../services/resume.service";
 
 export const postApplication = async (req: Request, res: Response, next: NextFunction) => {
@@ -74,15 +74,15 @@ export const exportResume = async (req: Request, res: Response, next: NextFuncti
       res.status(404).json({ message: `Application with id ${id} not found` });
       return;
     }
-    const buffer = await generateResumeDocx(app);
+    const buffer = await generateResumeXlsx(app);
     const safeName = app.full_name.replace(/[^a-zA-Z0-9_-]+/g, "_");
     res.setHeader(
       "Content-Type",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename="${safeName}_resume.docx"`
+      `attachment; filename="${safeName}_resume.xlsx"`
     );
     res.send(buffer);
   } catch (err) {
