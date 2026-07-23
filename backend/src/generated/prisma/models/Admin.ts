@@ -33,6 +33,8 @@ export type AdminMinAggregateOutputType = {
   emailVerified: boolean | null
   updatedAt: Date | null
   image: string | null
+  lastSeenApplicationsAt: Date | null
+  lastSeenMessagesAt: Date | null
 }
 
 export type AdminMaxAggregateOutputType = {
@@ -44,6 +46,8 @@ export type AdminMaxAggregateOutputType = {
   emailVerified: boolean | null
   updatedAt: Date | null
   image: string | null
+  lastSeenApplicationsAt: Date | null
+  lastSeenMessagesAt: Date | null
 }
 
 export type AdminCountAggregateOutputType = {
@@ -55,6 +59,8 @@ export type AdminCountAggregateOutputType = {
   emailVerified: number
   updatedAt: number
   image: number
+  lastSeenApplicationsAt: number
+  lastSeenMessagesAt: number
   _all: number
 }
 
@@ -68,6 +74,8 @@ export type AdminMinAggregateInputType = {
   emailVerified?: true
   updatedAt?: true
   image?: true
+  lastSeenApplicationsAt?: true
+  lastSeenMessagesAt?: true
 }
 
 export type AdminMaxAggregateInputType = {
@@ -79,6 +87,8 @@ export type AdminMaxAggregateInputType = {
   emailVerified?: true
   updatedAt?: true
   image?: true
+  lastSeenApplicationsAt?: true
+  lastSeenMessagesAt?: true
 }
 
 export type AdminCountAggregateInputType = {
@@ -90,6 +100,8 @@ export type AdminCountAggregateInputType = {
   emailVerified?: true
   updatedAt?: true
   image?: true
+  lastSeenApplicationsAt?: true
+  lastSeenMessagesAt?: true
   _all?: true
 }
 
@@ -174,6 +186,8 @@ export type AdminGroupByOutputType = {
   emailVerified: boolean
   updatedAt: Date
   image: string | null
+  lastSeenApplicationsAt: Date | null
+  lastSeenMessagesAt: Date | null
   _count: AdminCountAggregateOutputType | null
   _min: AdminMinAggregateOutputType | null
   _max: AdminMaxAggregateOutputType | null
@@ -206,6 +220,8 @@ export type AdminWhereInput = {
   emailVerified?: Prisma.BoolFilter<"Admin"> | boolean
   updatedAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
   image?: Prisma.StringNullableFilter<"Admin"> | string | null
+  lastSeenApplicationsAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
+  lastSeenMessagesAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
   news?: Prisma.NewsListRelationFilter
   replies?: Prisma.ContactReplyListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
@@ -223,6 +239,8 @@ export type AdminOrderByWithRelationInput = {
   emailVerified?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastSeenApplicationsAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastSeenMessagesAt?: Prisma.SortOrderInput | Prisma.SortOrder
   news?: Prisma.NewsOrderByRelationAggregateInput
   replies?: Prisma.ContactReplyOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
@@ -244,6 +262,8 @@ export type AdminWhereUniqueInput = Prisma.AtLeast<{
   emailVerified?: Prisma.BoolFilter<"Admin"> | boolean
   updatedAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
   image?: Prisma.StringNullableFilter<"Admin"> | string | null
+  lastSeenApplicationsAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
+  lastSeenMessagesAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
   news?: Prisma.NewsListRelationFilter
   replies?: Prisma.ContactReplyListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
@@ -261,6 +281,8 @@ export type AdminOrderByWithAggregationInput = {
   emailVerified?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastSeenApplicationsAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastSeenMessagesAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AdminCountOrderByAggregateInput
   _max?: Prisma.AdminMaxOrderByAggregateInput
   _min?: Prisma.AdminMinOrderByAggregateInput
@@ -278,6 +300,8 @@ export type AdminScalarWhereWithAggregatesInput = {
   emailVerified?: Prisma.BoolWithAggregatesFilter<"Admin"> | boolean
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Admin"> | Date | string
   image?: Prisma.StringNullableWithAggregatesFilter<"Admin"> | string | null
+  lastSeenApplicationsAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Admin"> | Date | string | null
+  lastSeenMessagesAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Admin"> | Date | string | null
 }
 
 export type AdminCreateInput = {
@@ -289,6 +313,8 @@ export type AdminCreateInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
   news?: Prisma.NewsCreateNestedManyWithoutAdminInput
   replies?: Prisma.ContactReplyCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAdminInput
@@ -306,6 +332,8 @@ export type AdminUncheckedCreateInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
   news?: Prisma.NewsUncheckedCreateNestedManyWithoutAdminInput
   replies?: Prisma.ContactReplyUncheckedCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAdminInput
@@ -323,6 +351,8 @@ export type AdminUpdateInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   news?: Prisma.NewsUpdateManyWithoutAdminNestedInput
   replies?: Prisma.ContactReplyUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAdminNestedInput
@@ -340,6 +370,8 @@ export type AdminUncheckedUpdateInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   news?: Prisma.NewsUncheckedUpdateManyWithoutAdminNestedInput
   replies?: Prisma.ContactReplyUncheckedUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAdminNestedInput
@@ -357,6 +389,8 @@ export type AdminCreateManyInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
 }
 
 export type AdminUpdateManyMutationInput = {
@@ -368,6 +402,8 @@ export type AdminUpdateManyMutationInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AdminUncheckedUpdateManyInput = {
@@ -379,6 +415,8 @@ export type AdminUncheckedUpdateManyInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AdminOrderByRelevanceInput = {
@@ -396,6 +434,8 @@ export type AdminCountOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  lastSeenApplicationsAt?: Prisma.SortOrder
+  lastSeenMessagesAt?: Prisma.SortOrder
 }
 
 export type AdminMaxOrderByAggregateInput = {
@@ -407,6 +447,8 @@ export type AdminMaxOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  lastSeenApplicationsAt?: Prisma.SortOrder
+  lastSeenMessagesAt?: Prisma.SortOrder
 }
 
 export type AdminMinOrderByAggregateInput = {
@@ -418,6 +460,8 @@ export type AdminMinOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  lastSeenApplicationsAt?: Prisma.SortOrder
+  lastSeenMessagesAt?: Prisma.SortOrder
 }
 
 export type AdminScalarRelationFilter = {
@@ -440,6 +484,10 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type AdminCreateNestedOneWithoutNotes_createdInput = {
@@ -539,6 +587,8 @@ export type AdminCreateWithoutNotes_createdInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
   news?: Prisma.NewsCreateNestedManyWithoutAdminInput
   replies?: Prisma.ContactReplyCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAdminInput
@@ -555,6 +605,8 @@ export type AdminUncheckedCreateWithoutNotes_createdInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
   news?: Prisma.NewsUncheckedCreateNestedManyWithoutAdminInput
   replies?: Prisma.ContactReplyUncheckedCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAdminInput
@@ -576,6 +628,8 @@ export type AdminCreateWithoutNotes_editedInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
   news?: Prisma.NewsCreateNestedManyWithoutAdminInput
   replies?: Prisma.ContactReplyCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAdminInput
@@ -592,6 +646,8 @@ export type AdminUncheckedCreateWithoutNotes_editedInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
   news?: Prisma.NewsUncheckedCreateNestedManyWithoutAdminInput
   replies?: Prisma.ContactReplyUncheckedCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAdminInput
@@ -624,6 +680,8 @@ export type AdminUpdateWithoutNotes_createdInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   news?: Prisma.NewsUpdateManyWithoutAdminNestedInput
   replies?: Prisma.ContactReplyUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAdminNestedInput
@@ -640,6 +698,8 @@ export type AdminUncheckedUpdateWithoutNotes_createdInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   news?: Prisma.NewsUncheckedUpdateManyWithoutAdminNestedInput
   replies?: Prisma.ContactReplyUncheckedUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAdminNestedInput
@@ -667,6 +727,8 @@ export type AdminUpdateWithoutNotes_editedInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   news?: Prisma.NewsUpdateManyWithoutAdminNestedInput
   replies?: Prisma.ContactReplyUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAdminNestedInput
@@ -683,6 +745,8 @@ export type AdminUncheckedUpdateWithoutNotes_editedInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   news?: Prisma.NewsUncheckedUpdateManyWithoutAdminNestedInput
   replies?: Prisma.ContactReplyUncheckedUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAdminNestedInput
@@ -699,6 +763,8 @@ export type AdminCreateWithoutNewsInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
   replies?: Prisma.ContactReplyCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAdminInput
   accounts?: Prisma.AccountCreateNestedManyWithoutAdminInput
@@ -715,6 +781,8 @@ export type AdminUncheckedCreateWithoutNewsInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
   replies?: Prisma.ContactReplyUncheckedCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAdminInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutAdminInput
@@ -747,6 +815,8 @@ export type AdminUpdateWithoutNewsInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   replies?: Prisma.ContactReplyUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAdminNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutAdminNestedInput
@@ -763,6 +833,8 @@ export type AdminUncheckedUpdateWithoutNewsInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   replies?: Prisma.ContactReplyUncheckedUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAdminNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutAdminNestedInput
@@ -779,6 +851,8 @@ export type AdminCreateWithoutRepliesInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
   news?: Prisma.NewsCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAdminInput
   accounts?: Prisma.AccountCreateNestedManyWithoutAdminInput
@@ -795,6 +869,8 @@ export type AdminUncheckedCreateWithoutRepliesInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
   news?: Prisma.NewsUncheckedCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAdminInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutAdminInput
@@ -827,6 +903,8 @@ export type AdminUpdateWithoutRepliesInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   news?: Prisma.NewsUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAdminNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutAdminNestedInput
@@ -843,6 +921,8 @@ export type AdminUncheckedUpdateWithoutRepliesInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   news?: Prisma.NewsUncheckedUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAdminNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutAdminNestedInput
@@ -859,6 +939,8 @@ export type AdminCreateWithoutSessionsInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
   news?: Prisma.NewsCreateNestedManyWithoutAdminInput
   replies?: Prisma.ContactReplyCreateNestedManyWithoutAdminInput
   accounts?: Prisma.AccountCreateNestedManyWithoutAdminInput
@@ -875,6 +957,8 @@ export type AdminUncheckedCreateWithoutSessionsInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
   news?: Prisma.NewsUncheckedCreateNestedManyWithoutAdminInput
   replies?: Prisma.ContactReplyUncheckedCreateNestedManyWithoutAdminInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutAdminInput
@@ -907,6 +991,8 @@ export type AdminUpdateWithoutSessionsInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   news?: Prisma.NewsUpdateManyWithoutAdminNestedInput
   replies?: Prisma.ContactReplyUpdateManyWithoutAdminNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutAdminNestedInput
@@ -923,6 +1009,8 @@ export type AdminUncheckedUpdateWithoutSessionsInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   news?: Prisma.NewsUncheckedUpdateManyWithoutAdminNestedInput
   replies?: Prisma.ContactReplyUncheckedUpdateManyWithoutAdminNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutAdminNestedInput
@@ -939,6 +1027,8 @@ export type AdminCreateWithoutAccountsInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
   news?: Prisma.NewsCreateNestedManyWithoutAdminInput
   replies?: Prisma.ContactReplyCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAdminInput
@@ -955,6 +1045,8 @@ export type AdminUncheckedCreateWithoutAccountsInput = {
   emailVerified?: boolean
   updatedAt?: Date | string
   image?: string | null
+  lastSeenApplicationsAt?: Date | string | null
+  lastSeenMessagesAt?: Date | string | null
   news?: Prisma.NewsUncheckedCreateNestedManyWithoutAdminInput
   replies?: Prisma.ContactReplyUncheckedCreateNestedManyWithoutAdminInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAdminInput
@@ -987,6 +1079,8 @@ export type AdminUpdateWithoutAccountsInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   news?: Prisma.NewsUpdateManyWithoutAdminNestedInput
   replies?: Prisma.ContactReplyUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAdminNestedInput
@@ -1003,6 +1097,8 @@ export type AdminUncheckedUpdateWithoutAccountsInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastSeenApplicationsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastSeenMessagesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   news?: Prisma.NewsUncheckedUpdateManyWithoutAdminNestedInput
   replies?: Prisma.ContactReplyUncheckedUpdateManyWithoutAdminNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAdminNestedInput
@@ -1095,6 +1191,8 @@ export type AdminSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   emailVerified?: boolean
   updatedAt?: boolean
   image?: boolean
+  lastSeenApplicationsAt?: boolean
+  lastSeenMessagesAt?: boolean
   news?: boolean | Prisma.Admin$newsArgs<ExtArgs>
   replies?: boolean | Prisma.Admin$repliesArgs<ExtArgs>
   sessions?: boolean | Prisma.Admin$sessionsArgs<ExtArgs>
@@ -1115,9 +1213,11 @@ export type AdminSelectScalar = {
   emailVerified?: boolean
   updatedAt?: boolean
   image?: boolean
+  lastSeenApplicationsAt?: boolean
+  lastSeenMessagesAt?: boolean
 }
 
-export type AdminOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "role" | "createdAt" | "emailVerified" | "updatedAt" | "image", ExtArgs["result"]["admin"]>
+export type AdminOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "role" | "createdAt" | "emailVerified" | "updatedAt" | "image" | "lastSeenApplicationsAt" | "lastSeenMessagesAt", ExtArgs["result"]["admin"]>
 export type AdminInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   news?: boolean | Prisma.Admin$newsArgs<ExtArgs>
   replies?: boolean | Prisma.Admin$repliesArgs<ExtArgs>
@@ -1147,6 +1247,8 @@ export type $AdminPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     emailVerified: boolean
     updatedAt: Date
     image: string | null
+    lastSeenApplicationsAt: Date | null
+    lastSeenMessagesAt: Date | null
   }, ExtArgs["result"]["admin"]>
   composites: {}
 }
@@ -1530,6 +1632,8 @@ export interface AdminFieldRefs {
   readonly emailVerified: Prisma.FieldRef<"Admin", 'Boolean'>
   readonly updatedAt: Prisma.FieldRef<"Admin", 'DateTime'>
   readonly image: Prisma.FieldRef<"Admin", 'String'>
+  readonly lastSeenApplicationsAt: Prisma.FieldRef<"Admin", 'DateTime'>
+  readonly lastSeenMessagesAt: Prisma.FieldRef<"Admin", 'DateTime'>
 }
     
 

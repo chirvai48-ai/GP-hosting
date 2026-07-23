@@ -643,10 +643,6 @@ export type EnumCandidateInquiryStateFieldUpdateOperationsInput = {
   set?: $Enums.CandidateInquiryState
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 
 
 export type CandidateInquirySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{

@@ -143,7 +143,9 @@ export const AdminScalarFieldEnum = {
   createdAt: 'createdAt',
   emailVerified: 'emailVerified',
   updatedAt: 'updatedAt',
-  image: 'image'
+  image: 'image',
+  lastSeenApplicationsAt: 'lastSeenApplicationsAt',
+  lastSeenMessagesAt: 'lastSeenMessagesAt'
 } as const
 
 export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]

@@ -13,6 +13,7 @@ import {newsRouter} from './routes/news.route'
 import applicationRouter from './routes/application.route'
 import noteRouter from './routes/note.route'
 import contactsRouter from './routes/contacts.route'
+import adminRouter from './routes/admin.route'
 import { requireAuthUnlessNoAdmins } from './middlewares/requireAuth'
 
 const app = express();
@@ -46,6 +47,7 @@ app.use("/api/news",newsRouter);
 app.use("/api/jobs",jobsRouter);
 app.use("/api/applications",applicationRouter);
 app.use("/api/contacts", contactsRouter);
+app.use("/api/admin", adminRouter);
 app.use("/api", noteRouter);
 app.use(errorMiddleware);
 

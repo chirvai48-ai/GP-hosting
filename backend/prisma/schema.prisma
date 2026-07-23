@@ -88,6 +88,8 @@ model Admin {
   accounts      Account[]
   notes_created Note[]         @relation("NotesCreatedBy")
   notes_edited  Note[]         @relation("NotesEditedBy")
+  lastSeenApplicationsAt DateTime?
+  lastSeenMessagesAt     DateTime?
 
   @@map("admin")
 }
