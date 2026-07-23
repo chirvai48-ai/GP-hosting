@@ -3,3 +3,19 @@ node_modules
 .env
 
 /generated/prisma
+/dist
+
+# tsc was compiling these root config files in-place before tsconfig.json
+# scoped "include" to src — stray output from that, safe to regenerate
+eslint.config.mjs
+eslint.config.mjs.map
+eslint.config.d.mts
+eslint.config.d.mts.map
+prisma.config.js
+prisma.config.js.map
+prisma.config.d.ts
+prisma.config.d.ts.map
+prisma/seed.js
+prisma/seed.js.map
+prisma/seed.d.ts
+prisma/seed.d.ts.map
