@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getJobs,getJobsById,postJobs,deleteJobs,updateJobs } from "../controllers/jobController";
 import {validateCreate,validateUpdate } from "../middlewares/validate";
+import { requireAuth } from "../middlewares/requireAuth";
 import { createJobSchema,updateJobSchema } from "../schemas/job.schema";
 /**
  * @swagger
@@ -267,8 +268,8 @@ import { createJobSchema,updateJobSchema } from "../schemas/job.schema";
 const jobsRouter = Router();
 jobsRouter.get("/", getJobs);
 jobsRouter.get("/:id",getJobsById)
-jobsRouter.post("/", validateCreate(createJobSchema), postJobs)
-jobsRouter.delete("/:id",deleteJobs);
-jobsRouter.patch("/:id",validateUpdate(updateJobSchema),updateJobs)
+jobsRouter.post("/", requireAuth, validateCreate(createJobSchema), postJobs)
+jobsRouter.delete("/:id", requireAuth, deleteJobs);
+jobsRouter.patch("/:id", requireAuth, validateUpdate(updateJobSchema), updateJobs)
 
 export default jobsRouter;

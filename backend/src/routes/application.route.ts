@@ -9,16 +9,18 @@ import {
   exportResume,
 } from "../controllers/applicationController";
 import { validateCreate, validateUpdate } from "../middlewares/validate";
+import { requireAuth } from "../middlewares/requireAuth";
 import { createApplicationSchema, updateApplicationSchema } from "../schemas/application.schema";
 
 export const applicationRouter = Router();
 
-applicationRouter.get("/", getApplications);
-applicationRouter.get("/talent-pool", getTalentPool);
-applicationRouter.get("/:id/resume.docx", exportResume);
-applicationRouter.get("/:id", getApplicationById);
 applicationRouter.post("/", validateCreate(createApplicationSchema), postApplication);
-applicationRouter.patch("/:id", validateUpdate(updateApplicationSchema), patchApplication);
-applicationRouter.delete("/:id", deleteApplication);
+
+applicationRouter.get("/", requireAuth, getApplications);
+applicationRouter.get("/talent-pool", requireAuth, getTalentPool);
+applicationRouter.get("/:id/resume.xlsx", requireAuth, exportResume);
+applicationRouter.get("/:id", requireAuth, getApplicationById);
+applicationRouter.patch("/:id", requireAuth, validateUpdate(updateApplicationSchema), patchApplication);
+applicationRouter.delete("/:id", requireAuth, deleteApplication);
 
 export default applicationRouter;

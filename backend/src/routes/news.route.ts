@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getNews, postNews, getNewsById, deleteNews, updateNews } from "../controllers/newsController";
 import { validateCreate, validateUpdate } from "../middlewares/validate";
+import { requireAuth } from "../middlewares/requireAuth";
 import { createNewsSchema, updateNewschema } from "../schemas/news.schema";
 
 export const newsRouter = Router();
@@ -282,7 +283,7 @@ newsRouter.get("/:id", getNewsById);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-newsRouter.post("/", validateCreate(createNewsSchema), postNews);
+newsRouter.post("/", requireAuth, validateCreate(createNewsSchema), postNews);
 
 /**
  * @swagger
@@ -330,7 +331,7 @@ newsRouter.post("/", validateCreate(createNewsSchema), postNews);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-newsRouter.delete("/:id", deleteNews);
+newsRouter.delete("/:id", requireAuth, deleteNews);
 
 /**
  * @swagger
@@ -396,6 +397,6 @@ newsRouter.delete("/:id", deleteNews);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-newsRouter.patch("/:id", validateUpdate(updateNewschema), updateNews);
+newsRouter.patch("/:id", requireAuth, validateUpdate(updateNewschema), updateNews);
 
 export default newsRouter;

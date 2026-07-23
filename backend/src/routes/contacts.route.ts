@@ -13,6 +13,7 @@ import {
   deleteCandidateInquiry,
 } from "../controllers/contactController";
 import { validateCreate, validateUpdate } from "../middlewares/validate";
+import { requireAuth } from "../middlewares/requireAuth";
 import {
   createCompanyInquirySchema,
   updateCompanyInquirySchema,
@@ -23,34 +24,36 @@ import {
 export const contactsRouter = Router();
 
 // Company inquiries
-contactsRouter.get("/company-inquiries", getCompanyInquiries);
-contactsRouter.get("/company-inquiries/:id", getCompanyInquiryById);
 contactsRouter.post(
   "/company-inquiries",
   validateCreate(createCompanyInquirySchema),
   postCompanyInquiry
 );
+contactsRouter.get("/company-inquiries", requireAuth, getCompanyInquiries);
+contactsRouter.get("/company-inquiries/:id", requireAuth, getCompanyInquiryById);
 contactsRouter.patch(
   "/company-inquiries/:id",
+  requireAuth,
   validateUpdate(updateCompanyInquirySchema),
   patchCompanyInquiry
 );
-contactsRouter.delete("/company-inquiries/:id", deleteCompanyInquiry);
+contactsRouter.delete("/company-inquiries/:id", requireAuth, deleteCompanyInquiry);
 
 // Candidate inquiries
-contactsRouter.get("/candidate-inquiries", getCandidateInquiries);
-contactsRouter.get("/candidate-inquiries/talent-pool", getCandidateTalentPool);
-contactsRouter.get("/candidate-inquiries/:id", getCandidateInquiryById);
 contactsRouter.post(
   "/candidate-inquiries",
   validateCreate(createCandidateInquirySchema),
   postCandidateInquiry
 );
+contactsRouter.get("/candidate-inquiries", requireAuth, getCandidateInquiries);
+contactsRouter.get("/candidate-inquiries/talent-pool", requireAuth, getCandidateTalentPool);
+contactsRouter.get("/candidate-inquiries/:id", requireAuth, getCandidateInquiryById);
 contactsRouter.patch(
   "/candidate-inquiries/:id",
+  requireAuth,
   validateUpdate(updateCandidateInquirySchema),
   patchCandidateInquiry
 );
-contactsRouter.delete("/candidate-inquiries/:id", deleteCandidateInquiry);
+contactsRouter.delete("/candidate-inquiries/:id", requireAuth, deleteCandidateInquiry);
 
 export default contactsRouter;
