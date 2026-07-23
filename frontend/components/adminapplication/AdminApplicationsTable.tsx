@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getLastSeen, markSeen } from "@/lib/lastSeen";
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -125,6 +126,18 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [viewing, setViewing] = useState<Application | null>(null);
   const [activeTab, setActiveTab] = useState<ApplicationStage>("Pending");
+  // undefined = not loaded yet (show no dots); null = loaded, never seen before (everything is new)
+  const [lastSeenSnapshot, setLastSeenSnapshot] = useState<string | null | undefined>(undefined);
+  const hasMarkedSeen = useRef(false);
+
+  useEffect(() => {
+    if (hasMarkedSeen.current) return;
+    hasMarkedSeen.current = true;
+    getLastSeen()
+      .then(({ data }) => setLastSeenSnapshot(data.lastSeenApplicationsAt))
+      .then(() => markSeen("applications"))
+      .catch(() => {});
+  }, []);
 
   const { data, isPending, isError } = useQuery({
     queryKey: ["applications", jobId],
@@ -173,14 +186,26 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
   const columns = useMemo(() => [
     columnHelper.accessor("full_name", {
       header: "Name",
-      cell: ({ row, getValue }) => (
-        <button
-          onClick={() => setViewing(row.original)}
-          className="text-left text-[var(--color-primary)] hover:underline font-[var(--font-label)]"
-        >
-          {getValue() as string}
-        </button>
-      ),
+      cell: ({ row, getValue }) => {
+        const isNew =
+          lastSeenSnapshot !== undefined &&
+          (lastSeenSnapshot === null ||
+            new Date(row.original.created_at).getTime() > new Date(lastSeenSnapshot).getTime());
+        return (
+          <button
+            onClick={() => setViewing(row.original)}
+            className="flex items-center gap-1.5 text-left text-[var(--color-primary)] hover:underline font-[var(--font-label)]"
+          >
+            {isNew && (
+              <span
+                className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#c0392b]"
+                title="New since your last visit"
+              />
+            )}
+            {getValue() as string}
+          </button>
+        );
+      },
     }),
     columnHelper.accessor("email", { header: "Email", size: 200 }),
     columnHelper.accessor("phone_number", { header: "Phone", size: 140 }),
@@ -337,7 +362,7 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
         );
       },
     }),
-  ], [deletingId, patchMutation.isPending]);
+  ], [deletingId, patchMutation.isPending, lastSeenSnapshot]);
 
   const table = useReactTable({
     data: applications,

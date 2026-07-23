@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -27,78 +28,96 @@ import {
   Users,
 } from "lucide-react";
 import { authClient, useSession } from "@/lib/auth-client";
+import { adminFetch } from "@/lib/adminFetch";
 
 const drawerWidth = 240;
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-const NAV_SECTIONS = [
-  {
-    label: "Overview",
-    items: [
-      {
-        text: "Dashboard",
-        icon: <LayoutDashboard size={16} />,
-        badge: null,
-        href: "/admin/dashboard/overview",
-      },
-    ],
-  },
-  {
-    label: "Recruitment",
-    items: [
-      {
-        text: "Jobs & Vacancies",
-        icon: <BriefcaseBusiness size={16} />,
-        badge: null,
-        href: "/admin/dashboard/vacancies",
-      },
-      {
-        text: "Applications",
-        icon: <FileText size={16} />,
-        badge: null,
-        href: "/admin/dashboard/applications",
-      },
-      {
-        text: "Talent Pool",
-        icon: <Users size={16} />,
-        badge: null,
-        href: "/admin/dashboard/talent-pool",
-      },
-    ],
-  },
-  {
-    label: "Communications",
-    items: [
-      {
-        text: "Messages",
-        icon: <Mail size={16} />,
-        badge: null,
-        href: "/admin/dashboard/messages",
-      },
-    ],
-  },
-  {
-    label: "Content",
-    items: [
-      {
-        text: "Blog & News",
-        icon: <Newspaper size={16} />,
-        badge: null,
-        href: "/admin/dashboard/blogs",
-      },
-    ],
-  },
-  {
-    label: "Admin",
-    items: [
-      {
-        text: "Settings",
-        icon: <Settings size={16} />,
-        badge: null,
-        href: "/admin/dashboard/settings",
-      },
-    ],
-  },
-];
+async function getNewApplicationsCount(): Promise<number> {
+  const res = await adminFetch(`${API_URL}/api/applications/stats`);
+  if (!res.ok) return 0;
+  const json = await res.json();
+  return json.data?.newApplicationsCount ?? 0;
+}
+
+async function getNewMessagesCount(): Promise<number> {
+  const res = await adminFetch(`${API_URL}/api/contacts/stats`);
+  if (!res.ok) return 0;
+  const json = await res.json();
+  return json.data?.newMessagesCount ?? 0;
+}
+
+function buildNavSections(newApplications: number, newMessages: number) {
+  return [
+    {
+      label: "Overview",
+      items: [
+        {
+          text: "Dashboard",
+          icon: <LayoutDashboard size={16} />,
+          badge: null as number | null,
+          href: "/admin/dashboard/overview",
+        },
+      ],
+    },
+    {
+      label: "Recruitment",
+      items: [
+        {
+          text: "Jobs & Vacancies",
+          icon: <BriefcaseBusiness size={16} />,
+          badge: null as number | null,
+          href: "/admin/dashboard/vacancies",
+        },
+        {
+          text: "Applications",
+          icon: <FileText size={16} />,
+          badge: newApplications > 0 ? newApplications : null,
+          href: "/admin/dashboard/applications",
+        },
+        {
+          text: "Talent Pool",
+          icon: <Users size={16} />,
+          badge: null as number | null,
+          href: "/admin/dashboard/talent-pool",
+        },
+      ],
+    },
+    {
+      label: "Communications",
+      items: [
+        {
+          text: "Messages",
+          icon: <Mail size={16} />,
+          badge: newMessages > 0 ? newMessages : null,
+          href: "/admin/dashboard/messages",
+        },
+      ],
+    },
+    {
+      label: "Content",
+      items: [
+        {
+          text: "Blog & News",
+          icon: <Newspaper size={16} />,
+          badge: null as number | null,
+          href: "/admin/dashboard/blogs",
+        },
+      ],
+    },
+    {
+      label: "Admin",
+      items: [
+        {
+          text: "Settings",
+          icon: <Settings size={16} />,
+          badge: null as number | null,
+          href: "/admin/dashboard/settings",
+        },
+      ],
+    },
+  ];
+}
 
 export default function ResponsiveDrawer() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -106,6 +125,21 @@ export default function ResponsiveDrawer() {
   const pathname = usePathname();
   const router = useRouter();
   const { data: session } = useSession();
+
+  const newApplicationsQuery = useQuery({
+    queryKey: ["applications", "stats", "nav-badge"],
+    queryFn: getNewApplicationsCount,
+    refetchInterval: 60_000,
+  });
+  const newMessagesQuery = useQuery({
+    queryKey: ["contacts", "stats", "nav-badge"],
+    queryFn: getNewMessagesCount,
+    refetchInterval: 60_000,
+  });
+  const NAV_SECTIONS = React.useMemo(
+    () => buildNavSections(newApplicationsQuery.data ?? 0, newMessagesQuery.data ?? 0),
+    [newApplicationsQuery.data, newMessagesQuery.data]
+  );
 
   const userEmail = session?.user?.email ?? "";
   const userName = session?.user?.name ?? userEmail.split("@")[0];
@@ -271,7 +305,7 @@ export default function ResponsiveDrawer() {
                         {item.badge && (
                           <Box
                             sx={{
-                              backgroundColor: "var(--color-secondary)",
+                              backgroundColor: "#c0392b",
                               color: "white",
                               fontSize: "0.6rem",
                               fontWeight: 600,

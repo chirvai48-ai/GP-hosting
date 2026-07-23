@@ -20,6 +20,13 @@ async function getJobs(): Promise<JobsResponse> {
   return res.json();
 }
 
+async function getNewCountsByJob(): Promise<Record<number, number>> {
+  const res = await adminFetch(`${API_URL}/api/applications/new-counts-by-job`);
+  if (!res.ok) throw new Error("Failed to load new-application counts");
+  const json = await res.json();
+  return json.data ?? {};
+}
+
 const columnHelper = createColumnHelper<Job>();
 
 const CONTRACT_LABEL: Record<string, string> = {
@@ -42,6 +49,11 @@ export default function ApplicationsVacancyList() {
     queryFn: getJobs,
   });
 
+  const { data: newCounts = {} } = useQuery({
+    queryKey: ["applications", "new-counts-by-job"],
+    queryFn: getNewCountsByJob,
+  });
+
   const jobs = useMemo(
     () => (data?.data ?? []).filter((j) => j.status === "Published"),
     [data]
@@ -49,7 +61,25 @@ export default function ApplicationsVacancyList() {
 
   const columns = useMemo(() => [
     columnHelper.accessor("id", { header: "ID", size: 60 }),
-    columnHelper.accessor("title", { header: "Job Title" }),
+    columnHelper.accessor("title", {
+      header: "Job Title",
+      cell: ({ row, getValue }) => {
+        const newCount = newCounts[row.original.id] ?? 0;
+        return (
+          <span className="flex items-center gap-1.5">
+            {newCount > 0 && (
+              <span
+                className="flex-shrink-0 rounded-full bg-[#c0392b] text-white text-[10px] font-semibold px-1.5 py-0.5 leading-none"
+                title={`${newCount} new since your last visit`}
+              >
+                {newCount} new
+              </span>
+            )}
+            {getValue()}
+          </span>
+        );
+      },
+    }),
     columnHelper.accessor("location", { header: "Location", size: 140 }),
     columnHelper.accessor((row) => row.job_category?.name ?? "—", {
       id: "category",
@@ -104,7 +134,7 @@ export default function ApplicationsVacancyList() {
         </Link>
       ),
     }),
-  ], []);
+  ], [newCounts]);
 
   const table = useReactTable({
     data: jobs,

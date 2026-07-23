@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useQuery } from "@tanstack/react-query";
+import { getLastSeen, markSeen } from "@/lib/lastSeen";
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -81,6 +82,22 @@ export default function MessagesPage() {
   const [activeTab, setActiveTab] = useState<Tab>("company");
   const [viewingCompany, setViewingCompany] = useState<CompanyInquiry | null>(null);
   const [viewingCandidate, setViewingCandidate] = useState<CandidateInquiry | null>(null);
+  // undefined = not loaded yet (show no dots); null = loaded, never seen before (everything is new)
+  const [lastSeenSnapshot, setLastSeenSnapshot] = useState<string | null | undefined>(undefined);
+  const hasMarkedSeen = useRef(false);
+
+  useEffect(() => {
+    if (hasMarkedSeen.current) return;
+    hasMarkedSeen.current = true;
+    getLastSeen()
+      .then(({ data }) => setLastSeenSnapshot(data.lastSeenMessagesAt))
+      .then(() => markSeen("messages"))
+      .catch(() => {});
+  }, []);
+
+  const isNew = (createdAt: string) =>
+    lastSeenSnapshot !== undefined &&
+    (lastSeenSnapshot === null || new Date(createdAt).getTime() > new Date(lastSeenSnapshot).getTime());
 
   // ── Company inquiries ──────────────────────────────────────────────────────
 
@@ -101,8 +118,14 @@ export default function MessagesPage() {
         cell: ({ row, getValue }) => (
           <button
             onClick={() => setViewingCompany(row.original)}
-            className="text-left text-[var(--color-primary)] hover:underline font-[var(--font-label)]"
+            className="flex items-center gap-1.5 text-left text-[var(--color-primary)] hover:underline font-[var(--font-label)]"
           >
+            {isNew(row.original.created_at) && (
+              <span
+                className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#c0392b]"
+                title="New since your last visit"
+              />
+            )}
             {getValue()}
           </button>
         ),
@@ -144,7 +167,7 @@ export default function MessagesPage() {
         ),
       }),
     ],
-    []
+    [lastSeenSnapshot]
   );
 
   const companyTable = useReactTable({
@@ -172,8 +195,14 @@ export default function MessagesPage() {
         cell: ({ row, getValue }) => (
           <button
             onClick={() => setViewingCandidate(row.original)}
-            className="text-left text-[var(--color-primary)] hover:underline font-[var(--font-label)]"
+            className="flex items-center gap-1.5 text-left text-[var(--color-primary)] hover:underline font-[var(--font-label)]"
           >
+            {isNew(row.original.created_at) && (
+              <span
+                className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#c0392b]"
+                title="New since your last visit"
+              />
+            )}
             {getValue()}
           </button>
         ),
@@ -214,7 +243,7 @@ export default function MessagesPage() {
         ),
       }),
     ],
-    []
+    [lastSeenSnapshot]
   );
 
   const candidateTable = useReactTable({
