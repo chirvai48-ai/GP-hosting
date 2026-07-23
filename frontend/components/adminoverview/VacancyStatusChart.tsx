@@ -1,13 +1,14 @@
 "use client";
 
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { CHART_COLORS } from "./chartColors";
 
 const STATUS_ORDER = ["Published", "Draft", "Closed", "Archived"];
 const STATUS_COLORS: Record<string, string> = {
-  Published: "#145652",
-  Draft: "#c9a84c",
-  Closed: "#3f4947",
-  Archived: "#a8b5b3",
+  Published: CHART_COLORS.teal,
+  Draft: CHART_COLORS.gold,
+  Closed: CHART_COLORS.coral,
+  Archived: CHART_COLORS.slate,
 };
 
 export default function VacancyStatusChart({ statusCounts }: { statusCounts: Record<string, number> }) {

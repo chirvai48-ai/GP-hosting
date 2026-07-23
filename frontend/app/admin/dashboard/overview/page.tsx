@@ -14,6 +14,7 @@ import StatCard from "@/components/adminoverview/StatCard";
 import PipelineChart from "@/components/adminoverview/PipelineChart";
 import TrendChart from "@/components/adminoverview/TrendChart";
 import VacancyStatusChart from "@/components/adminoverview/VacancyStatusChart";
+import MessageQueueCard from "@/components/adminoverview/MessageQueueCard";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -86,6 +87,10 @@ export default function OverviewPage() {
   const openMessages = contact.openContactRequests + contact.newCandidateInquiries;
   const publishedVacancies = job.statusCounts["Published"] ?? 0;
   const pendingApplications = app.stageCounts["Pending"] ?? 0;
+  const hireRate =
+    app.totalApplications > 0
+      ? Math.round((app.hiredThisMonth / app.totalApplications) * 100)
+      : 0;
 
   return (
     <div className="p-6 bg-[var(--color-surface)] min-h-screen">
@@ -99,12 +104,18 @@ export default function OverviewPage() {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
-        <StatCard label="Open Vacancies" value={publishedVacancies} icon={Briefcase} />
-        <StatCard label="Pending Applications" value={pendingApplications} icon={ClipboardList} />
-        <StatCard label="Talent Pool" value={talentPoolTotal} icon={Users} />
-        <StatCard label="Open Messages" value={openMessages} icon={Mail} />
-        <StatCard label="Hired This Month" value={app.hiredThisMonth} icon={CheckCircle2} />
-        <StatCard label="Total Applications" value={app.totalApplications} icon={FileText} />
+        <StatCard label="Open Vacancies" value={publishedVacancies} icon={Briefcase} color="teal" />
+        <StatCard label="Pending Applications" value={pendingApplications} icon={ClipboardList} color="slate" />
+        <StatCard label="Talent Pool" value={talentPoolTotal} icon={Users} color="blue" />
+        <StatCard label="Open Messages" value={openMessages} icon={Mail} color="gold" />
+        <StatCard
+          label="Hired This Month"
+          value={app.hiredThisMonth}
+          icon={CheckCircle2}
+          color="plum"
+          hint={app.totalApplications > 0 ? `${hireRate}% of all applicants` : undefined}
+        />
+        <StatCard label="Total Applications" value={app.totalApplications} icon={FileText} color="coral" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
@@ -114,6 +125,11 @@ export default function OverviewPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <VacancyStatusChart statusCounts={job.statusCounts} />
+        <MessageQueueCard
+          openContactRequests={contact.openContactRequests}
+          newCandidateInquiries={contact.newCandidateInquiries}
+          movedToTalentPool={contact.movedToTalentPool}
+        />
       </div>
     </div>
   );

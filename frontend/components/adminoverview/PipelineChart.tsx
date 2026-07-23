@@ -1,6 +1,7 @@
 "use client";
 
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Cell } from "recharts";
+import { CHART_COLORS } from "./chartColors";
 
 const STAGE_ORDER = ["Pending", "ApplicantCalled", "InterviewScheduling", "Hired", "Rejected"];
 const STAGE_LABELS: Record<string, string> = {
@@ -10,11 +11,19 @@ const STAGE_LABELS: Record<string, string> = {
   Hired: "Hired",
   Rejected: "Rejected",
 };
+const STAGE_COLORS: Record<string, string> = {
+  Pending: CHART_COLORS.slate,
+  ApplicantCalled: CHART_COLORS.blue,
+  InterviewScheduling: CHART_COLORS.gold,
+  Hired: CHART_COLORS.teal,
+  Rejected: CHART_COLORS.coral,
+};
 
 export default function PipelineChart({ stageCounts }: { stageCounts: Record<string, number> }) {
   const data = STAGE_ORDER.map((stage) => ({
     stage: STAGE_LABELS[stage],
     count: stageCounts[stage] ?? 0,
+    fill: STAGE_COLORS[stage],
   }));
 
   return (
@@ -28,7 +37,11 @@ export default function PipelineChart({ stageCounts }: { stageCounts: Record<str
           <XAxis dataKey="stage" tick={{ fontSize: 11 }} />
           <YAxis allowDecimals={false} tick={{ fontSize: 11 }} />
           <Tooltip />
-          <Bar dataKey="count" fill="var(--color-primary)" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+            {data.map((d) => (
+              <Cell key={d.stage} fill={d.fill} />
+            ))}
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>
