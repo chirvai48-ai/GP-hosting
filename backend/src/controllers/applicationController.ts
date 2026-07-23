@@ -6,6 +6,7 @@ import {
   removeApplication,
   patchApplication as patchApplicationService,
   fetchTalentPool,
+  fetchApplicationStats,
 } from "../services/application.service";
 import {
   fetchApplicationForResume,
@@ -51,6 +52,15 @@ export const getTalentPool = async (req: Request, res: Response, next: NextFunct
       req.query as Record<string, string | undefined>;
     const applications = await fetchTalentPool({ search, location, japanese_ability, job_category });
     res.status(200).json({ message: "Talent pool fetched successfully", data: applications });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getApplicationStats = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const stats = await fetchApplicationStats();
+    res.status(200).json({ message: "Application stats fetched successfully", data: stats });
   } catch (err) {
     next(err);
   }

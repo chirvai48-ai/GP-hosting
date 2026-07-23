@@ -11,6 +11,7 @@ import {
   getCandidateTalentPool,
   patchCandidateInquiry,
   deleteCandidateInquiry,
+  getContactStats,
 } from "../controllers/contactController";
 import { validateCreate, validateUpdate } from "../middlewares/validate";
 import { requireAuth } from "../middlewares/requireAuth";
@@ -22,6 +23,8 @@ import {
 } from "../schemas/contact.schema";
 
 export const contactsRouter = Router();
+
+contactsRouter.get("/stats", requireAuth, getContactStats);
 
 // Company inquiries
 contactsRouter.post(

@@ -11,6 +11,7 @@ import {
   fetchCandidateTalentPool,
   patchCandidateInquiry as patchCandidateInquiryService,
   removeCandidateInquiry,
+  fetchContactStats,
 } from "../services/contacts.service";
 
 // Company inquiries
@@ -68,6 +69,17 @@ export const deleteCompanyInquiry = async (req: Request, res: Response, next: Ne
     res
       .status(200)
       .json({ message: `Company inquiry ${id} deleted successfully`, data: deleted });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getContactStats = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const stats = await fetchContactStats();
+    res
+      .status(200)
+      .json({ message: "Contact stats fetched successfully", data: stats });
   } catch (err) {
     next(err);
   }

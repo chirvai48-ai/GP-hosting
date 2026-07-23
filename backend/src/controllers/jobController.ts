@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { createJobs,fetchJobs,fetchJobsById,removeJobs, patchJobs } from "../services/job.service";
+import { createJobs,fetchJobs,fetchJobsById,removeJobs, patchJobs, fetchJobStats } from "../services/job.service";
 export const getJobs = async (
   req: Request,
   res: Response,
@@ -31,6 +31,22 @@ export const postJobs = async (
     )
   } catch (err) {
     next(err);
+  }
+};
+
+export const getJobStats = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const stats = await fetchJobStats();
+    res.status(200).json({
+      message: "Job stats fetched successfully",
+      data: stats,
+    });
+  } catch (error) {
+    next(error);
   }
 };
 

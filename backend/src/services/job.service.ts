@@ -71,6 +71,19 @@ export const fetchJobsById = async (id: number): Promise<PrismaJob[]> => {
   return job;
 };
 
+export const fetchJobStats = async () => {
+  const [statusGroups, totalJobs] = await Promise.all([
+    prisma.job.groupBy({ by: ["status"], _count: true }),
+    prisma.job.count(),
+  ]);
+
+  const statusCounts = Object.fromEntries(
+    statusGroups.map((g) => [g.status, g._count])
+  ) as Record<string, number>;
+
+  return { statusCounts, totalJobs };
+};
+
 export const removeJobs = async (id: number) => {
   const job = await prisma.job.findUnique({ where: { id } });
 

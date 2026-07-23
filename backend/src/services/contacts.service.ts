@@ -119,6 +119,16 @@ export const patchCandidateInquiry = async (id: number, data: updateCandidateInq
   });
 };
 
+export const fetchContactStats = async () => {
+  const [openContactRequests, newCandidateInquiries, movedToTalentPool] = await Promise.all([
+    prisma.contactRequest.count({ where: { status: "Open" } }),
+    prisma.candidateInquiry.count({ where: { state: "New" } }),
+    prisma.candidateInquiry.count({ where: { state: "MovedToTalentPool" } }),
+  ]);
+
+  return { openContactRequests, newCandidateInquiries, movedToTalentPool };
+};
+
 export const removeCandidateInquiry = async (id: number) => {
   const inquiry = await prisma.candidateInquiry.findUnique({ where: { id } });
 

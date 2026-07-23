@@ -121,6 +121,51 @@ export const cleanupRejectedApplications = async () => {
   return stale.length;
 };
 
+export const fetchApplicationStats = async () => {
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const trendCutoff = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+
+  const [stageGroups, talentPoolCount, hiredThisMonth, totalApplications, recentApplications] =
+    await Promise.all([
+      prisma.application.groupBy({
+        by: ["stage"],
+        _count: true,
+        where: { status: { not: "TalentPool" } },
+      }),
+      prisma.application.count({ where: { status: "TalentPool" } }),
+      prisma.application.count({ where: { stage: "Hired", updated_at: { gte: startOfMonth } } }),
+      prisma.application.count(),
+      prisma.application.findMany({
+        where: { created_at: { gte: trendCutoff } },
+        select: { created_at: true },
+      }),
+    ]);
+
+  const stageCounts = Object.fromEntries(
+    stageGroups.map((g) => [g.stage, g._count])
+  ) as Record<string, number>;
+
+  const weeklyTrend: Record<string, number> = {};
+  for (const { created_at } of recentApplications) {
+    const weekStart = new Date(created_at);
+    weekStart.setUTCHours(0, 0, 0, 0);
+    weekStart.setUTCDate(weekStart.getUTCDate() - weekStart.getUTCDay());
+    const key = weekStart.toISOString().slice(0, 10);
+    weeklyTrend[key] = (weeklyTrend[key] ?? 0) + 1;
+  }
+
+  return {
+    stageCounts,
+    talentPoolCount,
+    hiredThisMonth,
+    totalApplications,
+    weeklyTrend: Object.entries(weeklyTrend)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([weekStart, count]) => ({ weekStart, count })),
+  };
+};
+
 export const removeApplication = async (id: number) => {
   const application = await prisma.application.findUnique({ where: { id } });
 
