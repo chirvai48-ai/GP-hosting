@@ -46,7 +46,7 @@ async function postCompanyInquiry(payload: CreateCompanyInquiryForm) {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body?.error?.formErrors?.[0] || body?.message || "Submission failed");
+    throw new Error(body?.error?.formErrors?.[0] || body?.message || "送信に失敗しました");
   }
   return res.json();
 }
@@ -77,16 +77,16 @@ export default function CompanyContactPage() {
         <div className="max-w-md w-full text-center bg-white rounded-2xl shadow-sm border border-[rgba(20,86,82,0.1)] p-10">
           <CheckCircle2 size={48} className="mx-auto text-[color:var(--color-primary)] mb-4" />
           <h1 className="font-[family-name:var(--font-headline)] text-2xl text-[color:var(--color-on-surface)] mb-2">
-            Inquiry submitted
+            お問い合わせの送信が完了いたしました
           </h1>
           <p className="font-[family-name:var(--font-body)] text-sm text-[color:var(--color-on-surface-variant)] mb-6">
-            Thank you for reaching out. We'll get back to you as soon as possible.
+            お問い合わせいただき誠にありがとうございます。内容を確認の上、担当者より折り返しご連絡いたします。今しばらくお待ちください。
           </p>
           <Link
             href="/"
             className="inline-block px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white transition-colors font-[family-name:var(--font-label)] text-sm"
           >
-            Back to home
+            ホームへ戻る
           </Link>
         </div>
       </main>
@@ -109,7 +109,7 @@ export default function CompanyContactPage() {
           href="/"
           className="inline-flex items-center gap-1 text-xs text-[color:var(--color-on-surface-variant)] hover:text-[color:var(--color-primary)] font-[family-name:var(--font-label)] mb-6"
         >
-          <ArrowLeft size={14} /> Back to home
+          <ArrowLeft size={14} /> ホームへ戻る
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-12 items-start">
@@ -118,7 +118,7 @@ export default function CompanyContactPage() {
             <div className="relative w-full aspect-[4/5] sm:aspect-[16/10] lg:aspect-[4/5] rounded-3xl overflow-hidden shadow-lg">
               <Image
                 src="/Panel01.jpg"
-                alt="Hiring partners"
+                alt="採用パートナー企業様"
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -127,10 +127,10 @@ export default function CompanyContactPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-primary)]/85 via-[var(--color-primary)]/30 to-transparent" />
               <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-end text-white">
                 <span className="inline-flex items-center gap-1.5 self-start px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-[10px] font-[family-name:var(--font-label)] tracking-[0.18em] uppercase mb-3">
-                  <Briefcase size={12} /> Business inquiry
+                  <Briefcase size={12} /> 企業様向けお問い合わせ
                 </span>
                 <h1 className="font-[family-name:var(--font-headline)] text-3xl md:text-4xl leading-tight mb-2">
-                  Hire candidates who actually fit.
+                  貴社に真にマッチする確実な人材採用を。
                 </h1>
                 <p className="font-[family-name:var(--font-body)] text-sm md:text-base text-white/90 max-w-sm">
                   Tell us what you&apos;re looking for and we&apos;ll match you with vetted talent from our network.
@@ -140,9 +140,9 @@ export default function CompanyContactPage() {
 
             <div className="bg-white rounded-2xl border border-[rgba(20,86,82,0.1)] p-5 flex flex-col gap-3">
               {[
-                { Icon: ShieldCheck, t: "Pre-screened candidates", d: "Every profile goes through interview and background checks." },
-                { Icon: Users, t: "Multilingual talent pool", d: "Bilingual JP/EN candidates across engineering, sales, and ops." },
-                { Icon: Clock, t: "Responsive support", d: "Dedicated account manager from first call to placement." },
+                { Icon: ShieldCheck, t: "徹底した事前スクリーニング", d: "すべての候補者に対して、事前面談と経歴チェックを徹底して実施しております。" },
+                { Icon: Users, t: "豊富なマルチリンガル人材", d: "エンジニア、営業、バックオフィスなど、日・英バイリンガル人材が多数在籍しています。" },
+                { Icon: Clock, t: "迅速かつ手厚い伴走サポート", d: "初回のご相談から採用・定着まで、専任の担当者が一貫してトータルサポートいたします。" },
               ].map(({ Icon, t, d }) => (
                 <div key={t} className="flex gap-3">
                   <div className="shrink-0 w-9 h-9 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center">
@@ -157,7 +157,7 @@ export default function CompanyContactPage() {
             </div>
 
             <div className="hidden lg:flex flex-col gap-2 text-sm text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-body)]">
-              <div className="flex items-start gap-2"><MapPin size={14} className="mt-1 shrink-0 text-[var(--color-primary)]" /> 6th Floor, 2-36-1 Ikebukuro, Toshima City, Tokyo 171-0014, Japan</div>
+              <div className="flex items-start gap-2"><MapPin size={14} className="mt-1 shrink-0 text-[var(--color-primary)]" /> 〒171-0014 東京都豊島区池袋2-36-1 6階</div>
               <div className="flex items-center gap-2"><Mail size={14} className="text-[var(--color-primary)]" /> info@glowing-partner.jp</div>
               <div className="flex items-center gap-2"><Phone size={14} className="text-[var(--color-primary)]" /> <a href="tel:+81368419101" className="hover:text-[var(--color-primary)]">+81-3-6841-9101</a></div>
             </div>
@@ -170,15 +170,15 @@ export default function CompanyContactPage() {
         >
           <fieldset className="flex flex-col gap-5" disabled={isPending}>
             <legend className="font-[family-name:var(--font-headline)] text-lg text-[color:var(--color-on-surface)] mb-2">
-              Your details
+              お問い合わせ情報の入力
             </legend>
 
-            <Field label="Company / Contact name" error={errors.name?.message}>
-              <input className={inputCls} placeholder="Acme Corp" {...register("name")} />
+            <Field label="貴社名・ご担当者様氏名" error={errors.name?.message}>
+              <input className={inputCls} placeholder="例：株式会社〇〇" {...register("name")} />
             </Field>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <Field label="Email" error={errors.email?.message}>
+              <Field label="メールアドレス" error={errors.email?.message}>
                 <input
                   type="email"
                   className={inputCls}
@@ -186,27 +186,27 @@ export default function CompanyContactPage() {
                   {...register("email")}
                 />
               </Field>
-              <Field label="Phone number" error={errors.phone_number?.message}>
+              <Field label="電話番号" error={errors.phone_number?.message}>
                 <input
                   className={inputCls}
-                  placeholder="+81 3 1234 5678"
+                  placeholder="03-1234-5678"
                   {...register("phone_number")}
                 />
               </Field>
             </div>
 
-            <Field label="Subject" error={errors.subject?.message}>
+            <Field label="お問い合わせ項目 / 件名" error={errors.subject?.message}>
               <input
                 className={inputCls}
-                placeholder="What is this inquiry about?"
+                placeholder="お問い合わせの件名をご入力ください"
                 {...register("subject")}
               />
             </Field>
 
-            <Field label="Message" error={errors.message?.message}>
+            <Field label="お問い合わせ内容（具体的な採用ニーズなど）" error={errors.message?.message}>
               <textarea
                 className={`${inputCls} resize-y min-h-[120px]`}
-                placeholder="Tell us about your hiring needs…"
+                placeholder="募集職種、人数、採用時期などのご希望についてご自由にご入力ください"
                 {...register("message")}
               />
             </Field>
@@ -222,7 +222,7 @@ export default function CompanyContactPage() {
               disabled={isPending}
               className="mt-2 self-end px-8 py-2.5 bg-[var(--color-primary)] text-white font-[family-name:var(--font-label)] text-sm tracking-widest uppercase hover:opacity-90 transition-opacity disabled:opacity-50"
             >
-              {isPending ? "Sending…" : "Send inquiry"}
+              {isPending ? "送信中…" : "この内容で送信する"}
             </button>
           </fieldset>
           </form>

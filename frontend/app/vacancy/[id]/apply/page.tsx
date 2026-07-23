@@ -12,7 +12,7 @@ export default async function ApplyPage({
     return (
       <main className="min-h-screen flex items-center justify-center px-6 py-10 bg-[color:var(--color-surface)]">
         <p className="text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-label)]">
-          Invalid vacancy id.
+          無効な求人IDです。
         </p>
       </main>
     );

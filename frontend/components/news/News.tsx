@@ -43,20 +43,20 @@ function NewsSection() {
   return (
     <div className="flex flex-col min-h-screen w-auto justify-center items-center bg-[#f2f4f3]">
       <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light leading-[1.05] tracking-tight mb-2 font-headline text-primary mt-2">
-        Top News
+        Top ニュース
       </h1>
       <div className="w-36 h-0.5 mx-auto mb-4 bg-secondary" />
 
       {isPending && (
-        <p className="text-sm text-gray-500 font-headline">Loading news...</p>
+        <p className="text-sm text-gray-500 font-headline">ニュースを読み込んでいます...</p>
       )}
 
       {isError && (
-        <p className="text-sm text-red-500 font-headline">Failed to load news.</p>
+        <p className="text-sm text-red-500 font-headline">ニュースの読み込みに失敗しました。</p>
       )}
 
       {!isPending && !isError && items.length === 0 && (
-        <p className="text-sm text-gray-500 font-headline">No news published yet.</p>
+        <p className="text-sm text-gray-500 font-headline">まだニュースはありません。</p>
       )}
 
       {items.length > 0 && (
@@ -68,7 +68,7 @@ function NewsSection() {
           />
           <Link href="/news">
             <button className="mt-2 mb-6 px-6 py-2 rounded-full border border-[var(--color-secondary)] text-[var(--color-secondary)] text-sm font-headline hover:bg-[var(--color-secondary)] hover:text-white transition-colors">
-              More News
+              ニュースをもっと見る
             </button>
           </Link>
         </>

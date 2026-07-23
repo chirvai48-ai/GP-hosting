@@ -5,7 +5,7 @@ import BrandColumn from "./Column1";
 function FacebookColumn() {
   return (
     <div className="flex flex-col">
-      <SectionLabel>Find Us on Facebook</SectionLabel>
+      <SectionLabel>Facebook公式ページ</SectionLabel>
       <p
         className="text-[13.5px] italic mb-4"
         style={{
@@ -14,7 +14,7 @@ function FacebookColumn() {
           lineHeight: 1.65,
         }}
       >
-        Join our community for updates, announcements, and stories.
+        コミュニティに参加して、最新情報、お知らせ、ストーリーをチェックしましょう。
       </p>
 
       {/* Facebook preview card */}
@@ -57,7 +57,7 @@ function FacebookColumn() {
                 color: "rgba(248,250,248,0.38)",
               }}
             >
-              Facebook Page
+              Facebookページ
             </p>
           </div>
         </div>
@@ -65,9 +65,9 @@ function FacebookColumn() {
         {/* Stats */}
         <div className="flex gap-5 mb-4">
           {[
-            { num: "5.5K", lbl: "Followers" },
-            { num: "3.8K", lbl: "Likes" },
-            { num: "Weekly", lbl: "Posts" },
+            { num: "5.5K", lbl: "フォロワー" },
+            { num: "3.8K", lbl: "いいね！" },
+            { num: "毎週", lbl: "投稿" },
           ].map(({ num, lbl }) => (
             <div key={lbl}>
               <span
@@ -118,7 +118,7 @@ function FacebookColumn() {
                 color: "var(--color-secondary)",
               }}
             >
-              Visit our page
+              ページを見る
             </span>
             <svg
               viewBox="0 0 24 24"
@@ -189,7 +189,7 @@ export default function FooterSection() {
           © {new Date().getFullYear()} Glowing Partner Japan.
         </p>
         <div className="flex gap-6">
-          {["Privacy", "Terms", "Sitemap"].map((link) => (
+          {["プライバシーポリシー", "利用規約", "Sitemap"].map((link) => (
             <a
               key={link}
               href="#"

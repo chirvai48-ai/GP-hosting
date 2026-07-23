@@ -2,12 +2,12 @@ import { Building2, MapPin, Phone, User, Users, Coins, BadgeCheck } from "lucide
 
 const rows: { label: string; value: React.ReactNode; icon: React.ReactNode }[] = [
   {
-    label: "Company Name",
-    value: "Glowing Partner Co., Ltd.",
+    label: "会社名",
+    value: "株式会社Glowing Partner",
     icon: <Building2 size={16} />,
   },
   {
-    label: "Address",
+    label: "所在地",
     value: (
       <>
         6th Floor, 2-36-1 Ikebukuro,
@@ -18,7 +18,7 @@ const rows: { label: string; value: React.ReactNode; icon: React.ReactNode }[] =
     icon: <MapPin size={16} />,
   },
   {
-    label: "Telephone",
+    label: "電話番号",
     value: (
       <a href="tel:+81368419101" className="hover:text-[color:var(--color-secondary)] transition-colors">
         +81-3-6841-9101
@@ -27,12 +27,12 @@ const rows: { label: string; value: React.ReactNode; icon: React.ReactNode }[] =
     icon: <Phone size={16} />,
   },
   {
-    label: "Capital",
-    value: "44.25 million JPY",
+    label: "資本金",
+    value: "4,425万円",
     icon: <Coins size={16} />,
   },
   {
-    label: "President & Representative Director",
+    label: "代表取締役",
     value: (
       <>
         Go Uenaka <span className="text-[color:var(--color-on-surface-variant)]">(上中 豪)</span>
@@ -41,23 +41,23 @@ const rows: { label: string; value: React.ReactNode; icon: React.ReactNode }[] =
     icon: <User size={16} />,
   },
   {
-    label: "Number of Employees",
-    value: "100 (including full-time employees and part-time staff)",
+    label: "従業員数",
+    value: "100名（正社員・アルバイト含む）",
     icon: <Users size={16} />,
   },
 ];
 
 const licenses: { label: string; value: string }[] = [
   {
-    label: "General Worker Dispatch Business License",
-    value: "Pai 11-040029",
+    label: "一般労働者派遣事業許可",
+    value: "派11-040029",
   },
   {
-    label: "Paid Employment Placement Business License",
-    value: "11-Yu-040019",
+    label: "有料職業紹介事業許可",
+    value: "11-ユ-040019",
   },
   {
-    label: "Registered Support Organization (Specified Skilled Worker Program)",
+    label: "登録支援機関（特定技能）",
     value: "22-To-007904",
   },
 ];
@@ -69,10 +69,10 @@ export default function CorporateInfo() {
         {/* Section header */}
         <div className="text-center mb-14">
           <p className="font-label text-[10px] font-semibold tracking-[0.2em] uppercase text-[color:var(--color-secondary)] mb-4">
-            Corporate Information
+            企業情報
           </p>
           <h2 className="font-headline text-5xl font-light italic text-[color:var(--color-primary)]">
-            Company Profile
+            会社概要
           </h2>
           <div className="w-16 h-0.5 bg-[color:var(--color-secondary)] mx-auto mt-5" />
         </div>
@@ -104,7 +104,7 @@ export default function CorporateInfo() {
         {/* Licenses */}
         <div className="mt-10">
           <p className="font-label text-[10px] font-semibold tracking-[0.2em] uppercase text-[color:var(--color-secondary)] mb-4 text-center">
-            Licenses & Registrations
+            許認可・登録
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {licenses.map(({ label, value }) => (
@@ -115,7 +115,7 @@ export default function CorporateInfo() {
                 <div className="flex items-center gap-2 text-[color:var(--color-primary)]">
                   <BadgeCheck size={16} />
                   <span className="font-label text-[10px] font-semibold tracking-[0.14em] uppercase">
-                    License
+                    許可番号
                   </span>
                 </div>
                 <p className="font-body text-sm text-[color:var(--color-on-surface)] leading-snug">

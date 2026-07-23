@@ -6,30 +6,30 @@ import {
 } from "./application.schemas";
 
 export const createCompanyInquirySchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Enter a valid email"),
-  phone_number: z.string().min(1, "Phone number is required"),
-  subject: z.string().min(1, "Subject is required").max(255, "Subject must be 255 characters or fewer"),
-  message: z.string().min(1, "Message is required"),
+  name: z.string().min(1, "お名前（会社名・担当者氏名）を入力してください"),
+  email: z.string().email("正しいメールアドレスの形式で入力してください"),
+  phone_number: z.string().min(1, "電話番号を入力してください"),
+  subject: z.string().min(1, "件名を選択または入力してください").max(255, "件名は255文字以内で入力してください"),
+  message: z.string().min(1, "お問い合わせ内容を入力してください"),
 });
 
 export type CreateCompanyInquiryForm = z.infer<typeof createCompanyInquirySchema>;
 
 export const createCandidateInquirySchema = z.object({
-  full_name: z.string().min(1, "Full name is required"),
-  email: z.string().email("Enter a valid email"),
-  phone_number: z.string().min(1, "Phone number is required"),
+  full_name: z.string().min(1, "氏名を入力してください"),
+  email: z.string().email("正しいメールアドレスの形式で入力してください"),
+  phone_number: z.string().min(1, "電話番号を入力してください"),
   date_of_birth: z
     .string()
-    .min(1, "Date of birth is required")
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+    .min(1, "生年月日を入力してください")
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "日付は YYYY-MM-DD（年-月-日）の形式で入力してください"),
   gender: z.enum(GENDER_OPTIONS).optional(),
-  current_address: z.string().min(1, "Current address is required"),
-  preferred_location: z.string().min(1, "Preferred location is required"),
+  current_address: z.string().min(1, "現住所を入力してください"),
+  preferred_location: z.string().min(1, "勤務希望地を入力してください"),
   residence_status: z.enum(RESIDENCE_STATUS_OPTIONS).optional(),
   japanese_ability: z.enum(JAPANESE_ABILITY_OPTIONS).optional(),
   cover_letter: z.string().optional(),
-  resume_key: z.string().min(1, "Resume is required"),
+  resume_key: z.string().min(1, "履歴書ファイルを添付してください"),
   resume_type: z.string().min(1),
 });
 

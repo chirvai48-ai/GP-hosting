@@ -15,68 +15,68 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
+  { label: "ホーム", href: "/" },
+  { label: "会社概要", href: "/about" },
   {
-    label: "Services",
+    label: "サービス",
     href: "#",
     subItems: [
       {
-        label: "For Recruiter",
+        label: "企業様向け",
         image: "/forrecruiter.jpg",
         href: "/services/for-recruiter",
       },
       {
-        label: "For Job Seeker",
+        label: "求職者様向け",
         image: "/forjobseeker.jpg",
         href: "/services/for-job-seeker",
       },
     ],
   },
   {
-    label: "Our Business",
+    label: "事業内容",
     href: "#",
     subItems: [
       {
-        label: "Job Search Support",
+        label: "就職活動支援事業",
         image: "/careercounseling.jpg",
         href: "/business/career-counseling",
       },
       {
-        label: "Temporary Staffing",
+        label: "労働者派遣事業",
         image: "/recruiters.jpg",
         href: "/business/staffing",
       },
       {
-        label: "Recruitment & Placement",
+        label: "人材紹介事業",
         image: "/jobseekers.jpg",
         href: "/business/placement",
       },
       {
-        label: "Specified Skilled Worker Support",
+        label: "特定技能外国人の支援事業（登録支援機関）",
         image: "/forrecruiter.jpg",
         href: "/business/ssw-support",
       },
     ],
   },
   {
-    label: "Contact",
+    label: "お問い合わせ",
     href: "#",
     subItems: [
       {
-        label: "Company",
+        label: "法人のお客様",
         image: "/company.jpg",
         href: "/contact/company",
       },
       {
-        label: "Customer",
+        label: "個人のお客様",
         image: "/customer.jpg",
         href: "/contact/customer",
       },
     ],
   },
-  { label: "Vacancy", href: "/vacancy" },
-  { label: "News", href: "/news" },
+  { label: "求人情報", href: "/vacancy" },
+  { label: "ニュース", href: "/news" },
 ];
 
 export default function Navbar() {
@@ -184,7 +184,7 @@ export default function Navbar() {
             <div className="flex-shrink-0">
               <img
                 src="/GpLogoTransparent.png"
-                alt="Logo"
+                alt="ロゴ"
                 className="h-14 md:h-20 w-auto object-contain"
               />
             </div>
@@ -275,12 +275,12 @@ export default function Navbar() {
             {/* Mobile hamburger */}
             <button
               type="button"
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-label={mobileOpen ? "メニューを閉じる" : "メニューを開く"}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((v) => !v)}
               className={`lg:hidden relative w-10 h-10 flex items-center justify-center transition-colors ${textColor}`}
             >
-              <span className="sr-only">Toggle navigation</span>
+              <span className="sr-only">ナビゲーションを切り替える</span>
               <span className="relative block w-6 h-4">
                 <span
                   className={`absolute left-0 top-0 block h-[2px] w-6 bg-current transition-transform duration-300 ${

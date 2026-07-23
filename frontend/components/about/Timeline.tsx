@@ -5,65 +5,65 @@ import { Building2, Handshake, Shield, Globe, Heart, Zap, Star, ChevronRight } f
 
 const companyHistory = [
   {
-    year: "2018",
-    milestone: "Founded",
-    title: "A Bold Beginning",
+    year: "2018年",
+    milestone: "会社設立",
+    title: "新たな挑戦のスタート",
     description:
-      "Glowing Partner Co., Ltd. is established in Japan with a clear mission: to build a society where diversity is celebrated and every individual's potential can shine.",
+      "確かな使命を掲げ、日本にて株式会社Glowing Partnerを設立。多様性を尊重し、すべての個人の可能性が輝く社会づくりへの第一歩を踏み出しました。",
     primary: true,
     icon: <Building2 size={20} />,
   },
   {
-    year: "2019",
-    milestone: "Partnership",
-    title: "Bridging Two Nations",
+    year: "2019年",
+    milestone: "業務提携",
+    title: "二国間を繋ぐ架け橋の構築",
     description:
-      "A landmark partnership with World Partner Pvt. Ltd. in Nepal creates a powerful bridge, connecting talented Nepali professionals with forward-thinking Japanese companies.",
+      "ネパールの現地法人「World Partner Pvt. Ltd.」との強固なパートナーシップを締結。優秀なネパール人求職者と、未来を見据える日本企業を結ぶ確かなルートを確立しました。",
     primary: false,
     icon: <Handshake size={20} />,
   },
   {
-    year: "2020",
-    milestone: "Resilience",
-    title: "Thriving Through Change",
+    year: "2020年",
+    milestone: "柔軟な変化と適応",
+    title: "逆境を乗り越える組織力",
     description:
-      "Despite global challenges, Glowing Partner adapts and grows — demonstrating that diversity and international collaboration are sources of strength, not vulnerability.",
+      "世界的な社会情勢の変化に直面する中、柔軟に事業を適応させ成長を維持。多様性と国際的な連携こそが、困難に負けない真の強みであることを証明しました。",
     primary: true,
     icon: <Shield size={20} />,
   },
   {
-    year: "2021",
-    milestone: "Expansion",
-    title: "A Growing Network",
+    year: "2021年",
+    milestone: "事業の拡大",
+    title: "拡大する信頼のネットワーク",
     description:
-      "Partnerships with Japanese companies across diverse industries multiply, placing international talent where it matters most and proving that integration creates innovation.",
+      "幅広い業種の日本企業との取引が急速に拡大。国際的な人材が現場の中核として活躍し、多様性の受け入れが組織にイノベーションをもたらすことを示しました。",
     primary: false,
     icon: <Globe size={20} />,
   },
   {
-    year: "2022",
-    milestone: "Community",
-    title: "More Than a Business",
+    year: "2022年",
+    milestone: "地域社会への貢献",
+    title: "ビジネスを超えた絆",
     description:
-      "Glowing Partner deepens its commitment to community through active volunteer initiatives, reinforcing the belief that contributing to others' happiness is the greatest motivation.",
+      "社会貢献活動やボランティアへ積極的に取り組み、地域社会との結びつきを強化。「誰かの幸福に寄与することこそが最大の原動力である」という理念を実践しました。",
     primary: true,
     icon: <Heart size={20} />,
   },
   {
-    year: "2023",
-    milestone: "Innovation",
-    title: "Reshaping the Future of Work",
+    year: "2023年",
+    milestone: "プロセスの革新",
+    title: "雇用手続きのDX推進",
     description:
-      "New processes and digital tools streamline the journey from application to employment, expanding access to opportunity for international talent across Japan.",
+      "新しいデジタルツールの導入により、応募から採用・就労までの手続きを効率化。日本全国の企業へ、よりスムーズに国際人材を紹介できる環境を整えました。",
     primary: false,
     icon: <Zap size={20} />,
   },
   {
-    year: "2024",
-    milestone: "Today",
-    title: "A Cycle of Success",
+    year: "2024年",
+    milestone: "現在、そして未来へ",
+    title: "成功と信頼のグローバル循環",
     description:
-      "With a dedicated team — 95% from Nepal — Glowing Partner continues to prove that international talent drives a cycle of innovation, success, and genuine human connection.",
+      "メンバーの多くをネパール国籍のスタッフが占める強みを活かし、国際人材がもたらす組織の成長、ビジネスの成功、そして国境を超えた真の人間関係の好循環を証明し続けています。",
     primary: true,
     icon: <Star size={20} />,
   },
@@ -77,10 +77,10 @@ export default function Timeline() {
         {/* Section header */}
         <div className="text-center mb-16">
           <p className="font-label text-[10px] font-semibold tracking-[0.2em] uppercase text-[color:var(--color-secondary)] mb-4">
-            Our Journey
+            これまでの歩み
           </p>
           <h2 className="font-headline text-5xl font-light italic text-[color:var(--color-primary)]">
-            Company Timeline
+            沿革・ヒストリー
           </h2>
           <div className="w-16 h-0.5 bg-[color:var(--color-secondary)] mx-auto mt-5" />
         </div>

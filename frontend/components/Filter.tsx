@@ -7,17 +7,17 @@ type Props = {
 type Item = { id: string; label: string };
 
 const scheduleItems: Item[] = [
-  { id: "full_time", label: "Full-time" },
-  { id: "part_time", label: "Part-time" },
-  { id: "contract", label: "Contract / Temporary" },
-  { id: "internship", label: "Internship" },
+  { id: "full_time", label: "正社員" },
+  { id: "part_time", label: "パート・アルバイト" },
+  { id: "contract", label: "契約社員・派遣社員" },
+  { id: "internship", label: "インターンシップ" },
 ];
 
 const employmentItems: Item[] = [
-  { id: "sixdays", label: "6 days / week" },
-  { id: "shift_based", label: "Shift-based" },
-  { id: "flexible", label: "Flexible schedule" },
-  { id: "fivedays", label: "5 days / week" },
+  { id: "sixdays", label: "週6日勤務" },
+  { id: "shift_based", label: "シフト制" },
+  { id: "flexible", label: "フレックス・自由相談" },
+  { id: "fivedays", label: "週5日勤務" },
 ];
 
 function CheckboxGroup<G extends keyof Filterstype>({
@@ -97,7 +97,7 @@ function Filters({ filters, onChange }: Props) {
                    tracking-wide pb-3 mb-5
                    border-b-2 border-[var(--color-secondary)] font-headline"
       >
-        Filters
+        条件で絞り込む
       </h2>
 
       
@@ -107,7 +107,7 @@ function Filters({ filters, onChange }: Props) {
           className="text-[9px] md:text-[11px] tracking-widest uppercase
                      text-[var(--color-secondary)] mb-2 font-label "
         >
-          Working schedule
+          勤務形態
         </p>
         <CheckboxGroup items={scheduleItems} group="schedule" filters={filters} onChange={onChange} />
       </div>
@@ -120,7 +120,7 @@ function Filters({ filters, onChange }: Props) {
           className="text-[9px] md:text-[11px] font-label tracking-widest uppercase
                      text-[var(--color-secondary)] mb-2"
         >
-          Employment type
+          働き方・シフト
         </p>
         <CheckboxGroup items={employmentItems} group="employment" filters={filters} onChange={onChange} />
       </div>

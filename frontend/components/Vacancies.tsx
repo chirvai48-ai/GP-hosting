@@ -23,9 +23,9 @@ function formatSalary(min: number, max: number, currency: string) {
 }
 
 const CONTRACT_LABEL: Record<string, string> = {
-  Full_time: "Full-time",
-  Part_time: "Part-time",
-  Internship: "Internship",
+  Full_time: "正社員",
+  Part_time: "パート・アルバイト",
+  Internship: "インターン",
   Flexible: "Flexible",
 };
 
@@ -99,30 +99,30 @@ function JobDetailModal({ job, onClose }: { job: Job; onClose: () => void }) {
               onClick={onClose}
               className="shrink-0 px-3 py-1 text-xs rounded border border-[var(--color-secondary)] text-[var(--color-secondary)] font-[family-name:var(--font-label)] hover:bg-[var(--color-secondary)] hover:text-white transition-colors whitespace-nowrap"
             >
-              Apply to this job →
+              この求人に応募する →
             </Link>
           </div>
 
           {/* Key info grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            <InfoItem icon={<MapPin size={15} />} label="Location" value={job.location} />
-            <InfoItem icon={<Briefcase size={15} />} label="Experience" value={`${job.experience} yr${job.experience !== 1 ? "s" : ""}`} />
-            <InfoItem icon={<CalendarDays size={15} />} label="Posted" value={formatDate(job.created_at)} />
+            <InfoItem icon={<MapPin size={15} />} label="勤務地" value={job.location} />
+            <InfoItem icon={<Briefcase size={15} />} label="必要経験・年数" value={`${job.experience} yr${job.experience !== 1 ? "s" : ""}`} />
+            <InfoItem icon={<CalendarDays size={15} />} label="掲載日" value={formatDate(job.created_at)} />
             {job.shift_start && job.shift_end && (
-              <InfoItem icon={<Clock size={15} />} label="Shift" value={`${formatTime(job.shift_start)} – ${formatTime(job.shift_end)}`} />
+              <InfoItem icon={<Clock size={15} />} label="シフト" value={`${formatTime(job.shift_start)} – ${formatTime(job.shift_end)}`} />
             )}
             {job.workdays != null && (
-              <InfoItem icon={<CalendarDays size={15} />} label="Days / week" value={String(job.workdays)} />
+              <InfoItem icon={<CalendarDays size={15} />} label="出勤日数（週）" value={String(job.workdays)} />
             )}
             {job.gender && (
-              <InfoItem icon={<Users size={15} />} label="Gender" value={job.gender} />
+              <InfoItem icon={<Users size={15} />} label="性別" value={job.gender} />
             )}
           </div>
 
           {/* Salary */}
           <div className="bg-[#f2f4f3] rounded-xl px-5 py-4">
             <p className="font-[family-name:var(--font-label)] text-[10px] font-semibold tracking-widest uppercase text-[color:var(--color-secondary)] mb-1">
-              Annual Salary
+              年収
             </p>
             <p className="font-[family-name:var(--font-headline)] text-2xl text-[color:var(--color-primary)]">
               {formatSalary(job.salary_min, job.salary_max, job.currency)}
@@ -133,7 +133,7 @@ function JobDetailModal({ job, onClose }: { job: Job; onClose: () => void }) {
           {job.languages?.length > 0 && (
             <TagSection
               icon={<Star size={14} />}
-              label="Languages"
+              label="活かせる言語・語学力"
               tags={job.languages.map((l) => l.name)}
               tagClass="bg-[#E1F5EE] text-[#0F6E56]"
             />
@@ -143,17 +143,17 @@ function JobDetailModal({ job, onClose }: { job: Job; onClose: () => void }) {
           {job.technical_skills?.length > 0 && (
             <TagSection
               icon={<Award size={14} />}
-              label="Technical Skills"
+              label="スキル・専門知識"
               tags={job.technical_skills.map((s) => s.name)}
               tagClass="bg-[#E6F1FB] text-[#185FA5]"
             />
           )}
 
           {/* Text sections */}
-          {job.soft_skills && <TextSection icon={<Users size={14} />} label="Soft Skills" value={job.soft_skills} />}
-          {job.requirements && <TextSection icon={<FileText size={14} />} label="Requirements" value={job.requirements} />}
-          {job.benefits && <TextSection icon={<Star size={14} />} label="Benefits" value={job.benefits} />}
-          {job.application_method && <TextSection icon={<Send size={14} />} label="How to Apply" value={job.application_method} />}
+          {job.soft_skills && <TextSection icon={<Users size={14} />} label="求める人物像・強み" value={job.soft_skills} />}
+          {job.requirements && <TextSection icon={<FileText size={14} />} label="応募資格・要件" value={job.requirements} />}
+          {job.benefits && <TextSection icon={<Star size={14} />} label="福利厚生・待遇" value={job.benefits} />}
+          {job.application_method && <TextSection icon={<Send size={14} />} label="応募方法" value={job.application_method} />}
 
         </div>
       </div>
@@ -252,7 +252,7 @@ function VacancyCard({ job, onClick }: { job: Job; onClick: () => void }) {
         </div>
         <div className="border-t border-[rgba(20,86,82,0.1)] mb-2" />
         <div className="flex items-baseline gap-1.5 mb-1">
-          <span className="font-[family-name:var(--font-label)] text-[11px] font-semibold text-[color:var(--color-secondary)]">Annual</span>
+          <span className="font-[family-name:var(--font-label)] text-[11px] font-semibold text-[color:var(--color-secondary)]">年収</span>
           <span className="font-[family-name:var(--font-display)] text-[16px] font-medium text-[color:var(--color-primary)] leading-none tracking-tight">
             {formatSalary(job.salary_min, job.salary_max, job.currency)}
           </span>
@@ -270,7 +270,7 @@ function VacancyCard({ job, onClick }: { job: Job; onClick: () => void }) {
               : "bg-transparent text-[color:var(--color-primary)] border-[color:var(--color-primary)]"
           }`}
         >
-          Apply Now →
+          求人に応募する →
         </Link>
       </div>
 
@@ -303,17 +303,17 @@ export default function VacancySection({
       <div className="mb-6">
         <div className="border-l-[3px] border-[color:var(--color-secondary)] pl-5">
           <p className="font-[family-name:var(--font-label)] text-[10px] md:text-[11px] font-semibold tracking-[0.12em] uppercase text-[color:var(--color-secondary)] mb-1">
-            We&apos;re hiring
+            採用情報
           </p>
           <h1 className="font-[family-name:var(--font-headline)] text-[24px] md:text-[32px] font-normal italic text-[color:var(--color-primary)] leading-[1.1]">
-            Open Positions
+            募集中の求人一覧
           </h1>
           <p className="font-[family-name:var(--font-label)] text-[10px] md:text-[11px] text-[color:var(--color-on-surface-variant)] mt-2">
             {isPending
-              ? "Loading…"
+              ? "読み込み中…"
               : isFiltered
-              ? `${jobs.length} of ${totalCount} vacancies match your filters`
-              : `${totalCount} vacancies across all departments`}
+              ? `該当する求人が ${jobs.length} 件見つかりました（総求人数：${totalCount} 件）`
+              : `$全体で {totalCount} 件の求人がございます`}
           </p>
         </div>
       </div>
@@ -321,29 +321,29 @@ export default function VacancySection({
       <div>
         {isPending && (
           <div className="flex items-center justify-center py-24 text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-label)]">
-            Loading positions…
+            求人情報を読み込んでいます…
           </div>
         )}
         {isError && (
           <div className="flex items-center justify-center py-24 text-red-500 font-[family-name:var(--font-label)]">
-            Failed to load vacancies.
+            求人情報の読み込みに失敗しました。
           </div>
         )}
         {!isPending && !isError && jobs.length === 0 && totalCount === 0 && (
           <div className="flex items-center justify-center py-24 text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-label)]">
-            No open positions at the moment.
+            現在、募集中の求人はございません。
           </div>
         )}
         {!isPending && !isError && jobs.length === 0 && totalCount > 0 && (
           <div className="flex flex-col items-center justify-center py-24 gap-3">
             <p className="text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-label)]">
-              No vacancies match your current filters.
+              選択された条件に一致する求人が見つかりませんでした。
             </p>
             <button
               onClick={onClearFilters}
               className="px-4 py-2 text-xs rounded border border-[var(--color-primary)] text-[var(--color-primary)] font-[family-name:var(--font-label)] tracking-widest uppercase hover:bg-[var(--color-primary)] hover:text-white transition-colors"
             >
-              Clear filters
+              検索条件をクリアする
             </button>
           </div>
         )}

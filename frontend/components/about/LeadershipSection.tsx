@@ -13,16 +13,16 @@ interface Leader {
 const leaders: Leader[] = [
   {
     id: 1,
-    name: "Narayan Pokhrel",
-    title: "CEO, World Partner",
+    name: "ポケレル・ナラヤン",
+    title: "World Partner 代表取締役",
     href: "https://world-partner.com.np",
     imageUrl: "/Narayan.jpeg",
     logo: "/logogreen.jpeg",
   },
   {
     id: 2,
-    name: "Go Uenaka",
-    title: "CEO, Glowing Partner",
+    name: "上中 豪",
+    title: "株式会社Glowing Partner 代表取締役",
     imageUrl: "/UenkaGO.jpg",
     logo: "/GpLogoTransparent.png",
   },
@@ -35,10 +35,10 @@ const LeadershipSection: React.FC = () => {
         {/* Section header */}
         <div className="text-center mb-12">
           <p className="font-label text-[10px] font-semibold tracking-[0.2em] uppercase text-[color:var(--color-secondary)] mb-4">
-            The People Behind the Mission
+            組織体制・リーダーシップ
           </p>
           <h2 className="font-headline text-4xl md:text-5xl font-light italic text-[color:var(--color-primary)]">
-            Leadership
+            役員・経営陣紹介
           </h2>
           <div className="w-16 h-0.5 bg-[color:var(--color-secondary)] mx-auto mt-5" />
         </div>
@@ -58,7 +58,7 @@ const LeadershipSection: React.FC = () => {
                 <div className="relative overflow-hidden border border-[rgba(20,86,82,0.15)] shadow-md h-48 sm:h-56 md:h-[344px]">
                   <Image
                     src="/Map1.png"
-                    alt="Bridge between Nepal and Japan"
+                    alt="日本とネパールを繋ぐネットワーク"
                     fill
                     className="object-contain sm:object-cover"
                     priority

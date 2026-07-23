@@ -75,7 +75,7 @@ function StepIndicator({ step }: { step: 1 | 2 }) {
                 : "text-[var(--color-on-surface-variant)]"
             }`}
           >
-            {s === 1 ? "Personal info" : "Preferences & resume"}
+            {s === 1 ? "基本情報の入力" : "希望条件・履歴書添付"}
           </span>
           {s < 2 && <div className="w-8 h-px bg-[var(--color-container-low)]" />}
         </div>
@@ -98,7 +98,7 @@ async function postCandidateInquiry(payload: CreateCandidateInquiryForm) {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body?.error?.formErrors?.[0] || body?.message || "Submission failed");
+    throw new Error(body?.error?.formErrors?.[0] || body?.message || "送信に失敗しました");
   }
   return res.json();
 }
@@ -145,7 +145,7 @@ export default function CustomerContactPage() {
         body: resumeFileRef.current,
         headers: { "Content-Type": resumeFileRef.current.type },
       });
-      if (!putRes.ok) throw new Error("Resume upload failed. Please try again.");
+      if (!putRes.ok) throw new Error("履歴書のアップロードに失敗しました。お手数ですが、もう一度お試しください。");
     }
     setSubmitted(true);
   };
@@ -159,7 +159,7 @@ export default function CustomerContactPage() {
     const file = e.target.files?.[0];
     if (!file) return;
     if (!ACCEPTED_MIME.includes(file.type)) {
-      setResumeError("Only PDF, DOC, or DOCX files are allowed.");
+      setResumeError("アップロード可能なファイルは PDF、DOC、DOCX 形式のみです。");
       setValue("resume_key", "");
       setValue("resume_type", "");
       resumeFileRef.current = null;
@@ -167,7 +167,7 @@ export default function CustomerContactPage() {
       return;
     }
     if (file.size > MAX_RESUME_BYTES) {
-      setResumeError("File must be 5 MB or smaller.");
+      setResumeError("ファイルサイズは 5MB 以下にしてください。");
       setValue("resume_key", "");
       setValue("resume_type", "");
       resumeFileRef.current = null;
@@ -189,16 +189,16 @@ export default function CustomerContactPage() {
         <div className="max-w-md w-full text-center bg-white rounded-2xl shadow-sm border border-[rgba(20,86,82,0.1)] p-10">
           <CheckCircle2 size={48} className="mx-auto text-[color:var(--color-primary)] mb-4" />
           <h1 className="font-[family-name:var(--font-headline)] text-2xl text-[color:var(--color-on-surface)] mb-2">
-            Submission received
+            ご登録が完了いたしました
           </h1>
           <p className="font-[family-name:var(--font-body)] text-sm text-[color:var(--color-on-surface-variant)] mb-6">
-            Thank you for your interest. We'll review your profile and reach out if there's a match.
+            ご登録いただき誠にありがとうございます。内容を確認の上、ご経歴やご希望にマッチする求人がございましたら、担当者よりご連絡いたします。
           </p>
           <Link
             href="/vacancy"
             className="inline-block px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white transition-colors font-[family-name:var(--font-label)] text-sm"
           >
-            Browse vacancies
+            募集中の求人を見る
           </Link>
         </div>
       </main>
@@ -222,7 +222,7 @@ export default function CustomerContactPage() {
           href="/"
           className="inline-flex items-center gap-1 text-xs text-[color:var(--color-on-surface-variant)] hover:text-[color:var(--color-primary)] font-[family-name:var(--font-label)] mb-6"
         >
-          <ArrowLeft size={14} /> Back to home
+          <ArrowLeft size={14} /> ホームへ戻る
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-12 items-start">
@@ -231,7 +231,7 @@ export default function CustomerContactPage() {
             <div className="relative w-full aspect-[4/5] sm:aspect-[16/10] lg:aspect-[4/5] rounded-3xl overflow-hidden shadow-lg">
               <Image
                 src="/message.jpg"
-                alt="Job seekers"
+                alt="お仕事を検索中の皆様"
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -240,22 +240,22 @@ export default function CustomerContactPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-primary)]/85 via-[var(--color-primary)]/30 to-transparent" />
               <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-end text-white">
                 <span className="inline-flex items-center gap-1.5 self-start px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-[10px] font-[family-name:var(--font-label)] tracking-[0.18em] uppercase mb-3">
-                  <Sparkles size={12} /> Job seeker inquiry
+                  <Sparkles size={12} /> 求職者様向けご登録・お問い合わせ
                 </span>
                 <h1 className="font-[family-name:var(--font-headline)] text-3xl md:text-4xl leading-tight mb-2">
-                  Let&apos;s find the role that fits you.
+                  あなたに本当にマッチするキャリアを、ともに。
                 </h1>
                 <p className="font-[family-name:var(--font-body)] text-sm md:text-base text-white/90 max-w-sm">
-                  Share your profile — we&apos;ll reach out the moment we have something worth your time.
+                  あなたのご経歴やご希望をお聞かせください。最適なポジションが見つかり次第、すぐにご案内いたします。
                 </p>
               </div>
             </div>
 
             <div className="bg-white rounded-2xl border border-[rgba(20,86,82,0.1)] p-5 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
               {[
-                { n: "500+", l: "Candidates placed" },
-                { n: "120+", l: "Hiring partners" },
-                { n: "48h", l: "Avg. response" },
+                { n: "500名以上", l: "内定・就職実績" },
+                { n: "120社以上", l: "パートナー企業数" },
+                { n: "48時間以内", l: "平均レスポンス時間" },
               ].map((s) => (
                 <div key={s.l}>
                   <p className="font-[family-name:var(--font-headline)] text-xl text-[var(--color-primary)]">
@@ -269,7 +269,7 @@ export default function CustomerContactPage() {
             </div>
 
             <div className="hidden lg:flex flex-col gap-2 text-sm text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-body)]">
-              <div className="flex items-start gap-2"><MapPin size={14} className="mt-1 shrink-0 text-[var(--color-primary)]" /> 6th Floor, 2-36-1 Ikebukuro, Toshima City, Tokyo 171-0014, Japan</div>
+              <div className="flex items-start gap-2"><MapPin size={14} className="mt-1 shrink-0 text-[var(--color-primary)]" /> 〒171-0014 東京都豊島区池袋2-36-1 6階</div>
               <div className="flex items-center gap-2"><Mail size={14} className="text-[var(--color-primary)]" /> info@glowing-partner.jp</div>
               <div className="flex items-center gap-2"><Phone size={14} className="text-[var(--color-primary)]" /> <a href="tel:+81368419101" className="hover:text-[var(--color-primary)]">+81-3-6841-9101</a></div>
             </div>
@@ -286,15 +286,15 @@ export default function CustomerContactPage() {
           {step === 1 && (
             <fieldset className="flex flex-col gap-5">
               <legend className="font-[family-name:var(--font-headline)] text-lg text-[color:var(--color-on-surface)] mb-2">
-                Personal information
+                応募者基本情報
               </legend>
 
-              <Field label="Full name" error={errors.full_name?.message}>
+              <Field label="氏名（フルネーム）" error={errors.full_name?.message}>
                 <input className={inputCls} placeholder="Yamada Taro" {...register("full_name")} />
               </Field>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <Field label="Email" error={errors.email?.message}>
+                <Field label="メールアドレス" error={errors.email?.message}>
                   <input
                     type="email"
                     className={inputCls}
@@ -302,22 +302,22 @@ export default function CustomerContactPage() {
                     {...register("email")}
                   />
                 </Field>
-                <Field label="Phone number" error={errors.phone_number?.message}>
+                <Field label="電話番号" error={errors.phone_number?.message}>
                   <input
                     className={inputCls}
-                    placeholder="+81 90 1234 5678"
+                    placeholder="090-1234-5678"
                     {...register("phone_number")}
                   />
                 </Field>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <Field label="Date of birth" error={errors.date_of_birth?.message}>
+                <Field label="生年月日" error={errors.date_of_birth?.message}>
                   <input type="date" className={inputCls} {...register("date_of_birth")} />
                 </Field>
-                <Field label="Gender (optional)" error={errors.gender?.message}>
+                <Field label="性別（任意）" error={errors.gender?.message}>
                   <select className={inputCls} defaultValue="" {...register("gender")}>
-                    <option value="">Select…</option>
+                    <option value="">選択してください</option>
                     {GENDER_OPTIONS.map((g) => (
                       <option key={g} value={g}>
                         {g}
@@ -327,10 +327,10 @@ export default function CustomerContactPage() {
                 </Field>
               </div>
 
-              <Field label="Current address" error={errors.current_address?.message}>
+              <Field label="現住所" error={errors.current_address?.message}>
                 <textarea
                   className={`${inputCls} resize-y min-h-[60px]`}
-                  placeholder="Where you currently live"
+                  placeholder="現在お住まいの住所"
                   {...register("current_address")}
                 />
               </Field>
@@ -341,7 +341,7 @@ export default function CustomerContactPage() {
                   onClick={next}
                   className="inline-flex items-center gap-2 px-8 py-2.5 bg-[var(--color-primary)] text-white font-[family-name:var(--font-label)] text-sm tracking-widest uppercase hover:opacity-90 transition-opacity"
                 >
-                  Next <ArrowRight size={14} />
+                  次へ <ArrowRight size={14} />
                 </button>
               </div>
             </fieldset>
@@ -350,21 +350,21 @@ export default function CustomerContactPage() {
           {step === 2 && (
             <fieldset className="flex flex-col gap-5" disabled={isPending}>
               <legend className="font-[family-name:var(--font-headline)] text-lg text-[color:var(--color-on-surface)] mb-2">
-                Preferences &amp; resume
+                希望条件・履歴書
               </legend>
 
-              <Field label="Preferred work location" error={errors.preferred_location?.message}>
+              <Field label="勤務希望地" error={errors.preferred_location?.message}>
                 <input
                   className={inputCls}
-                  placeholder="e.g. Tokyo, Osaka"
+                  placeholder="例：東京、大阪"
                   {...register("preferred_location")}
                 />
               </Field>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <Field label="Residence status (optional)" error={errors.residence_status?.message}>
+                <Field label="在留資格 / ビザの種類（任意）" error={errors.residence_status?.message}>
                   <select className={inputCls} defaultValue="" {...register("residence_status")}>
-                    <option value="">Select…</option>
+                    <option value="">選択してください</option>
                     {RESIDENCE_STATUS_OPTIONS.map((r) => (
                       <option key={r} value={r}>
                         {RESIDENCE_STATUS_LABELS[r]}
@@ -372,9 +372,9 @@ export default function CustomerContactPage() {
                     ))}
                   </select>
                 </Field>
-                <Field label="Japanese ability (optional)" error={errors.japanese_ability?.message}>
+                <Field label="日本語能力（任意）" error={errors.japanese_ability?.message}>
                   <select className={inputCls} defaultValue="" {...register("japanese_ability")}>
-                    <option value="">Select…</option>
+                    <option value="">選択してください</option>
                     {JAPANESE_ABILITY_OPTIONS.map((j) => (
                       <option key={j} value={j}>
                         {j}
@@ -384,16 +384,16 @@ export default function CustomerContactPage() {
                 </Field>
               </div>
 
-              <Field label="Cover letter (optional)" error={errors.cover_letter?.message}>
+              <Field label="自己PR・備考（任意）" error={errors.cover_letter?.message}>
                 <textarea
                   className={`${inputCls} resize-y min-h-[100px]`}
-                  placeholder="Tell us about yourself and what you're looking for…"
+                  placeholder="ご自身の強みや、ご希望の職種・働き方などについてご自由にご入力ください"
                   {...register("cover_letter")}
                 />
               </Field>
 
               <div className="flex flex-col gap-1">
-                <label className={labelCls}>Resume (PDF, DOC, DOCX — max 5 MB)</label>
+                <label className={labelCls}>履歴書・職務経歴書（PDF / DOC / DOCX形式、5MB以下）</label>
                 <label className="cursor-pointer">
                   <div
                     className={`flex items-center gap-3 px-4 py-3 border-2 border-dashed rounded transition-colors ${
@@ -422,7 +422,7 @@ export default function CustomerContactPage() {
                         </>
                       ) : (
                         <span className="text-sm font-[family-name:var(--font-label)] text-[var(--color-on-surface-variant)]">
-                          Click to upload resume
+                          ファイルを選択してアップロード
                         </span>
                       )}
                     </div>
@@ -449,14 +449,14 @@ export default function CustomerContactPage() {
                   onClick={() => setStep(1)}
                   className="inline-flex items-center gap-2 px-6 py-2.5 border border-[var(--color-primary)] text-[var(--color-primary)] font-[family-name:var(--font-label)] text-sm tracking-widest uppercase hover:bg-[var(--color-primary)] hover:text-white transition-colors"
                 >
-                  <ArrowLeft size={14} /> Back
+                  <ArrowLeft size={14} /> 戻る
                 </button>
                 <button
                   type="submit"
                   disabled={isPending}
                   className="inline-flex items-center gap-2 px-8 py-2.5 bg-[var(--color-primary)] text-white font-[family-name:var(--font-label)] text-sm tracking-widest uppercase hover:opacity-90 transition-opacity disabled:opacity-50"
                 >
-                  {isPending ? "Submitting…" : "Submit profile"}
+                  {isPending ? "送信中…" : "この内容で登録する"}
                 </button>
               </div>
             </fieldset>

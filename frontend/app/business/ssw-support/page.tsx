@@ -5,9 +5,9 @@ import StatGraphic from "@/components/business/StatGraphic";
 import CrossSell from "@/components/business/CrossSell";
 
 export const metadata = {
-  title: "Support Services for Specified Skilled Workers | Glowing Partner",
+  title: "特定技能外国人の支援事業（登録支援機関） | 株式会社Glowing Partner",
   description:
-    "As a Registered Support Organization, we recruit and develop Specified Skilled Worker candidates through our Nepal group company and provide post-employment career support.",
+    "ネパール現地法人「World Partner Pvt.Ltd.」をグループ会社として有し、現地での人材育成・募集から、国家資格を持つキャリアコンサルタントによる採用後の支援業務まで一貫して対応しています。",
 };
 
 function IconFlag() {
@@ -51,53 +51,53 @@ export default function SswSupportPage() {
   return (
     <>
       <Hero
-        eyebrow="Business 04"
-        title="Support Services for Specified Skilled Workers"
-        lede="As a Registered Support Organization, we recruit and develop human resources directly in Nepal through our group company, World Partner Pvt. Ltd., and provide ongoing support after employment in Japan."
+        eyebrow="④ 特定技能外国人の支援事業（登録支援機関）"
+        title="特定技能外国人 支援サービス"
+        lede="ネパール現地法人「World Partner Pvt.Ltd.」をグループ会社として有し、ネパール現地での人材育成・募集が可能です。日本での採用後も、国家資格を持つキャリアコンサルタントが支援業務を担当します。"
         image="/Business4.jpeg"
         imageAlt="SSW Support Services"
         sideBySide
       />
 
       <Section
-        eyebrow="Our Nepal pipeline"
-        heading="Recruited and developed directly at the source."
-        body="Through our group company in Nepal, World Partner Pvt. Ltd., we are able to recruit and develop human resources directly in Nepal — building a pipeline of candidates who are prepared for life and work in Japan before they ever board the plane."
+        eyebrow="ネパール現地のパイプライン"
+        heading="グループ会社を通じた現地での人材育成と募集。"
+        body="ネパール現地法人「World Partner Pvt.Ltd.」をグループ会社として有しているため、ネパール現地での直接の人材育成・募集が可能です。来日前から日本での就労や生活に向けた確かなパイプラインを構築しています。"
       />
 
       <StatGraphic
-        eyebrow="Dual-panel evaluation"
-        heading="Candidates assessed by experts on both sides."
+        eyebrow="選考アドバイス体制"
+        heading="実績豊富なプロフェッショナルによる選考サポート。"
         stats={[
-          { value: "10,000+", label: "Nepali candidates", sub: "Collectively assessed by our Japanese professional panel." },
-          { value: "12+ yrs", label: "In Japan", sub: "Nepali professionals on our team with deep cross-cultural knowledge." },
-          { value: "2", label: "Cultures, one team", sub: "Japanese rigor and Nepali insight in every selection decision." },
+          { value: "10,000+", label: "10,000人以上の実績", sub: "選考の際には、これまでのべ10,000人以上のネパール人選考実績がある日本人が対応します。" },
+          { value: "12+ yrs", label: "日本在住12年以上", sub: "日本在住12年以上のネパール人スタッフが、双方の文化や考え方を深く理解し選考を行います。" },
+          { value: "2", label: "的確なアドバイス", sub: "日本人とネパール人が、それぞれの視点から選考のポイントを分かりやすくアドバイスいたします。" },
         ]}
       />
 
       <FeatureGrid
-        eyebrow="What you get"
-        heading="End-to-end Specified Skilled Worker support."
+        eyebrow="サービスの特徴"
+        heading="募集から採用後の支援までトータルサポート。"
         features={[
           {
             icon: <IconFlag />,
-            title: "Source in Nepal",
-            body: "Direct recruitment through our group company, World Partner Pvt. Ltd., based in Nepal.",
+            title: "ネパール現地での人材育成・募集",
+            body: "ネパール現地法人「World Partner Pvt.Ltd.」をグループ会社として有し、現地でのダイレクトな人材育成と募集を行います。",
           },
           {
             icon: <IconUsers />,
-            title: "Dual-panel selection",
-            body: "Candidates evaluated by Japanese professionals and Nepali specialists who have lived in Japan for over 12 years.",
+            title: "実績に基づく選考アドバイス",
+            body: "これまでのべ10,000人以上の選考実績がある日本人が、日本在住12年以上のネパール人とともに選考のポイントをアドバイスいたします。",
           },
           {
             icon: <IconBridge />,
-            title: "Cross-cultural readiness",
-            body: "Candidates are prepared for Japanese workplace culture before placement, reducing onboarding friction.",
+            title: "文化の違いを埋めるマッチング",
+            body: "双方の求めていることを深く理解した上で選考を行うため、ミスマッチがなく、スムーズに日本での就労を開始できます。",
           },
           {
             icon: <IconShield />,
-            title: "Post-employment support",
-            body: "Ongoing assistance from nationally certified Career Consultants ensures successful integration after hiring.",
+            title: "国家資格保持者による採用後支援",
+            body: "採用後の義務的支援業務やアフターケアについては、国家資格を持つプロのキャリアコンサルタントが全面的に担当いたします。",
           },
         ]}
       />

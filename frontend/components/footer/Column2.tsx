@@ -16,7 +16,7 @@ export default function HoursNewsletterColumn() {
 
 
       {/* Newsletter */}
-      <SectionLabel>Subscribe to Newsletter</SectionLabel>
+      <SectionLabel>ニュースレターに登録</SectionLabel>
       {submitted ? (
         <p
           className="text-[13px] tracking-wide"
@@ -25,7 +25,7 @@ export default function HoursNewsletterColumn() {
             color: "var(--color-secondary)",
           }}
         >
-          Thank you for subscribing ✦
+          ご登録ありがとうございます ✦
         </p>
       ) : (
         <>
@@ -35,7 +35,7 @@ export default function HoursNewsletterColumn() {
           >
             <input
               type="email"
-              placeholder="Your email address"
+              placeholder="メールアドレス"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
@@ -49,7 +49,7 @@ export default function HoursNewsletterColumn() {
               onClick={handleSubmit}
               className="px-4 flex items-center justify-center transition-opacity duration-200 hover:opacity-80"
               style={{ background: "var(--color-secondary)" }}
-              aria-label="Subscribe"
+              aria-label="登録する"
             >
               {/* Arrow right icon */}
               <svg

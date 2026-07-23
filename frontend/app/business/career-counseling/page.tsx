@@ -6,69 +6,69 @@ import StatGraphic from "@/components/business/StatGraphic";
 import CrossSell from "@/components/business/CrossSell";
 
 export const metadata = {
-  title: "Job Hunting Support Services | Glowing Partner",
+  title: "就職活動支援事業 | 株式会社Glowing Partner",
   description:
-    "Led by representative Kaminaka, nationally certified Career Consultant, we provide job-hunting know-how and career support to individuals and educational institutions.",
+    "キャリアコンサルタントの国家資格を有する代表の上中が中心となり、個人および学校法人に対して、就職活動に関するノウハウ提供やキャリア支援を行っています。",
 };
 
 export default function CareerCounselingPage() {
   return (
     <>
       <Hero
-        eyebrow="Business 01"
-        title="Job Hunting Support Services"
-        lede="Led by our representative, Kaminaka, who holds a national qualification as a Career Consultant, we provide job-hunting know-how and career support to both individuals and educational institutions."
+        eyebrow="① 就職活動支援事業"
+        title="就職活動支援サービス"
+        lede="キャリアコンサルタントの国家資格を有する、代表の上中が中心となり、個人および学校に対して、就職活動に関するノウハウ提供をしています。"
         image="/Seminar3.jpg"
-        imageAlt="Job Hunting Support Services"
+        imageAlt="就職活動支援サービス"
       />
 
       <ExternalLinkCard
-        eyebrow="National qualification"
-        title="What is a Career Consultant?"
-        description="Read the official explanation of the Career Consultant national qualification on the Japan Career Consulting Association website."
+        eyebrow="国家資格"
+        title="＜キャリアコンサルタントとは？＞"
+        description="特定非営利活動法人 日本キャリア開発協会のウェブサイトで、国家資格「キャリアコンサルタント」の公式な説明をご覧いただけます。"
         href="https://www.career-cc.org/"
-        linkLabel="Visit career-cc.org"
+        linkLabel="外部サイトへ移動（career-cc.org）"
       />
 
       <Section
-        eyebrow="For individuals"
-        heading="GP Job Offer Academy"
-        body="This program was launched during the COVID-19 pandemic when job opportunities drastically decreased. It was driven by a strong desire to support talented individuals who were struggling simply because they did not know how to approach job hunting effectively. As a result, our academy has helped participants secure job offers from more than 500 companies, contributing significantly to their career development."
+        eyebrow="個人向け"
+        heading="就活スクール「GP内定アカデミー」"
+        body="コロナ禍で求人が激減した際、「優秀でありながら就職活動のやり方が分からず苦労している方々のお役に少しでも立ちたい」という強い想いからスタートしました。その結果、これまでに500社以上の内定実績を誇り、多くの方のキャリア形成に貢献しています。"
         image="/Seminar1.jpg"
         image2="/Seminar2.jpg"
-        imageAlt="GP Job Offer Academy"
+        imageAlt="就活スクール「GP内定アカデミー」"
       >
         <p className="text-base md:text-lg leading-relaxed text-[color:var(--color-on-surface-variant)] font-[var(--font-label)]">
-          One of our key strengths is our personalized guidance and ongoing support, enabling individuals to conduct a job search they can feel confident and satisfied with. We provide practical know-how on how to effectively present their experiences and strengths to potential employers, including interview preparation and other essential job-hunting skills. Our nationally certified professional Career Consultants provide comprehensive support tailored to each job seeker.
+          「面接対策」など、ご自身で納得のいく就職活動ができるよう（自分自身の経験をより効果的に企業に提案するノウハウ）、丁寧に指導・伴走するのが私たちの特徴です。国家資格を持つプロのキャリアコンサルタントが、求職者様ひとりひとりの就職活動を全面的にサポートいたします。
         </p>
       </Section>
 
       <StatGraphic
         stats={[
-          { value: "500+", label: "Companies", sub: "have extended offers to academy participants." },
-          { value: "1:1", label: "Mentorship", sub: "with nationally certified Career Consultants." },
-          { value: "2 yrs", label: "Hokkaido Program", sub: "of consecutive subsidized seminar delivery." },
+          { value: "500+", label: "500社以上", sub: "多くの受講生が希望の企業より内定を獲得しています。" },
+          { value: "1:1", label: "徹底的な伴走支援", sub: "国家資格を持つプロのキャリアコンサルタントが個別指導。" },
+          { value: "2 yrs", label: "2年連続の実績", sub: "北海道補助事業の一環として就職活動セミナーを実施。" },
         ]}
       />
 
       <Section
-        eyebrow="For educational institutions"
-        heading="Job Hunting Seminars"
-        body="By providing job-hunting expertise to universities, vocational schools, and Japanese language schools with large international student populations, we help improve overall employment rates for educational institutions. We have successfully conducted job-hunting seminars for two consecutive years as part of a Hokkaido government subsidy program."
+        eyebrow="学校法人向け"
+        heading="就活セミナー"
+        body="留学生が多数在籍する大学・専門学校・日本語学校にて、就職活動のノウハウを提供することにより、学校全体の就職率UPに貢献しています。2年連続で、北海道補助事業の一環での就職活動セミナーを実施した実績があります。"
         image="/Seminar4.jpg"
-        imageAlt="Job hunting seminar"
+        imageAlt="学校法人向け就活セミナーの風景"
         reverse
       />
 
       <PhotoStrip
-        eyebrow="Hokkaido Subsidy Program"
-        heading="Achievements in Hokkaido Government Subsidized Programs."
+        eyebrow="北海道補助事業"
+        heading="北海道補助事業におけるセミナー実施実績"
         photos={[
-          { src: "/Seminar1.jpg", caption: "Academy mentorship" },
-          { src: "/Seminar2.jpg", caption: "Group workshop" },
-          { src: "/Seminar3.jpg", caption: "Career consultation" },
-          { src: "/Seminar4.jpg", caption: "Institution seminar" },
-          { src: "/Seminar5.jpg", caption: "October 2025" },
+          { src: "/Seminar1.jpg", caption: "個別面談・指導" },
+          { src: "/Seminar2.jpg", caption: "就活ワークショップ" },
+          { src: "/Seminar3.jpg", caption: "キャリアカウンセリング" },
+          { src: "/Seminar4.jpg", caption: "学内就職ガイダンス" },
+          { src: "/Seminar5.jpg", caption: "2025年10月期 実績" },
         ]}
       />
 

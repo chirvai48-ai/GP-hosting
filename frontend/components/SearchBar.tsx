@@ -58,46 +58,46 @@ function SearchBar({ searchState, onChange, onClear }: Props) {
   };
 
   const cityValue: string[] = [
-    "All cities",
-    "Tokyo",
-    "Osaka",
-    "Kyoto",
-    "Yokohama",
-    "Nagoya",
-    "Sapporo",
-    "Fukuoka",
-    "Kobe",
-    "Hiroshima",
-    "Sendai",
+    "すべての勤務地",
+    "東京都",
+    "大阪府",
+    "京都府",
+    "神奈川県（横浜）",
+    "愛知県（名古屋）",
+    "北海道（札幌）",
+    "福岡県",
+    "兵庫県（神戸）",
+    "広島県",
+    "宮城県（仙台）",
   ];
 
   const experienceValue = [
     {
-      name: "All levels",
+      name: "不問（すべての経験レベル）",
       value: -1,
     },
     {
-      name: "Entry level",
+      name: "未経験歓迎",
       value: 0,
     },
     {
-      name: "0-1 years",
+      name: "1年未満",
       value: 1,
     },
     {
-      name: "2-3 years",
+      name: "2〜3年",
       value: 2,
     },
     {
-      name: "3-4 years",
+      name: "3〜4年",
       value: 3,
     },
     {
-      name: "4-5 years",
+      name: "4〜5年",
       value: 4,
     },
     {
-      name: "5+ years",
+      name: "5年以上",
       value: 6,
     },
   ];
@@ -123,7 +123,7 @@ function SearchBar({ searchState, onChange, onClear }: Props) {
   };
   return (
     <div className="p-2 bg-[var(--color-surface)]">
-      <p className="font-headline text-sm opacity-60">FIND YOUR NEXT ROLE</p>
+      <p className="font-headline text-sm opacity-60">求人検索</p>
       <div className="flex flex-col items-center  p-4 gap-4">
         {/* Search bar on the left */}
         <div className="w-full max-w-4xl  ">
@@ -131,7 +131,7 @@ function SearchBar({ searchState, onChange, onClear }: Props) {
             <Search className="w-4 h-5 shrink-0" color="#145652" />
             <input
               className="flex-1 min-w-0 outline-1 bg-white rounded-md font-headline italic px-2"
-              placeholder=" Job title, keyword, skill..."
+              placeholder=" 職種、キーワード、スキルなど"
               onChange={handleFormInput}
               value={keyword}
             />
@@ -151,7 +151,7 @@ function SearchBar({ searchState, onChange, onClear }: Props) {
                 textTransform: "none",
               }}
             >
-              Clear filters
+              検索条件をクリア
             </Button>
           </div>
         </div>
@@ -165,7 +165,7 @@ function SearchBar({ searchState, onChange, onClear }: Props) {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={searchState.city}
-                label="City"
+                label="勤務地"
                 onChange={handleCityChange}
                 sx={{
                   fontFamily: "Cormorant Garamond",
@@ -194,12 +194,12 @@ function SearchBar({ searchState, onChange, onClear }: Props) {
               color="#145652"
             />
             <FormControl fullWidth size="small">
-              <InputLabel id="demo-simple-select-label">Experience</InputLabel>
+              <InputLabel id="demo-simple-select-label">経験年数</InputLabel>
               <Select<number>
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={searchState.exp}
-                label="Experience"
+                label="経験年数"
                 onChange={handleExpChange}
                 sx={{
                   fontFamily: "Cormorant Garamond",
@@ -255,7 +255,7 @@ function SearchBar({ searchState, onChange, onClear }: Props) {
                 fontFamily: "Cormorant Garamond",
               }}
             >
-              Salary range:{" "}
+              給与範囲：{" "}
               <span className="text-secondary font-black text-sm">
                 {" "}
                 {formatYen(searchState.sliderValue[0])} – {formatYen(searchState.sliderValue[1])}{" "}

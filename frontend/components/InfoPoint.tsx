@@ -145,7 +145,7 @@ function HoverImage({ alt, src, insetPercent = 10, eyebrow, title, expand }: Hov
               transition: "transform 0.4s",
             }}
           >
-            <span>Explore</span>
+            <span>詳しく見る</span>
             <span aria-hidden="true">→</span>
           </div>
         </div>
@@ -174,7 +174,7 @@ function StepsPanel({ heading, steps, onClose, moreHref, moreLabel }: StepsPanel
     <div className="relative flex flex-col max-w-md w-full px-2">
       <button
         className="absolute -top-2 right-0 w-8 h-8 flex items-center justify-center text-[color:var(--color-primary)]/60 hover:text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)]/5 transition-colors"
-        aria-label="Close"
+        aria-label="閉じる"
         onClick={onClose}
       >
         <svg
@@ -198,7 +198,7 @@ function StepsPanel({ heading, steps, onClose, moreHref, moreLabel }: StepsPanel
           color: "var(--color-secondary)",
         }}
       >
-        How it works
+        ご利用の流れ
       </p>
       <h3
         className="font-light italic mb-1"
@@ -347,26 +347,26 @@ const planeIcon = (
 const recruiterSteps: Step[] = [
   {
     number: "Step 1",
-    title: "Tell us your hiring needs",
-    description: "Share your requirements, timeline, and the type of talent you're looking for.",
+    title: "採用要件のヒアリング",
+    description: "求める人物像、採用要件、ご希望の時期などをお聞かせください。",
     icon: messageIcon,
   },
   {
     number: "Step 2",
-    title: "We find & match candidates",
-    description: "We interview and screen candidates individually to ensure the right fit for your company.",
+    title: "人材の選定・マッチング",
+    description: "貴社に最適な人材をご紹介するため、専任コンサルタントが候補者と個別に面談・スクリーニングを行います。",
     icon: searchIcon,
   },
   {
     number: "Step 3",
-    title: "Get candidates fast",
-    description: "Receive qualified, ready-to-work talent — sometimes as soon as the same day.",
+    title: "スピーディなご紹介",
+    description: "貴社の条件にマッチした即戦力人材をご紹介します。最短即日のご紹介も可能です。",
     icon: fastForwardIcon,
   },
   {
     number: "Step 4",
-    title: "Ongoing support",
-    description: "Our consultants stay involved after hiring to ensure smooth onboarding and long-term success.",
+    title: "採用後のフォローアップ",
+    description: "採用後もコンサルタントが継続的にサポートし、スムーズな職場定着と長期的な活躍をご支援します。",
     icon: teamIcon,
   },
 ];
@@ -374,26 +374,26 @@ const recruiterSteps: Step[] = [
 const seekerSteps: Step[] = [
   {
     number: "Step 1",
-    title: "Send us your resume",
-    description: "Submit your details and let us know what kind of role you're looking for in Japan.",
+    title: "履歴書のご提出",
+    description: "ご自身の経歴をご提出いただき、日本でどのようなお仕事を希望されているかお聞かせください。",
     icon: documentIcon,
   },
   {
     number: "Step 2",
-    title: "We assess your fit",
-    description: "Our consultants review your background and match you with companies that align with your skills and goals.",
+    title: "カウンセリング・お仕事紹介",
+    description: "専任のコンサルタントが経歴やご希望を伺い、スキルやキャリアプランに最適な企業をご紹介します。",
     icon: matchIcon,
   },
   {
     number: "Step 3",
-    title: "Interview & placement",
-    description: "We prepare you for interviews and guide you through every step until you receive your offer.",
+    title: "面接・内定",
+    description: "事前の面接対策から内定獲得まで、すべてのステップを丁寧にサポートします。",
     icon: searchIcon,
   },
   {
     number: "Step 4",
-    title: "Settlement support",
-    description: "From visa paperwork to your first weeks in Japan, we stay by your side to help you settle in.",
+    title: "就業・生活サポート",
+    description: "ビザの申請手続きから来日後の生活準備まで、新しい環境にスムーズに慣れるよう寄り添ってサポートします。",
     icon: planeIcon,
   },
 ];
@@ -414,7 +414,7 @@ export const Infopoint = () => {
               color: "var(--color-secondary)",
             }}
           >
-            Choose Your Path
+            ご希望のサービス
           </p>
           <h2
             className="text-5xl md:text-[3.5rem] font-light italic leading-tight mb-5"
@@ -424,7 +424,7 @@ export const Infopoint = () => {
               whiteSpace: "pre-line",
             }}
           >
-            Who are you here for?
+            ご利用目的をお選びください
           </h2>
           <div
             className="h-0.5 mb-6"
@@ -437,7 +437,7 @@ export const Infopoint = () => {
               color: "var(--color-on-surface-variant)",
             }}
           >
-            Pick your path and we'll guide you from there.
+            ご希望のメニューをお選びください。最適な情報へご案内します。
           </p>
         </div>
 
@@ -458,10 +458,10 @@ export const Infopoint = () => {
                   >
                     <HoverImage
                       src="/recruiters.jpg"
-                      alt="Image of recruiters"
+                      alt="企業の採用ご担当者イメージ"
                       insetPercent={10}
-                      eyebrow="For Companies"
-                      title="For Recruiters"
+                      eyebrow="企業様向け"
+                      title="採用ご担当者様"
                       expand={expand}
                     />
                   </motion.div>
@@ -478,11 +478,11 @@ export const Infopoint = () => {
                     className="flex flex-1/2 items-center justify-center"
                   >
                     <StepsPanel
-                      heading="Hiring with us"
+                      heading="採用までの流れ"
                       steps={recruiterSteps}
                       onClose={() => setExpand(false)}
                       moreHref="/services/for-recruiter"
-                      moreLabel="More details for companies"
+                      moreLabel="企業様向けの詳細はこちら"
                     />
                   </motion.div>
                 )}
@@ -498,11 +498,11 @@ export const Infopoint = () => {
                     transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
                   >
                     <StepsPanel
-                      heading="Your journey to Japan"
+                      heading="日本で働くまでの流れ"
                       steps={seekerSteps}
                       onClose={() => setExpand(false)}
                       moreHref="/services/for-job-seeker"
-                      moreLabel="More details for job seekers"
+                      moreLabel="求職者様向けの詳細はこちら"
                     />
                   </motion.div>
                 )}
@@ -522,8 +522,8 @@ export const Infopoint = () => {
                       src="/jobseekers.jpg"
                       alt="Image of job seekers"
                       insetPercent={10}
-                      eyebrow="For Candidates"
-                      title="For Job Seekers"
+                      eyebrow="求職者様向け"
+                      title="お仕事をお探しの方へ"
                       expand={expand}
                     />
                   </motion.div>

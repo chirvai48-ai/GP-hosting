@@ -5,9 +5,9 @@ import StatGraphic from "@/components/business/StatGraphic";
 import CrossSell from "@/components/business/CrossSell";
 
 export const metadata = {
-  title: "Recruitment & Placement Services | Glowing Partner",
+  title: "人材紹介事業（有料職業紹介） | 株式会社Glowing Partner",
   description:
-    "For companies seeking direct-hire employees, we provide recruitment and placement services on a fully success-fee basis — fees are charged only upon successful placement.",
+    "直接雇用を希望される企業様に対して、完全成功報酬型の人材紹介サービスを提供しております。採用が決定するまで費用は一切かからないため、リスクなく確実な採用活動を進められます。",
 };
 
 function IconHandshake() {
@@ -42,45 +42,45 @@ export default function PlacementPage() {
   return (
     <>
       <Hero
-        eyebrow="Business 03"
-        title="Recruitment and Placement Services"
-        lede="For companies seeking direct-hire employees, we provide recruitment and placement services on a fully success-fee basis — meaning fees are charged only upon successful placement."
+        eyebrow="③ 人材紹介事業"
+        title="人材紹介サービス"
+        lede="弊社では、直接雇用を希望される企業様に対して、完全成功報酬型の人材紹介を実施しております。採用が正式に決定するまで費用は発生しないため、無駄なコストをかけずに最適な人材を確保できます。"
         image="/Business3.jpeg"
         imageAlt="Recruitment and Placement Services"
       />
 
       <StatGraphic
-        eyebrow="How it works"
-        heading="A success-fee model, with no upfront cost."
+        eyebrow="仕組みと特徴"
+        heading="初期費用ゼロの完全成功報酬型モデル。"
         stats={[
-          { value: "0", label: "Upfront fee", sub: "No engagement charge before a successful placement is made." },
-          { value: "100%", label: "Success-based", sub: "Fees are paid only when a candidate is successfully hired." },
-          { value: "1", label: "Goal", sub: "The right direct-hire match for your team — nothing else." },
+          { value: "0", label: "初期費用", sub: "採用が決定するまでの着手金や掲載料などは一切かかりません。" },
+          { value: "100%", label: "完全成功報酬制", sub: "紹介した候補者の入社が確定した段階で 初めて費用が発生します。" },
+          { value: "1", label: "目指すゴール", sub: "貴社チームの即戦力となる、直接雇用に最適な人材とのマッチング。" },
         ]}
       />
 
       <Section
-        eyebrow="Direct-hire focus"
-        heading="Built for companies hiring for the long term."
-        body="Our placement service is designed for companies seeking direct-hire employees who will join your team on your own terms — not as dispatched staff. Because we are compensated only on successful placement, our incentives are fully aligned with finding the right person, not filling the role at any cost."
+        eyebrow="直接雇用のメリット"
+        heading="長期的な活躍を見据えた、直接雇用の基盤づくり。"
+        body="弊社の有料職業紹介は、派遣スタッフではなく、自社のコアメンバーとして長期的に活躍する直接雇用枠での採用を目指す企業様に最適なサービスです。完全成功報酬制だからこそ、私たちは単に「枠を埋める」ための紹介はいたしません。貴社の要件や社風に本当にマッチする人材の厳選に徹底してこだわります。"
       />
 
       <FeatureGrid
         features={[
           {
             icon: <IconHandshake />,
-            title: "Aligned incentives",
-            body: "We earn only when you successfully hire — so we recommend candidates who actually fit, not just any available profile.",
+            title: "ミスマッチのない厳選紹介",
+            body: "採用決定までは費用をいただきません。そのため、手当たり次第に候補者を推薦するのではなく、貴社の要件に真に合致する人材のみをご提案します。",
           },
           {
             icon: <IconCoin />,
-            title: "No risk to start",
-            body: "There is no engagement fee. You only pay once a candidate accepts and joins your company on a direct-hire basis.",
+            title: "リスクゼロでのスタート",
+            body: "着手金や登録料といった前払いの費用は一切不要です。候補者が内定を承諾し、直接雇用として入社を迎えるまで費用は発生しません。",
           },
           {
             icon: <IconTarget />,
-            title: "Targeted shortlists",
-            body: "Drawing on our recruitment pipelines, we present focused shortlists rather than overwhelming you with profiles.",
+            title: "厳選された候補者リスト",
+            body: "独自の採用パイプラインを活用し、膨大な履歴書で人事担当者様の手間を煩わせることなく、スクリーニングを重ねた最適な候補者のみを絞り込んで提示します。",
           },
         ]}
       />

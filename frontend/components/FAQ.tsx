@@ -15,108 +15,97 @@ const FAQ: React.FC = () => {
 
   const faqItems: FAQItem[] = [
     {
-      question: "Which visas can I apply for?",
+      question: "どのような種類のビザの申請に対応していますか？",
       answer: (
         <div className="space-y-2">
-          <p>Currently, we assist with the following visa types:</p>
+          <p>現在、当社では以下のビザ取得および就労サポートを行っております。</p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>Specified Skilled Worker Visa (SSW)</li>
-            <li>Technical Intern Training Visa (TIT)</li>
+            <li>特定技能ビザ</li>
+            <li>技能実習ビザ</li>
           </ul>
           <p className="pt-2">
-            Regarding Student Visa, we are not currently processing them, but we plan to offer this service in the near future.
+            ※留学生ビザ（留学ビザ）の手続きについては、現在は取り扱っておりませんが、近い将来に対応を開始する予定です。
           </p>
         </div>
       )
     },
     {
-      question: "How much does it cost to go to Japan?",
+      question: "日本への渡航や手続きにはどのくらいの費用がかかりますか？",
       answer: (
         <p>
-          The cost varies depending on the visa type, the destination region, and the employing company.
-          Please contact us for a consultation, and we will explain the details based on your specific situation.
+          費用は取得するビザの種類、就職先の地域、勤務する企業によって異なります。個別面談の際に、ご希望の条件に応じた詳細な費用内訳をご案内いたしますので、まずはお気軽にご相談ください。
         </p>
       )
     },
     {
-      question: "How long does the process take?",
+      question: "申し込みから日本で働き始めるまでに、どのくらいの期間がかかりますか？",
       answer: (
         <p>
-          The timeline differs depending on the visa category and timing. For example, for the SSW visa,
-          the process time varies significantly depending on whether you have already passed the Japanese language and skills exams.
-          Please consult us for an estimated timeline.
+          ビザの種類や申請のタイミングによって異なります。例えば特定技能（SSW）ビザの場合、日本語試験や技能試験にすでに合格しているかどうかで期間が大きく変わります。目安となるスケジュールはカウンセリング時にご説明いたします。
         </p>
       )
     },
     {
-      question: "What documents are required?",
+      question: "どのような書類を準備する必要がありますか？",
       answer: (
         <p>
-          Required documents depend on the specific visa type. Generally, you will need a passport,
-          resume (CV), graduation certificates, and photos. We will provide a specific checklist during our consultation.
+          申請するビザによって必要書類は異なりますが、一般的にはパスポート、履歴書（CV）、卒業証明書、顔写真などが必要です。面談の際に、個別の必要書類チェックリストをお渡しいたします。
         </p>
       )
     },
     {
-      question: "What level of Japanese is required?",
+      question: "日本語はどのくらいのレベルが必要ですか？",
       answer: (
         <p>
-          It depends on the visa, but for the SSW visa, JLPT N4 (basic conversational level) is the minimum requirement.
-          However, having N3 or N2 will give you access to better job opportunities. We also provide support for Japanese language learning.
+          ビザによって異なりますが、特定技能（SSW）ビザの場合はJLPT N4（基本的な日常会話レベル）以上が必須となります。N3やN2の資格をお持ちであれば、より条件の良い求人をご紹介可能です。当社では日本語の学習支援も行っています。
         </p>
       )
     },
     {
-      question: "What is the salary in Japan?",
+      question: "日本での給与はどのくらいですか？",
       answer: (
         <p>
-          Salaries vary based on the visa type, region (prefecture), and job industry. However, please be assured that all job offers
-          comply with Japanese labor laws regarding minimum wage. We will provide specific salary details when introducing job offers.
+          給与はビザの種類、勤務地（都道府県）、職種によって異なります。なお、ご紹介するすべての求人は日本国内の労働法および各地域の最低賃金を厳守しておりますのでご安心ください。具体的な給与額は求人をご紹介する際にご提示いたします。
         </p>
       )
     },
     {
-      question: "Can I bring my family (spouse/children) to Japan?",
+      question: "家族（配偶者や子供）を日本に呼ぶことはできますか？",
       answer: (
         <p>
-          Yes, if you obtain an &quot;Engineer/Specialist in Humanities/International Services&quot; visa or an &quot;SSW Type 2&quot; visa,
-          you can bring your family to live with you. We can propose a long-term career plan if you wish to live with your family in the future.
+          はい、「技術・人文知識・国際業務」ビザ、または「特定技能2号」ビザを取得した場合は、家族帯同で日本に滞在することが可能です。将来的に家族と一緒に日本で暮らしたい方には、長期的なキャリアプランをご提案いたします。
         </p>
       )
     },
     {
-      question: "What if I get sick or have trouble in Japan?",
+      question: "日本で病気になったり、困ったことが起きたりした場合はどうすればよいですか？",
       answer: (
         <p>
-          Please do not worry. Our parent company (Japan office) is there for you. If you face illness, injury, or workplace issues,
-          our Japanese staff will be available to consult and help you solve the problem immediately.
+          どうぞご安心ください。日本の本社オフィスが皆様を全面的にサポートします。病気やケガ、職場でのトラブルなどが発生した際は、当社の日本人スタッフおよび現地スタッフが迅速に相談に乗り、解決に向けて対応いたします。
         </p>
       )
     },
     {
-      question: "Can new graduates apply?",
+      question: "学校を卒業したばかりの新卒ですが、応募は可能ですか？",
       answer: (
         <p>
-          Yes, absolutely! New graduates are welcome to apply. In particular, those with a university bachelor&apos;s degree may be eligible
-          for the &quot;Engineer/Specialist in Humanities/International Services&quot; visa. We support young talent in starting their careers.
+          はい、大歓迎です！新卒の方の応募も広く受け付けております。特に大学の学士号をお持ちの場合は、「技術・人文知識・国際業務」ビザでの就労チャンスもあります。若い皆様の日本での第一歩をしっかり支えます。
         </p>
       )
     },
     {
-      question: "If I fail an interview, will you stop introducing jobs?",
+      question: "面接で不採用になってしまった場合、次のお仕事は紹介してもらえなくなりますか？",
       answer: (
         <p>
-          No, please don&apos;t give up. Even if you are not selected, we will analyze the reasons and provide training for the next interview.
-          We will support you as many times as needed until you secure a job offer.
+          いいえ、決して諦める必要はありません。万が一不採用となった場合でも、何が課題だったかを一緒に分析し、次の面接に向けた対策を行います。内定を獲得できるまで、何度でも継続してサポートいたします。
         </p>
       )
     },
     {
-      question: "Is online consultation available?",
+      question: "オンラインでの相談や面談は可能ですか？",
       answer: (
         <p>
-          Yes, it is available. Even if you live far away, we can conduct counseling sessions and interviews online
-          using tools like Zoom or Google Meet.
+          はい、可能です。遠方にお住まいの方や来社が難しい方でも、ZoomやGoogle Meetなどのオンラインツールを使用して、カウンセリングからお仕事の選考面接までスムーズに進めることができます。
         </p>
       )
     }
@@ -131,11 +120,11 @@ const FAQ: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-2xl md:text-3xl font-light text-[#2C5A5B] mb-3 tracking-wide">
-            Frequently Asked Questions
+            よくあるご質問（FAQ）
           </h2>
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#2C5A5B] to-transparent mx-auto mb-6"></div>
           <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">
-            Clear answers to common questions about your journey to Japan
+            日本での就労や新しい生活に向けた、よくあるご質問にお答えします
           </p>
         </div>
 
@@ -223,11 +212,11 @@ const FAQ: React.FC = () => {
 
         <div className="mt-12 md:mt-16 pt-8 border-t border-gray-100 text-center">
           <p className="text-gray-600 mb-4 text-sm">
-            Need more specific information?
+            より詳細な情報や個別の確認をご希望ですか？
           </p>
           <a href="/contact/customer">
             <button className="group relative px-6 py-3 text-white font-medium text-sm tracking-wide">
-              <span className="relative z-10">Get Personalized Consultation</span>
+              <span className="relative z-10">無料の個別カウンセリングに申し込む</span>
               <div className="absolute inset-0 border bg-gradient-to-br from-[#2C5A5B] to-[#4C9E9F] rounded-lg transition-all duration-300"></div>
               <div className="absolute text-2xl -bottom-1 left-1/2 w-0 group-hover:w-3/4 h-px bg-gradient-to-r from-transparent via-[#2C5A5B] to-transparent group-hover:left-1/5 transition-all duration-300"></div>
             </button>

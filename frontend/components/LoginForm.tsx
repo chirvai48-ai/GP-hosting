@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Mail,
   LockKeyhole,
@@ -8,7 +9,7 @@ import {
   MessageSquareWarning,
   MoveRight,
 } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 
 const IconLayers = () => (
   <svg
@@ -28,12 +29,32 @@ const IconLayers = () => (
 );
 
 export function LoginForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { data: session, isPending } = useSession();
+  const reason = searchParams.get("reason");
+
   const [email, setEmail]         = useState("");
   const [password, setPassword]   = useState("");
   const [showPwd, setShowPwd]     = useState(false);
   const [remember, setRemember]   = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError]         = useState("");
+  const [notice, setNotice]       = useState<string>("");
+
+  useEffect(() => {
+    if (!isPending && session?.user) {
+      router.replace("/admin/dashboard/vacancies");
+    }
+  }, [session, isPending, router]);
+
+  useEffect(() => {
+    if (reason === "expired") {
+      setNotice("Your session has expired. Please sign in again.");
+    } else if (reason === "required") {
+      setNotice("Please sign in to access the admin area.");
+    }
+  }, [reason]);
 
   const handleSubmit = async () => {
     if (!email || !password) {
@@ -79,6 +100,16 @@ export function LoginForm() {
       <p className="font-label text-[0.75rem] text-on-surface-var tracking-[.02em] mt-1 mb-8">
         Sign in to your administrator account
       </p>
+
+      {notice && (
+        <div
+          role="status"
+          className="mb-6 flex items-start gap-2 border-l-2 border-secondary bg-secondary/10 px-3 py-2 font-label text-[0.72rem] text-on-surface tracking-[.02em]"
+        >
+          <MessageSquareWarning size={14} className="mt-0.5 flex-shrink-0 text-secondary" />
+          <span>{notice}</span>
+        </div>
+      )}
 
       {/* ── Email field ── */}
       <div className="mb-4">

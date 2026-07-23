@@ -10,10 +10,13 @@ import {
   createApplicationSchema,
   CreateApplicationForm,
   GENDER_OPTIONS,
+  GENDER_LABELS,
   RESIDENCE_STATUS_OPTIONS,
   RESIDENCE_STATUS_LABELS,
   JAPANESE_ABILITY_OPTIONS,
+  JAPANESE_ABILITY_LABELS,
   WORKING_DAYS,
+  WORKING_DAY_LABELS,
   CONTRACT_OPTIONS,
   CONTRACT_LABELS,
 } from "@/schemas/application.schemas";
@@ -80,7 +83,7 @@ async function postApplication(payload: CreateApplicationForm) {
       body?.error?.formErrors?.[0] ||
         body?.messagge ||
         body?.message ||
-        "Failed to submit application"
+        "応募の送信に失敗しました。"
     );
   }
   return res.json();
@@ -154,7 +157,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
         headers: { "Content-Type": resumeFileRef.current.type },
       });
       if (!putRes.ok) {
-        throw new Error("Resume upload failed. Please contact support.");
+        throw new Error("履歴書のアップロードに失敗しました。お手数ですがサポートまでお問い合わせください。");
       }
     }
     setSubmitted(true);
@@ -171,7 +174,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
     const file = e.target.files?.[0];
     if (!file) return;
     if (!ACCEPTED_MIME.includes(file.type)) {
-      setResumeError("Only PDF, DOC, or DOCX files are allowed.");
+      setResumeError("アップロード可能なファイルは PDF、DOC、DOCX 形式のみです。");
       setValue("resume_key", "");
       setValue("resume_type", "");
       resumeFileRef.current = null;
@@ -179,7 +182,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
       return;
     }
     if (file.size > MAX_RESUME_BYTES) {
-      setResumeError("File must be 5 MB or smaller.");
+      setResumeError("ファイルサイズは 5MB 以下にしてください。");
       setValue("resume_key", "");
       setValue("resume_type", "");
       resumeFileRef.current = null;
@@ -204,19 +207,19 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
             className="mx-auto text-[color:var(--color-primary)] mb-4"
           />
           <h1 className="font-[family-name:var(--font-headline)] text-2xl text-[color:var(--color-on-surface)] mb-2">
-            Application submitted
+            応募が完了しました
           </h1>
           {job && (
             <p className="font-[family-name:var(--font-body)] text-sm text-[color:var(--color-on-surface-variant)] mb-6">
-              Thank you for applying to <strong>{job.title}</strong>. We'll be in
-              touch.
+              <strong>{job.title}</strong>{" "}
+              へのご応募ありがとうございます。内容を確認の上、担当者よりご連絡いたします。
             </p>
           )}
           <Link
             href="/vacancy"
             className="inline-block px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white transition-colors font-[family-name:var(--font-label)] text-sm"
           >
-            Back to vacancies
+            求人一覧に戻る
           </Link>
         </div>
       </main>
@@ -234,10 +237,10 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
             <ArrowLeft size={14} /> Back to vacancies
           </Link>
           <p className="font-[family-name:var(--font-label)] text-[10px] font-semibold tracking-[0.12em] uppercase text-[color:var(--color-secondary)] mb-1">
-            Apply for this role
+            求人に応募する
           </p>
           <h1 className="font-[family-name:var(--font-headline)] text-2xl md:text-3xl text-[color:var(--color-primary)] leading-tight">
-            {job?.title ?? "Job application"}
+            {job?.title ?? "求人応募フォーム"}
           </h1>
           {job?.location && (
             <p className="font-[family-name:var(--font-body)] text-sm text-[color:var(--color-on-surface-variant)] mt-1">
@@ -255,20 +258,20 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
           {step === 1 && (
             <fieldset className="flex flex-col gap-5">
               <legend className="font-[family-name:var(--font-headline)] text-lg text-[color:var(--color-on-surface)] mb-2">
-                Personal information
+                応募者基本情報
               </legend>
 
-              <Field label="Full name" error={errors.full_name?.message}>
+              <Field label="氏名（フルネーム）" error={errors.full_name?.message}>
                 <input
                   className={inputCls}
-                  placeholder="Yamada Taro"
+                  placeholder="山田 太郎"
                   {...register("full_name")}
                 />
               </Field>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <Field
-                  label="Date of birth"
+                  label="生年月日"
                   error={errors.date_of_birth?.message}
                 >
                   <input
@@ -277,18 +280,18 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
                     {...register("date_of_birth")}
                   />
                 </Field>
-                <Field label="Gender" error={errors.gender?.message}>
+                <Field label="性別" error={errors.gender?.message}>
                   <select
                     className={inputCls}
                     defaultValue=""
                     {...register("gender")}
                   >
                     <option value="" disabled>
-                      Select…
+                      選択してください
                     </option>
                     {GENDER_OPTIONS.map((g) => (
                       <option key={g} value={g}>
-                        {g}
+                        {GENDER_LABELS[g]}
                       </option>
                     ))}
                   </select>
@@ -296,14 +299,14 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <Field label="Phone number" error={errors.phone_number?.message}>
+                <Field label="電話番号" error={errors.phone_number?.message}>
                   <input
                     className={inputCls}
-                    placeholder="+81 90 1234 5678"
+                    placeholder="090-1234-5678"
                     {...register("phone_number")}
                   />
                 </Field>
-                <Field label="Email" error={errors.email?.message}>
+                <Field label="メールアドレス" error={errors.email?.message}>
                   <input
                     type="email"
                     className={inputCls}
@@ -313,38 +316,38 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
                 </Field>
               </div>
 
-              <Field label="Country" error={errors.country?.message}>
+              <Field label="国籍" error={errors.country?.message}>
                 <input
                   className={inputCls}
-                  placeholder="Japan"
+                  placeholder="日本"
                   {...register("country")}
                 />
               </Field>
 
               <Field
-                label="Current address"
+                label="現住所"
                 error={errors.current_address?.message}
               >
                 <textarea
                   className={`${inputCls} resize-y min-h-[60px]`}
-                  placeholder="Where you currently live"
+                  placeholder="現在お住まいの住所"
                   {...register("current_address")}
                 />
               </Field>
 
               <Field
-                label="Permanent address"
+                label="本国住所（実家住所）"
                 error={errors.permanent_address?.message}
               >
                 <textarea
                   className={`${inputCls} resize-y min-h-[60px]`}
-                  placeholder="Your permanent / home address"
+                  placeholder="本国の住所または実家の住所"
                   {...register("permanent_address")}
                 />
               </Field>
 
               <Field
-                label="Facebook URL (optional)"
+                label="Facebook URL（任意）"
                 error={errors.facebook_url?.message}
               >
                 <input
@@ -359,22 +362,22 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
           {step === 2 && (
             <fieldset className="flex flex-col gap-5">
               <legend className="font-[family-name:var(--font-headline)] text-lg text-[color:var(--color-on-surface)] mb-2">
-                Status &amp; schedule
+                在留資格・勤務希望
               </legend>
 
               <Field
-                label="Nearest station"
+                label="最寄り駅"
                 error={errors.nearest_station?.message}
               >
                 <input
                   className={inputCls}
-                  placeholder="e.g. Shinjuku"
+                  placeholder="例：新宿駅"
                   {...register("nearest_station")}
                 />
               </Field>
 
               <Field
-                label="Residence status"
+                label="在留資格（ビザの種類）"
                 error={errors.residence_status?.message}
               >
                 <select
@@ -383,7 +386,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
                   {...register("residence_status")}
                 >
                   <option value="" disabled>
-                    Select…
+                    選択してください
                   </option>
                   {RESIDENCE_STATUS_OPTIONS.map((r) => (
                     <option key={r} value={r}>
@@ -394,7 +397,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
               </Field>
 
               <Field
-                label="Japanese ability"
+                label="日本語能力"
                 error={errors.japanese_ability?.message}
               >
                 <select
@@ -403,35 +406,35 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
                   {...register("japanese_ability")}
                 >
                   <option value="" disabled>
-                    Select…
+                    選択してください
                   </option>
                   {JAPANESE_ABILITY_OPTIONS.map((j) => (
                     <option key={j} value={j}>
-                      {j}
+                      {JAPANESE_ABILITY_LABELS[j]}
                     </option>
                   ))}
                 </select>
               </Field>
 
               <Field
-                label="Preferred work location"
+                label="勤務希望地"
                 error={errors.preferred_location?.message}
               >
                 <input
                   className={inputCls}
-                  placeholder="e.g. Tokyo, Yokohama, Remote"
+                  placeholder="例：東京、横浜、リモート"
                   {...register("preferred_location")}
                 />
               </Field>
 
-              <Field label="Availability" error={errors.availability?.message}>
+              <Field label="就業可能時期（いつから働けるか）" error={errors.availability?.message}>
                 <select
                   className={inputCls}
                   defaultValue=""
                   {...register("availability")}
                 >
                   <option value="" disabled>
-                    Select…
+                    選択してください
                   </option>
                   {CONTRACT_OPTIONS.map((c) => (
                     <option key={c} value={c}>
@@ -443,26 +446,26 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <Field
-                  label="School / college"
+                  label="学校名・出身校"
                   error={errors.school_college?.message}
                 >
                   <input
                     className={inputCls}
-                    placeholder="University of Tokyo"
+                    placeholder="例：〇〇大学、〇〇専門学校"
                     {...register("school_college")}
                   />
                 </Field>
-                <Field label="Degree" error={errors.degree?.message}>
+                <Field label="学位・専攻" error={errors.degree?.message}>
                   <input
                     className={inputCls}
-                    placeholder="B.Sc. Computer Science"
+                    placeholder="例：学士（コンピュータサイエンス）"
                     {...register("degree")}
                   />
                 </Field>
               </div>
 
               <Field
-                label="Available working days"
+                label="勤務可能な曜日・日数"
                 error={errors.working_days?.message}
               >
                 <Controller
@@ -490,7 +493,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
                                 : "bg-white text-[color:var(--color-on-surface-variant)] border-[#c0cbc9] hover:border-[var(--color-primary)]"
                             }`}
                           >
-                            {day}
+                            {WORKING_DAY_LABELS[day]}
                           </button>
                         );
                       })}
@@ -504,36 +507,36 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
           {step === 3 && (
             <fieldset className="flex flex-col gap-5">
               <legend className="font-[family-name:var(--font-headline)] text-lg text-[color:var(--color-on-surface)] mb-2">
-                Documents &amp; review
+                書類添付・入力内容の確認
               </legend>
 
-              <Field label="Soft skills" error={errors.soft_skills?.message}>
+              <Field label="特徴・自身の強み（ソフトスキル）" error={errors.soft_skills?.message}>
                 <textarea
                   className={`${inputCls} resize-y min-h-[80px]`}
-                  placeholder="e.g. Communication, teamwork, problem solving"
+                  placeholder="例：コミュニケーション力、チームワーク、問題解決力など"
                   {...register("soft_skills")}
                 />
               </Field>
 
               <Field
-                label="Cover letter (optional)"
+                label="自己PR・志望動機（任意）"
                 error={errors.cover_letter?.message}
               >
                 <textarea
                   className={`${inputCls} resize-y min-h-[140px]`}
-                  placeholder="Tell us why you're a good fit…"
+                  placeholder="ご自身の強みやアピールポイントをご記入ください"
                   {...register("cover_letter")}
                 />
               </Field>
 
               <div className="flex flex-col gap-1">
-                <label className={labelCls}>Resume (PDF / DOC / DOCX, ≤ 5 MB)</label>
+                <label className={labelCls}>履歴書・職務経歴書（PDF / DOC / DOCX形式、5MB以下）</label>
                 <label className="flex items-center gap-3 px-3 py-3 rounded border border-dashed border-[#c0cbc9] bg-[var(--color-container-low)] cursor-pointer hover:border-[var(--color-primary)]">
                   <Upload size={18} className="text-[color:var(--color-secondary)]" />
                   <span className="text-sm text-[color:var(--color-on-surface-variant)]">
                     {resumeFileMeta
                       ? `${resumeFileMeta.name} (${formatBytes(resumeFileMeta.size)})`
-                      : "Click to choose a file"}
+                      : "ファイルを選択してください"}
                   </span>
                   <input
                     type="file"
@@ -566,7 +569,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
               disabled={step === 1 || isPending}
               className="inline-flex items-center gap-1 px-4 py-2 rounded border border-[#c0cbc9] text-[color:var(--color-on-surface-variant)] hover:border-[var(--color-primary)] hover:text-[color:var(--color-primary)] font-[family-name:var(--font-label)] text-sm disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              <ArrowLeft size={14} /> Back
+              <ArrowLeft size={14} /> 戻る
             </button>
 
             {step < 3 ? (
@@ -575,7 +578,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
                 onClick={next}
                 className="inline-flex items-center gap-1 px-4 py-2 rounded bg-[var(--color-primary)] text-white font-[family-name:var(--font-label)] text-sm hover:opacity-90"
               >
-                Next <ArrowRight size={14} />
+                次へ <ArrowRight size={14} />
               </button>
             ) : (
               <button
@@ -583,7 +586,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
                 disabled={isPending}
                 className="inline-flex items-center gap-1 px-5 py-2 rounded bg-[var(--color-secondary)] text-white font-[family-name:var(--font-label)] text-sm hover:opacity-90 disabled:opacity-50"
               >
-                {isPending ? "Submitting…" : "Submit application"}
+                {isPending ? "送信中…" : "この内容で応募する"}
               </button>
             )}
           </div>
@@ -594,7 +597,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
 }
 
 function StepIndicator({ step }: { step: Step }) {
-  const labels = ["Personal", "Status", "Documents"];
+  const labels = ["基本情報", "就業状況・希望", "書類添付・確認"];
   return (
     <ol className="flex items-center gap-2">
       {labels.map((label, i) => {
@@ -618,7 +621,7 @@ function StepIndicator({ step }: { step: Step }) {
                     : "text-[color:var(--color-on-surface-variant)]"
                 }`}
               >
-                Step {n}
+                ステップ {n}
               </span>
               <span
                 className={`text-[10px] font-[family-name:var(--font-label)] ${
@@ -657,35 +660,43 @@ function Field({
 
 function Summary({ values }: { values: CreateApplicationForm }) {
   const rows: [string, string][] = [
-    ["Name", values.full_name],
-    ["Date of birth", values.date_of_birth],
-    ["Phone", values.phone_number],
-    ["Email", values.email],
-    ["Gender", values.gender ?? ""],
-    ["Country", values.country],
-    ["Current address", values.current_address],
-    ["Permanent address", values.permanent_address],
-    ["Nearest station", values.nearest_station],
+    ["氏名", values.full_name],
+    ["生年月日", values.date_of_birth],
+    ["電話番号", values.phone_number],
+    ["メールアドレス", values.email],
+    ["性別", values.gender ? GENDER_LABELS[values.gender] : ""],
+    ["国籍", values.country],
+    ["現住所", values.current_address],
+    ["住所", values.permanent_address],
+    ["最寄り駅", values.nearest_station],
     [
-      "Residence",
+      "在留資格",
       values.residence_status
         ? RESIDENCE_STATUS_LABELS[values.residence_status]
         : "",
     ],
-    ["Japanese", values.japanese_ability ?? ""],
-    ["Preferred location", values.preferred_location],
     [
-      "Availability",
+      "日本語能力",
+      values.japanese_ability ? JAPANESE_ABILITY_LABELS[values.japanese_ability] : "",
+    ],
+    ["勤務希望地", values.preferred_location],
+    [
+      "就業可能時期",
       values.availability ? CONTRACT_LABELS[values.availability] : "",
     ],
-    ["School / college", values.school_college],
-    ["Degree", values.degree],
-    ["Working days", (values.working_days ?? []).join(", ")],
+    ["学校名", values.school_college],
+    ["学位・専攻", values.degree],
+    [
+      "勤務可能な曜日・日数",
+      (values.working_days ?? [])
+        .map((d) => WORKING_DAY_LABELS[d] ?? d)
+        .join("、"),
+    ],
   ];
   return (
     <div className="rounded-lg bg-[var(--color-container-low)] p-4">
       <p className="font-[family-name:var(--font-label)] text-[10px] font-semibold tracking-widest uppercase text-[color:var(--color-secondary)] mb-3">
-        Review
+        入力内容の確認
       </p>
       <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
         {rows.map(([k, v]) => (

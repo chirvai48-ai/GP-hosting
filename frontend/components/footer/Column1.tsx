@@ -4,24 +4,24 @@ import { GoldDivider,SectionLabel,socialLinks } from "./Helpers";
 export default function BrandColumn() {
   return (
     <div className="flex flex-col">
-        <SectionLabel>Our company</SectionLabel>
+        <SectionLabel>会社情報</SectionLabel>
       {/* Logo */}
       <div className="flex justify-start items-center">
-      <Image alt="GP LOGO" src={"/GpLogoTransparent.png"} width={130} height={130} />
+      <Image alt="GPロゴ" src={"/GpLogoTransparent.png"} width={130} height={130} />
       </div> 
       
 
       {/* Contact rows */}
       {[
         {
-          label: "Our Address",
+          label: "所在地",
           value: (
             <>
-              6th Floor, 2-36-1 Ikebukuro, Toshima City, Tokyo 171-0014, Japan
+              〒171-0014 東京都豊島区池袋二丁目36番1号6階
             </>
           ),
         },
-        { label: "Email Us", value: "info@glowing-partner.jp" },
+        { label: "メールアドレス", value: "info@glowing-partner.jp" },
       ].map(({ label, value }) => (
         <div key={label} className="flex items-start gap-3 mb-3">
           <span
@@ -55,7 +55,7 @@ export default function BrandColumn() {
       <GoldDivider />
 
       {/* Social icons */}
-      <SectionLabel>Follow Us</SectionLabel>
+      <SectionLabel>フォローする</SectionLabel>
       <div className="flex gap-3">
         {socialLinks.map(({ label, href, icon }) => (
           <a

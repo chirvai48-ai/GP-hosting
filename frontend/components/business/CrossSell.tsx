@@ -16,17 +16,17 @@ export default function CrossSell() {
         <div className="grid md:grid-cols-[1fr_auto] gap-10 md:items-end mb-12">
           <div>
             <p className="font-[var(--font-label)] text-[10px] tracking-[0.4em] uppercase text-[color:var(--color-primary)] mb-4">
-              Explore our businesses
+              各種サービス紹介
             </p>
             <h2 className="font-display text-3xl md:text-5xl leading-tight text-[color:var(--color-on-surface)] max-w-2xl">
-              Four practices, one mission.
+              4つの柱で、最適なキャリアと人材の架け橋に。
             </h2>
           </div>
           <Link
             href="/contact/company"
             className="inline-flex items-center gap-3 font-[var(--font-label)] text-[11px] tracking-[0.35em] uppercase text-[color:var(--color-primary)] border border-[color:var(--color-primary)] px-6 py-4 hover:bg-[color:var(--color-primary)] hover:text-white transition-colors duration-300 self-start md:self-end"
           >
-            Contact us <span aria-hidden>&rarr;</span>
+            お問い合わせ <span aria-hidden>&rarr;</span>
           </Link>
         </div>
 

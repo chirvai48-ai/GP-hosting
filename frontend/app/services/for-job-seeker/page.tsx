@@ -6,43 +6,43 @@ import DiagonalCTA from "@/components/services/DiagonalCTA";
 const panels: DiagonalPanelData[] = [
   {
     number: "01",
-    label: "How We Help",
-    headline: "Your next job, considered carefully.",
+    label: "サポート内容",
+    headline: "次のキャリアを、ともに真剣に考えます。",
     body:
-      "Most job-search advice is generic. Ours is not. We sit with each candidate, learn what the next ten years should feel like, and then introduce a small number of roles that fit — not a flood of postings. Less scrolling, more talking, better outcomes.",
+      "一般的な求職アドバイスは画一的なものになりがちですが、当社のサポートは異なります。国家資格キャリアコンサルタントとチームで候補者一人ひとりとじっくり向き合い、これからの10年をどう過ごしたいかを伺った上で、大量の求人ではなく、本当にマッチする厳選されたポジションのみをご紹介します。膨大な求人検索の手間を省き、対話を通じたより良いマッチングを実現します。",
     image: "/2panel01.jpg",
     bullets: [
-      "1-on-1 consultations, not impersonal mailing lists",
-      "Honest feedback on fit, not flattery",
-      "Bilingual support in Japanese and English",
+      "一斉送信メールではなく、1対1の個別面談",
+      "表面的なお世辞ではない、適性に対する率直なフィードバック",
+      "日本語と英語のバイリンガルサポート",
     ],
   },
   {
     number: "02",
-    label: "Counseling & Preparation",
-    headline: "GPNA, and one-on-one consulting.",
+    label: "カウンセリング・選考対策",
+    headline: "GPNAと、1対1の個別コンサルティング。",
     body:
-      "Through Glowing Partner Naitei Academy (GPNA) we run structured preparation programs for students entering the job market. For mid-career professionals and returners, our certified career consultant Ms. Uenaka offers private sessions at the Shiki Satellite Office — unhurried, confidential, and grounded in a decade of real placements.",
+      "Glowing Partner Naitei Academy（GPNA）を通じ、就職活動を行う学生向けに体系的な選考対策プログラムを実施しています。また、中途採用やブランクのある方向けには、国家資格を持つキャリアコンサルタントとチームで個別相談を承ります。10年にわたる実績に基づき、秘密厳守でじっくりと時間をかけてサポートします。",
     image: "/Seminar2.jpg",
     bullets: [
-      "GPNA — for new graduates and students",
-      "Career consulting with Ms. Uenaka",
-      "ES, interview, and mock-screening practice",
+      "GPNA — 新卒・学生向けプログラム",
+      "専任チームによるキャリアコンサルティング",
+      "エントリーシート（ES）、面接、模擬選考対策",
     ],
   },
   {
     number: "03",
-    label: "Breadth of Opportunities",
-    headline: "Part-time, full-time, and everything between.",
+    label: "幅広い就業機会",
+    headline: "アルバイトから正社員まで、あらゆる働き方に対応。",
     body:
-      "Whether you are looking for a part-time shift to bridge a month, a full-time career change, or a long-term path under the SSW or Technical Intern Training programs — we represent roles across the spectrum. One conversation will tell us which path actually fits.",
+      "短期間のアルバイトから、正社員としてのキャリアチェンジ、あるいは特定技能や技能実習制度を活用した長期的なキャリア形成まで、幅広い働き方の求人を扱っています。一度お話を伺うだけで、あなたに最適なキャリアパスをご提案します。",
     image: "/2panel03.jpg",
     imagePosition: "100% center",
     bullets: [
-      "Part-time direct placement",
-      "Full-time and mid-career change (転職)",
-      "Specified Skilled Worker visa roles",
-      "Technical Intern Training placements",
+      "アルバイトの直接雇用紹介",
+      "正社員・中途採用（転職）",
+      "特定技能ビザの求人",
+      "技能実習生の紹介",
     ],
   },
 ];
@@ -54,11 +54,11 @@ export default function ForJobSeekerPage() {
         <DiagonalPanel key={p.number} data={p} index={i} />
       ))}
       <DiagonalCTA
-        kicker="Get in touch"
-        headline="Start a conversation about your next role."
-        body="Send a short message — your background, what you are looking for, and a way to reach you. A counselor will reply personally, usually within two business days."
+        kicker="お問い合わせ"
+        headline="次のキャリアについて、まずはご相談ください。"
+        body="ご自身の経歴、ご希望の条件、ご連絡先を簡単なメッセージでお送りください。専任のカウンセラーが、通常2営業日以内に個別にご返信いたします。"
         href="/contact/customer"
-        ctaLabel="Contact us — for candidates"
+        ctaLabel="求職者様向けお問い合わせ"
         image="/message.jpg"
       />
     </main>

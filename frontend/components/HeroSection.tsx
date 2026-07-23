@@ -100,7 +100,7 @@ export default function HeroSection() {
               fontFamily: "'Cormorant Garamond', Georgia, serif",
             }}
           >
-            Est. Tokyo · 1987
+            東京設立 · 1987年
           </span>
           <span className="h-px w-10" style={{ background: "#C9A84C" }} />
         </div>
@@ -114,7 +114,7 @@ export default function HeroSection() {
             textShadow: "0 2px 40px rgba(20,86,82,0.6)",
           }}
         >
-          Differences{" "}
+          「違うから良い」
           <em
             className="not-italic"
             style={{
@@ -122,10 +122,10 @@ export default function HeroSection() {
               fontStyle: "italic",
             }}
           >
-            Create
+            と思える
           </em>
           <br />
-          New Opportunities
+          社会へ
         </h1>
 
         {/* Sub-copy 
@@ -152,7 +152,7 @@ export default function HeroSection() {
               fontFamily: "'Jost', sans-serif",
             }}
           >
-            <span className="relative z-10">View Opportunities</span>
+            <span className="relative z-10">求人を見る</span>
             <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">
               →
             </span>
@@ -195,7 +195,7 @@ export default function HeroSection() {
             fontFamily: "'Jost', sans-serif",
           }}
         >
-          Scroll
+          スクロール
         </span>
         <div
           className="h-10 w-px relative overflow-hidden"

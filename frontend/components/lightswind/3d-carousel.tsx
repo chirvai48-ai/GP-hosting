@@ -204,14 +204,14 @@ const ThreeDCarousel = ({
                 onClick={() =>
                   setActive((prev) => (prev - 1 + items.length) % items.length)
                 }
-                aria-label="Previous"
+                aria-label="前へ"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:bg-white z-30 shadow-md transition-all hover:scale-110"
                 onClick={() => setActive((prev) => (prev + 1) % items.length)}
-                aria-label="Next"
+                aria-label="次へ"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>

@@ -16,82 +16,80 @@ type Member = {
 const members: Member[] = [
   {
     id: "uenaka",
-    name: "Uenaka Go",
-    role: "Founder & CEO",
+    name: "上中 豪",
+    role: "代表取締役",
     photo: "/UenkaGO.jpg",
     isCeo: true,
-    bio: `Since founding our company in August 2018, we have operated with a unique philosophy: every one of our employees is a foreign national.
+    bio: `2018年8月に起業して以来、私たちは今日に至るまで、ずっと【社員は全員外国人】という体制で会社を運営してまいりました。
 
-Why did we intentionally build our organization this way? The answer lies in a principle that has always guided me.
+なぜ、あえてそのような組織を作ったのか。理由は私の強いこだわりにあります。
 
-I believe that anything we confidently recommend to our clients should first be something we have practiced ourselves and experienced firsthand.
+「お客様に自信を持ってお勧めするものは、自分自身が誰よりも実践し、その価値を体感したものでありたい」と考えたからです。
 
-From the very beginning, I was also convinced that as the number of foreign employees in Japan continues to grow, foreign workforce management — how to maximize their potential and help them build long-term careers — would become one of the greatest challenges facing Japanese companies.
+また当時から、外国人社員が増える社会において「外国人マネジメント（いかに彼らの能力を活かし、定着させるか）」が、多くの企業様にとって最大の課題になると確信していたからでもあります。
 
-Of course, our journey was not smooth from the start. We encountered many challenges, including language barriers, cultural differences, and differing values. Through continuous trial and improvement, however, we developed systems that foster mutual understanding and enable everyone to grow together. As a result, we successfully maintained our all-foreign employee organization and, united as one team, even overcame the unprecedented challenges of the COVID-19 pandemic.
+当然、最初からすべてが順風満帆だったわけではありません。言葉や文化の壁、価値観の違いなど、多くの試行錯誤を重ねてきました。しかし、互いを理解し、共に成長できる仕組みを築き上げた結果、私たちは【社員は全員外国人】という体制のまま、あの未曾有のコロナ禍すらも一丸となって乗り越えることができました。
 
-We believe that a service which ends simply with recruitment support ultimately offers clients nothing more than an increase in labor costs.
+私たちは、「採用のご支援」だけで終わるサービスは、お客様にとって単なる「人件費（コスト）の増加」のご提案でしかないと考えております。
 
-What sets us apart is the real-world experience and expertise in managing foreign employees that we have gained through years of operating our own company. This hands-on knowledge allows us to provide practical, on-site support that other companies cannot easily replicate — helping foreign employees settle into their workplaces quickly and become productive members of the team.
+私たちが自社で試行錯誤しながら蓄積してきた、リアルな「外国人マネジメントの経験とノウハウ」。
+それにより、他社には真似できない、現場に寄り添った「定着支援」と「即戦力化」をご支援いたします。
 
-Our goal is to ensure that hiring foreign talent is not viewed merely as a solution to labor shortages or an additional expense.
-
-Instead, we strive to help your international employees become valuable members of your organization — people who contribute to increased productivity, higher sales, and greater profitability. We would be honored to walk alongside your company as a trusted partner throughout that journey.`,
+外国人採用を、単なる人手不足の解消（コスト）で終わらせない。
+御社の仲間に加わった外国籍社員の方々が、新しい力となり、「売上増・利益増」をもたらす存在へと育つまで、御社の伴走者として共に歩んでいければ幸いです。`,
   },
   {
     id: "narayan",
-    name: "Narayan Pokhrel",
+    name: "ポケレル・ナラヤン",
     role: "",
     photo: "/Narayan.jpeg",
-    bio: `I have been living in Japan for the past 12 years. Thanks to this experience, I have a deep understanding of the expectations, perspectives, and needs of both Japanese companies and foreign employees.
+    bio: `私はこれまで12年間日本で暮らしてきました。この長年の経験があるからこそ、日本企業が求める基準や考え方と、外国籍スタッフの本音やニーズの双方を深く理解することができます。
 
-By listening to people's real voices and bridging cultural differences, I strive to provide support that achieves 100% mutual understanding through effective two-way communication.
+現場のリアルな声に耳を傾け、文化や習慣の違いを丁寧に埋めることで、「双方向での100%の意思疎通」ができる関係づくりとサポートを心がけています。
 
-I am also one of the many foreigners who crossed the sea to come to Japan 12 years ago. Because of this personal experience, I understand the feelings of foreign employees and how to help them make the most of their potential better than anyone else. With strong communication skills, I am committed to serving as a bridge between employers and employees, providing wholehearted support to both sides.`,
+私自身も12年前に海を渡り、大きな期待と少しの不安を抱えて日本にやってきた外国人の一人です。だからこそ、求職者の皆様の気持ちが誰よりも分かりますし、彼らが日本でどのように能力を発揮すべきかを的確にアドバイスできます。質の高いコミュニケーション力で企業様とスタッフを繋ぐ強固な架け橋となり、双方にとって最高の成果が出るよう全力でサポートいたします。`,
   },
   {
     id: "arun",
-    name: "Arun Gurung",
+    name: "グルン・アルン",
     role: "",
     photo: "/Arun.jpeg",
-    bio: `I provide comprehensive support throughout the entire employment process — from recruiting foreign talent to labor management, employee training after hiring, and ongoing follow-up support for companies.
+    bio: `外国籍人材の募集・採用支援から、入社後の労務管理、社員教育・研修、そして企業様への継続的なアフターフォローまで、就労に関わるプロセスを一貫してサポートしております。
 
-As a foreign worker in Japan myself, I have grown with the help and kindness of the people around me. Because of that experience, I can truly understand the concerns and anxieties of job seekers and offer practical, personalized advice.
+私自身も外国人として日本で働く中で、周囲の人々の温かいサポートや親切心に助けられながら成長してきました。その経験があるからこそ、日本での就労を目指す求職者の皆様の不安や悩みに心から共感し、実践的で一人ひとりに寄り添ったアドバイスができます。
 
-For companies, I am committed to providing and supporting employees who can contribute effectively and remain with the organization for the long term. For job seekers, I aim to connect them with workplaces where they can work with confidence and peace of mind.
-
-Above all, I value building strong human relationships, and I dedicate myself to becoming the best possible partner for both employers and job seekers.`,
+企業様には「現場の中核として長く貢献してくれる優秀な人材」を。求職者の皆様には「安心して長く働ける最高の環境」を。何よりも「人と人とのつながり・信頼関係」を大切にし、企業様と求職者様の双方にとって最良のパートナーになれるよう邁進してまいります。`,
   },
   {
     id: "sanyukta",
-    name: "Sanyukta Amatya",
+    name: "サニュクタ・アマチャ",
     role: "",
     photo: "/Amatya.jpeg",
-    bio: `At Glowing Partner, we are committed to supporting each individual by understanding their goals and aspirations and helping them find workplaces where they can grow with confidence and peace of mind.
+    bio: `Glowing Partnerでは、求職者の皆様一人ひとりの将来の目標や希望にじっくりと耳を傾け、自分らしく安心して成長できる職場環境との出会いを全面的にサポートしています。
 
-We believe that every new challenge and every fresh start holds great potential. Let us work together to build a brighter future.`,
+新しい環境への挑戦や、新しい一歩を踏み出すことには、無限の可能性が秘められていると信じています。皆様と共に、素晴らしい未来を築いていけることを楽しみにしています。`,
   },
   {
     id: "norin",
-    name: "Norin Shrestha",
+    name: "シュレスタ・ノリン",
     role: "",
     photo: "/Norin.jpeg",
-    bio: `For me, teamwork, respect for others, and continuous learning are extremely important.
+    bio: `私にとって、チームワーク、周囲への敬意、そして日々新しいことを学び続ける姿勢は非常に重要です。
 
-I am grateful for every opportunity to learn, grow, and contribute.
+新しい知識を吸収し、組織やお客様に貢献できるすべての機会に深く感謝しています。
 
-My goal is to be someone my colleagues and clients can trust by providing kind, attentive, and reliable support to everyone I work with.`,
+一緒に働く同僚や、ご縁をいただいたすべてのお客様から心から信頼していただけるよう、常に親切、丁寧、そして確実なサポートを提供することを心がけています。`,
   },
   {
     id: "nirajan",
-    name: "Nirajan Pokhrel",
+    name: "ポカレル・ニラジャン",
     role: "",
     photo: "/Nirajan.jpeg",
-    bio: `In my daily work, I value building trusting relationships with both our client companies and our staff above all else.
+    bio: `日々の業務において、企業様やスタッフの皆様との間に「揺るぎない信頼関係」を築くことを最も大切にしています。
 
-I approach every consultation and every task with sincerity, taking full responsibility to ensure the best possible support.
+いただくご相談や任せていただいた業務の一つひとつに対して常に誠実に向き合い、強い責任感を持って最後まで対応にあたっております。
 
-My goal is to be someone you can rely on and feel comfortable turning to whenever you need assistance. I am committed to supporting you with dedication and integrity every step of the way.`,
+皆様にとって「最も身近で、何かあったときに真っ先に頼れる存在」になれるよう、どのような場面でも誠心誠意、全力でサポートさせていただきます。`,
   },
 ];
 
@@ -170,7 +168,7 @@ function BioModal({
     >
       <button
         type="button"
-        aria-label="Close"
+        aria-label="閉じる"
         onClick={onClose}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-default"
       />
@@ -207,7 +205,7 @@ function BioModal({
 
           <div className="min-w-0 flex-1">
             <p className="font-label text-[10px] tracking-[0.2em] uppercase text-[color:var(--color-secondary)] font-semibold mb-1">
-              {member.isCeo ? "Message from the CEO" : "From the team"}
+              {member.isCeo ? "代表メッセージ" : "担当スタッフからのメッセージ"}
             </p>
             <h3 className="font-headline text-xl md:text-2xl text-[color:var(--color-on-surface)] leading-tight truncate">
               {member.name}
@@ -220,7 +218,7 @@ function BioModal({
 
         <button
           type="button"
-          aria-label="Close"
+          aria-label="閉じる"
           onClick={onClose}
           className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/95 border border-[rgba(20,86,82,0.15)] flex items-center justify-center shadow-sm text-[color:var(--color-on-surface)] hover:text-[color:var(--color-primary)] hover:border-[color:var(--color-secondary)] transition-colors"
         >
@@ -281,7 +279,7 @@ function CeoFeature({ member, onOpen }: { member: Member; onOpen: () => void }) 
         <div className="p-8 md:p-12 flex flex-col justify-center">
           <span className="inline-flex items-center gap-1.5 self-start px-2.5 py-1 rounded-full bg-[color:var(--color-secondary)]/15 text-[10px] font-label font-semibold tracking-[0.18em] uppercase text-[color:var(--color-primary)] border border-[color:var(--color-secondary)]/40 mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[color:var(--color-secondary)]" />
-            Chief Executive
+            代表取締役最高経営責任者
           </span>
 
           <h3 className="font-headline text-4xl md:text-5xl text-[color:var(--color-on-surface)] leading-tight mb-2">
@@ -295,7 +293,7 @@ function CeoFeature({ member, onOpen }: { member: Member; onOpen: () => void }) 
             {member.bio}
           </p>
 
-          <ReadButton onClick={onOpen} label="Read full message" />
+          <ReadButton onClick={onOpen} label="メッセージの全文を読む" />
         </div>
       </div>
     </article>
@@ -323,7 +321,7 @@ function MemberCard({ member, onOpen }: { member: Member; onOpen: () => void }) 
           {member.bio}
         </p>
 
-        <ReadButton onClick={onOpen} label="Read bio" />
+        <ReadButton onClick={onOpen} label="プロフィールを見る" />
       </div>
     </article>
   );
@@ -350,10 +348,10 @@ export default function TeamSection() {
         {/* Header */}
         <div className="text-center mb-14">
           <p className="font-label text-[10px] font-semibold tracking-[0.2em] uppercase text-[color:var(--color-secondary)] mb-4">
-            Our Team
+            私たちのチーム
           </p>
           <h2 className="font-headline text-5xl md:text-6xl font-light italic text-[color:var(--color-primary)]">
-            The People Behind Glowing Partner
+            プロフェッショナル紹介
           </h2>
           <div className="w-16 h-0.5 bg-[color:var(--color-secondary)] mx-auto mt-5" />
           <p className="font-body text-base md:text-lg text-[color:var(--color-on-surface-variant)] leading-relaxed max-w-3xl mx-auto mt-6">
@@ -371,7 +369,7 @@ export default function TeamSection() {
         <div className="flex items-center gap-4 mb-10">
           <div className="flex-1 h-px bg-[rgba(20,86,82,0.12)]" />
           <p className="font-label text-[10px] tracking-[0.22em] uppercase text-[color:var(--color-on-surface-variant)]">
-            Meet the Team
+            メンバー一覧
           </p>
           <div className="flex-1 h-px bg-[rgba(20,86,82,0.12)]" />
         </div>

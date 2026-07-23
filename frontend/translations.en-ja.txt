@@ -1,0 +1,3114 @@
+GLOWING PARTNER — ENGLISH → JAPANESE TRANSLATION CATALOG
+Generated: 2026-07-05
+Scope: public-facing pages only (admin dashboard excluded)
+
+Instructions for translator:
+- Fill in the JA: line under each entry.
+- Preserve line breaks if a string wraps in the UI.
+- If a translation depends on nuance you can't judge, leave a "# note:" line above the JA: line.
+- Numeric index [N] is stable — please keep it in your reply if you split the file.
+
+TOTAL ENTRIES: 723
+
+================================================================
+FILE: components/Navbar.tsx
+Route(s): global — appears on every public page
+================================================================
+
+[1] Nav item — top-level, order 1
+    EN: Home
+    JA: __________
+
+[2] Nav item — top-level, order 2
+    EN: About
+    JA: __________
+
+[3] Nav item — top-level, order 3 (has submenu)
+    EN: Services
+    JA: __________
+
+[4] Submenu item under Services
+    EN: For Recruiter
+    JA: __________
+
+[5] Submenu item under Services
+    EN: For Job Seeker
+    JA: __________
+
+[6] Nav item — top-level, order 4 (has submenu)
+    EN: Our Business
+    JA: __________
+
+[7] Submenu item under Our Business
+    EN: Job Search Support
+    JA: __________
+
+[8] Submenu item under Our Business
+    EN: Temporary Staffing
+    JA: __________
+
+[9] Submenu item under Our Business
+    EN: Recruitment & Placement
+    JA: __________
+
+[10] Submenu item under Our Business
+    EN: Specified Skilled Worker Support
+    JA: __________
+
+[11] Nav item — top-level, order 5 (has submenu)
+    EN: Contact
+    JA: __________
+
+[12] Submenu item under Contact
+    EN: Company
+    JA: __________
+
+[13] Submenu item under Contact
+    EN: Customer
+    JA: __________
+
+[14] Nav item — top-level, order 6
+    EN: Vacancy
+    JA: __________
+
+[15] Nav item — top-level, order 7
+    EN: News
+    JA: __________
+
+[16] alt attr — company logo
+    EN: Logo
+    JA: __________
+
+[17] aria-label — mobile menu button (closed state)
+    EN: Open menu
+    JA: __________
+
+[18] aria-label — mobile menu button (open state)
+    EN: Close menu
+    JA: __________
+
+[19] Screen-reader hamburger label
+    EN: Toggle navigation
+    JA: __________
+
+================================================================
+FILE: components/footer/FooterSection.tsx
+Route(s): global — footer on every public page
+================================================================
+
+[20] Footer section label
+    EN: Find Us on Facebook
+    JA: __________
+
+[21] Facebook column intro copy
+    EN: Join our community for updates, announcements, and stories.
+    JA: __________
+
+[22] Facebook card — page name
+    EN: Glowing Partner
+    JA: __________
+
+[23] Facebook card — page type label
+    EN: Facebook Page
+    JA: __________
+
+[24] Facebook stat label
+    EN: Followers
+    JA: __________
+
+[25] Facebook stat label
+    EN: Likes
+    JA: __________
+
+[26] Facebook stat label
+    EN: Posts
+    JA: __________
+
+[27] Facebook stat value (frequency word, translate literally)
+    EN: Weekly
+    JA: __________
+
+[28] Facebook CTA link text
+    EN: Visit our page
+    JA: __________
+
+[29] Footer copyright (year prefix)
+    EN: © {year} Glowing Partner Japan.
+    JA: __________
+
+[30] Footer bottom link
+    EN: Privacy
+    JA: __________
+
+[31] Footer bottom link
+    EN: Terms
+    JA: __________
+
+[32] Footer bottom link
+    EN: Sitemap
+    JA: __________
+
+================================================================
+FILE: components/footer/Column1.tsx
+Route(s): global — footer column 1
+================================================================
+
+[33] Footer section label
+    EN: Our company
+    JA: __________
+
+[34] alt attr — GP logo in footer
+    EN: GP LOGO
+    JA: __________
+
+[35] Contact row label
+    EN: Our Address
+    JA: __________
+
+[36] Contact row value — company address
+    EN: 6th Floor, 2-36-1 Ikebukuro, Toshima City, Tokyo 171-0014, Japan
+    JA: __________
+
+[37] Contact row label
+    EN: Call Us
+    JA: __________
+
+[38] Phone number (do not translate — keep digits)
+    EN: +81-3-6841-9101
+    JA: __________
+
+[39] Contact row label
+    EN: Email Us
+    JA: __________
+
+[40] Email address (do not translate)
+    EN: info@glowing-partner.jp
+    JA: __________
+
+[41] Footer section label
+    EN: Follow Us
+    JA: __________
+
+[42] aria-label — social icon
+    EN: Facebook
+    JA: __________
+
+[43] aria-label — social icon
+    EN: Instagram
+    JA: __________
+
+[44] aria-label — social icon
+    EN: LinkedIn
+    JA: __________
+
+[45] aria-label — social icon
+    EN: X
+    JA: __________
+
+================================================================
+FILE: components/footer/Column2.tsx
+Route(s): global — footer column 2
+================================================================
+
+[46] Footer section label
+    EN: Office Hours
+    JA: __________
+
+[47] Footer section label
+    EN: Subscribe to Newsletter
+    JA: __________
+
+[48] Newsletter — post-submit confirmation
+    EN: Thank you for subscribing ✦
+    JA: __________
+
+[49] Newsletter — email placeholder
+    EN: Your email address
+    JA: __________
+
+[50] aria-label — newsletter submit button
+    EN: Subscribe
+    JA: __________
+
+[51] Newsletter — helper text
+    EN: No spam. Unsubscribe anytime.
+    JA: __________
+
+================================================================
+FILE: components/footer/Helpers.tsx
+Route(s): global — footer data
+================================================================
+
+[52] Office hours — day range
+    EN: Monday – Friday
+    JA: __________
+
+[53] Office hours — time range
+    EN: 9:00 – 18:00
+    JA: __________
+
+[54] Office hours — day
+    EN: Saturday
+    JA: __________
+
+[55] Office hours — time range
+    EN: 10:00 – 15:00
+    JA: __________
+
+[56] Office hours — day
+    EN: Sunday
+    JA: __________
+
+[57] Office hours — status
+    EN: Closed
+    JA: __________
+
+================================================================
+FILE: components/HeroSection.tsx
+Route(s): / (home)
+================================================================
+
+[58] Hero eyebrow line
+    EN: Est. Tokyo · 1987
+    JA: __________
+
+[59] Hero headline part 1
+    EN: Different
+    JA: __________
+
+[60] Hero headline emphasized word
+    EN: Is
+    JA: __________
+
+[61] Hero headline part 2 (on next line)
+    EN: Good
+    JA: __________
+
+[62] Hero primary CTA
+    EN: View Opportunities
+    JA: __________
+
+[63] Hero scroll indicator label
+    EN: Scroll
+    JA: __________
+
+================================================================
+FILE: components/Philosophy.tsx
+Route(s): / (home)
+================================================================
+
+[64] Philosophy panel 1 — label
+    EN: 01 — Mission
+    JA: __________
+
+[65] Philosophy panel 1 — title (line-break preserved)
+    EN: Rooted in Purpose,Driven by Impact
+    JA: __________
+
+[66] Philosophy panel 1 — description
+    EN: We exist to cultivate meaningful change at the intersection of people and possibility. Every decision we make is anchored in a commitment to create lasting value — not just for those we serve today, but for the generations that will inherit the world we shape together.
+    JA: __________
+
+[67] Philosophy panel 2 — label
+    EN: 02 — Vision
+    JA: __________
+
+[68] Philosophy panel 2 — title
+    EN: A Future We Build Together
+    JA: __________
+
+[69] Philosophy panel 2 — description
+    EN: We envision a world where growth is not measured in metrics alone, but in the quality of relationships forged, communities strengthened, and ideas brought to life. Our horizon is vast — and we pursue it with the quiet confidence of those who understand that enduring things are built slowly, and with great care.
+    JA: __________
+
+[70] Philosophy panel 3 — label
+    EN: 03 — Corporate Philosophy
+    JA: __________
+
+[71] Philosophy panel 3 — title
+    EN: Integrity as the Foundation of All
+    JA: __________
+
+[72] Philosophy panel 3 — description
+    EN: Our philosophy is not a document — it is a living practice. We believe that commerce and conscience are not in opposition, but in conversation. Transparency guides our governance, humility shapes our ambitions, and a deep respect for the natural world informs every choice we make as stewards of something larger than ourselves.
+    JA: __________
+
+================================================================
+FILE: components/InfoPoint.tsx
+Route(s): / (home)
+================================================================
+
+[73] Section eyebrow
+    EN: Choose Your Path
+    JA: __________
+
+[74] Section headline
+    EN: Who are you here for?
+    JA: __________
+
+[75] Section subtitle
+    EN: Pick your path and we'll guide you from there.
+    JA: __________
+
+[76] Hover card 1 — eyebrow
+    EN: For Companies
+    JA: __________
+
+[77] Hover card 1 — title
+    EN: For Recruiters
+    JA: __________
+
+[78] Hover card 2 — eyebrow
+    EN: For Candidates
+    JA: __________
+
+[79] Hover card 2 — title
+    EN: For Job Seekers
+    JA: __________
+
+[80] Hover card — explore CTA
+    EN: Explore
+    JA: __________
+
+[81] Steps panel — eyebrow
+    EN: How it works
+    JA: __________
+
+[82] Steps panel heading — recruiters
+    EN: Hiring with us
+    JA: __________
+
+[83] Steps panel heading — job seekers
+    EN: Your journey to Japan
+    JA: __________
+
+[84] aria-label — close steps panel
+    EN: Close
+    JA: __________
+
+[85] Recruiter step 1 — number
+    EN: Step 1
+    JA: __________
+
+[86] Recruiter step 1 — title
+    EN: Tell us your hiring needs
+    JA: __________
+
+[87] Recruiter step 1 — description
+    EN: Share your requirements, timeline, and the type of talent you're looking for.
+    JA: __________
+
+[88] Recruiter step 2 — number
+    EN: Step 2
+    JA: __________
+
+[89] Recruiter step 2 — title
+    EN: We find & match candidates
+    JA: __________
+
+[90] Recruiter step 2 — description
+    EN: We interview and screen candidates individually to ensure the right fit for your company.
+    JA: __________
+
+[91] Recruiter step 3 — number
+    EN: Step 3
+    JA: __________
+
+[92] Recruiter step 3 — title
+    EN: Get candidates fast
+    JA: __________
+
+[93] Recruiter step 3 — description
+    EN: Receive qualified, ready-to-work talent — sometimes as soon as the same day.
+    JA: __________
+
+[94] Recruiter step 4 — number
+    EN: Step 4
+    JA: __________
+
+[95] Recruiter step 4 — title
+    EN: Ongoing support
+    JA: __________
+
+[96] Recruiter step 4 — description
+    EN: Our consultants stay involved after hiring to ensure smooth onboarding and long-term success.
+    JA: __________
+
+[97] Seeker step 1 — number
+    EN: Step 1
+    JA: __________
+
+[98] Seeker step 1 — title
+    EN: Send us your resume
+    JA: __________
+
+[99] Seeker step 1 — description
+    EN: Submit your details and let us know what kind of role you're looking for in Japan.
+    JA: __________
+
+[100] Seeker step 2 — number
+    EN: Step 2
+    JA: __________
+
+[101] Seeker step 2 — title
+    EN: We assess your fit
+    JA: __________
+
+[102] Seeker step 2 — description
+    EN: Our consultants review your background and match you with companies that align with your skills and goals.
+    JA: __________
+
+[103] Seeker step 3 — number
+    EN: Step 3
+    JA: __________
+
+[104] Seeker step 3 — title
+    EN: Interview & placement
+    JA: __________
+
+[105] Seeker step 3 — description
+    EN: We prepare you for interviews and guide you through every step until you receive your offer.
+    JA: __________
+
+[106] Seeker step 4 — number
+    EN: Step 4
+    JA: __________
+
+[107] Seeker step 4 — title
+    EN: Settlement support
+    JA: __________
+
+[108] Seeker step 4 — description
+    EN: From visa paperwork to your first weeks in Japan, we stay by your side to help you settle in.
+    JA: __________
+
+[109] Steps panel — more details CTA (recruiter)
+    EN: More details for companies
+    JA: __________
+
+[110] Steps panel — more details CTA (seeker)
+    EN: More details for job seekers
+    JA: __________
+
+[111] alt attr — recruiters image
+    EN: Image of recruiters
+    JA: __________
+
+[112] alt attr — job seekers image
+    EN: Image of job seekers
+    JA: __________
+
+================================================================
+FILE: components/Employee.tsx
+Route(s): / (home) — team carousel
+================================================================
+
+[113] Section heading
+    EN: Our team
+    JA: __________
+
+[114] Carousel item 1 — title/role
+    EN: Founder & CEO
+    JA: __________
+
+[115] Carousel item 1 — brand/name
+    EN: Uenaka Go
+    JA: __________
+
+[116] Carousel item 1 — description
+    EN: Since founding the company in August 2018, Uenaka has built Glowing Partner on a unique philosophy — every employee is a foreign national — and a commitment to practicing what we recommend.
+    JA: __________
+
+[117] Carousel item 1 — tag
+    EN: Leadership
+    JA: __________
+
+[118] Carousel item 1 — tag
+    EN: Strategy
+    JA: __________
+
+[119] Carousel item 1 — tag
+    EN: Foreign Workforce
+    JA: __________
+
+[120] Carousel item 1 — tag
+    EN: Founder
+    JA: __________
+
+[121] Carousel item 2 — title/role
+    EN: CEO, World Partner
+    JA: __________
+
+[122] Carousel item 2 — brand/name
+    EN: Narayan Pokhrel
+    JA: __________
+
+[123] Carousel item 2 — description
+    EN: Twelve years in Japan shape Narayan's role as the bridge between Japanese companies and foreign employees, championing 100% mutual understanding through two-way communication.
+    JA: __________
+
+[124] Carousel item 2 — tag
+    EN: Bridge Partner
+    JA: __________
+
+[125] Carousel item 2 — tag
+    EN: Japan-Nepal
+    JA: __________
+
+[126] Carousel item 2 — tag
+    EN: Communication
+    JA: __________
+
+[127] Carousel item 2 — tag
+    EN: Advisor
+    JA: __________
+
+[128] Carousel item 3 — title/role
+    EN: Employment Support Lead
+    JA: __________
+
+[129] Carousel item 3 — brand/name
+    EN: Arun Gurung
+    JA: __________
+
+[130] Carousel item 3 — description
+    EN: Arun supports the full employment journey — from recruiting foreign talent to labor management, training, and long-term follow-up for client companies.
+    JA: __________
+
+[131] Carousel item 3 — tag
+    EN: Recruitment
+    JA: __________
+
+[132] Carousel item 3 — tag
+    EN: Labor Management
+    JA: __________
+
+[133] Carousel item 3 — tag
+    EN: Training
+    JA: __________
+
+[134] Carousel item 3 — tag
+    EN: Follow-up
+    JA: __________
+
+[135] Carousel item 4 — title/role
+    EN: Career Support Specialist
+    JA: __________
+
+[136] Carousel item 4 — brand/name
+    EN: Sanyukta Amatya
+    JA: __________
+
+[137] Carousel item 4 — description
+    EN: Sanyukta partners with each candidate to understand their aspirations and connect them with workplaces where they can grow with confidence and peace of mind.
+    JA: __________
+
+[138] Carousel item 4 — tag
+    EN: Career Support
+    JA: __________
+
+[139] Carousel item 4 — tag
+    EN: Candidate Care
+    JA: __________
+
+[140] Carousel item 4 — tag
+    EN: Mentorship
+    JA: __________
+
+[141] Carousel item 5 — title/role
+    EN: Client Support
+    JA: __________
+
+[142] Carousel item 5 — brand/name
+    EN: Norin Shrestha
+    JA: __________
+
+[143] Carousel item 5 — description
+    EN: Guided by teamwork, respect, and continuous learning, Norin offers kind, attentive, and reliable support to colleagues and clients alike.
+    JA: __________
+
+[144] Carousel item 5 — tag
+    EN: Client Support
+    JA: __________
+
+[145] Carousel item 5 — tag
+    EN: Teamwork
+    JA: __________
+
+[146] Carousel item 5 — tag
+    EN: Reliability
+    JA: __________
+
+[147] Carousel item 6 — title/role
+    EN: Account & Staff Relations
+    JA: __________
+
+[148] Carousel item 6 — brand/name
+    EN: Nirajan Pokhrel
+    JA: __________
+
+[149] Carousel item 6 — description
+    EN: Nirajan builds trusting relationships with client companies and staff, approaching every consultation with sincerity and full responsibility.
+    JA: __________
+
+[150] Carousel item 6 — tag
+    EN: Account Management
+    JA: __________
+
+[151] Carousel item 6 — tag
+    EN: Staff Relations
+    JA: __________
+
+[152] Carousel item 6 — tag
+    EN: Trust
+    JA: __________
+
+================================================================
+FILE: components/FAQ.tsx
+Route(s): / (home)
+================================================================
+
+[153] Section heading
+    EN: Frequently Asked Questions
+    JA: __________
+
+[154] Section subtitle
+    EN: Clear answers to common questions about your journey to Japan
+    JA: __________
+
+[155] FAQ #1 — question
+    EN: Which visas can I apply for?
+    JA: __________
+
+[156] FAQ #1 — answer intro
+    EN: Currently, we assist with the following visa types:
+    JA: __________
+
+[157] FAQ #1 — bullet
+    EN: Specified Skilled Worker Visa (SSW)
+    JA: __________
+
+[158] FAQ #1 — bullet
+    EN: Technical Intern Training Visa (TIT)
+    JA: __________
+
+[159] FAQ #1 — closing paragraph
+    EN: Regarding Student Visa, we are not currently processing them, but we plan to offer this service in the near future.
+    JA: __________
+
+[160] FAQ #2 — question
+    EN: How much does it cost to go to Japan?
+    JA: __________
+
+[161] FAQ #2 — answer
+    EN: The cost varies depending on the visa type, the destination region, and the employing company. Please contact us for a consultation, and we will explain the details based on your specific situation.
+    JA: __________
+
+[162] FAQ #3 — question
+    EN: How long does the process take?
+    JA: __________
+
+[163] FAQ #3 — answer
+    EN: The timeline differs depending on the visa category and timing. For example, for the SSW visa, the process time varies significantly depending on whether you have already passed the Japanese language and skills exams. Please consult us for an estimated timeline.
+    JA: __________
+
+[164] FAQ #4 — question
+    EN: What documents are required?
+    JA: __________
+
+[165] FAQ #4 — answer
+    EN: Required documents depend on the specific visa type. Generally, you will need a passport, resume (CV), graduation certificates, and photos. We will provide a specific checklist during our consultation.
+    JA: __________
+
+[166] FAQ #5 — question
+    EN: What level of Japanese is required?
+    JA: __________
+
+[167] FAQ #5 — answer
+    EN: It depends on the visa, but for the SSW visa, JLPT N4 (basic conversational level) is the minimum requirement. However, having N3 or N2 will give you access to better job opportunities. We also provide support for Japanese language learning.
+    JA: __________
+
+[168] FAQ #6 — question
+    EN: What is the salary in Japan?
+    JA: __________
+
+[169] FAQ #6 — answer
+    EN: Salaries vary based on the visa type, region (prefecture), and job industry. However, please be assured that all job offers comply with Japanese labor laws regarding minimum wage. We will provide specific salary details when introducing job offers.
+    JA: __________
+
+[170] FAQ #7 — question
+    EN: Can I bring my family (spouse/children) to Japan?
+    JA: __________
+
+[171] FAQ #7 — answer
+    EN: Yes, if you obtain an "Engineer/Specialist in Humanities/International Services" visa or an "SSW Type 2" visa, you can bring your family to live with you. We can propose a long-term career plan if you wish to live with your family in the future.
+    JA: __________
+
+[172] FAQ #8 — question
+    EN: What if I get sick or have trouble in Japan?
+    JA: __________
+
+[173] FAQ #8 — answer
+    EN: Please do not worry. Our parent company (Japan office) is there for you. If you face illness, injury, or workplace issues, our Japanese staff will be available to consult and help you solve the problem immediately.
+    JA: __________
+
+[174] FAQ #9 — question
+    EN: Can new graduates apply?
+    JA: __________
+
+[175] FAQ #9 — answer
+    EN: Yes, absolutely! New graduates are welcome to apply. In particular, those with a university bachelor's degree may be eligible for the "Engineer/Specialist in Humanities/International Services" visa. We support young talent in starting their careers.
+    JA: __________
+
+[176] FAQ #10 — question
+    EN: If I fail an interview, will you stop introducing jobs?
+    JA: __________
+
+[177] FAQ #10 — answer
+    EN: No, please don't give up. Even if you are not selected, we will analyze the reasons and provide training for the next interview. We will support you as many times as needed until you secure a job offer.
+    JA: __________
+
+[178] FAQ #11 — question
+    EN: Is online consultation available?
+    JA: __________
+
+[179] FAQ #11 — answer
+    EN: Yes, it is available. Even if you live far away, we can conduct counseling sessions and interviews online using tools like Zoom or Google Meet.
+    JA: __________
+
+[180] FAQ — bottom-of-section prompt
+    EN: Need more specific information?
+    JA: __________
+
+[181] FAQ — bottom CTA button
+    EN: Get Personalized Consultation
+    JA: __________
+
+================================================================
+FILE: components/about/IntroSection.tsx
+Route(s): /about
+================================================================
+
+[182] Section eyebrow
+    EN: About Us
+    JA: __________
+
+[183] Page headline (italic)
+    EN: Different is Good!
+    JA: __________
+
+[184] Intro paragraph
+    EN: At Glowing Partner Co., Ltd., we believe that being different is what makes us stronger. Founded in 2018, our mission is to build a society where diversity is celebrated and every individual's potential can shine. As specialists in foreign national employment, we bridge the gap between talented job seekers and forward-thinking companies. Guided by the philosophy that "opportunities come through people," we are committed to reshaping the future of work in Japan by proving that integrating international talent creates a cycle of innovation and success.
+    JA: __________
+
+================================================================
+FILE: components/about/Timeline.tsx
+Route(s): /about
+================================================================
+
+[185] Section eyebrow
+    EN: Our Journey
+    JA: __________
+
+[186] Section heading
+    EN: Company Timeline
+    JA: __________
+
+[187] Timeline year
+    EN: 2018
+    JA: __________
+
+[188] Timeline 2018 — milestone
+    EN: Founded
+    JA: __________
+
+[189] Timeline 2018 — title
+    EN: A Bold Beginning
+    JA: __________
+
+[190] Timeline 2018 — description
+    EN: Glowing Partner Co., Ltd. is established in Japan with a clear mission: to build a society where diversity is celebrated and every individual's potential can shine.
+    JA: __________
+
+[191] Timeline year
+    EN: 2019
+    JA: __________
+
+[192] Timeline 2019 — milestone
+    EN: Partnership
+    JA: __________
+
+[193] Timeline 2019 — title
+    EN: Bridging Two Nations
+    JA: __________
+
+[194] Timeline 2019 — description
+    EN: A landmark partnership with World Partner Pvt. Ltd. in Nepal creates a powerful bridge, connecting talented Nepali professionals with forward-thinking Japanese companies.
+    JA: __________
+
+[195] Timeline year
+    EN: 2020
+    JA: __________
+
+[196] Timeline 2020 — milestone
+    EN: Resilience
+    JA: __________
+
+[197] Timeline 2020 — title
+    EN: Thriving Through Change
+    JA: __________
+
+[198] Timeline 2020 — description
+    EN: Despite global challenges, Glowing Partner adapts and grows — demonstrating that diversity and international collaboration are sources of strength, not vulnerability.
+    JA: __________
+
+[199] Timeline year
+    EN: 2021
+    JA: __________
+
+[200] Timeline 2021 — milestone
+    EN: Expansion
+    JA: __________
+
+[201] Timeline 2021 — title
+    EN: A Growing Network
+    JA: __________
+
+[202] Timeline 2021 — description
+    EN: Partnerships with Japanese companies across diverse industries multiply, placing international talent where it matters most and proving that integration creates innovation.
+    JA: __________
+
+[203] Timeline year
+    EN: 2022
+    JA: __________
+
+[204] Timeline 2022 — milestone
+    EN: Community
+    JA: __________
+
+[205] Timeline 2022 — title
+    EN: More Than a Business
+    JA: __________
+
+[206] Timeline 2022 — description
+    EN: Glowing Partner deepens its commitment to community through active volunteer initiatives, reinforcing the belief that contributing to others' happiness is the greatest motivation.
+    JA: __________
+
+[207] Timeline year
+    EN: 2023
+    JA: __________
+
+[208] Timeline 2023 — milestone
+    EN: Innovation
+    JA: __________
+
+[209] Timeline 2023 — title
+    EN: Reshaping the Future of Work
+    JA: __________
+
+[210] Timeline 2023 — description
+    EN: New processes and digital tools streamline the journey from application to employment, expanding access to opportunity for international talent across Japan.
+    JA: __________
+
+[211] Timeline year
+    EN: 2024
+    JA: __________
+
+[212] Timeline 2024 — milestone
+    EN: Today
+    JA: __________
+
+[213] Timeline 2024 — title
+    EN: A Cycle of Success
+    JA: __________
+
+[214] Timeline 2024 — description
+    EN: With a dedicated team — 95% from Nepal — Glowing Partner continues to prove that international talent drives a cycle of innovation, success, and genuine human connection.
+    JA: __________
+
+[215] Mobile-only progress indicator (uses N + total)
+    EN: Milestone {N} of {total}
+    JA: __________
+
+================================================================
+FILE: components/about/TeamSection.tsx
+Route(s): /about
+================================================================
+
+[216] Section eyebrow
+    EN: Our Team
+    JA: __________
+
+[217] Section heading
+    EN: The People Behind Glowing Partner
+    JA: __________
+
+[218] Section subtitle
+    EN: A small, multi-national team united by one belief: international talent and Japanese companies grow strongest when they truly understand each other.
+    JA: __________
+
+[219] Team divider label
+    EN: Meet the Team
+    JA: __________
+
+[220] Team member 1 — name
+    EN: Uenaka Go
+    JA: __________
+
+[221] Team member 1 — role
+    EN: Founder & CEO
+    JA: __________
+
+[222] Team member 1 — bio (multi-paragraph; preserve blank lines)
+    EN: Since founding our company in August 2018, we have operated with a unique philosophy: every one of our employees is a foreign national.
+
+Why did we intentionally build our organization this way? The answer lies in a principle that has always guided me.
+
+I believe that anything we confidently recommend to our clients should first be something we have practiced ourselves and experienced firsthand.
+
+From the very beginning, I was also convinced that as the number of foreign employees in Japan continues to grow, foreign workforce management — how to maximize their potential and help them build long-term careers — would become one of the greatest challenges facing Japanese companies.
+
+Of course, our journey was not smooth from the start. We encountered many challenges, including language barriers, cultural differences, and differing values. Through continuous trial and improvement, however, we developed systems that foster mutual understanding and enable everyone to grow together. As a result, we successfully maintained our all-foreign employee organization and, united as one team, even overcame the unprecedented challenges of the COVID-19 pandemic.
+
+We believe that a service which ends simply with recruitment support ultimately offers clients nothing more than an increase in labor costs.
+
+What sets us apart is the real-world experience and expertise in managing foreign employees that we have gained through years of operating our own company. This hands-on knowledge allows us to provide practical, on-site support that other companies cannot easily replicate — helping foreign employees settle into their workplaces quickly and become productive members of the team.
+
+Our goal is to ensure that hiring foreign talent is not viewed merely as a solution to labor shortages or an additional expense.
+
+Instead, we strive to help your international employees become valuable members of your organization — people who contribute to increased productivity, higher sales, and greater profitability. We would be honored to walk alongside your company as a trusted partner throughout that journey.
+    JA: __________
+
+[223] Team member 2 — name
+    EN: Narayan Pokhrel
+    JA: __________
+
+[224] Team member 2 — role
+    EN: CEO, World Partner
+    JA: __________
+
+[225] Team member 2 — bio
+    EN: I have been living in Japan for the past 12 years. Thanks to this experience, I have a deep understanding of the expectations, perspectives, and needs of both Japanese companies and foreign employees.
+
+By listening to people's real voices and bridging cultural differences, I strive to provide support that achieves 100% mutual understanding through effective two-way communication.
+
+I am also one of the many foreigners who crossed the sea to come to Japan 12 years ago. Because of this personal experience, I understand the feelings of foreign employees and how to help them make the most of their potential better than anyone else. With strong communication skills, I am committed to serving as a bridge between employers and employees, providing wholehearted support to both sides.
+    JA: __________
+
+[226] Team member 3 — name
+    EN: Arun Gurung
+    JA: __________
+
+[227] Team member 3 — role
+    EN: Employment Support Lead
+    JA: __________
+
+[228] Team member 3 — bio
+    EN: I provide comprehensive support throughout the entire employment process — from recruiting foreign talent to labor management, employee training after hiring, and ongoing follow-up support for companies.
+
+As a foreign worker in Japan myself, I have grown with the help and kindness of the people around me. Because of that experience, I can truly understand the concerns and anxieties of job seekers and offer practical, personalized advice.
+
+For companies, I am committed to providing and supporting employees who can contribute effectively and remain with the organization for the long term. For job seekers, I aim to connect them with workplaces where they can work with confidence and peace of mind.
+
+Above all, I value building strong human relationships, and I dedicate myself to becoming the best possible partner for both employers and job seekers.
+    JA: __________
+
+[229] Team member 4 — name
+    EN: Sanyukta Amatya
+    JA: __________
+
+[230] Team member 4 — role
+    EN: Career Support Specialist
+    JA: __________
+
+[231] Team member 4 — bio
+    EN: At Glowing Partner, we are committed to supporting each individual by understanding their goals and aspirations and helping them find workplaces where they can grow with confidence and peace of mind.
+
+We believe that every new challenge and every fresh start holds great potential. Let us work together to build a brighter future.
+    JA: __________
+
+[232] Team member 5 — name
+    EN: Norin Shrestha
+    JA: __________
+
+[233] Team member 5 — role
+    EN: Client Support
+    JA: __________
+
+[234] Team member 5 — bio
+    EN: For me, teamwork, respect for others, and continuous learning are extremely important.
+
+I am grateful for every opportunity to learn, grow, and contribute.
+
+My goal is to be someone my colleagues and clients can trust by providing kind, attentive, and reliable support to everyone I work with.
+    JA: __________
+
+[235] Team member 6 — name
+    EN: Nirajan Pokhrel
+    JA: __________
+
+[236] Team member 6 — role
+    EN: Account & Staff Relations
+    JA: __________
+
+[237] Team member 6 — bio
+    EN: In my daily work, I value building trusting relationships with both our client companies and our staff above all else.
+
+I approach every consultation and every task with sincerity, taking full responsibility to ensure the best possible support.
+
+My goal is to be someone you can rely on and feel comfortable turning to whenever you need assistance. I am committed to supporting you with dedication and integrity every step of the way.
+    JA: __________
+
+[238] Bio modal — aria-label prefix
+    EN: {name} biography
+    JA: __________
+
+[239] Bio modal — CEO eyebrow
+    EN: Message from the CEO
+    JA: __________
+
+[240] Bio modal — non-CEO eyebrow
+    EN: From the team
+    JA: __________
+
+[241] aria-label — bio modal close button
+    EN: Close
+    JA: __________
+
+[242] CEO card — badge
+    EN: Chief Executive
+    JA: __________
+
+[243] CEO card — CTA button
+    EN: Read full message
+    JA: __________
+
+[244] Team card — CTA button
+    EN: Read bio
+    JA: __________
+
+================================================================
+FILE: components/about/LeadershipSection.tsx
+Route(s): /about
+================================================================
+
+[245] Section eyebrow
+    EN: The People Behind the Mission
+    JA: __________
+
+[246] Section heading
+    EN: Leadership
+    JA: __________
+
+[247] alt attr — Nepal-Japan map
+    EN: Bridge between Nepal and Japan
+    JA: __________
+
+[248] Map caption (uses HTML entity for &)
+    EN: Bridging Nepal & Japan
+    JA: __________
+
+[249] Leader 1 — name
+    EN: Narayan Pokhrel
+    JA: __________
+
+[250] Leader 1 — title
+    EN: CEO, World Partner
+    JA: __________
+
+[251] Leader 2 — name
+    EN: Go Uenaka
+    JA: __________
+
+[252] Leader 2 — title
+    EN: CEO, Glowing Partner
+    JA: __________
+
+[253] External-site link decoration
+    EN: ↪ Visit
+    JA: __________
+
+================================================================
+FILE: components/about/CorporateInfo.tsx
+Route(s): /about
+================================================================
+
+[254] Section eyebrow
+    EN: Corporate Information
+    JA: __________
+
+[255] Section heading
+    EN: Company Profile
+    JA: __________
+
+[256] Profile row label
+    EN: Company Name
+    JA: __________
+
+[257] Profile row value
+    EN: Glowing Partner Co., Ltd.
+    JA: __________
+
+[258] Profile row label
+    EN: Address
+    JA: __________
+
+[259] Profile row value — address (with line break)
+    EN: 6th Floor, 2-36-1 Ikebukuro,
+Toshima City, Tokyo 171-0014, Japan
+    JA: __________
+
+[260] Profile row label
+    EN: Telephone
+    JA: __________
+
+[261] Profile row label
+    EN: Capital
+    JA: __________
+
+[262] Profile row value — capital
+    EN: 44.25 million JPY
+    JA: __________
+
+[263] Profile row label
+    EN: President & Representative Director
+    JA: __________
+
+[264] Profile row value — president name (English + kanji parenthetical)
+    EN: Go Uenaka (上中 豪)
+    JA: __________
+
+[265] Profile row label
+    EN: Number of Employees
+    JA: __________
+
+[266] Profile row value — headcount
+    EN: 100 (including full-time employees and part-time staff)
+    JA: __________
+
+[267] Licenses group label
+    EN: Licenses & Registrations
+    JA: __________
+
+[268] License card label
+    EN: License
+    JA: __________
+
+[269] License 1 — description
+    EN: General Worker Dispatch Business License
+    JA: __________
+
+[270] License 1 — number (keep verbatim)
+    EN: Pai 11-040029
+    JA: __________
+
+[271] License 2 — description
+    EN: Paid Employment Placement Business License
+    JA: __________
+
+[272] License 2 — number
+    EN: 11-Yu-040019
+    JA: __________
+
+[273] License 3 — description
+    EN: Registered Support Organization (Specified Skilled Worker Program)
+    JA: __________
+
+[274] License 3 — number
+    EN: 22-To-007904
+    JA: __________
+
+================================================================
+FILE: app/services/for-job-seeker/page.tsx
+Route(s): /services/for-job-seeker
+================================================================
+
+[275] Panel 01 — label
+    EN: How We Help
+    JA: __________
+
+[276] Panel 01 — headline
+    EN: Your next job, considered carefully.
+    JA: __________
+
+[277] Panel 01 — body
+    EN: Most job-search advice is generic. Ours is not. We sit with each candidate, learn what the next ten years should feel like, and then introduce a small number of roles that fit — not a flood of postings. Less scrolling, more talking, better outcomes.
+    JA: __________
+
+[278] Panel 01 — bullet
+    EN: 1-on-1 consultations, not impersonal mailing lists
+    JA: __________
+
+[279] Panel 01 — bullet
+    EN: Honest feedback on fit, not flattery
+    JA: __________
+
+[280] Panel 01 — bullet
+    EN: Bilingual support in Japanese and English
+    JA: __________
+
+[281] Panel 02 — label
+    EN: Counseling & Preparation
+    JA: __________
+
+[282] Panel 02 — headline
+    EN: GPNA, and one-on-one consulting.
+    JA: __________
+
+[283] Panel 02 — body
+    EN: Through Glowing Partner Naitei Academy (GPNA) we run structured preparation programs for students entering the job market. For mid-career professionals and returners, our certified career consultant Ms. Uenaka offers private sessions at the Shiki Satellite Office — unhurried, confidential, and grounded in a decade of real placements.
+    JA: __________
+
+[284] Panel 02 — bullet
+    EN: GPNA — for new graduates and students
+    JA: __________
+
+[285] Panel 02 — bullet
+    EN: Career consulting with Ms. Uenaka
+    JA: __________
+
+[286] Panel 02 — bullet
+    EN: ES, interview, and mock-screening practice
+    JA: __________
+
+[287] Panel 03 — label
+    EN: Breadth of Opportunities
+    JA: __________
+
+[288] Panel 03 — headline
+    EN: Part-time, full-time, and everything between.
+    JA: __________
+
+[289] Panel 03 — body
+    EN: Whether you are looking for a part-time shift to bridge a month, a full-time career change, or a long-term path under the SSW or Technical Intern Training programs — we represent roles across the spectrum. One conversation will tell us which path actually fits.
+    JA: __________
+
+[290] Panel 03 — bullet
+    EN: Part-time direct placement
+    JA: __________
+
+[291] Panel 03 — bullet (contains Japanese kanji already)
+    EN: Full-time and mid-career change (転職)
+    JA: __________
+
+[292] Panel 03 — bullet
+    EN: Specified Skilled Worker visa roles
+    JA: __________
+
+[293] Panel 03 — bullet
+    EN: Technical Intern Training placements
+    JA: __________
+
+[294] Bottom CTA — kicker
+    EN: Get in touch
+    JA: __________
+
+[295] Bottom CTA — headline
+    EN: Start a conversation about your next role.
+    JA: __________
+
+[296] Bottom CTA — body
+    EN: Send a short message — your background, what you are looking for, and a way to reach you. A counselor will reply personally, usually within two business days.
+    JA: __________
+
+[297] Bottom CTA — button label
+    EN: Contact us — for candidates
+    JA: __________
+
+================================================================
+FILE: app/services/for-recruiter/page.tsx
+Route(s): /services/for-recruiter
+================================================================
+
+[298] Panel 01 — label
+    EN: Why Partner With Us
+    JA: __________
+
+[299] Panel 01 — headline
+    EN: Recruitment, with fewer surprises.
+    JA: __________
+
+[300] Panel 01 — body
+    EN: Hiring decisions are expensive and noisy. We sit between the posting and the offer letter and absorb the noise — screening, scheduling, cultural fit checks, language assessment — so the people who reach your interview room are the ones worth your time.
+    JA: __________
+
+[301] Panel 01 — bullet
+    EN: Pre-screened, role-matched candidates only
+    JA: __________
+
+[302] Panel 01 — bullet
+    EN: Bilingual sourcing across Japan and overseas
+    JA: __________
+
+[303] Panel 01 — bullet
+    EN: Transparent reporting at every stage
+    JA: __________
+
+[304] Panel 02 — label
+    EN: Breadth of Talent
+    JA: __________
+
+[305] Panel 02 — headline
+    EN: From cleaning crews to specified skilled workers.
+    JA: __________
+
+[306] Panel 02 — body
+    EN: Whatever your headcount looks like — a shift of part-time cleaning staff, a full-time bilingual back-office hire, an SSW visa cohort, or a technical intern training program — we have the pipeline. One agency, one point of contact, end-to-end coverage.
+    JA: __________
+
+[307] Panel 02 — bullet
+    EN: Part-time dispatch — cleaning specialty
+    JA: __________
+
+[308] Panel 02 — bullet
+    EN: Full-time dispatch and direct placement
+    JA: __________
+
+[309] Panel 02 — bullet (contains kanji)
+    EN: Specified Skilled Worker (特定技能)
+    JA: __________
+
+[310] Panel 02 — bullet (contains kanji)
+    EN: Technical Intern Training (技能実習)
+    JA: __________
+
+[311] Panel 03 — label
+    EN: Compliance & Aftercare
+    JA: __________
+
+[312] Panel 03 — headline
+    EN: We don't disappear after the offer letter.
+    JA: __________
+
+[313] Panel 03 — body
+    EN: Recruitment is the easy part — retention is the work. We stay involved through onboarding, first-month check-ins, and the inevitable first issues. For visa-based hires, we coordinate with sending and supervising organizations so compliance never lands on your HR team unprepared.
+    JA: __________
+
+[314] Panel 03 — bullet
+    EN: Post-placement check-ins for the first 12 months
+    JA: __________
+
+[315] Panel 03 — bullet
+    EN: Replacement guarantees during probation
+    JA: __________
+
+[316] Panel 03 — bullet
+    EN: Visa, contract, and labor-law support
+    JA: __________
+
+[317] Bottom CTA — kicker
+    EN: Get in touch
+    JA: __________
+
+[318] Bottom CTA — headline
+    EN: Tell us who you need to hire.
+    JA: __________
+
+[319] Bottom CTA — body
+    EN: A short message about the role, the headcount, and the timeline is enough to start. We will reply with a candidate plan — not a sales pitch.
+    JA: __________
+
+[320] Bottom CTA — button label
+    EN: Contact us — for companies
+    JA: __________
+
+================================================================
+FILE: app/business/staffing/page.tsx
+Route(s): /business/staffing
+================================================================
+
+[321] metadata — page title
+    EN: Temporary Staffing Services | Glowing Partner
+    JA: __________
+
+[322] metadata — description
+    EN: Leveraging strong relationships with educational institutions, we recruit and dispatch international students with reduced staffing fees and 365-day language support.
+    JA: __________
+
+[323] Hero eyebrow
+    EN: Business 02
+    JA: __________
+
+[324] Hero title
+    EN: Temporary Staffing Services
+    JA: __________
+
+[325] Hero lede
+    EN: Leveraging our strong relationships with educational institutions, we primarily recruit and dispatch international students — pairing client companies with motivated, capable staff while keeping dispatch fees competitive.
+    JA: __________
+
+[326] Section eyebrow
+    EN: Our advantage
+    JA: __________
+
+[327] Section heading
+    EN: Strong school ties, lower dispatch fees.
+    JA: __________
+
+[328] Section body
+    EN: One of our unique advantages is that employing international students — who are exempt from certain social insurance costs — enables us to offer staffing services with reduced dispatch fees. Our staffing services are mainly provided to building cleaning and maintenance companies for cleaning-related operations.
+    JA: __________
+
+[329] Stat block eyebrow
+    EN: By the numbers
+    JA: __________
+
+[330] Stat block heading
+    EN: A staffing model built around international student talent.
+    JA: __________
+
+[331] Stat 1 — label
+    EN: Day call center
+    JA: __________
+
+[332] Stat 1 — sub
+    EN: Interpretation & communication support, every day of the year.
+    JA: __________
+
+[333] Stat 2 — label
+    EN: Social insurance overhead
+    JA: __________
+
+[334] Stat 2 — sub
+    EN: International students are exempt — savings passed to clients.
+    JA: __________
+
+[335] Stat 3 — label
+    EN: Direct school pipeline
+    JA: __________
+
+[336] Stat 3 — sub
+    EN: Sourced through strong long-term institutional partnerships.
+    JA: __________
+
+[337] Feature grid eyebrow
+    EN: Support services
+    JA: __________
+
+[338] Feature grid heading
+    EN: Built to support both clients and dispatched staff.
+    JA: __________
+
+[339] Feature 1 — title
+    EN: Native-language work manuals
+    JA: __________
+
+[340] Feature 1 — body
+    EN: Operating manuals are prepared in the native languages of our international staff so on-site work starts clearly and safely.
+    JA: __________
+
+[341] Feature 2 — title
+    EN: 365-day call center
+    JA: __________
+
+[342] Feature 2 — body
+    EN: Year-round interpretation and communication support connecting client companies with foreign employees whenever needed.
+    JA: __________
+
+[343] Feature 3 — title
+    EN: Cleaning & maintenance focus
+    JA: __________
+
+[344] Feature 3 — body
+    EN: Staffing is primarily provided to building cleaning and maintenance companies for cleaning-related operations.
+    JA: __________
+
+[345] Feature 4 — title
+    EN: Institution-sourced talent
+    JA: __________
+
+[346] Feature 4 — body
+    EN: Long-standing relationships with universities, vocational schools, and Japanese language schools feed a steady talent pipeline.
+    JA: __________
+
+================================================================
+FILE: app/business/placement/page.tsx
+Route(s): /business/placement
+================================================================
+
+[347] metadata — page title
+    EN: Recruitment & Placement Services | Glowing Partner
+    JA: __________
+
+[348] metadata — description
+    EN: For companies seeking direct-hire employees, we provide recruitment and placement services on a fully success-fee basis — fees are charged only upon successful placement.
+    JA: __________
+
+[349] Hero eyebrow
+    EN: Business 03
+    JA: __________
+
+[350] Hero title
+    EN: Recruitment and Placement Services
+    JA: __________
+
+[351] Hero lede
+    EN: For companies seeking direct-hire employees, we provide recruitment and placement services on a fully success-fee basis — meaning fees are charged only upon successful placement.
+    JA: __________
+
+[352] Stat block eyebrow
+    EN: How it works
+    JA: __________
+
+[353] Stat block heading
+    EN: A success-fee model, with no upfront cost.
+    JA: __________
+
+[354] Stat 1 — label
+    EN: Upfront fee
+    JA: __________
+
+[355] Stat 1 — sub
+    EN: No engagement charge before a successful placement is made.
+    JA: __________
+
+[356] Stat 2 — label
+    EN: Success-based
+    JA: __________
+
+[357] Stat 2 — sub
+    EN: Fees are paid only when a candidate is successfully hired.
+    JA: __________
+
+[358] Stat 3 — label
+    EN: Goal
+    JA: __________
+
+[359] Stat 3 — sub
+    EN: The right direct-hire match for your team — nothing else.
+    JA: __________
+
+[360] Section eyebrow
+    EN: Direct-hire focus
+    JA: __________
+
+[361] Section heading
+    EN: Built for companies hiring for the long term.
+    JA: __________
+
+[362] Section body
+    EN: Our placement service is designed for companies seeking direct-hire employees who will join your team on your own terms — not as dispatched staff. Because we are compensated only on successful placement, our incentives are fully aligned with finding the right person, not filling the role at any cost.
+    JA: __________
+
+[363] Feature 1 — title
+    EN: Aligned incentives
+    JA: __________
+
+[364] Feature 1 — body
+    EN: We earn only when you successfully hire — so we recommend candidates who actually fit, not just any available profile.
+    JA: __________
+
+[365] Feature 2 — title
+    EN: No risk to start
+    JA: __________
+
+[366] Feature 2 — body
+    EN: There is no engagement fee. You only pay once a candidate accepts and joins your company on a direct-hire basis.
+    JA: __________
+
+[367] Feature 3 — title
+    EN: Targeted shortlists
+    JA: __________
+
+[368] Feature 3 — body
+    EN: Drawing on our recruitment pipelines, we present focused shortlists rather than overwhelming you with profiles.
+    JA: __________
+
+================================================================
+FILE: app/business/ssw-support/page.tsx
+Route(s): /business/ssw-support
+================================================================
+
+[369] metadata — page title
+    EN: Support Services for Specified Skilled Workers | Glowing Partner
+    JA: __________
+
+[370] metadata — description
+    EN: As a Registered Support Organization, we recruit and develop Specified Skilled Worker candidates through our Nepal group company and provide post-employment career support.
+    JA: __________
+
+[371] Hero eyebrow
+    EN: Business 04
+    JA: __________
+
+[372] Hero title
+    EN: Support Services for Specified Skilled Workers
+    JA: __________
+
+[373] Hero lede
+    EN: As a Registered Support Organization, we recruit and develop human resources directly in Nepal through our group company, World Partner Pvt. Ltd., and provide ongoing support after employment in Japan.
+    JA: __________
+
+[374] Section eyebrow
+    EN: Our Nepal pipeline
+    JA: __________
+
+[375] Section heading
+    EN: Recruited and developed directly at the source.
+    JA: __________
+
+[376] Section body
+    EN: Through our group company in Nepal, World Partner Pvt. Ltd., we are able to recruit and develop human resources directly in Nepal — building a pipeline of candidates who are prepared for life and work in Japan before they ever board the plane.
+    JA: __________
+
+[377] Stat block eyebrow
+    EN: Dual-panel evaluation
+    JA: __________
+
+[378] Stat block heading
+    EN: Candidates assessed by experts on both sides.
+    JA: __________
+
+[379] Stat 1 — label
+    EN: Nepali candidates
+    JA: __________
+
+[380] Stat 1 — sub
+    EN: Collectively assessed by our Japanese professional panel.
+    JA: __________
+
+[381] Stat 2 — label
+    EN: In Japan
+    JA: __________
+
+[382] Stat 2 — sub
+    EN: Nepali professionals on our team with deep cross-cultural knowledge.
+    JA: __________
+
+[383] Stat 3 — label
+    EN: Cultures, one team
+    JA: __________
+
+[384] Stat 3 — sub
+    EN: Japanese rigor and Nepali insight in every selection decision.
+    JA: __________
+
+[385] Feature grid eyebrow
+    EN: What you get
+    JA: __________
+
+[386] Feature grid heading
+    EN: End-to-end Specified Skilled Worker support.
+    JA: __________
+
+[387] Feature 1 — title
+    EN: Source in Nepal
+    JA: __________
+
+[388] Feature 1 — body
+    EN: Direct recruitment through our group company, World Partner Pvt. Ltd., based in Nepal.
+    JA: __________
+
+[389] Feature 2 — title
+    EN: Dual-panel selection
+    JA: __________
+
+[390] Feature 2 — body
+    EN: Candidates evaluated by Japanese professionals and Nepali specialists who have lived in Japan for over 12 years.
+    JA: __________
+
+[391] Feature 3 — title
+    EN: Cross-cultural readiness
+    JA: __________
+
+[392] Feature 3 — body
+    EN: Candidates are prepared for Japanese workplace culture before placement, reducing onboarding friction.
+    JA: __________
+
+[393] Feature 4 — title
+    EN: Post-employment support
+    JA: __________
+
+[394] Feature 4 — body
+    EN: Ongoing assistance from nationally certified Career Consultants ensures successful integration after hiring.
+    JA: __________
+
+================================================================
+FILE: app/business/career-counseling/page.tsx
+Route(s): /business/career-counseling
+================================================================
+
+[395] metadata — page title
+    EN: Job Hunting Support Services | Glowing Partner
+    JA: __________
+
+[396] metadata — description
+    EN: Led by representative Kaminaka, nationally certified Career Consultant, we provide job-hunting know-how and career support to individuals and educational institutions.
+    JA: __________
+
+[397] Hero eyebrow
+    EN: Business 01
+    JA: __________
+
+[398] Hero title
+    EN: Job Hunting Support Services
+    JA: __________
+
+[399] Hero lede
+    EN: Led by our representative, Kaminaka, who holds a national qualification as a Career Consultant, we provide job-hunting know-how and career support to both individuals and educational institutions.
+    JA: __________
+
+[400] Hero image alt
+    EN: Job Hunting Support Services
+    JA: __________
+
+[401] External link card — eyebrow
+    EN: National qualification
+    JA: __________
+
+[402] External link card — title
+    EN: What is a Career Consultant?
+    JA: __________
+
+[403] External link card — description
+    EN: Read the official explanation of the Career Consultant national qualification on the Japan Career Consulting Association website.
+    JA: __________
+
+[404] External link card — link label
+    EN: Visit career-cc.org
+    JA: __________
+
+[405] Section 1 — eyebrow
+    EN: For individuals
+    JA: __________
+
+[406] Section 1 — heading
+    EN: GP Job Offer Academy
+    JA: __________
+
+[407] Section 1 — body
+    EN: This program was launched during the COVID-19 pandemic when job opportunities drastically decreased. It was driven by a strong desire to support talented individuals who were struggling simply because they did not know how to approach job hunting effectively. As a result, our academy has helped participants secure job offers from more than 500 companies, contributing significantly to their career development.
+    JA: __________
+
+[408] Section 1 — image alt
+    EN: GP Job Offer Academy
+    JA: __________
+
+[409] Section 1 — extra paragraph
+    EN: One of our key strengths is our personalized guidance and ongoing support, enabling individuals to conduct a job search they can feel confident and satisfied with. We provide practical know-how on how to effectively present their experiences and strengths to potential employers, including interview preparation and other essential job-hunting skills. Our nationally certified professional Career Consultants provide comprehensive support tailored to each job seeker.
+    JA: __________
+
+[410] Stat 1 — label
+    EN: Companies
+    JA: __________
+
+[411] Stat 1 — sub
+    EN: have extended offers to academy participants.
+    JA: __________
+
+[412] Stat 2 — label
+    EN: Mentorship
+    JA: __________
+
+[413] Stat 2 — sub
+    EN: with nationally certified Career Consultants.
+    JA: __________
+
+[414] Stat 3 — label
+    EN: Hokkaido Program
+    JA: __________
+
+[415] Stat 3 — sub
+    EN: of consecutive subsidized seminar delivery.
+    JA: __________
+
+[416] Section 2 — eyebrow
+    EN: For educational institutions
+    JA: __________
+
+[417] Section 2 — heading
+    EN: Job Hunting Seminars
+    JA: __________
+
+[418] Section 2 — body
+    EN: By providing job-hunting expertise to universities, vocational schools, and Japanese language schools with large international student populations, we help improve overall employment rates for educational institutions. We have successfully conducted job-hunting seminars for two consecutive years as part of a Hokkaido government subsidy program.
+    JA: __________
+
+[419] Section 2 — image alt
+    EN: Job hunting seminar
+    JA: __________
+
+[420] Photo strip — eyebrow
+    EN: Hokkaido Subsidy Program
+    JA: __________
+
+[421] Photo strip — heading
+    EN: Achievements in Hokkaido Government Subsidized Programs.
+    JA: __________
+
+[422] Photo strip caption
+    EN: Academy mentorship
+    JA: __________
+
+[423] Photo strip caption
+    EN: Group workshop
+    JA: __________
+
+[424] Photo strip caption
+    EN: Career consultation
+    JA: __________
+
+[425] Photo strip caption
+    EN: Institution seminar
+    JA: __________
+
+[426] Photo strip caption
+    EN: October 2025
+    JA: __________
+
+================================================================
+FILE: components/business/CrossSell.tsx
+Route(s): all /business/* pages (chrome)
+================================================================
+
+[427] Cross-sell eyebrow
+    EN: Explore our businesses
+    JA: __________
+
+[428] Cross-sell heading
+    EN: Four practices, one mission.
+    JA: __________
+
+[429] Cross-sell contact CTA
+    EN: Contact us
+    JA: __________
+
+[430] Cross-sell tile CTA
+    EN: Read
+    JA: __________
+
+================================================================
+FILE: components/business/PageShell.tsx
+Route(s): all /business/* pages (chrome data + breadcrumb)
+================================================================
+
+[431] Breadcrumb — brand link
+    EN: Glowing Partner
+    JA: __________
+
+[432] Business tile label — /business/career-counseling
+    EN: Job Hunting Support
+    JA: __________
+
+[433] Business tile label — /business/staffing
+    EN: Temporary Staffing
+    JA: __________
+
+[434] Business tile label — /business/placement
+    EN: Recruitment & Placement
+    JA: __________
+
+[435] Business tile label — /business/ssw-support
+    EN: Specified Skilled Worker Support
+    JA: __________
+
+================================================================
+FILE: components/SearchBar.tsx
+Route(s): /vacancy (chrome)
+================================================================
+
+[436] Search bar section eyebrow
+    EN: FIND YOUR NEXT ROLE
+    JA: __________
+
+[437] Search input placeholder (leading space intentional)
+    EN:  Job title, keyword, skill...
+    JA: __________
+
+[438] Clear-filters button
+    EN: Clear filters
+    JA: __________
+
+[439] City filter — label
+    EN: City
+    JA: __________
+
+[440] City option
+    EN: All cities
+    JA: __________
+
+[441] City option
+    EN: Tokyo
+    JA: __________
+
+[442] City option
+    EN: Osaka
+    JA: __________
+
+[443] City option
+    EN: Kyoto
+    JA: __________
+
+[444] City option
+    EN: Yokohama
+    JA: __________
+
+[445] City option
+    EN: Nagoya
+    JA: __________
+
+[446] City option
+    EN: Sapporo
+    JA: __________
+
+[447] City option
+    EN: Fukuoka
+    JA: __________
+
+[448] City option
+    EN: Kobe
+    JA: __________
+
+[449] City option
+    EN: Hiroshima
+    JA: __________
+
+[450] City option
+    EN: Sendai
+    JA: __________
+
+[451] Experience filter — label
+    EN: Experience
+    JA: __________
+
+[452] Experience option
+    EN: All levels
+    JA: __________
+
+[453] Experience option
+    EN: Entry level
+    JA: __________
+
+[454] Experience option
+    EN: 0-1 years
+    JA: __________
+
+[455] Experience option
+    EN: 2-3 years
+    JA: __________
+
+[456] Experience option
+    EN: 3-4 years
+    JA: __________
+
+[457] Experience option
+    EN: 4-5 years
+    JA: __________
+
+[458] Experience option
+    EN: 5+ years
+    JA: __________
+
+[459] Salary caption prefix (before the range value)
+    EN: Salary range:
+    JA: __________
+
+================================================================
+FILE: components/Filter.tsx
+Route(s): /vacancy (sidebar)
+================================================================
+
+[460] Sidebar heading
+    EN: Filters
+    JA: __________
+
+[461] Working-schedule group label
+    EN: Working schedule
+    JA: __________
+
+[462] Schedule option
+    EN: Full-time
+    JA: __________
+
+[463] Schedule option
+    EN: Part-time
+    JA: __________
+
+[464] Schedule option
+    EN: Contract / Temporary
+    JA: __________
+
+[465] Schedule option
+    EN: Internship
+    JA: __________
+
+[466] Employment-type group label
+    EN: Employment type
+    JA: __________
+
+[467] Employment option
+    EN: 6 days / week
+    JA: __________
+
+[468] Employment option
+    EN: Shift-based
+    JA: __________
+
+[469] Employment option
+    EN: Flexible schedule
+    JA: __________
+
+[470] Employment option
+    EN: 5 days / week
+    JA: __________
+
+================================================================
+FILE: components/Vacancies.tsx
+Route(s): /vacancy — chrome, cards, and modal
+================================================================
+
+[471] Section eyebrow
+    EN: We're hiring
+    JA: __________
+
+[472] Section heading
+    EN: Open Positions
+    JA: __________
+
+[473] Count line — loading
+    EN: Loading…
+    JA: __________
+
+[474] Count line — filtered (uses counts, translate template)
+    EN: {jobs.length} of {totalCount} vacancies match your filters
+    JA: __________
+
+[475] Count line — unfiltered (uses count)
+    EN: {totalCount} vacancies across all departments
+    JA: __________
+
+[476] Loading state text
+    EN: Loading positions…
+    JA: __________
+
+[477] Error state text
+    EN: Failed to load vacancies.
+    JA: __________
+
+[478] Empty state — no vacancies at all
+    EN: No open positions at the moment.
+    JA: __________
+
+[479] Empty state — filters filtered everything out
+    EN: No vacancies match your current filters.
+    JA: __________
+
+[480] Clear filters button (empty state)
+    EN: Clear filters
+    JA: __________
+
+[481] Vacancy card — Apply button
+    EN: Apply Now →
+    JA: __________
+
+[482] Modal — Apply link
+    EN: Apply to this job →
+    JA: __________
+
+[483] Modal info label
+    EN: Location
+    JA: __________
+
+[484] Modal info label
+    EN: Experience
+    JA: __________
+
+[485] Modal info label
+    EN: Posted
+    JA: __________
+
+[486] Modal info label
+    EN: Shift
+    JA: __________
+
+[487] Modal info label
+    EN: Days / week
+    JA: __________
+
+[488] Modal info label
+    EN: Gender
+    JA: __________
+
+[489] Modal salary label
+    EN: Annual Salary
+    JA: __________
+
+[490] Modal — tag section label
+    EN: Languages
+    JA: __________
+
+[491] Modal — tag section label
+    EN: Technical Skills
+    JA: __________
+
+[492] Modal — text section label
+    EN: Soft Skills
+    JA: __________
+
+[493] Modal — text section label
+    EN: Requirements
+    JA: __________
+
+[494] Modal — text section label
+    EN: Benefits
+    JA: __________
+
+[495] Modal — text section label
+    EN: How to Apply
+    JA: __________
+
+[496] Card salary prefix
+    EN: Annual
+    JA: __________
+
+[497] Contract label
+    EN: Full-time
+    JA: __________
+
+[498] Contract label
+    EN: Part-time
+    JA: __________
+
+[499] Contract label
+    EN: Internship
+    JA: __________
+
+[500] Contract label
+    EN: Flexible
+    JA: __________
+
+================================================================
+FILE: app/vacancy/[id]/apply/page.tsx
+Route(s): /vacancy/[id]/apply
+================================================================
+
+[501] Error message — invalid vacancy id
+    EN: Invalid vacancy id.
+    JA: __________
+
+================================================================
+FILE: components/application/ApplicationForm.tsx
+Route(s): /vacancy/[id]/apply
+================================================================
+
+[502] Success screen — heading
+    EN: Application submitted
+    JA: __________
+
+[503] Success screen — body (template with job title)
+    EN: Thank you for applying to {job.title}. We'll be in touch.
+    JA: __________
+
+[504] Success screen — back link
+    EN: Back to vacancies
+    JA: __________
+
+[505] Header — back link
+    EN: Back to vacancies
+    JA: __________
+
+[506] Header eyebrow
+    EN: Apply for this role
+    JA: __________
+
+[507] Header title fallback (when job not loaded)
+    EN: Job application
+    JA: __________
+
+[508] Step indicator — step 1 label
+    EN: Personal
+    JA: __________
+
+[509] Step indicator — step 2 label
+    EN: Status
+    JA: __________
+
+[510] Step indicator — step 3 label
+    EN: Documents
+    JA: __________
+
+[511] Step indicator — step-number prefix
+    EN: Step {N}
+    JA: __________
+
+[512] Step 1 — legend
+    EN: Personal information
+    JA: __________
+
+[513] Field label
+    EN: Full name
+    JA: __________
+
+[514] Field placeholder — full name (Japanese sample name, keep as-is)
+    EN: Yamada Taro
+    JA: __________
+
+[515] Field label
+    EN: Date of birth
+    JA: __________
+
+[516] Field label
+    EN: Gender
+    JA: __________
+
+[517] Select placeholder option
+    EN: Select…
+    JA: __________
+
+[518] Field label
+    EN: Phone number
+    JA: __________
+
+[519] Field placeholder — phone
+    EN: +81 90 1234 5678
+    JA: __________
+
+[520] Field label
+    EN: Email
+    JA: __________
+
+[521] Field placeholder — email
+    EN: you@example.com
+    JA: __________
+
+[522] Field label
+    EN: Country
+    JA: __________
+
+[523] Field placeholder — country
+    EN: Japan
+    JA: __________
+
+[524] Field label
+    EN: Current address
+    JA: __________
+
+[525] Field placeholder — current address
+    EN: Where you currently live
+    JA: __________
+
+[526] Field label
+    EN: Permanent address
+    JA: __________
+
+[527] Field placeholder — permanent address
+    EN: Your permanent / home address
+    JA: __________
+
+[528] Field label
+    EN: Facebook URL (optional)
+    JA: __________
+
+[529] Field placeholder — facebook URL (do not translate URL)
+    EN: https://facebook.com/your.profile
+    JA: __________
+
+[530] Step 2 — legend
+    EN: Status & schedule
+    JA: __________
+
+[531] Field label
+    EN: Nearest station
+    JA: __________
+
+[532] Field placeholder — nearest station
+    EN: e.g. Shinjuku
+    JA: __________
+
+[533] Field label
+    EN: Residence status
+    JA: __________
+
+[534] Field label
+    EN: Japanese ability
+    JA: __________
+
+[535] Field label
+    EN: Preferred work location
+    JA: __________
+
+[536] Field placeholder — preferred location
+    EN: e.g. Tokyo, Yokohama, Remote
+    JA: __________
+
+[537] Field label
+    EN: Availability
+    JA: __________
+
+[538] Field label
+    EN: School / college
+    JA: __________
+
+[539] Field placeholder — school
+    EN: University of Tokyo
+    JA: __________
+
+[540] Field label
+    EN: Degree
+    JA: __________
+
+[541] Field placeholder — degree
+    EN: B.Sc. Computer Science
+    JA: __________
+
+[542] Field label
+    EN: Available working days
+    JA: __________
+
+[543] Step 3 — legend
+    EN: Documents & review
+    JA: __________
+
+[544] Field label
+    EN: Soft skills
+    JA: __________
+
+[545] Field placeholder — soft skills
+    EN: e.g. Communication, teamwork, problem solving
+    JA: __________
+
+[546] Field label
+    EN: Cover letter (optional)
+    JA: __________
+
+[547] Field placeholder — cover letter
+    EN: Tell us why you're a good fit…
+    JA: __________
+
+[548] Resume field label
+    EN: Resume (PDF / DOC / DOCX, ≤ 5 MB)
+    JA: __________
+
+[549] Resume upload prompt
+    EN: Click to choose a file
+    JA: __________
+
+[550] Summary — section label
+    EN: Review
+    JA: __________
+
+[551] Summary row label
+    EN: Name
+    JA: __________
+
+[552] Summary row label
+    EN: Date of birth
+    JA: __________
+
+[553] Summary row label
+    EN: Phone
+    JA: __________
+
+[554] Summary row label
+    EN: Email
+    JA: __________
+
+[555] Summary row label
+    EN: Gender
+    JA: __________
+
+[556] Summary row label
+    EN: Country
+    JA: __________
+
+[557] Summary row label
+    EN: Current address
+    JA: __________
+
+[558] Summary row label
+    EN: Permanent address
+    JA: __________
+
+[559] Summary row label
+    EN: Nearest station
+    JA: __________
+
+[560] Summary row label
+    EN: Residence
+    JA: __________
+
+[561] Summary row label
+    EN: Japanese
+    JA: __________
+
+[562] Summary row label
+    EN: Preferred location
+    JA: __________
+
+[563] Summary row label
+    EN: Availability
+    JA: __________
+
+[564] Summary row label
+    EN: School / college
+    JA: __________
+
+[565] Summary row label
+    EN: Degree
+    JA: __________
+
+[566] Summary row label
+    EN: Working days
+    JA: __________
+
+[567] Nav button — back
+    EN: Back
+    JA: __________
+
+[568] Nav button — next
+    EN: Next
+    JA: __________
+
+[569] Nav button — submit (idle)
+    EN: Submit application
+    JA: __________
+
+[570] Nav button — submit (pending)
+    EN: Submitting…
+    JA: __________
+
+[571] Resume error — bad mimetype
+    EN: Only PDF, DOC, or DOCX files are allowed.
+    JA: __________
+
+[572] Resume error — too large
+    EN: File must be 5 MB or smaller.
+    JA: __________
+
+[573] Runtime error — resume upload failed
+    EN: Resume upload failed. Please contact support.
+    JA: __________
+
+[574] Runtime error — application post failed (fallback)
+    EN: Failed to submit application
+    JA: __________
+
+================================================================
+FILE: app/contact/company/page.tsx
+Route(s): /contact/company
+================================================================
+
+[575] Success screen — heading
+    EN: Inquiry submitted
+    JA: __________
+
+[576] Success screen — body
+    EN: Thank you for reaching out. We'll get back to you as soon as possible.
+    JA: __________
+
+[577] Success screen — back link
+    EN: Back to home
+    JA: __________
+
+[578] Header — back link
+    EN: Back to home
+    JA: __________
+
+[579] Hero — pill / badge
+    EN: Business inquiry
+    JA: __________
+
+[580] alt attr — hero image
+    EN: Hiring partners
+    JA: __________
+
+[581] Hero — headline
+    EN: Hire candidates who actually fit.
+    JA: __________
+
+[582] Hero — subcopy
+    EN: Tell us what you're looking for and we'll match you with vetted talent from our network.
+    JA: __________
+
+[583] Value prop 1 — title
+    EN: Pre-screened candidates
+    JA: __________
+
+[584] Value prop 1 — description
+    EN: Every profile goes through interview and background checks.
+    JA: __________
+
+[585] Value prop 2 — title
+    EN: Multilingual talent pool
+    JA: __________
+
+[586] Value prop 2 — description
+    EN: Bilingual JP/EN candidates across engineering, sales, and ops.
+    JA: __________
+
+[587] Value prop 3 — title
+    EN: Responsive support
+    JA: __________
+
+[588] Value prop 3 — description
+    EN: Dedicated account manager from first call to placement.
+    JA: __________
+
+[589] Sidebar address
+    EN: 6th Floor, 2-36-1 Ikebukuro, Toshima City, Tokyo 171-0014, Japan
+    JA: __________
+
+[590] Form — legend
+    EN: Your details
+    JA: __________
+
+[591] Field label
+    EN: Company / Contact name
+    JA: __________
+
+[592] Field placeholder — company name (sample brand)
+    EN: Acme Corp
+    JA: __________
+
+[593] Field label
+    EN: Email
+    JA: __________
+
+[594] Field placeholder — email
+    EN: contact@company.com
+    JA: __________
+
+[595] Field label
+    EN: Phone number
+    JA: __________
+
+[596] Field placeholder — phone
+    EN: +81 3 1234 5678
+    JA: __________
+
+[597] Field label
+    EN: Subject
+    JA: __________
+
+[598] Field placeholder — subject
+    EN: What is this inquiry about?
+    JA: __________
+
+[599] Field label
+    EN: Message
+    JA: __________
+
+[600] Field placeholder — message
+    EN: Tell us about your hiring needs…
+    JA: __________
+
+[601] Submit button — pending
+    EN: Sending…
+    JA: __________
+
+[602] Submit button — idle
+    EN: Send inquiry
+    JA: __________
+
+[603] Runtime error fallback
+    EN: Submission failed
+    JA: __________
+
+================================================================
+FILE: app/contact/customer/page.tsx
+Route(s): /contact/customer
+================================================================
+
+[604] Step indicator — step 1 label
+    EN: Personal info
+    JA: __________
+
+[605] Step indicator — step 2 label
+    EN: Preferences & resume
+    JA: __________
+
+[606] Success screen — heading
+    EN: Submission received
+    JA: __________
+
+[607] Success screen — body
+    EN: Thank you for your interest. We'll review your profile and reach out if there's a match.
+    JA: __________
+
+[608] Success screen — CTA
+    EN: Browse vacancies
+    JA: __________
+
+[609] Header — back link
+    EN: Back to home
+    JA: __________
+
+[610] Hero pill / badge
+    EN: Job seeker inquiry
+    JA: __________
+
+[611] alt attr — hero image
+    EN: Job seekers
+    JA: __________
+
+[612] Hero — headline
+    EN: Let's find the role that fits you.
+    JA: __________
+
+[613] Hero — subcopy
+    EN: Share your profile — we'll reach out the moment we have something worth your time.
+    JA: __________
+
+[614] Stat 1 — value
+    EN: 500+
+    JA: __________
+
+[615] Stat 1 — label
+    EN: Candidates placed
+    JA: __________
+
+[616] Stat 2 — value
+    EN: 120+
+    JA: __________
+
+[617] Stat 2 — label
+    EN: Hiring partners
+    JA: __________
+
+[618] Stat 3 — value
+    EN: 48h
+    JA: __________
+
+[619] Stat 3 — label
+    EN: Avg. response
+    JA: __________
+
+[620] Sidebar address
+    EN: 6th Floor, 2-36-1 Ikebukuro, Toshima City, Tokyo 171-0014, Japan
+    JA: __________
+
+[621] Step 1 legend
+    EN: Personal information
+    JA: __________
+
+[622] Field label
+    EN: Full name
+    JA: __________
+
+[623] Field placeholder — full name
+    EN: Yamada Taro
+    JA: __________
+
+[624] Field label
+    EN: Email
+    JA: __________
+
+[625] Field placeholder — email
+    EN: you@example.com
+    JA: __________
+
+[626] Field label
+    EN: Phone number
+    JA: __________
+
+[627] Field placeholder — phone
+    EN: +81 90 1234 5678
+    JA: __________
+
+[628] Field label
+    EN: Date of birth
+    JA: __________
+
+[629] Field label
+    EN: Gender (optional)
+    JA: __________
+
+[630] Select placeholder
+    EN: Select…
+    JA: __________
+
+[631] Field label
+    EN: Current address
+    JA: __________
+
+[632] Field placeholder — current address
+    EN: Where you currently live
+    JA: __________
+
+[633] Nav button — next
+    EN: Next
+    JA: __________
+
+[634] Step 2 legend
+    EN: Preferences & resume
+    JA: __________
+
+[635] Field label
+    EN: Preferred work location
+    JA: __________
+
+[636] Field placeholder — preferred location
+    EN: e.g. Tokyo, Osaka
+    JA: __________
+
+[637] Field label
+    EN: Residence status (optional)
+    JA: __________
+
+[638] Field label
+    EN: Japanese ability (optional)
+    JA: __________
+
+[639] Field label
+    EN: Cover letter (optional)
+    JA: __________
+
+[640] Field placeholder — cover letter
+    EN: Tell us about yourself and what you're looking for…
+    JA: __________
+
+[641] Resume upload — field label
+    EN: Resume (PDF, DOC, DOCX — max 5 MB)
+    JA: __________
+
+[642] Resume upload — prompt
+    EN: Click to upload resume
+    JA: __________
+
+[643] Nav button — back
+    EN: Back
+    JA: __________
+
+[644] Submit button — pending
+    EN: Submitting…
+    JA: __________
+
+[645] Submit button — idle
+    EN: Submit profile
+    JA: __________
+
+[646] Resume error — bad mimetype
+    EN: Only PDF, DOC, or DOCX files are allowed.
+    JA: __________
+
+[647] Resume error — too large
+    EN: File must be 5 MB or smaller.
+    JA: __________
+
+[648] Runtime error — resume upload failed
+    EN: Resume upload failed. Please try again.
+    JA: __________
+
+[649] Runtime error fallback
+    EN: Submission failed
+    JA: __________
+
+================================================================
+FILE: components/news/News.tsx
+Route(s): / (home — Top News section)
+================================================================
+
+[650] Section heading
+    EN: Top News
+    JA: __________
+
+[651] Loading state
+    EN: Loading news...
+    JA: __________
+
+[652] Error state
+    EN: Failed to load news.
+    JA: __________
+
+[653] Empty state
+    EN: No news published yet.
+    JA: __________
+
+[654] More-news button
+    EN: More News
+    JA: __________
+
+================================================================
+FILE: app/news/page.tsx
+Route(s): /news (chrome only — article body text is dynamic from DB)
+================================================================
+
+[655] Loading fallback (suspense + query)
+    EN: Loading...
+    JA: __________
+
+[656] Error state
+    EN: Failed to load news.
+    JA: __________
+
+[657] Empty state
+    EN: No news published yet.
+    JA: __________
+
+[658] Header pill / badge
+    EN: The Glowing Partner journal
+    JA: __________
+
+[659] Page heading (period kept as separate span for styling)
+    EN: News.
+    JA: __________
+
+[660] Page subtitle
+    EN: Updates, hiring milestones, and stories from across our network.
+    JA: __________
+
+[661] Header stat label
+    EN: Stories published
+    JA: __________
+
+[662] Right column — list header
+    EN: Latest stories
+    JA: __________
+
+[663] Right column — total count suffix (template)
+    EN: {N} total
+    JA: __________
+
+[664] Featured-story badge on article detail
+    EN: Featured story
+    JA: __________
+
+[665] Reading-time template (dynamic minutes)
+    EN: {minutes} min read
+    JA: __________
+
+================================================================
+FILE: schemas/application.schemas.ts
+Route(s): validation messages + enum labels for application form
+================================================================
+
+[666] Gender option label
+    EN: Male
+    JA: __________
+
+[667] Gender option label
+    EN: Female
+    JA: __________
+
+[668] Gender option label
+    EN: Other
+    JA: __________
+
+[669] JLPT option
+    EN: N1
+    JA: __________
+
+[670] JLPT option
+    EN: N2
+    JA: __________
+
+[671] JLPT option
+    EN: N3
+    JA: __________
+
+[672] JLPT option
+    EN: N4
+    JA: __________
+
+[673] JLPT option
+    EN: N5
+    JA: __________
+
+[674] Japanese ability — none
+    EN: None
+    JA: __________
+
+[675] Weekday option
+    EN: Monday
+    JA: __________
+
+[676] Weekday option
+    EN: Tuesday
+    JA: __________
+
+[677] Weekday option
+    EN: Wednesday
+    JA: __________
+
+[678] Weekday option
+    EN: Thursday
+    JA: __________
+
+[679] Weekday option
+    EN: Friday
+    JA: __________
+
+[680] Weekday option
+    EN: Saturday
+    JA: __________
+
+[681] Weekday option
+    EN: Sunday
+    JA: __________
+
+[682] Zod validation — required
+    EN: Full name is required
+    JA: __________
+
+[683] Zod validation — required
+    EN: Date of birth is required
+    JA: __________
+
+[684] Zod validation — format
+    EN: Date must be in YYYY-MM-DD format
+    JA: __________
+
+[685] Zod validation — required
+    EN: Phone number is required
+    JA: __________
+
+[686] Zod validation — format
+    EN: Enter a valid email
+    JA: __________
+
+[687] Zod validation — enum
+    EN: Select a gender
+    JA: __________
+
+[688] Zod validation — URL
+    EN: Enter a valid URL
+    JA: __________
+
+[689] Zod validation — required
+    EN: Country is required
+    JA: __________
+
+[690] Zod validation — required
+    EN: Nearest station is required
+    JA: __________
+
+[691] Zod validation — enum
+    EN: Select your residence status
+    JA: __________
+
+[692] Zod validation — enum
+    EN: Select your Japanese ability
+    JA: __________
+
+[693] Zod validation — array min
+    EN: Pick at least one day
+    JA: __________
+
+[694] Zod validation — required
+    EN: Current address is required
+    JA: __________
+
+[695] Zod validation — required
+    EN: Permanent address is required
+    JA: __________
+
+[696] Zod validation — required
+    EN: Preferred location is required
+    JA: __________
+
+[697] Zod validation — enum
+    EN: Select your availability
+    JA: __________
+
+[698] Zod validation — required
+    EN: School or college is required
+    JA: __________
+
+[699] Zod validation — required
+    EN: Degree is required
+    JA: __________
+
+[700] Zod validation — required
+    EN: Soft skills are required
+    JA: __________
+
+[701] Zod validation — required
+    EN: Resume is required
+    JA: __________
+
+[702] Zod validation — required
+    EN: Resume type is required
+    JA: __________
+
+[703] Residence status label
+    EN: Permanent Resident
+    JA: __________
+
+[704] Residence status label
+    EN: Work Visa
+    JA: __________
+
+[705] Residence status label
+    EN: Student Visa
+    JA: __________
+
+[706] Residence status label
+    EN: Spouse Visa
+    JA: __________
+
+[707] Residence status label
+    EN: Other
+    JA: __________
+
+[708] Contract label
+    EN: Full-time
+    JA: __________
+
+[709] Contract label
+    EN: Part-time
+    JA: __________
+
+[710] Contract label
+    EN: Internship
+    JA: __________
+
+[711] Contract label
+    EN: Flexible
+    JA: __________
+
+================================================================
+FILE: schemas/contact.schemas.ts
+Route(s): validation messages for company + candidate inquiry forms
+================================================================
+
+[712] Zod validation — required
+    EN: Name is required
+    JA: __________
+
+[713] Zod validation — format
+    EN: Enter a valid email
+    JA: __________
+
+[714] Zod validation — required
+    EN: Phone number is required
+    JA: __________
+
+[715] Zod validation — required
+    EN: Subject is required
+    JA: __________
+
+[716] Zod validation — max length
+    EN: Subject must be 255 characters or fewer
+    JA: __________
+
+[717] Zod validation — required
+    EN: Message is required
+    JA: __________
+
+[718] Zod validation — required
+    EN: Full name is required
+    JA: __________
+
+[719] Zod validation — required
+    EN: Date of birth is required
+    JA: __________
+
+[720] Zod validation — format
+    EN: Date must be in YYYY-MM-DD format
+    JA: __________
+
+[721] Zod validation — required
+    EN: Current address is required
+    JA: __________
+
+[722] Zod validation — required
+    EN: Preferred location is required
+    JA: __________
+
+[723] Zod validation — required
+    EN: Resume is required
+    JA: __________
+
+================================================================
+END OF CATALOG — 723 entries total
+================================================================
