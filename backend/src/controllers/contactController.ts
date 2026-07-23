@@ -76,7 +76,7 @@ export const deleteCompanyInquiry = async (req: Request, res: Response, next: Ne
 
 export const getContactStats = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const stats = await fetchContactStats();
+    const stats = await fetchContactStats(req.admin!.id);
     res
       .status(200)
       .json({ message: "Contact stats fetched successfully", data: stats });

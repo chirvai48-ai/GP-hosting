@@ -7,6 +7,7 @@ import {
   patchApplication as patchApplicationService,
   fetchTalentPool,
   fetchApplicationStats,
+  fetchNewApplicationCountsByJob,
 } from "../services/application.service";
 import {
   fetchApplicationForResume,
@@ -59,8 +60,17 @@ export const getTalentPool = async (req: Request, res: Response, next: NextFunct
 
 export const getApplicationStats = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const stats = await fetchApplicationStats();
+    const stats = await fetchApplicationStats(req.admin!.id);
     res.status(200).json({ message: "Application stats fetched successfully", data: stats });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getNewApplicationCountsByJob = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const counts = await fetchNewApplicationCountsByJob(req.admin!.id);
+    res.status(200).json({ message: "New application counts fetched successfully", data: counts });
   } catch (err) {
     next(err);
   }

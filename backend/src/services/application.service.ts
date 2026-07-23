@@ -121,12 +121,18 @@ export const cleanupRejectedApplications = async () => {
   return stale.length;
 };
 
-export const fetchApplicationStats = async () => {
+export const fetchApplicationStats = async (adminId: string) => {
   const now = new Date();
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
   const trendCutoff = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
 
-  const [stageGroups, talentPoolCount, hiredThisMonth, totalApplications, recentApplications] =
+  const admin = await prisma.admin.findUnique({
+    where: { id: adminId },
+    select: { lastSeenApplicationsAt: true },
+  });
+  const lastSeenApplicationsAt = admin?.lastSeenApplicationsAt ?? new Date(0);
+
+  const [stageGroups, talentPoolCount, hiredThisMonth, totalApplications, recentApplications, newApplicationsCount] =
     await Promise.all([
       prisma.application.groupBy({
         by: ["stage"],
@@ -139,6 +145,9 @@ export const fetchApplicationStats = async () => {
       prisma.application.findMany({
         where: { created_at: { gte: trendCutoff } },
         select: { created_at: true },
+      }),
+      prisma.application.count({
+        where: { status: { not: "TalentPool" }, created_at: { gt: lastSeenApplicationsAt } },
       }),
     ]);
 
@@ -160,10 +169,27 @@ export const fetchApplicationStats = async () => {
     talentPoolCount,
     hiredThisMonth,
     totalApplications,
+    newApplicationsCount,
     weeklyTrend: Object.entries(weeklyTrend)
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([weekStart, count]) => ({ weekStart, count })),
   };
+};
+
+export const fetchNewApplicationCountsByJob = async (adminId: string) => {
+  const admin = await prisma.admin.findUnique({
+    where: { id: adminId },
+    select: { lastSeenApplicationsAt: true },
+  });
+  const lastSeenApplicationsAt = admin?.lastSeenApplicationsAt ?? new Date(0);
+
+  const groups = await prisma.application.groupBy({
+    by: ["job_id"],
+    _count: true,
+    where: { status: { not: "TalentPool" }, created_at: { gt: lastSeenApplicationsAt } },
+  });
+
+  return Object.fromEntries(groups.map((g) => [g.job_id, g._count])) as Record<number, number>;
 };
 
 export const removeApplication = async (id: number) => {

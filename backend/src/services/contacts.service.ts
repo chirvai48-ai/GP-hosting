@@ -119,14 +119,33 @@ export const patchCandidateInquiry = async (id: number, data: updateCandidateInq
   });
 };
 
-export const fetchContactStats = async () => {
-  const [openContactRequests, newCandidateInquiries, movedToTalentPool] = await Promise.all([
+export const fetchContactStats = async (adminId: string) => {
+  const admin = await prisma.admin.findUnique({
+    where: { id: adminId },
+    select: { lastSeenMessagesAt: true },
+  });
+  const lastSeenMessagesAt = admin?.lastSeenMessagesAt ?? new Date(0);
+
+  const [
+    openContactRequests,
+    newCandidateInquiries,
+    movedToTalentPool,
+    newCompanyMessages,
+    newCandidateMessages,
+  ] = await Promise.all([
     prisma.contactRequest.count({ where: { status: "Open" } }),
     prisma.candidateInquiry.count({ where: { state: "New" } }),
     prisma.candidateInquiry.count({ where: { state: "MovedToTalentPool" } }),
+    prisma.contactRequest.count({ where: { created_at: { gt: lastSeenMessagesAt } } }),
+    prisma.candidateInquiry.count({ where: { created_at: { gt: lastSeenMessagesAt } } }),
   ]);
 
-  return { openContactRequests, newCandidateInquiries, movedToTalentPool };
+  return {
+    openContactRequests,
+    newCandidateInquiries,
+    movedToTalentPool,
+    newMessagesCount: newCompanyMessages + newCandidateMessages,
+  };
 };
 
 export const removeCandidateInquiry = async (id: number) => {

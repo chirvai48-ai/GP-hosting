@@ -7,6 +7,7 @@ import {
   deleteApplication,
   getTalentPool,
   getApplicationStats,
+  getNewApplicationCountsByJob,
   exportResume,
 } from "../controllers/applicationController";
 import { validateCreate, validateUpdate } from "../middlewares/validate";
@@ -20,6 +21,7 @@ applicationRouter.post("/", validateCreate(createApplicationSchema), postApplica
 applicationRouter.get("/", requireAuth, getApplications);
 applicationRouter.get("/talent-pool", requireAuth, getTalentPool);
 applicationRouter.get("/stats", requireAuth, getApplicationStats);
+applicationRouter.get("/new-counts-by-job", requireAuth, getNewApplicationCountsByJob);
 applicationRouter.get("/:id/resume.xlsx", requireAuth, exportResume);
 applicationRouter.get("/:id", requireAuth, getApplicationById);
 applicationRouter.patch("/:id", requireAuth, validateUpdate(updateApplicationSchema), patchApplication);
