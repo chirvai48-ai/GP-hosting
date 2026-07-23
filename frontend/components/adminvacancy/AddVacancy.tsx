@@ -11,6 +11,7 @@ import React from "react";
 import { JobPostingForm1, JobPostingForm2, JobPostingForm3 } from "./Forms";
 import { FieldErrors } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { adminFetch } from "@/lib/adminFetch";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -51,7 +52,7 @@ function AddVacancy() {
   const queryClient = useQueryClient();
 
   const createJob = async (formData: CreateJobForm) => {
-    const res = await fetch(`${API_URL}/api/jobs`, {
+    const res = await adminFetch(`${API_URL}/api/jobs`, {
       method: "POST",
       body: JSON.stringify(formData),
       headers: { "Content-Type": "application/json" },

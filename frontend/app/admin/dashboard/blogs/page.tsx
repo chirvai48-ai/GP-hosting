@@ -10,19 +10,20 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import { useState, useRef } from "react";
+import { adminFetch } from "@/lib/adminFetch";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const columnHelper = createColumnHelper<News>();
 
 async function getNews(): Promise<NewsResponse> {
-  const res = await fetch(`${API_URL}/api/news`);
+  const res = await adminFetch(`${API_URL}/api/news`);
   if (!res.ok) throw new Error("Failed to fetch news");
   return res.json();
 }
 
 async function patchNews({ id, data }: { id: number; data: Partial<News> }) {
-  const res = await fetch(`${API_URL}/api/news/${id}`, {
+  const res = await adminFetch(`${API_URL}/api/news/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -32,7 +33,7 @@ async function patchNews({ id, data }: { id: number; data: Partial<News> }) {
 }
 
 async function deleteNews(id: number) {
-  const res = await fetch(`${API_URL}/api/news/${id}`, { method: "DELETE" });
+  const res = await adminFetch(`${API_URL}/api/news/${id}`, { method: "DELETE" });
   if (!res.ok) throw new Error("Failed to delete article");
   return res.json();
 }

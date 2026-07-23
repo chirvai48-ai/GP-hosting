@@ -5,6 +5,7 @@ import { Modal, Box } from "@mui/material";
 import { X, Trash2 } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { CompanyInquiry, ContactStatus } from "@/types/table";
+import { adminFetch } from "@/lib/adminFetch";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -32,7 +33,7 @@ function FieldRow({ label, value }: { label: string; value: React.ReactNode }) {
 }
 
 async function patchStatus(id: number, status: ContactStatus) {
-  const res = await fetch(`${API_URL}/api/contacts/company-inquiries/${id}`, {
+  const res = await adminFetch(`${API_URL}/api/contacts/company-inquiries/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ status }),
@@ -42,7 +43,7 @@ async function patchStatus(id: number, status: ContactStatus) {
 }
 
 async function deleteInquiry(id: number) {
-  const res = await fetch(`${API_URL}/api/contacts/company-inquiries/${id}`, {
+  const res = await adminFetch(`${API_URL}/api/contacts/company-inquiries/${id}`, {
     method: "DELETE",
   });
   if (!res.ok) throw new Error("Failed to delete inquiry");

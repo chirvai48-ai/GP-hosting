@@ -17,6 +17,7 @@ import type {
   ContactStatus,
   CandidateInquiryState,
 } from "@/types/table";
+import { adminFetch } from "@/lib/adminFetch";
 
 const CompanyInquiryDetailModal = dynamic(
   () => import("@/components/admincontact/CompanyInquiryDetailModal"),
@@ -58,13 +59,13 @@ const CANDIDATE_STATE_LABELS: Record<CandidateInquiryState, string> = {
 // ── Fetch functions ───────────────────────────────────────────────────────────
 
 async function fetchCompanyInquiries(): Promise<CompanyInquiriesResponse> {
-  const res = await fetch(`${API_URL}/api/contacts/company-inquiries`);
+  const res = await adminFetch(`${API_URL}/api/contacts/company-inquiries`);
   if (!res.ok) throw new Error("Failed to load company inquiries");
   return res.json();
 }
 
 async function fetchCandidateInquiries(): Promise<CandidateInquiriesResponse> {
-  const res = await fetch(`${API_URL}/api/contacts/candidate-inquiries`);
+  const res = await adminFetch(`${API_URL}/api/contacts/candidate-inquiries`);
   if (!res.ok) throw new Error("Failed to load candidate submissions");
   return res.json();
 }

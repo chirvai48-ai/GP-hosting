@@ -8,6 +8,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "@/lib/auth-client";
 import { createNewsSchema, CreateNewsForm } from "@/schemas/news.schemas";
 import { ImageUpload } from "../Reusables/Reusables";
+import { adminFetch } from "@/lib/adminFetch";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -17,7 +18,7 @@ const labelCls =
   "text-[0.7rem] tracking-widest uppercase text-[var(--color-on-surface-variant)] font-medium";
 
 async function postNews(data: CreateNewsForm) {
-  const res = await fetch(`${API_URL}/api/news`, {
+  const res = await adminFetch(`${API_URL}/api/news`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

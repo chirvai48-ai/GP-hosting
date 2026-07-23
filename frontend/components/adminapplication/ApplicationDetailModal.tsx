@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Application, ApplicationStatus, ApplicationStage } from "@/types/table";
 import NotesPanel from "./NotesPanel";
 import EditApplicationForm from "./EditApplicationForm";
+import { adminFetch } from "@/lib/adminFetch";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -17,7 +18,7 @@ async function patchApplication({
   id: number;
   changes: Partial<{ status: ApplicationStatus; stage: ApplicationStage }>;
 }) {
-  const res = await fetch(`${API_URL}/api/applications/${id}`, {
+  const res = await adminFetch(`${API_URL}/api/applications/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(changes),
@@ -286,7 +287,7 @@ export default function ApplicationDetailModal({
                   <Pencil size={12} /> Edit
                 </button>
                 <a
-                  href={`${API_URL}/api/applications/${application.id}/resume.docx`}
+                  href={`${API_URL}/api/applications/${application.id}/resume.xlsx`}
                   className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded border border-[var(--color-primary)] text-[var(--color-primary)] font-[var(--font-label)] hover:bg-[var(--color-primary)] hover:text-white"
                 >
                   <FileDown size={12} /> Export resume

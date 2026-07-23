@@ -18,6 +18,7 @@ import type {
   CandidateInquiriesResponse,
   JapaneseAbility,
 } from "@/types/table";
+import { adminFetch } from "@/lib/adminFetch";
 
 const ApplicationDetailModal = dynamic(
   () => import("@/components/adminapplication/ApplicationDetailModal"),
@@ -131,13 +132,13 @@ async function fetchTalentPool(filters: Filters): Promise<ApplicationsResponse> 
   if (filters.japaneseAbility) params.set("japanese_ability", filters.japaneseAbility);
   if (filters.jobCategory) params.set("job_category", filters.jobCategory);
   const qs = params.toString();
-  const res = await fetch(`${API_URL}/api/applications/talent-pool${qs ? `?${qs}` : ""}`);
+  const res = await adminFetch(`${API_URL}/api/applications/talent-pool${qs ? `?${qs}` : ""}`);
   if (!res.ok) throw new Error("Failed to load talent pool");
   return res.json();
 }
 
 async function fetchCandidateTalentPool(): Promise<CandidateInquiriesResponse> {
-  const res = await fetch(`${API_URL}/api/contacts/candidate-inquiries/talent-pool`);
+  const res = await adminFetch(`${API_URL}/api/contacts/candidate-inquiries/talent-pool`);
   if (!res.ok) throw new Error("Failed to load candidate submissions");
   return res.json();
 }

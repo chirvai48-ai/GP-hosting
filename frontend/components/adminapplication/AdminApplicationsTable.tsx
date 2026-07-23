@@ -18,6 +18,7 @@ import type {
   ApplicationStatus,
   Job,
 } from "@/types/table";
+import { adminFetch } from "@/lib/adminFetch";
 
 const ApplicationDetailModal = dynamic(() => import("./ApplicationDetailModal"), {
   ssr: false,
@@ -80,13 +81,13 @@ const RESIDENCE_LABELS: Record<string, string> = {
 };
 
 async function fetchApplications(jobId: number): Promise<ApplicationsResponse> {
-  const res = await fetch(`${API_URL}/api/applications?job_id=${jobId}`);
+  const res = await adminFetch(`${API_URL}/api/applications?job_id=${jobId}`);
   if (!res.ok) throw new Error("Failed to load applications");
   return res.json();
 }
 
 async function fetchJob(id: number): Promise<Job | null> {
-  const res = await fetch(`${API_URL}/api/jobs/${id}`);
+  const res = await adminFetch(`${API_URL}/api/jobs/${id}`);
   if (!res.ok) return null;
   const json = await res.json();
   return (json?.data ?? null) as Job | null;
@@ -99,7 +100,7 @@ async function patchApplication({
   id: number;
   changes: Partial<{ stage: ApplicationStage; status: ApplicationStatus }>;
 }) {
-  const res = await fetch(`${API_URL}/api/applications/${id}`, {
+  const res = await adminFetch(`${API_URL}/api/applications/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(changes),
@@ -112,7 +113,7 @@ async function patchApplication({
 }
 
 async function deleteApplication(id: number) {
-  const res = await fetch(`${API_URL}/api/applications/${id}`, { method: "DELETE" });
+  const res = await adminFetch(`${API_URL}/api/applications/${id}`, { method: "DELETE" });
   if (!res.ok) throw new Error("Failed to delete application");
   return res.json();
 }

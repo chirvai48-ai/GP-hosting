@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,6 +12,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import {
@@ -21,9 +22,11 @@ import {
   Mail,
   Newspaper,
   LayoutDashboard,
-  ChevronRight,
+  LogOut,
+  Settings,
   Users,
 } from "lucide-react";
+import { authClient, useSession } from "@/lib/auth-client";
 
 const drawerWidth = 240;
 
@@ -84,12 +87,38 @@ const NAV_SECTIONS = [
       },
     ],
   },
+  {
+    label: "Admin",
+    items: [
+      {
+        text: "Settings",
+        icon: <Settings size={16} />,
+        badge: null,
+        href: "/admin/dashboard/settings",
+      },
+    ],
+  },
 ];
 
 export default function ResponsiveDrawer() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const { data: session } = useSession();
+
+  const userEmail = session?.user?.email ?? "";
+  const userName = session?.user?.name ?? userEmail.split("@")[0];
+  const userInitials = userName
+    .split(/[\s.@_-]+/)
+    .slice(0, 2)
+    .map((p: string) => p[0]?.toUpperCase() ?? "")
+    .join("") || "AD";
+
+  const handleLogout = async () => {
+    await authClient.signOut();
+    router.replace("/admin/login");
+  };
   const activeItem = React.useMemo(() => {
     for (const section of NAV_SECTIONS) {
       for (const item of section.items) {
@@ -298,12 +327,14 @@ export default function ResponsiveDrawer() {
               fontFamily: "var(--font-label)",
               color: "white",
               flexShrink: 0,
+              textTransform: "uppercase",
             }}
           >
-            AD
+            {userInitials}
           </Box>
           <Box sx={{ flex: 1, minWidth: 0 }}>
             <Typography
+              noWrap
               sx={{
                 fontFamily: "var(--font-label)",
                 fontSize: "0.75rem",
@@ -312,9 +343,10 @@ export default function ResponsiveDrawer() {
                 lineHeight: 1.2,
               }}
             >
-              Admin
+              {userName}
             </Typography>
             <Typography
+              noWrap
               sx={{
                 fontFamily: "var(--font-label)",
                 fontSize: "0.625rem",
@@ -322,10 +354,23 @@ export default function ResponsiveDrawer() {
                 lineHeight: 1.2,
               }}
             >
-              Super Admin
+              {userEmail}
             </Typography>
           </Box>
-          <ChevronRight size={14} color="rgba(255,255,255,0.4)" />
+          <Tooltip title="Sign out" placement="top">
+            <IconButton
+              size="small"
+              onClick={handleLogout}
+              aria-label="Sign out"
+              sx={{
+                color: "rgba(255,255,255,0.5)",
+                "&:hover": { color: "white", backgroundColor: "rgba(255,255,255,0.1)" },
+                flexShrink: 0,
+              }}
+            >
+              <LogOut size={14} />
+            </IconButton>
+          </Tooltip>
         </Box>
       </Box>
     </Box>

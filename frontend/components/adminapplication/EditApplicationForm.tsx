@@ -17,6 +17,7 @@ import {
   APPLICATION_STATUS_OPTIONS,
 } from "@/schemas/application.schemas";
 import type { Application } from "@/types/table";
+import { adminFetch } from "@/lib/adminFetch";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -69,7 +70,7 @@ async function patchApplication({
   id: number;
   body: Partial<EditValues>;
 }) {
-  const res = await fetch(`${API_URL}/api/applications/${id}`, {
+  const res = await adminFetch(`${API_URL}/api/applications/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),

@@ -10,6 +10,7 @@ import {
 } from "@tanstack/react-table";
 import { useState } from "react";
 import AddVacancy from "@/components/adminvacancy/AddVacancy";
+import { adminFetch } from "@/lib/adminFetch";
 
 type transformedData = Partial<Job> & {
   job_category?:string,
@@ -35,13 +36,13 @@ const TransformData = (updatedFields:Partial<Job> | null) => ({
 const columnHelper = createColumnHelper<Job>();
 
 async function getJobs(): Promise<JobsResponse> {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jobs`);
+  const response = await adminFetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jobs`);
   if (!response.ok) throw new Error("Network response was not ok");
   return response.json();
 }
 
 async function patchJobs({id,data}:{id:number,data:Partial<Job>}) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jobs/${id}`,
+  const response = await adminFetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jobs/${id}`,
     {
       method:'PATCH',
       headers:{
@@ -55,7 +56,7 @@ async function patchJobs({id,data}:{id:number,data:Partial<Job>}) {
 }
 
 async function deleteJob(id: number) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jobs/${id}`, {
+  const response = await adminFetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jobs/${id}`, {
     method: 'DELETE',
   });
   if (!response.ok) throw new Error("Network response was not ok");

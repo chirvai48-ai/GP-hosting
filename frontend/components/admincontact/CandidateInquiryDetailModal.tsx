@@ -5,6 +5,7 @@ import { Modal, Box } from "@mui/material";
 import { X, ExternalLink, Archive, XCircle, Eye, Trash2 } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { CandidateInquiry, CandidateInquiryState } from "@/types/table";
+import { adminFetch } from "@/lib/adminFetch";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -45,7 +46,7 @@ function FieldRow({ label, value }: { label: string; value: React.ReactNode }) {
 }
 
 async function patchState(id: number, state: CandidateInquiryState) {
-  const res = await fetch(`${API_URL}/api/contacts/candidate-inquiries/${id}`, {
+  const res = await adminFetch(`${API_URL}/api/contacts/candidate-inquiries/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ state }),
@@ -55,7 +56,7 @@ async function patchState(id: number, state: CandidateInquiryState) {
 }
 
 async function deleteInquiry(id: number) {
-  const res = await fetch(`${API_URL}/api/contacts/candidate-inquiries/${id}`, {
+  const res = await adminFetch(`${API_URL}/api/contacts/candidate-inquiries/${id}`, {
     method: "DELETE",
   });
   if (!res.ok) throw new Error("Failed to delete submission");

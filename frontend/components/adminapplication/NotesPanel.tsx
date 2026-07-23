@@ -5,11 +5,12 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Pencil, Trash2, Check, X } from "lucide-react";
 import { useSession } from "@/lib/auth-client";
 import type { Note, NotesResponse } from "@/types/table";
+import { adminFetch } from "@/lib/adminFetch";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 async function fetchNotes(applicationId: number): Promise<NotesResponse> {
-  const res = await fetch(`${API_URL}/api/applications/${applicationId}/notes`);
+  const res = await adminFetch(`${API_URL}/api/applications/${applicationId}/notes`);
   if (!res.ok) throw new Error("Failed to load notes");
   return res.json();
 }
@@ -23,7 +24,7 @@ async function postNote({
   text: string;
   adminId: string;
 }) {
-  const res = await fetch(`${API_URL}/api/applications/${applicationId}/notes`, {
+  const res = await adminFetch(`${API_URL}/api/applications/${applicationId}/notes`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ text, created_by_admin_id: adminId }),
@@ -44,7 +45,7 @@ async function patchNote({
   text: string;
   adminId: string;
 }) {
-  const res = await fetch(`${API_URL}/api/notes/${id}`, {
+  const res = await adminFetch(`${API_URL}/api/notes/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ text, last_edited_by_admin_id: adminId }),
@@ -57,7 +58,7 @@ async function patchNote({
 }
 
 async function deleteNote(id: number) {
-  const res = await fetch(`${API_URL}/api/notes/${id}`, { method: "DELETE" });
+  const res = await adminFetch(`${API_URL}/api/notes/${id}`, { method: "DELETE" });
   if (!res.ok) throw new Error("Failed to delete note");
   return res.json();
 }

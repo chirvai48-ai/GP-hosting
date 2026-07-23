@@ -10,11 +10,12 @@ import {
   useReactTable,
   flexRender,
 } from "@tanstack/react-table";
+import { adminFetch } from "@/lib/adminFetch";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 async function getJobs(): Promise<JobsResponse> {
-  const res = await fetch(`${API_URL}/api/jobs`);
+  const res = await adminFetch(`${API_URL}/api/jobs`);
   if (!res.ok) throw new Error("Failed to load jobs");
   return res.json();
 }
