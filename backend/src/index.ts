@@ -13,18 +13,22 @@ import {newsRouter} from './routes/news.route'
 import applicationRouter from './routes/application.route'
 import noteRouter from './routes/note.route'
 import contactsRouter from './routes/contacts.route'
+import { requireAuthUnlessNoAdmins } from './middlewares/requireAuth'
 
 const app = express();
 
 
 app.use(cors({
   origin: ["http://localhost:3000", "http://localhost:3001"],
-  credentials: true,  
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],         
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
 }))
 
 
 
+// Sign-up open only to bootstrap the first admin, or to an already-authenticated
+// admin thereafter — prevents public self-registration without a lockout on a fresh DB.
+app.post("/api/auth/sign-up/email", requireAuthUnlessNoAdmins, toNodeHandler(auth));
 app.all("/api/auth/*splat", toNodeHandler(auth));
 
 
