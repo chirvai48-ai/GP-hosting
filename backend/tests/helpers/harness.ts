@@ -2,6 +2,7 @@ import request from "supertest";
 import type TestAgent from "supertest/lib/agent";
 import app from "../../src/index";
 import { prisma } from "../../src/lib/prisma";
+import { auth } from "../../src/lib/auth";
 
 export { app, prisma };
 
@@ -20,14 +21,52 @@ export interface AdminSession {
   adminId: string;
 }
 
-// Sign a fresh admin up + in via better-auth, returning a cookie-bearing agent.
+// Sign-up is gated to already-authenticated admins (or a first-admin bootstrap
+// on an empty table). Tests need many admins, so bootstrap one root admin per
+// file and have it sign up every subsequent test admin.
+const ROOT_EMAIL = `gptest_root@${TEST_EMAIL_DOMAIN}`;
+const ROOT_PASSWORD = "RootTest1234!secure";
+const ROOT_NAME = `${MARKER} Root Admin`;
+
+let rootAgentPromise: Promise<InstanceType<typeof TestAgent>> | null = null;
+
+function getRootAgent(): Promise<InstanceType<typeof TestAgent>> {
+  if (!rootAgentPromise) {
+    rootAgentPromise = (async () => {
+      const agent = request.agent(app);
+      // Sign-up/email is gated to authenticated admins now, so the root test
+      // admin is created via the same server-side call the seed script uses
+      // (auth.api.signUpEmail) rather than the HTTP route. Fails silently if
+      // it already exists (e.g. leftover from a prior run) — sign-in matters.
+      try {
+        await auth.api.signUpEmail({
+          body: { email: ROOT_EMAIL, password: ROOT_PASSWORD, name: ROOT_NAME },
+        });
+      } catch {
+        // already exists
+      }
+      const signIn = await agent
+        .post("/api/auth/sign-in/email")
+        .send({ email: ROOT_EMAIL, password: ROOT_PASSWORD });
+      if (signIn.status !== 200) {
+        throw new Error(`root admin bootstrap failed: ${signIn.status} ${JSON.stringify(signIn.body)}`);
+      }
+      return agent;
+    })();
+  }
+  return rootAgentPromise;
+}
+
+// Sign a fresh admin up (via the root admin) + in via better-auth, returning a
+// cookie-bearing agent.
 export async function createAdminAgent(): Promise<AdminSession> {
   const agent = request.agent(app);
   const email = `gptest_${uniq()}@${TEST_EMAIL_DOMAIN}`;
   const password = "Test1234!secure";
   const name = `${MARKER} Admin`;
 
-  await agent.post("/api/auth/sign-up/email").send({ email, password, name });
+  const root = await getRootAgent();
+  await root.post("/api/auth/sign-up/email").send({ email, password, name });
   await agent.post("/api/auth/sign-in/email").send({ email, password });
 
   const session = await agent.get("/api/auth/get-session");

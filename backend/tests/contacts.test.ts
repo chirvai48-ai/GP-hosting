@@ -97,3 +97,24 @@ describe("candidate inquiry form", () => {
     expect([200, 204]).toContain(del.status);
   });
 });
+
+describe("contact stats", () => {
+  let admin: AdminSession;
+  beforeAll(async () => {
+    admin = await createAdminAgent();
+  });
+
+  it("GET /api/contacts/stats requires auth", async () => {
+    const res = await anon().get("/api/contacts/stats");
+    expect(res.status).toBe(401);
+  });
+
+  it("GET /api/contacts/stats returns counts for admin", async () => {
+    const res = await admin.agent.get("/api/contacts/stats");
+    expect(res.status).toBe(200);
+    const data = res.body.data;
+    expect(data).toHaveProperty("openContactRequests");
+    expect(data).toHaveProperty("newCandidateInquiries");
+    expect(data).toHaveProperty("movedToTalentPool");
+  });
+});

@@ -67,4 +67,18 @@ describe("jobs (vacancies)", () => {
     const res = await admin.agent.delete(`/api/jobs/${id}`);
     expect([200, 204]).toContain(res.status);
   });
+
+  it("GET /api/jobs/stats requires auth", async () => {
+    const res = await anon().get("/api/jobs/stats");
+    expect(res.status).toBe(401);
+  });
+
+  it("GET /api/jobs/stats returns status counts for admin", async () => {
+    await admin.agent.post("/api/jobs").send(jobPayload());
+    const res = await admin.agent.get("/api/jobs/stats");
+    expect(res.status).toBe(200);
+    expect(res.body.data).toHaveProperty("statusCounts");
+    expect(res.body.data).toHaveProperty("totalJobs");
+    expect(typeof res.body.data.totalJobs).toBe("number");
+  });
 });

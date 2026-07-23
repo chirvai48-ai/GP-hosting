@@ -133,4 +133,20 @@ describe("application admin lifecycle", () => {
     const after = await admin.agent.get(`/api/applications/${appId}`);
     expect(after.body.data).toBeFalsy();
   });
+
+  it("GET /api/applications/stats requires auth", async () => {
+    const res = await anon().get("/api/applications/stats");
+    expect(res.status).toBe(401);
+  });
+
+  it("GET /api/applications/stats returns aggregate counts for admin", async () => {
+    const res = await admin.agent.get("/api/applications/stats");
+    expect(res.status).toBe(200);
+    const data = res.body.data;
+    expect(data).toHaveProperty("stageCounts");
+    expect(data).toHaveProperty("talentPoolCount");
+    expect(data).toHaveProperty("hiredThisMonth");
+    expect(data).toHaveProperty("totalApplications");
+    expect(Array.isArray(data.weeklyTrend)).toBe(true);
+  });
 });
