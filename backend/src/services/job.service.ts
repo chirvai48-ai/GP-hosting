@@ -43,6 +43,7 @@ export const createJobs = async (jobs: createJob): Promise<PrismaJob& { signed_u
 
 export const fetchJobs = async () => {
   const jobs = await prisma.job.findMany({
+    orderBy: { created_at: "desc" },
     include: {
       job_category: true,
       languages: true,

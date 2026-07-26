@@ -8,23 +8,8 @@ const rows: { label: string; value: React.ReactNode; icon: React.ReactNode }[] =
   },
   {
     label: "所在地",
-    value: (
-      <>
-        6th Floor, 2-36-1 Ikebukuro,
-        <br />
-        Toshima City, Tokyo 171-0014, Japan
-      </>
-    ),
+    value: "〒171-0014 東京都豊島区池袋二丁目36番1号6階",
     icon: <MapPin size={16} />,
-  },
-  {
-    label: "電話番号",
-    value: (
-      <a href="tel:+81368419101" className="hover:text-[color:var(--color-secondary)] transition-colors">
-        +81-3-6841-9101
-      </a>
-    ),
-    icon: <Phone size={16} />,
   },
   {
     label: "資本金",

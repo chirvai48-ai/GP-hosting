@@ -53,7 +53,7 @@ export default function SswSupportPage() {
       <Hero
         eyebrow="④ 特定技能外国人の支援事業（登録支援機関）"
         title="特定技能外国人 支援サービス"
-        lede="ネパール現地法人「World Partner Pvt.Ltd.」をグループ会社として有し、ネパール現地での人材育成・募集が可能です。日本での採用後も、国家資格を持つキャリアコンサルタントが支援業務を担当します。"
+        lede={<>ネパール現地法人「<a href="https://world-partner.com.np/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[var(--color-primary)] transition-colors">World Partner Pvt.Ltd.</a>」をグループ会社として有し、ネパール現地での人材育成・募集が可能です。日本での採用後も、国家資格を持つキャリアコンサルタントが支援業務を担当します。</>}
         image="/Business4.jpeg"
         imageAlt="SSW Support Services"
         sideBySide
@@ -62,7 +62,7 @@ export default function SswSupportPage() {
       <Section
         eyebrow="ネパール現地のパイプライン"
         heading="グループ会社を通じた現地での人材育成と募集。"
-        body="ネパール現地法人「World Partner Pvt.Ltd.」をグループ会社として有しているため、ネパール現地での直接の人材育成・募集が可能です。来日前から日本での就労や生活に向けた確かなパイプラインを構築しています。"
+        body={<>ネパール現地法人「<a href="https://world-partner.com.np/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[var(--color-primary)] transition-colors">World Partner Pvt.Ltd.</a>」をグループ会社として有しているため、ネパール現地での直接の人材育成・募集が可能です。来日前から日本での就労や生活に向けた確かなパイプラインを構築しています。</>}
       />
 
       <StatGraphic
@@ -82,7 +82,7 @@ export default function SswSupportPage() {
           {
             icon: <IconFlag />,
             title: "ネパール現地での人材育成・募集",
-            body: "ネパール現地法人「World Partner Pvt.Ltd.」をグループ会社として有し、現地でのダイレクトな人材育成と募集を行います。",
+            body: <>ネパール現地法人「<a href="https://world-partner.com.np/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[var(--color-primary)] transition-colors">World Partner Pvt.Ltd.</a>」をグループ会社として有し、現地でのダイレクトな人材育成と募集を行います。</>,
           },
           {
             icon: <IconUsers />,

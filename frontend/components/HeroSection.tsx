@@ -115,6 +115,7 @@ export default function HeroSection() {
           }}
         >
           「違うから良い」
+          <br />
           <em
             className="not-italic"
             style={{

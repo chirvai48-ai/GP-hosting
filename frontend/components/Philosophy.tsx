@@ -325,17 +325,6 @@ export default function PhilosophySection() {
             </div>
           ))}
         </div>
-
-        {/* Concept — closing line */}
-        <p
-          className="mt-20 text-xl md:text-2xl font-light text-center"
-          style={{
-            fontFamily: "var(--font-headline)",
-            color: "var(--color-primary)",
-          }}
-        >
-          — 日本とネパールの信頼の架け橋となる —
-        </p>
       </div>
     </section>
   );

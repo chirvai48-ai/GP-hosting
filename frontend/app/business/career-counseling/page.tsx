@@ -61,8 +61,8 @@ export default function CareerCounselingPage() {
       />
 
       <PhotoStrip
-        eyebrow="北海道補助事業"
-        heading="北海道補助事業におけるセミナー実施実績"
+        eyebrow="2024年度、2025年度"
+        heading="北海道観光人材発掘事業の就職支援講座を担当"
         photos={[
           { src: "/Seminar1.jpg", caption: "個別面談・指導" },
           { src: "/Seminar2.jpg", caption: "就活ワークショップ" },

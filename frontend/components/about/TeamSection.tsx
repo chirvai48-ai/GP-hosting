@@ -277,11 +277,6 @@ function CeoFeature({ member, onOpen }: { member: Member; onOpen: () => void }) 
 
         {/* Content */}
         <div className="p-8 md:p-12 flex flex-col justify-center">
-          <span className="inline-flex items-center gap-1.5 self-start px-2.5 py-1 rounded-full bg-[color:var(--color-secondary)]/15 text-[10px] font-label font-semibold tracking-[0.18em] uppercase text-[color:var(--color-primary)] border border-[color:var(--color-secondary)]/40 mb-5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[color:var(--color-secondary)]" />
-            代表取締役最高経営責任者
-          </span>
-
           <h3 className="font-headline text-4xl md:text-5xl text-[color:var(--color-on-surface)] leading-tight mb-2">
             {member.name}
           </h3>

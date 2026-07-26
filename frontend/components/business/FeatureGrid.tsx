@@ -1,10 +1,11 @@
 "use client";
 
+import React from "react";
 import { motion } from "motion/react";
 
 export type Feature = {
   title: string;
-  body: string;
+  body: string | React.ReactNode;
   icon?: React.ReactNode;
 };
 

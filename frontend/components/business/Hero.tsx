@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 
@@ -13,7 +14,7 @@ export default function Hero({
 }: {
   eyebrow: string;
   title: string;
-  lede?: string;
+  lede?: React.ReactNode;
   image?: string;
   imageAlt?: string;
   sideBySide?: boolean;
