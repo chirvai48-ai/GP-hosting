@@ -356,7 +356,10 @@ export default function MessagesPage() {
                         key={cell.id}
                         className="px-4 py-2.5 text-[var(--color-on-surface)] font-[var(--font-body)] border-r border-[var(--color-container-low)] last:border-r-0"
                       >
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        {flexRender(
+                          cell.column.columnDef.cell as (props: any) => React.ReactNode,
+                          cell.getContext()
+                        )}
                       </td>
                     ))}
                   </tr>

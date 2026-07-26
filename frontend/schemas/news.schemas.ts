@@ -19,7 +19,7 @@ export const createNewsSchema = z.object({
 
   admin_id: z.string().min(1).optional(),
 
-  status: newsStatusEnum.default("published"),
+  status: newsStatusEnum,
 
   image_key: z.string().min(1, "Image is required"),
   image_type: z.string().min(1, "Image type is required"),

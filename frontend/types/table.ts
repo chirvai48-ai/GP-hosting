@@ -131,7 +131,7 @@ export type Application = {
   stage: ApplicationStage;
   status: ApplicationStatus;
   created_at: string;
-  updated_at?: string;
+  updated_at: string;
 };
 
 export type ApplicationsResponse = {

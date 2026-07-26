@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { LoginForm } from "@/components/LoginForm";
 
 export default function AdminLoginPage() {
@@ -63,7 +64,9 @@ export default function AdminLoginPage() {
         {/* Top-right ambient glow */}
         <div className="absolute top-0 right-0 w-64 h-64 pointer-events-none bg-[radial-gradient(ellipse_at_top_right,rgba(201,168,76,.07),transparent_70%)]" />
 
-        <LoginForm />
+        <Suspense fallback={null}>
+          <LoginForm />
+        </Suspense>
 
       </main>
     </div>

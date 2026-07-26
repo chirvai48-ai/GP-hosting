@@ -12,23 +12,21 @@ import { useState } from "react";
 import AddVacancy from "@/components/adminvacancy/AddVacancy";
 import { adminFetch } from "@/lib/adminFetch";
 
-type transformedData = Partial<Job> & {
+type transformedData = Omit<Partial<Job>, "job_category" | "languages" | "technical_skills"> & {
   job_category?:string,
   languages?:string[],
   technical_skills?:string[]
 }
 
-const TransformData = (updatedFields:Partial<Job> | null) => ({
-  ...updatedFields,
-  ...(updatedFields?.job_category && {job_category : updatedFields?.job_category?.name}),
-  ...(updatedFields?.technical_skills && {
-    technical_skills: updatedFields.technical_skills.map(item => item.name),
-  }),
-  ...(updatedFields?.languages && {
-    languages: updatedFields.languages.map(item => item.name),
-  }),
-}
-) 
+const TransformData = (updatedFields:Partial<Job> | null): transformedData => {
+  const { job_category, technical_skills, languages, ...rest } = updatedFields ?? {};
+  return {
+    ...rest,
+    ...(job_category && { job_category: job_category.name }),
+    ...(technical_skills && { technical_skills: technical_skills.map(item => item.name) }),
+    ...(languages && { languages: languages.map(item => item.name) }),
+  };
+} 
 
 
 
@@ -41,7 +39,7 @@ async function getJobs(): Promise<JobsResponse> {
   return response.json();
 }
 
-async function patchJobs({id,data}:{id:number,data:Partial<Job>}) {
+async function patchJobs({id,data}:{id:number,data:transformedData}) {
   const response = await adminFetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jobs/${id}`,
     {
       method:'PATCH',
