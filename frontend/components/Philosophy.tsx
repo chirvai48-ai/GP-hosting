@@ -13,24 +13,15 @@ const philosophyData = [
     title: "「違うから良い」と\n思える社会に",
     // 支持文（調整可）
     description:
-      "違いは、組織を弱める要素ではなく、新しい可能性を生み出す原動力です。私たちは、誰もが自分らしく活躍できる社会の実現を目指します。",
+      "「国籍が違う／考え方が違う／文化が違う／年齢が違う／経験が違う\n私たちは、そんな違いを尊重し合うことで生まれる、新しい可能性の創出に貢献します。」",
     image: "/Philosophy1.jpg",
   },
   {
     id: "mission",
     label: "02 — Mission",
-    title: "組織の生産性と\n可能性を最大化する",
-    description:
-      "コミュニケーションの齟齬の解消をサポートし、組織の生産性と可能性を最大化させる。それが、私たちが果たすべき使命です。",
+    title: "コミュニケーションの齟齬の解消をサポートし、\n組織の生産性と可能性を最大化させる。",
+    description: "",
     image: "/Philosophy2.jpg",
-  },
-  {
-    id: "identity",
-    label: "03 — Identity",
-    title: "We are\nChance Maker.",
-    description:
-      "日本とネパールの信頼の架け橋となり、人と企業に新しいチャンスを生み出し続けます。",
-    image: "/Philosophy3.jpg",
   },
 ];
 
@@ -267,10 +258,10 @@ export default function PhilosophySection() {
             color: "var(--color-secondary)",
           }}
         >
-          04 — Value
+          03 — Value
         </p>
         <h2
-          className="text-4xl md:text-5xl font-light leading-tight mb-14 text-center"
+          className="text-2xl md:text-3xl font-light leading-tight mb-14 text-center"
           style={{
             fontFamily: "var(--font-headline)",
             color: "var(--color-primary)",
@@ -292,7 +283,7 @@ export default function PhilosophySection() {
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h3
-                className="text-2xl md:text-3xl font-light mb-1"
+                className="text-4xl md:text-5xl font-light mb-1"
                 style={{
                   fontFamily: "var(--font-headline)",
                   color: "var(--color-primary)",
@@ -301,7 +292,7 @@ export default function PhilosophySection() {
                 {v.en}
               </h3>
               <p
-                className="text-sm tracking-widest mb-5"
+                className="text-lg tracking-widest mb-5"
                 style={{
                   fontFamily: "var(--font-label)",
                   color: "var(--color-on-surface-variant)",
@@ -314,7 +305,7 @@ export default function PhilosophySection() {
                 style={{ background: "var(--color-secondary)" }}
               />
               <p
-                className="text-base md:text-lg leading-relaxed"
+                className="text-xl md:text-2xl leading-relaxed"
                 style={{
                   fontFamily: "var(--font-body)",
                   color: "var(--color-on-surface-variant)",

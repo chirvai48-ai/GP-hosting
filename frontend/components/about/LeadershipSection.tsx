@@ -17,14 +17,14 @@ const leaders: Leader[] = [
     title: "World Partner 代表取締役",
     href: "https://world-partner.com.np",
     imageUrl: "/Narayan.jpeg",
-    logo: "/logogreen.jpeg",
+    logo: "/Logo.jpeg",
   },
   {
     id: 2,
     name: "上中 豪",
     title: "株式会社Glowing Partner 代表取締役",
     imageUrl: "/UenkaGO.jpg",
-    logo: "/GpLogoTransparent.png",
+    logo: "/logowhite.jpeg",
   },
 ];
 

@@ -20,7 +20,7 @@ const rows: { label: string; value: React.ReactNode; icon: React.ReactNode }[] =
     label: "代表取締役",
     value: (
       <>
-        Go Uenaka <span className="text-[color:var(--color-on-surface-variant)]">(上中 豪)</span>
+        上中 豪 <span className="text-[color:var(--color-on-surface-variant)]">(Go Uenaka)</span>
       </>
     ),
     icon: <User size={16} />,
@@ -43,7 +43,7 @@ const licenses: { label: string; value: string }[] = [
   },
   {
     label: "登録支援機関（特定技能）",
-    value: "22-To-007904",
+    value: "22-登-007904",
   },
 ];
 

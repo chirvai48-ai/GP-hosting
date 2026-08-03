@@ -186,7 +186,7 @@ const ThreeDCarousel = ({
                           }
                         }}
                       >
-                        <span className="relative z-10 font-label text-secondary">Learn more</span>
+                        <span className="relative z-10 font-label text-secondary">続きを見る</span>
                         <ArrowRight className="ml-2 w-4 h-4 relative z-10 transition-transform group-hover:translate-x-1 text-secondary" />
                         <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full"></span>
                       </a>

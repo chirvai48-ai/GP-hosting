@@ -5,65 +5,59 @@ import { Building2, Handshake, Shield, Globe, Heart, Zap, Star, ChevronRight } f
 
 const companyHistory = [
   {
-    year: "2018年",
-    milestone: "会社設立",
-    title: "新たな挑戦のスタート",
-    description:
-      "確かな使命を掲げ、日本にて株式会社Glowing Partnerを設立。多様性を尊重し、すべての個人の可能性が輝く社会づくりへの第一歩を踏み出しました。",
+    year: "1998/09/07",
+    milestone: "設立",
+    title: "(株)日本医学総合研究振興協会 設立　調剤薬局事業を開始",
+    description: "",
     primary: true,
     icon: <Building2 size={20} />,
   },
   {
-    year: "2019年",
-    milestone: "業務提携",
-    title: "二国間を繋ぐ架け橋の構築",
-    description:
-      "ネパールの現地法人「World Partner Pvt. Ltd.」との強固なパートナーシップを締結。優秀なネパール人求職者と、未来を見据える日本企業を結ぶ確かなルートを確立しました。",
+    year: "2003/09/01",
+    milestone: "事業開始",
+    title: "薬剤師の労働者派遣事業、有料職業紹介事業を開始",
+    description: "",
     primary: false,
     icon: <Handshake size={20} />,
   },
   {
-    year: "2020年",
-    milestone: "柔軟な変化と適応",
-    title: "逆境を乗り越える組織力",
-    description:
-      "世界的な社会情勢の変化に直面する中、柔軟に事業を適応させ成長を維持。多様性と国際的な連携こそが、困難に負けない真の強みであることを証明しました。",
+    year: "2018/08/01",
+    milestone: "社名変更",
+    title: "社名変更と事業転換",
+    description: "",
     primary: true,
     icon: <Shield size={20} />,
   },
   {
-    year: "2021年",
-    milestone: "事業の拡大",
-    title: "拡大する信頼のネットワーク",
-    description:
-      "幅広い業種の日本企業との取引が急速に拡大。国際的な人材が現場の中核として活躍し、多様性の受け入れが組織にイノベーションをもたらすことを示しました。",
+    year: "2018/12/01",
+    milestone: "スクール事業開始",
+    title:
+      "留学生向け就職活動スクール事業を開始。3年間で500名以上の内定者を輩出。",
+    description: "",
     primary: false,
     icon: <Globe size={20} />,
   },
   {
-    year: "2022年",
-    milestone: "地域社会への貢献",
-    title: "ビジネスを超えた絆",
-    description:
-      "社会貢献活動やボランティアへ積極的に取り組み、地域社会との結びつきを強化。「誰かの幸福に寄与することこそが最大の原動力である」という理念を実践しました。",
+    year: "2023/02/01",
+    milestone: "スタッフ50人突破",
+    title: "派遣スタッフ数が50人を超える",
+    description: "",
     primary: true,
-    icon: <Heart size={20} />,
-  },
-  {
-    year: "2023年",
-    milestone: "プロセスの革新",
-    title: "雇用手続きのDX推進",
-    description:
-      "新しいデジタルツールの導入により、応募から採用・就労までの手続きを効率化。日本全国の企業へ、よりスムーズに国際人材を紹介できる環境を整えました。",
-    primary: false,
     icon: <Zap size={20} />,
   },
   {
-    year: "2024年",
-    milestone: "現在、そして未来へ",
-    title: "成功と信頼のグローバル循環",
-    description:
-      "メンバーの多くをネパール国籍のスタッフが占める強みを活かし、国際人材がもたらす組織の成長、ビジネスの成功、そして国境を超えた真の人間関係の好循環を証明し続けています。",
+    year: "2025/04/10",
+    milestone: "現地法人設立",
+    title: "ネパール現地法人 World Partner Pvt.,Ltd.を設立",
+    description: "",
+    primary: false,
+    icon: <Heart size={20} />,
+  },
+  {
+    year: "2025/09/01",
+    milestone: "スタッフ100人突破",
+    title: "派遣スタッフ数が100人を超える",
+    description: "",
     primary: true,
     icon: <Star size={20} />,
   },
