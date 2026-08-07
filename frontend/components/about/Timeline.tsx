@@ -32,7 +32,7 @@ const companyHistory = [
     year: "2018/12/01",
     milestone: "スクール事業開始",
     title:
-      "留学生向け就職活動スクール事業を開始。3年間で500名以上の内定者を輩出。",
+      "留学生向けの就職支援スクール「GP 内定 Academy」を開講し、3年間で500名以上の内定者を輩出",
     description: "",
     primary: false,
     icon: <Globe size={20} />,

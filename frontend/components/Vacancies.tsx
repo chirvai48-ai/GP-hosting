@@ -296,7 +296,6 @@ export default function VacancySection({
   onClearFilters,
 }: VacancySectionProps) {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
-  const isFiltered = jobs.length !== totalCount;
 
   return (
     <section className="flex-1 min-w-0 py-6">
@@ -308,13 +307,6 @@ export default function VacancySection({
           <h1 className="font-[family-name:var(--font-headline)] text-[24px] md:text-[32px] font-normal italic text-[color:var(--color-primary)] leading-[1.1]">
             募集中の求人一覧
           </h1>
-          <p className="font-[family-name:var(--font-label)] text-[10px] md:text-[11px] text-[color:var(--color-on-surface-variant)] mt-2">
-            {isPending
-              ? "読み込み中…"
-              : isFiltered
-              ? `該当する求人が ${jobs.length} 件見つかりました（総求人数：${totalCount} 件）`
-              : `$全体で {totalCount} 件の求人がございます`}
-          </p>
         </div>
       </div>
 

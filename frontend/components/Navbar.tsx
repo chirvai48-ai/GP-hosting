@@ -22,12 +22,12 @@ const navItems: NavItem[] = [
     href: "#",
     subItems: [
       {
-        label: "企業様向け",
+        label: "企業担当者様のご相談",
         image: "/forrecruiter.jpg",
         href: "/services/for-recruiter",
       },
       {
-        label: "求職者様向け",
+        label: "お仕事の紹介をご希望の方",
         image: "/forjobseeker.jpg",
         href: "/services/for-job-seeker",
       },
@@ -64,12 +64,12 @@ const navItems: NavItem[] = [
     href: "#",
     subItems: [
       {
-        label: "法人のお客様",
+        label: "企業様からのお問い合わせ",
         image: "/company.jpg",
         href: "/contact/company",
       },
       {
-        label: "個人のお客様",
+        label: "求職者様からのお問い合わせ",
         image: "/customer.jpg",
         href: "/contact/customer",
       },

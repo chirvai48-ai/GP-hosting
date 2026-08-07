@@ -47,14 +47,14 @@ export default function CareerCounselingPage() {
         stats={[
           { value: "500+", label: "500社以上", sub: "多くの受講生が希望の企業より内定を獲得しています。" },
           { value: "1:1", label: "徹底的な伴走支援", sub: "国家資格を持つプロのキャリアコンサルタントが個別指導。" },
-          { value: "2 yrs", label: "2年連続の実績", sub: "北海道補助事業の一環として就職活動セミナーを実施。" },
+          { value: "2 yrs", label: "2年連続の実績", sub: "北海道観光人材発掘事業の一環として就職活動セミナーを実施" },
         ]}
       />
 
       <Section
         eyebrow="学校法人向け"
         heading="就活セミナー"
-        body="留学生が多数在籍する大学・専門学校・日本語学校にて、就職活動のノウハウを提供することにより、学校全体の就職率UPに貢献しています。2年連続で、北海道補助事業の一環での就職活動セミナーを実施した実績があります。"
+        body="留学生が多数在籍する大学・専門学校・日本語学校にて、就職活動のノウハウを提供することにより、学校全体の就職率UPに貢献しています。2年連続で、北海道観光人材発掘事業の一環での就職活動セミナーを実施した実績があります。"
         image="/Seminar4.jpg"
         imageAlt="学校法人向け就活セミナーの風景"
         reverse
@@ -68,7 +68,6 @@ export default function CareerCounselingPage() {
           { src: "/Seminar2.jpg", caption: "就活ワークショップ" },
           { src: "/Seminar3.jpg", caption: "キャリアカウンセリング" },
           { src: "/Seminar4.jpg", caption: "学内就職ガイダンス" },
-          { src: "/Seminar5.jpg", caption: "2025年10月期 実績" },
         ]}
       />
 

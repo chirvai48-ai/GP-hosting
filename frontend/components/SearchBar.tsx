@@ -17,11 +17,8 @@ type Props = {
 };
 
 function formatYen(value: number) {
-  if (value >= 1000) {
-    const m = value / 1000;
-    return `¥${m % 1 === 0 ? m.toFixed(0) : m.toFixed(1)}M`;
-  }
-  return `¥${value}k`;
+  const man = (value * 1000) / 10000;
+  return `${man % 1 === 0 ? man.toFixed(0) : man.toFixed(1)}万`;
 }
 
 function SearchBar({ searchState, onChange, onClear }: Props) {
@@ -130,7 +127,7 @@ function SearchBar({ searchState, onChange, onClear }: Props) {
           <div className="flex flex-row w-full justify-center items-center bg-[#f0f2f1] rounded-full p-2 gap-2">
             <Search className="w-4 h-5 shrink-0" color="#145652" />
             <input
-              className="flex-1 min-w-0 outline-1 bg-white rounded-md font-headline italic px-2"
+              className="flex-1 min-w-0 outline-1 bg-white rounded-md font-headline italic px-2 text-gray-900 placeholder-gray-500"
               placeholder=" 職種、キーワード、スキルなど"
               onChange={handleFormInput}
               value={keyword}

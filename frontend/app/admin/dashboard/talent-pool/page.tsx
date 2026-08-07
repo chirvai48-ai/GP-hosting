@@ -109,7 +109,7 @@ function TextFilter({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="pl-8 pr-7 py-1.5 text-sm border border-[var(--color-container-low)] rounded-full bg-white focus:border-[var(--color-primary)] outline-none font-[var(--font-label)] w-full"
+        className="pl-8 pr-7 py-1.5 text-sm border border-[var(--color-container-low)] rounded-full bg-white text-gray-900 placeholder-gray-500 focus:border-[var(--color-primary)] outline-none font-[var(--font-label)] w-full"
       />
       {value && (
         <button
@@ -395,7 +395,7 @@ export default function TalentPoolPage() {
             <select
               value={japaneseAbility}
               onChange={(e) => setJapaneseAbility(e.target.value)}
-              className="py-1.5 pl-3 pr-7 text-sm border border-[var(--color-container-low)] rounded-full bg-white focus:border-[var(--color-primary)] outline-none font-[var(--font-label)] appearance-none cursor-pointer"
+              className="py-1.5 pl-3 pr-7 text-sm border border-[var(--color-container-low)] rounded-full bg-white text-gray-900 focus:border-[var(--color-primary)] outline-none font-[var(--font-label)] appearance-none cursor-pointer"
             >
               <option value="">JP Ability</option>
               {JP_OPTIONS.map((o) => (

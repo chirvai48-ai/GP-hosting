@@ -86,7 +86,7 @@ export function applyJobFilters(
   );
 }
 
-export const SALARY_SLIDER_MAX = 10000;
+export const SALARY_SLIDER_MAX = 1000;
 
 export const DEFAULT_FILTERS: Filterstype = {
   schedule: { full_time: false, part_time: false, contract: false, internship: false },

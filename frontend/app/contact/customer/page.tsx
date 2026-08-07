@@ -106,6 +106,7 @@ async function postCandidateInquiry(payload: CreateCandidateInquiryForm) {
 export default function CustomerContactPage() {
   const [step, setStep] = useState<1 | 2>(1);
   const [submitted, setSubmitted] = useState(false);
+  const [agreed, setAgreed] = useState(false);
   const [resumeError, setResumeError] = useState<string | null>(null);
   const resumeFileRef = useRef<File | null>(null);
   const [resumeFileMeta, setResumeFileMeta] = useState<{ name: string; size: number } | null>(
@@ -246,7 +247,8 @@ export default function CustomerContactPage() {
                   あなたに本当にマッチするキャリアを、ともに。
                 </h1>
                 <p className="font-[family-name:var(--font-body)] text-sm md:text-base text-white/90 max-w-sm">
-                  あなたのご経歴やご希望をお聞かせください。最適なポジションが見つかり次第、すぐにご案内いたします。
+                  求職者様のご相談窓口です。
+                  お問合せには可能な限り迅速にお答えできるよう心がけておりますが、内容によってはお時間をいただく場合、お答えできない場合がございます。予めご了承ください。
                 </p>
               </div>
             </div>
@@ -271,7 +273,7 @@ export default function CustomerContactPage() {
             <div className="hidden lg:flex flex-col gap-2 text-sm text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-body)]">
               <div className="flex items-start gap-2"><MapPin size={14} className="mt-1 shrink-0 text-[var(--color-primary)]" /> 〒171-0014 東京都豊島区池袋2-36-1 6階</div>
               <div className="flex items-center gap-2"><Mail size={14} className="text-[var(--color-primary)]" /> info@glowing-partner.jp</div>
-              <div className="flex items-center gap-2"><Phone size={14} className="text-[var(--color-primary)]" /> <a href="tel:+81368419101" className="hover:text-[var(--color-primary)]">+81-3-6841-9101</a></div>
+              <div className="flex items-center gap-2"><Phone size={14} className="text-[var(--color-primary)]" /> <a href="tel:05017903742" className="hover:text-[var(--color-primary)]">050-1790-3742</a></div>
             </div>
           </aside>
 
@@ -443,6 +445,15 @@ export default function CustomerContactPage() {
                 </p>
               )}
 
+              <label className="flex items-center gap-2 text-sm text-[color:var(--color-on-surface)] font-[family-name:var(--font-body)]">
+                <input
+                  type="checkbox"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                />
+                利用規約およびプライバシーポリシーに同意します。
+              </label>
+
               <div className="flex justify-between pt-2">
                 <button
                   type="button"
@@ -453,7 +464,7 @@ export default function CustomerContactPage() {
                 </button>
                 <button
                   type="submit"
-                  disabled={isPending}
+                  disabled={isPending || !agreed}
                   className="inline-flex items-center gap-2 px-8 py-2.5 bg-[var(--color-primary)] text-white font-[family-name:var(--font-label)] text-sm tracking-widest uppercase hover:opacity-90 transition-opacity disabled:opacity-50"
                 >
                   {isPending ? "送信中…" : "この内容で登録する"}

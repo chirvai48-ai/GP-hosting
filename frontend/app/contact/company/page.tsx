@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
-import { ArrowLeft, CheckCircle2, Briefcase, MapPin, Mail, Phone, ShieldCheck, Users, Clock } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Briefcase, MapPin, Mail, Phone } from "lucide-react";
 import {
   createCompanyInquirySchema,
   type CreateCompanyInquiryForm,
@@ -53,6 +53,7 @@ async function postCompanyInquiry(payload: CreateCompanyInquiryForm) {
 
 export default function CompanyContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [agreed, setAgreed] = useState(false);
 
   const {
     register,
@@ -138,22 +139,13 @@ export default function CompanyContactPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl border border-[rgba(20,86,82,0.1)] p-5 flex flex-col gap-3">
-              {[
-                { Icon: ShieldCheck, t: "徹底した事前スクリーニング", d: "すべての候補者に対して、事前面談と経歴チェックを徹底して実施しております。" },
-                { Icon: Users, t: "豊富なマルチリンガル人材", d: "エンジニア、営業、バックオフィスなど、日・英バイリンガル人材が多数在籍しています。" },
-                { Icon: Clock, t: "迅速かつ手厚い伴走サポート", d: "初回のご相談から採用・定着まで、専任の担当者が一貫してトータルサポートいたします。" },
-              ].map(({ Icon, t, d }) => (
-                <div key={t} className="flex gap-3">
-                  <div className="shrink-0 w-9 h-9 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center">
-                    <Icon size={16} />
-                  </div>
-                  <div>
-                    <p className="font-[family-name:var(--font-label)] text-sm text-[color:var(--color-on-surface)]">{t}</p>
-                    <p className="text-xs text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-body)]">{d}</p>
-                  </div>
-                </div>
-              ))}
+            <div className="bg-white rounded-2xl border border-[rgba(20,86,82,0.1)] p-5">
+              <p className="text-sm text-[color:var(--color-on-surface)] font-[family-name:var(--font-body)] leading-relaxed">
+                企業様向けのご相談窓口です。
+                <br />
+                お問合せには可能な限り迅速にお答えできるよう心がけて
+                おりますが、内容によってはお時間をいただく場合、お答えできない場合がございます。予めご了承ください。
+              </p>
             </div>
 
             <div className="hidden lg:flex flex-col gap-2 text-sm text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-body)]">
@@ -217,9 +209,18 @@ export default function CompanyContactPage() {
               </p>
             )}
 
+            <label className="flex items-center gap-2 text-sm text-[color:var(--color-on-surface)] font-[family-name:var(--font-body)]">
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+              />
+              利用規約およびプライバシーポリシーに同意します。
+            </label>
+
             <button
               type="submit"
-              disabled={isPending}
+              disabled={isPending || !agreed}
               className="mt-2 self-end px-8 py-2.5 bg-[var(--color-primary)] text-white font-[family-name:var(--font-label)] text-sm tracking-widest uppercase hover:opacity-90 transition-opacity disabled:opacity-50"
             >
               {isPending ? "送信中…" : "この内容で送信する"}
