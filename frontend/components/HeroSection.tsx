@@ -145,7 +145,7 @@ export default function HeroSection() {
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href="#collection"
+            href="/vacancy"
             className="group relative inline-flex items-center gap-3 px-10 py-4 text-sm tracking-[0.2em] uppercase font-medium transition-all duration-300 overflow-hidden"
             style={{
               background: "#C9A84C",

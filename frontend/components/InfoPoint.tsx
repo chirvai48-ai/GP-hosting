@@ -461,7 +461,7 @@ export const Infopoint = () => {
                       alt="企業の採用ご担当者イメージ"
                       insetPercent={10}
                       eyebrow="企業様向け"
-                      title="採用ご担当者様"
+                      title="企業担当者様のご相談"
                       expand={expand}
                     />
                   </motion.div>
@@ -523,7 +523,7 @@ export const Infopoint = () => {
                       alt="Image of job seekers"
                       insetPercent={10}
                       eyebrow="求職者様向け"
-                      title="お仕事をお探しの方へ"
+                      title="お仕事の紹介をご希望の方"
                       expand={expand}
                     />
                   </motion.div>

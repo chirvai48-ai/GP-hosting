@@ -157,7 +157,12 @@ function SearchBar({ searchState, onChange, onClear }: Props) {
           <div className="flex flex-row justify-center items-center gap-2">
             <MapPin className="w-5 md:w-6 opacity-50 " color="#145652" />
             <FormControl size="small" fullWidth>
-              <InputLabel id="demo-simple-select-label">City</InputLabel>
+              <InputLabel
+                id="demo-simple-select-label"
+                sx={{ "&.Mui-focused": { color: "#145652" } }}
+              >
+                City
+              </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -167,6 +172,12 @@ function SearchBar({ searchState, onChange, onClear }: Props) {
                 sx={{
                   fontFamily: "Cormorant Garamond",
                   fontSize: 14,
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#145652",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#145652",
+                  },
                 }}
               >
                 
@@ -191,7 +202,12 @@ function SearchBar({ searchState, onChange, onClear }: Props) {
               color="#145652"
             />
             <FormControl fullWidth size="small">
-              <InputLabel id="demo-simple-select-label">経験年数</InputLabel>
+              <InputLabel
+                id="demo-simple-select-label"
+                sx={{ "&.Mui-focused": { color: "#145652" } }}
+              >
+                経験年数
+              </InputLabel>
               <Select<number>
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -201,6 +217,12 @@ function SearchBar({ searchState, onChange, onClear }: Props) {
                 sx={{
                   fontFamily: "Cormorant Garamond",
                   fontSize: 14,
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#145652",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#145652",
+                  },
                 }}
               >
                 
