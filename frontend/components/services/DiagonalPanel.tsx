@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
+import Image from "next/image";
 
 export type DiagonalPanelData = {
   number: string;
@@ -59,16 +60,22 @@ export default function DiagonalPanel({ data, index }: Props) {
             WebkitClipPath: MOBILE_PHOTO_CLIP,
           }}
         >
-          <motion.img
-            src={data.image}
-            alt={data.label}
+          <motion.div
             initial={{ opacity: 0, scale: 1.05 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 1.1, ease: easeOut }}
-            style={{ objectPosition: "center 30%" }}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
+            className="absolute inset-0 h-full w-full"
+          >
+            <Image
+              src={data.image}
+              alt={data.label}
+              fill
+              sizes="100vw"
+              className="object-cover"
+              style={{ objectPosition: "center 30%" }}
+            />
+          </motion.div>
           <div className="absolute inset-0 bg-black/30" />
         </div>
         <motion.div
@@ -171,25 +178,31 @@ export default function DiagonalPanel({ data, index }: Props) {
             WebkitClipPath: desktopPhotoClip,
           }}
         >
-          <motion.img
-            src={data.image}
-            alt={data.label}
+          <motion.div
             initial={{
               opacity: 0,
               x: photoLeft ? "-4%" : "4%",
             }}
             whileInView={{ opacity: 1, x: "0%" }}
             viewport={{ once: true, margin: "-10%" }}
-            style={{
-              y: imageY,
-              objectPosition:
-                data.imagePosition ??
-                (photoLeft ? "80% center" : "20% center"),
-            }}
-            className={`absolute inset-y-0 h-[108%] w-[70%] object-cover will-change-transform ${
+            style={{ y: imageY }}
+            className={`absolute inset-y-0 h-[108%] w-[70%] will-change-transform ${
               photoLeft ? "left-0" : "right-0"
             }`}
-          />
+          >
+            <Image
+              src={data.image}
+              alt={data.label}
+              fill
+              sizes="70vw"
+              className="object-cover"
+              style={{
+                objectPosition:
+                  data.imagePosition ??
+                  (photoLeft ? "80% center" : "20% center"),
+              }}
+            />
+          </motion.div>
           <div className="absolute inset-0 bg-black/35" />
         </div>
 
