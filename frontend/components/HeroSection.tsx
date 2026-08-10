@@ -96,7 +96,7 @@ export default function HeroSection() {
             className="text-xs tracking-[0.35em] uppercase font-medium"
             style={{
               color: "#C9A84C",
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--font-cormorant), Georgia, serif",
               fontVariantNumeric: "lining-nums",
             }}
           >
@@ -109,7 +109,7 @@ export default function HeroSection() {
         <h1
           className="text-[8vw] sm:text-7xl lg:text-8xl font-light leading-[1.05] tracking-tight mb-6"
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--font-cormorant), Georgia, serif",
             color: "#F0EBE1",
             textShadow: "0 2px 40px rgba(20,86,82,0.6)",
           }}
@@ -131,7 +131,7 @@ export default function HeroSection() {
         <p
           className="mx-auto max-w-xl text-base sm:text-lg leading-relaxed mb-12 font-light"
           style={{
-            fontFamily: "'Jost', sans-serif",
+            fontFamily: "var(--font-jost), sans-serif",
             color: "rgba(240,235,225,0.78)",
             letterSpacing: "0.02em",
           }}
@@ -148,7 +148,7 @@ export default function HeroSection() {
             style={{
               background: "#C9A84C",
               color: "#145652",
-              fontFamily: "'Jost', sans-serif",
+              fontFamily: "var(--font-jost), sans-serif",
             }}
           >
             <span className="relative z-10">求人を見る</span>
@@ -168,7 +168,7 @@ export default function HeroSection() {
             style={{
               borderColor: "rgba(240,235,225,0.4)",
               color: "#F0EBE1",
-              fontFamily: "'Jost', sans-serif",
+              fontFamily: "var(--font-jost), sans-serif",
             }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLAnchorElement).style.borderColor = "#C9A84C";
@@ -191,7 +191,7 @@ export default function HeroSection() {
           className="text-[10px] tracking-[0.3em] uppercase"
           style={{
             color: "rgba(240,235,225,0.5)",
-            fontFamily: "'Jost', sans-serif",
+            fontFamily: "var(--font-jost), sans-serif",
           }}
         >
           スクロール
@@ -212,8 +212,6 @@ export default function HeroSection() {
 
       {/* ── keyframe for scroll indicator ── */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
-
         @keyframes scrollLine {
           0%   { transform: translateY(-100%); opacity: 1; }
           100% { transform: translateY(300%);  opacity: 0; }

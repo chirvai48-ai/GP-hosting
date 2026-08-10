@@ -1,9 +1,32 @@
 import type { Metadata } from "next";
+import { Cormorant_Garamond, Work_Sans, Jost } from "next/font/google";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { TanStackProvider } from "./tanstack-provider";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import ConditionalFooter from "@/components/footer/ConditionalFooter";
+
+const cormorantGaramond = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["300", "400", "600", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
+
+const jost = Jost({
+  variable: "--font-jost",
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +40,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased" suppressHydrationWarning>
+      <body
+        className={`${cormorantGaramond.variable} ${workSans.variable} ${jost.variable} antialiased`}
+        suppressHydrationWarning
+      >
         <Navbar />
         <TanStackProvider>
           <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
