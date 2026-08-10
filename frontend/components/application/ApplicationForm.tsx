@@ -227,7 +227,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
   }
 
   return (
-    <main className="min-h-screen bg-[color:var(--color-surface)] px-6 py-10">
+    <main className="min-h-screen bg-[color:var(--color-surface)] px-6 pt-24 md:pt-28 pb-10">
       <div className="max-w-2xl mx-auto">
         <header className="mb-6">
           <Link

@@ -207,7 +207,7 @@ export default function CustomerContactPage() {
   }
 
   return (
-    <main className="relative min-h-screen bg-[color:var(--color-surface)] px-6 py-10 overflow-hidden">
+    <main className="relative min-h-screen bg-[color:var(--color-surface)] px-6 pt-24 md:pt-28 pb-10 overflow-hidden">
       {/* decorative background blobs */}
       <div
         aria-hidden

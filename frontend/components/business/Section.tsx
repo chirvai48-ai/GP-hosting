@@ -33,7 +33,7 @@ export default function Section({
           transition={{ duration: 0.6 }}
         >
           {eyebrow && (
-            <p className="font-[var(--font-label)] text-[10px] tracking-[0.4em] uppercase text-[color:var(--color-primary)] mb-5">
+            <p className="font-[var(--font-label)] text-sm md:text-base tracking-[0.3em] uppercase text-[color:var(--color-primary)] mb-5">
               {eyebrow}
             </p>
           )}

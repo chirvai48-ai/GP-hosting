@@ -28,7 +28,7 @@ export default function Hero({
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="font-[var(--font-label)] text-[11px] tracking-[0.4em] uppercase text-[color:var(--color-primary)]"
+              className="font-[var(--font-label)] text-base md:text-lg tracking-[0.25em] uppercase text-[color:var(--color-primary)]"
             >
               {eyebrow}
             </motion.p>
@@ -75,7 +75,7 @@ export default function Hero({
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="font-[var(--font-label)] text-[11px] tracking-[0.4em] uppercase text-[color:var(--color-primary)]"
+            className="font-[var(--font-label)] text-base md:text-lg tracking-[0.25em] uppercase text-[color:var(--color-primary)]"
           >
             {eyebrow}
           </motion.p>

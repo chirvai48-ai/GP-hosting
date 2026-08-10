@@ -15,7 +15,7 @@ export default function CrossSell() {
       <div className="max-w-6xl mx-auto px-6 md:px-10 py-20 md:py-28">
         <div className="grid md:grid-cols-[1fr_auto] gap-10 md:items-end mb-12">
           <div>
-            <p className="font-[var(--font-label)] text-[10px] tracking-[0.4em] uppercase text-[color:var(--color-primary)] mb-4">
+            <p className="font-[var(--font-label)] text-sm md:text-base tracking-[0.3em] uppercase text-[color:var(--color-primary)] mb-4">
               各種サービス紹介
             </p>
             <h2 className="font-display text-3xl md:text-5xl leading-tight text-[color:var(--color-on-surface)] max-w-2xl">

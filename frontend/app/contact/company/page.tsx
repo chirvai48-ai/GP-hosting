@@ -95,7 +95,7 @@ export default function CompanyContactPage() {
   }
 
   return (
-    <main className="relative min-h-screen bg-[color:var(--color-surface)] px-6 py-10 overflow-hidden">
+    <main className="relative min-h-screen bg-[color:var(--color-surface)] px-6 pt-24 md:pt-28 pb-10 overflow-hidden">
       <div
         aria-hidden
         className="pointer-events-none absolute -top-32 -left-40 w-[480px] h-[480px] rounded-full bg-[var(--color-primary)]/10 blur-3xl"
@@ -133,9 +133,6 @@ export default function CompanyContactPage() {
                 <h1 className="font-[family-name:var(--font-headline)] text-3xl md:text-4xl leading-tight mb-2">
                   貴社に真にマッチする確実な人材採用を。
                 </h1>
-                <p className="font-[family-name:var(--font-body)] text-sm md:text-base text-white/90 max-w-sm">
-                  Tell us what you&apos;re looking for and we&apos;ll match you with vetted talent from our network.
-                </p>
               </div>
             </div>
 

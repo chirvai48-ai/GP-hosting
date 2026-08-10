@@ -46,7 +46,9 @@ export default function DiagonalPanel({ data, index }: Props) {
   return (
     <section
       ref={ref}
-      className="relative w-full overflow-hidden bg-[color:var(--color-surface)] md:h-[100vh] md:min-h-[640px]"
+      className={`relative w-full overflow-hidden bg-[color:var(--color-surface)] md:h-[100vh] md:min-h-[640px] ${
+        index === 0 ? "mt-14 md:mt-16" : ""
+      }`}
     >
       {/* ── MOBILE: stacked photo (top) + text (bottom) ── */}
       <div className="md:hidden">
@@ -236,7 +238,7 @@ export default function DiagonalPanel({ data, index }: Props) {
             viewport={{ once: true, margin: "-15%" }}
             transition={{ staggerChildren: 0.1, delayChildren: 0.3 }}
             className={`relative w-1/2 px-16 ${
-              photoLeft ? "pl-4 pr-20" : "pr-4 pl-20"
+              photoLeft ? "pl-[7%] pr-10" : "pr-[7%] pl-10"
             } max-w-2xl`}
           >
             <motion.div

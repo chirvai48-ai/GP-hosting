@@ -48,7 +48,9 @@ const LeadershipSection: React.FC = () => {
           {/* Top accent — primary → secondary */}
           <div
             className="h-1"
-            style={{ background: "linear-gradient(to right, #145652, #c9a84c)" }}
+            style={{
+              background: "linear-gradient(to right, #145652, #c9a84c)",
+            }}
           />
 
           <div className="p-6 sm:p-8 md:p-10 lg:p-12">
@@ -88,13 +90,15 @@ const LeadershipSection: React.FC = () => {
                         />
                       </div>
                       {/* Logo badge */}
-                      <div className="absolute -bottom-4 -right-4 w-14 h-14 rounded-full border-2 border-white shadow-md overflow-hidden bg-white p-3">
-                        <Image
-                          src={leader.logo}
-                          alt={`${leader.name} logo`}
-                          fill
-                          className="object-contain"
-                        />
+                      <div className="absolute -bottom-4 -right-4 w-14 h-14 rounded-full border-2 border-white shadow-md bg-white p-1 overflow-hidden">
+                        <div className="relative w-full h-full">
+                          <Image
+                            src={leader.logo}
+                            alt={`${leader.name} logo`}
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -119,7 +123,6 @@ const LeadershipSection: React.FC = () => {
                         )}
                       </p>
                     </div>
-
                   </div>
                 </div>
               ))}

@@ -2,13 +2,12 @@
 @import 'tailwindcss';
 @plugin 'lightswind/plugin';
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
   background: #ffffff;
   color: #171717;
-  overflow-x: hidden;
   font-variant-numeric: lining-nums;
 }
 
@@ -34,7 +33,7 @@ body {
   --animate-fade-up: fadeUp 0.55s ease both;
   --animate-fade-up-slow: fadeUp 0.7s 0.1s ease both;
   --animate-spin: spin 0.7s linear infinite;
-  --animate-marquee: marquee 40s linear infinite;
+  --animate-marquee: marquee 90s linear infinite;
   @keyframes fadeUp {
     0% {
       opacity: 0;
