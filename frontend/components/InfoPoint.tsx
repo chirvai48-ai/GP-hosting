@@ -117,10 +117,11 @@ function HoverImage({ alt, src, insetPercent = 10, eyebrow, title, expand }: Hov
         {/* Bottom label block — centered so it stays inside the clipped middle 80% */}
         <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 flex flex-col items-center text-center">
           <p
-            className="text-[10px] font-semibold tracking-[0.3em] uppercase mb-3"
+            className="text-xs sm:text-sm font-bold tracking-[0.15em] uppercase mb-3"
             style={{
               fontFamily: "var(--font-label)",
-              color: "rgba(201,168,76,0.95)",
+              color: "#E8C25F",
+              textShadow: "0 1px 4px rgba(0,0,0,0.6)",
             }}
           >
             {eyebrow}
@@ -461,7 +462,7 @@ export const Infopoint = () => {
                       alt="企業の採用ご担当者イメージ"
                       insetPercent={10}
                       eyebrow="企業様向け"
-                      title="企業担当者様のご相談"
+                      title="企業のご担当者様"
                       expand={expand}
                     />
                   </motion.div>
@@ -523,7 +524,7 @@ export const Infopoint = () => {
                       alt="Image of job seekers"
                       insetPercent={10}
                       eyebrow="求職者様向け"
-                      title="お仕事の紹介をご希望の方"
+                      title="お仕事をお探しの方"
                       expand={expand}
                     />
                   </motion.div>

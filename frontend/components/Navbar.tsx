@@ -84,8 +84,8 @@ export default function Navbar() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
-  // dark === true means the navbar sits on a LIGHT background → use dark text.
-  const [dark, setDark] = useState(true);
+  // Opacity of the white navbar background: 1 at top, fades toward MIN_OPACITY on scroll.
+  const [bgOpacity, setBgOpacity] = useState(1);
 
   useEffect(() => {
     // Close mobile menu on route change
@@ -105,54 +105,18 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   useEffect(() => {
-    const NAV_PROBE_Y = 40;
+    const FADE_DISTANCE = 240; // px of scroll over which opacity fades
+    const MIN_OPACITY = 0.92;
 
     let isScheduled = false;
 
-    const parseRgb = (
-      str: string
-    ): [number, number, number, number] | null => {
-      const m = str.match(/rgba?\(([^)]+)\)/);
-      if (!m) return null;
-      const parts = m[1].split(",").map((s) => parseFloat(s.trim()));
-      const [r, g, b, a = 1] = parts;
-      if ([r, g, b].some((n) => Number.isNaN(n))) return null;
-      return [r, g, b, a];
-    };
-
-    const isLightBg = (el: Element | null): boolean => {
-      let node: Element | null = el;
-      while (node && node !== document.body) {
-        const tint = (node as HTMLElement).dataset?.navbarTint;
-        if (tint === "light") return false;
-        if (tint === "dark") return true;
-        const bg = getComputedStyle(node).backgroundColor;
-        const rgb = parseRgb(bg);
-        if (rgb && rgb[3] > 0.2) {
-          const [r, g, b] = rgb;
-          const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-          return luminance > 0.6;
-        }
-        node = node.parentElement;
-      }
-      return true;
-    };
-
     const update = () => {
-      const prevPointer = document.documentElement.style.pointerEvents;
-      const header = document.querySelector("header[data-navbar-root]");
-      const prevHeaderPE = header
-        ? (header as HTMLElement).style.pointerEvents
-        : "";
-      if (header) (header as HTMLElement).style.pointerEvents = "none";
-      const el = document.elementFromPoint(window.innerWidth / 2, NAV_PROBE_Y);
-      if (header) (header as HTMLElement).style.pointerEvents = prevHeaderPE;
-      document.documentElement.style.pointerEvents = prevPointer;
-      setDark(isLightBg(el));
+      const ratio = Math.min(window.scrollY / FADE_DISTANCE, 1);
+      setBgOpacity(1 - ratio * (1 - MIN_OPACITY));
       isScheduled = false;
     };
 
-    const onScrollOrResize = () => {
+    const onScroll = () => {
       if (!isScheduled) {
         isScheduled = true;
         requestAnimationFrame(update);
@@ -160,37 +124,32 @@ export default function Navbar() {
     };
 
     update();
-    window.addEventListener("scroll", onScrollOrResize, { passive: true });
-    window.addEventListener("resize", onScrollOrResize);
-    return () => {
-      window.removeEventListener("scroll", onScrollOrResize);
-      window.removeEventListener("resize", onScrollOrResize);
-    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, [pathname]);
 
   if (pathname?.startsWith("/admin")) return null;
-
-  const textColor = dark || mobileOpen ? "text-black" : "text-white";
 
   return (
     <>
       <header
         data-navbar-root
-        className="fixed top-0 left-0 right-0 z-50 bg-transparent"
+        className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300"
+        style={{ backgroundColor: `rgba(255, 255, 255, ${bgOpacity})` }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
+          <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}
             <div className="flex-shrink-0">
               <img
-                src="/GpLogoTransparent.png"
+                src="/logowhite.jpeg"
                 alt="ロゴ"
-                className="h-14 md:h-20 w-auto object-contain"
+                className="h-10 md:h-14 w-auto object-contain"
               />
             </div>
 
             {/* Divider — desktop only */}
-            <div className="hidden lg:block w-px h-7 bg-white/25 mx-4" />
+            <div className="hidden lg:block w-px h-7 bg-black/25 mx-4" />
 
             {/* Desktop nav */}
             <nav className="hidden lg:block">
@@ -206,8 +165,7 @@ export default function Navbar() {
                   >
                     <a
                       href={item.href ?? "#"}
-                      className={`font-display text-sm font-black tracking-widest uppercase
-                      ${dark ? "text-black " : "text-white "}relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full transition-colors duration-300 flex items-center gap-1`}
+                      className="font-display text-sm font-black tracking-widest uppercase text-black relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-black after:transition-all after:duration-300 hover:after:w-full transition-colors duration-300 flex items-center gap-1"
                     >
                       {item.label}
                       {item.subItems && (
@@ -278,7 +236,7 @@ export default function Navbar() {
               aria-label={mobileOpen ? "メニューを閉じる" : "メニューを開く"}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((v) => !v)}
-              className={`lg:hidden relative w-10 h-10 flex items-center justify-center transition-colors ${textColor}`}
+              className="lg:hidden relative w-10 h-10 flex items-center justify-center transition-colors text-black"
             >
               <span className="sr-only">ナビゲーションを切り替える</span>
               <span className="relative block w-6 h-4">

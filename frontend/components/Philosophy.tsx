@@ -10,7 +10,7 @@ const philosophyData = [
   {
     id: "vision",
     label: "01 — Vision",
-    title: "「違うから良い」と\n思える社会に",
+    title: "「違うから良い」と\n思える社会へ",
     // 支持文（調整可）
     description:
       "「国籍が違う／考え方が違う／文化が違う／年齢が違う／経験が違う\n私たちは、そんな違いを尊重し合うことで生まれる、新しい可能性の創出に貢献します。」",
@@ -19,7 +19,8 @@ const philosophyData = [
   {
     id: "mission",
     label: "02 — Mission",
-    title: "コミュニケーションの齟齬の解消をサポートし、\n組織の生産性と可能性を最大化させる。",
+    title:
+      "コミュニケーションの齟\n齬の解消をサポートし、\n組織の生産性と可能性を\n最大化させる。",
     description: "",
     image: "/Philosophy2.jpg",
   },
@@ -117,11 +118,11 @@ export default function PhilosophySection() {
 
               {/* Title */}
               <h2
-                className="text-5xl md:text-[3.5rem] font-light leading-tight mb-8 transition-all duration-700"
+                className="text-lg sm:text-xl md:text-xl lg:text-3xl xl:text-4xl font-light leading-tight mb-8 transition-all duration-700"
                 style={{
                   fontFamily: "var(--font-headline)",
                   color: "var(--color-primary)",
-                  whiteSpace: "pre-line",
+                  whiteSpace: "pre",
                   opacity: activeIndex === i ? 1 : 0.25,
                   transform:
                     activeIndex === i ? "translateY(0px)" : "translateY(18px)",

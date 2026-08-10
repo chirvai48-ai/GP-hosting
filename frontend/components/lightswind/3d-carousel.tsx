@@ -107,8 +107,7 @@ const ThreeDCarousel = ({
     flex items-center justify-center"
     >
       <div
-        className="w-full px-4 sm:px-6 lg:px-8 
-      min-w-[350px] md:min-w-[950px] max-w-7xl  "
+        className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl"
       >
         <div
           className="relative overflow-hidden h-[700px] "

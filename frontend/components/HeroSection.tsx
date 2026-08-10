@@ -26,8 +26,7 @@ export default function HeroSection() {
   return (
     <section
       id="scrollArea"
-      data-navbar-tint="light"
-      className="relative h-screen min-h-[600px] w-full overflow-hidden flex items-center justify-center"
+      className="relative mt-14 md:mt-16 h-[calc(100vh-3.5rem)] md:h-[calc(100vh-4rem)] min-h-[600px] w-full overflow-hidden flex items-center justify-center"
     >
       {/* ── Poster / blur-up placeholder ── */}
       {/* Replace the src below with a low-res JPEG exported from your video's first frame */}
@@ -98,6 +97,7 @@ export default function HeroSection() {
             style={{
               color: "#C9A84C",
               fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontVariantNumeric: "lining-nums",
             }}
           >
             東京設立 · 1987年
@@ -107,17 +107,16 @@ export default function HeroSection() {
 
         {/* Main headline */}
         <h1
-          className="text-5xl sm:text-7xl lg:text-8xl font-light leading-[1.05] tracking-tight mb-6"
+          className="text-[8vw] sm:text-7xl lg:text-8xl font-light leading-[1.05] tracking-tight mb-6"
           style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             color: "#F0EBE1",
             textShadow: "0 2px 40px rgba(20,86,82,0.6)",
           }}
         >
-          「違うから良い」
-          <br />
+          <span className="block whitespace-nowrap">「違うから良い」</span>
           <em
-            className="not-italic"
+            className="not-italic block whitespace-nowrap"
             style={{
               color: "#C9A84C",
               fontStyle: "italic",
@@ -125,8 +124,7 @@ export default function HeroSection() {
           >
             と思える
           </em>
-          <br />
-          社会へ
+          <span className="block whitespace-nowrap">社会へ</span>
         </h1>
 
         {/* Sub-copy 

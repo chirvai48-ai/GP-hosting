@@ -88,7 +88,7 @@ const LeadershipSection: React.FC = () => {
                         />
                       </div>
                       {/* Logo badge */}
-                      <div className="absolute -bottom-4 -right-4 w-14 h-14 rounded-full border-2 border-white shadow-md overflow-hidden bg-white">
+                      <div className="absolute -bottom-4 -right-4 w-14 h-14 rounded-full border-2 border-white shadow-md overflow-hidden bg-white p-3">
                         <Image
                           src={leader.logo}
                           alt={`${leader.name} logo`}

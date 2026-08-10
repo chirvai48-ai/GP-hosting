@@ -7,7 +7,7 @@ const companyHistory = [
   {
     year: "1998/09/07",
     milestone: "設立",
-    title: "(株)日本医学総合研究振興協会 設立　調剤薬局事業を開始",
+    title: "(株)日本医学総合研究振興協会\n設立\n調剤薬局事業を開始",
     description: "",
     primary: true,
     icon: <Building2 size={20} />,
@@ -114,7 +114,7 @@ export default function Timeline() {
                       }}
                     >
                       <div className="w-full h-full bg-white rounded-full flex flex-col items-center justify-center gap-1">
-                        <span className="font-headline text-xl font-semibold text-[color:var(--color-primary)]">
+                        <span className="font-headline text-sm sm:text-base font-semibold tracking-tight whitespace-nowrap text-[color:var(--color-primary)]">
                           {item.year}
                         </span>
                         <span className="font-label text-[9px] font-semibold tracking-widest uppercase text-[color:var(--color-on-surface-variant)] bg-[color:var(--color-container-low)] px-2 py-0.5 rounded-full">
@@ -155,7 +155,7 @@ export default function Timeline() {
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2 mb-2">
-                          <h3 className="font-headline text-xl text-[color:var(--color-primary)]">
+                          <h3 className="font-headline text-xl text-[color:var(--color-primary)] whitespace-pre-line">
                             {item.title}
                           </h3>
                           <span className="font-label text-[10px] text-[color:var(--color-on-surface-variant)] bg-[color:var(--color-container-low)] px-2.5 py-1 rounded-full shrink-0">
