@@ -8,7 +8,16 @@ interface TanStackProviderProps {
 }
 
 export const TanStackProvider = ({ children }: TanStackProviderProps) => {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60_000, // 1 min — none of the current lists need sub-minute freshness
+          },
+        },
+      })
+  );
   return (
     <QueryClientProvider client={queryClient}>
       {children}
