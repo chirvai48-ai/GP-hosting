@@ -6,7 +6,8 @@ export const getJobs = async (
   next: NextFunction,
 ) => {
   try {
-    const jobs = await fetchJobs()
+    const status = typeof req.query.status === "string" ? req.query.status : undefined;
+    const jobs = await fetchJobs(status)
     res.status(200).json({
         message : "Job fetched successfully",
         data : jobs

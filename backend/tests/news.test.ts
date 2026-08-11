@@ -51,4 +51,28 @@ describe("news (blogs)", () => {
     const del = await admin.agent.delete(`/api/news/${id}`);
     expect([200, 204]).toContain(del.status);
   });
+
+  it("GET /api/news?status=published only returns published news", async () => {
+    const closed = await admin.agent
+      .post("/api/news")
+      .send(newsPayload({ status: "closed", admin_id: admin.adminId }));
+    const published = await admin.agent
+      .post("/api/news")
+      .send(newsPayload({ status: "published", admin_id: admin.adminId }));
+
+    const res = await anon().get("/api/news?status=published");
+    expect(res.status).toBe(200);
+    const ids = res.body.data.map((n: any) => n.id);
+    expect(ids).toContain(published.body.data.id);
+    expect(ids).not.toContain(closed.body.data.id);
+  });
+
+  it("GET /api/news with no status param still returns all statuses", async () => {
+    const closed = await admin.agent
+      .post("/api/news")
+      .send(newsPayload({ status: "closed", admin_id: admin.adminId }));
+    const res = await anon().get("/api/news");
+    const ids = res.body.data.map((n: any) => n.id);
+    expect(ids).toContain(closed.body.data.id);
+  });
 });

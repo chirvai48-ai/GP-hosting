@@ -81,4 +81,22 @@ describe("jobs (vacancies)", () => {
     expect(res.body.data).toHaveProperty("totalJobs");
     expect(typeof res.body.data.totalJobs).toBe("number");
   });
+
+  it("GET /api/jobs?status=Published only returns published jobs", async () => {
+    const draft = await admin.agent.post("/api/jobs").send(jobPayload({ status: "Draft" }));
+    const published = await admin.agent.post("/api/jobs").send(jobPayload({ status: "Published" }));
+
+    const res = await anon().get("/api/jobs?status=Published");
+    expect(res.status).toBe(200);
+    const ids = res.body.data.map((j: any) => j.id);
+    expect(ids).toContain(published.body.data.id);
+    expect(ids).not.toContain(draft.body.data.id);
+  });
+
+  it("GET /api/jobs with no status param still returns all statuses", async () => {
+    const draft = await admin.agent.post("/api/jobs").send(jobPayload({ status: "Draft" }));
+    const res = await anon().get("/api/jobs");
+    const ids = res.body.data.map((j: any) => j.id);
+    expect(ids).toContain(draft.body.data.id);
+  });
 });

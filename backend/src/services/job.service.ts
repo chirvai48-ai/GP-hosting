@@ -41,8 +41,9 @@ export const createJobs = async (jobs: createJob): Promise<PrismaJob& { signed_u
   return {...result,signed_url:signed_url};
 };
 
-export const fetchJobs = async () => {
+export const fetchJobs = async (status?: string) => {
   const jobs = await prisma.job.findMany({
+    where: status ? { status: status as any } : undefined,
     orderBy: { created_at: "desc" },
     include: {
       job_category: true,

@@ -12,7 +12,7 @@ import { applyJobFilters, DEFAULT_FILTERS, DEFAULT_SEARCH } from "@/lib/jobFilte
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 async function getJobs(): Promise<JobsResponse> {
-  const res = await fetch(`${API_URL}/api/jobs`);
+  const res = await fetch(`${API_URL}/api/jobs?status=Published`);
   if (!res.ok) throw new Error("Failed to fetch jobs");
   return res.json();
 }
@@ -26,10 +26,7 @@ const Page = () => {
     queryFn: getJobs,
   });
 
-  const publishedJobs = useMemo(
-    () => (data?.data ?? []).filter((j) => j.status === "Published"),
-    [data]
-  );
+  const publishedJobs = data?.data ?? [];
 
   const filteredJobs = useMemo(
     () => applyJobFilters(publishedJobs, searchState, filters),

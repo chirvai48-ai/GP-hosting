@@ -9,7 +9,7 @@ import type { News, NewsResponse } from "@/types/table";
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 async function getNews(): Promise<NewsResponse> {
-  const res = await fetch(`${API_URL}/api/news`);
+  const res = await fetch(`${API_URL}/api/news?status=published`);
   if (!res.ok) throw new Error("Failed to fetch news");
   return res.json();
 }
@@ -151,7 +151,7 @@ function NewsPageInner() {
     queryFn: getNews,
   });
 
-  const articles = (data?.data ?? []).filter((n) => n.status === "published");
+  const articles = data?.data ?? [];
 
   const [selectedId, setSelectedId] = useState<number | null>(
     urlId ? Number(urlId) : null

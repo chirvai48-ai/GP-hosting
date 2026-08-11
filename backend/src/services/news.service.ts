@@ -27,8 +27,9 @@ export const createNews = async (data: createNewsType): Promise<PrismaNews & { s
   return { ...result, ...(signed_url && { signed_url }) };
 };
 
-export const fetchNews = async () => {
+export const fetchNews = async (status?: string) => {
   const news = await prisma.news.findMany({
+    where: status ? { status: status as any } : undefined,
     include: { admin: true },
     orderBy: { published_at: "desc" },
   });
