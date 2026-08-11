@@ -99,4 +99,9 @@ describe("jobs (vacancies)", () => {
     const ids = res.body.data.map((j: any) => j.id);
     expect(ids).toContain(draft.body.data.id);
   });
+
+  it("GET /api/jobs?status=garbage returns 400, not a 500", async () => {
+    const res = await anon().get("/api/jobs?status=garbage");
+    expect(res.status).toBe(400);
+  });
 });

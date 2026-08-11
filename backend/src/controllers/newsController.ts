@@ -1,12 +1,19 @@
 import { Request, Response, NextFunction } from "express";
 import { createNews,fetchNews,fetchNewsById,patchNews,removeNews } from "../services/news.service";
+import { NewsStatus } from "../generated/prisma/enums";
 export const getNews = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const status = typeof req.query.status === "string" ? req.query.status : undefined;
+    const rawStatus = req.query.status;
+    const validStatuses = Object.values(NewsStatus);
+    if (rawStatus !== undefined && !validStatuses.includes(rawStatus as NewsStatus)) {
+      res.status(400).json({ message: `Invalid status. Must be one of: ${validStatuses.join(", ")}` });
+      return;
+    }
+    const status = typeof rawStatus === "string" ? rawStatus : undefined;
     const news = await fetchNews(status)
     res.status(200).json({
         message : "News fetched successfully",

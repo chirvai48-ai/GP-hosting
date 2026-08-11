@@ -47,6 +47,7 @@ export const getUrl = async (bucket: string, key: string) => {
 
 export const deleteObject = async (bucket: string, key: string): Promise<void> => {
   await S3.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }));
+  signedUrlCache.delete(`${bucket}/${key}`);
 };
 
 export const putUrl = async (bucket:string,key:string,contentType:string) => {

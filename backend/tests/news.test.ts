@@ -75,4 +75,9 @@ describe("news (blogs)", () => {
     const ids = res.body.data.map((n: any) => n.id);
     expect(ids).toContain(closed.body.data.id);
   });
+
+  it("GET /api/news?status=garbage returns 400, not a 500", async () => {
+    const res = await anon().get("/api/news?status=garbage");
+    expect(res.status).toBe(400);
+  });
 });

@@ -1,12 +1,19 @@
 import { Request, Response, NextFunction } from "express";
 import { createJobs,fetchJobs,fetchJobsById,removeJobs, patchJobs, fetchJobStats } from "../services/job.service";
+import { JobStatus } from "../generated/prisma/enums";
 export const getJobs = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const status = typeof req.query.status === "string" ? req.query.status : undefined;
+    const rawStatus = req.query.status;
+    const validStatuses = Object.values(JobStatus);
+    if (rawStatus !== undefined && !validStatuses.includes(rawStatus as JobStatus)) {
+      res.status(400).json({ message: `Invalid status. Must be one of: ${validStatuses.join(", ")}` });
+      return;
+    }
+    const status = typeof rawStatus === "string" ? rawStatus : undefined;
     const jobs = await fetchJobs(status)
     res.status(200).json({
         message : "Job fetched successfully",
