@@ -7,6 +7,7 @@ import {
   deleteApplication,
   getTalentPool,
   getApplicationStats,
+  getApplicationTrend,
   getNewApplicationCountsByJob,
   exportResume,
 } from "../controllers/applicationController";
@@ -21,6 +22,7 @@ applicationRouter.post("/", validateCreate(createApplicationSchema), postApplica
 applicationRouter.get("/", requireAuth, getApplications);
 applicationRouter.get("/talent-pool", requireAuth, getTalentPool);
 applicationRouter.get("/stats", requireAuth, getApplicationStats);
+applicationRouter.get("/trend", requireAuth, getApplicationTrend);
 applicationRouter.get("/new-counts-by-job", requireAuth, getNewApplicationCountsByJob);
 applicationRouter.get("/:id/resume.xlsx", requireAuth, exportResume);
 applicationRouter.get("/:id", requireAuth, getApplicationById);

@@ -147,6 +147,64 @@ describe("application admin lifecycle", () => {
     expect(data).toHaveProperty("talentPoolCount");
     expect(data).toHaveProperty("hiredThisMonth");
     expect(data).toHaveProperty("totalApplications");
-    expect(Array.isArray(data.weeklyTrend)).toBe(true);
+  });
+
+  it("GET /api/applications/trend requires auth", async () => {
+    const res = await anon().get("/api/applications/trend?granularity=monthly&year=2026&month=8");
+    expect(res.status).toBe(401);
+  });
+
+  it("GET /api/applications/trend rejects an invalid granularity", async () => {
+    const res = await admin.agent.get("/api/applications/trend?granularity=daily");
+    expect(res.status).toBe(400);
+  });
+
+  it("GET /api/applications/trend rejects monthly without a month", async () => {
+    const res = await admin.agent.get("/api/applications/trend?granularity=monthly&year=2026");
+    expect(res.status).toBe(400);
+  });
+
+  it("GET /api/applications/trend rejects quarterly without a quarter", async () => {
+    const res = await admin.agent.get("/api/applications/trend?granularity=quarterly&year=2026");
+    expect(res.status).toBe(400);
+  });
+
+  it("GET /api/applications/trend returns a day-per-bucket monthly trend", async () => {
+    const res = await admin.agent.get("/api/applications/trend?granularity=monthly&year=2026&month=2");
+    expect(res.status).toBe(200);
+    const data = res.body.data;
+    expect(data.granularity).toBe("monthly");
+    // Feb 2026 is not a leap year (2026 % 4 !== 0) -> 28 days
+    expect(data.trend).toHaveLength(28);
+    expect(data.trend[0]).toHaveProperty("label");
+    expect(data.trend[0]).toHaveProperty("count");
+  });
+
+  it("GET /api/applications/trend returns a week-per-bucket quarterly trend covering the quarter", async () => {
+    const res = await admin.agent.get("/api/applications/trend?granularity=quarterly&year=2026&quarter=1");
+    expect(res.status).toBe(200);
+    const data = res.body.data;
+    expect(data.granularity).toBe("quarterly");
+    expect(data.trend.length).toBeGreaterThanOrEqual(13);
+    expect(data.trend.length).toBeLessThanOrEqual(15);
+  });
+
+  it("GET /api/applications/trend returns a 12-bucket yearly trend", async () => {
+    const res = await admin.agent.get("/api/applications/trend?granularity=yearly&year=2026");
+    expect(res.status).toBe(200);
+    const data = res.body.data;
+    expect(data.granularity).toBe("yearly");
+    expect(data.trend).toHaveLength(12);
+  });
+
+  it("GET /api/applications/trend counts applications created earlier in this test file under the current month", async () => {
+    // Applications created by earlier tests in this describe block default created_at to now.
+    const now = new Date();
+    const res = await admin.agent.get(
+      `/api/applications/trend?granularity=monthly&year=${now.getUTCFullYear()}&month=${now.getUTCMonth() + 1}`
+    );
+    expect(res.status).toBe(200);
+    const total = res.body.data.trend.reduce((sum: number, b: { count: number }) => sum + b.count, 0);
+    expect(total).toBeGreaterThan(0);
   });
 });
