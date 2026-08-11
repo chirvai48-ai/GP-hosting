@@ -22,13 +22,27 @@ const S3 = new S3Client({
   },
 });
 
-export const getUrl = async (bucket:string,key:string) => {
-  const getUrl = await getSignedUrl(
+// Signed URLs are valid for 1 hour; cache them for 55 minutes so the same
+// object serves the same URL across requests (lets browsers/CDNs actually
+// cache the image instead of re-fetching on a new signature every time).
+const SIGNED_URL_TTL_MS = 55 * 60 * 1000;
+const signedUrlCache = new Map<string, { url: string; expiresAt: number }>();
+
+export const getUrl = async (bucket: string, key: string) => {
+  const cacheKey = `${bucket}/${key}`;
+  const cached = signedUrlCache.get(cacheKey);
+  if (cached && cached.expiresAt > Date.now()) {
+    return cached.url;
+  }
+
+  const url = await getSignedUrl(
     S3,
     new GetObjectCommand({ Bucket: bucket, Key: key }),
     { expiresIn: 3600 }, // Valid for 1 hour
   );
-  return getUrl
+
+  signedUrlCache.set(cacheKey, { url, expiresAt: Date.now() + SIGNED_URL_TTL_MS });
+  return url;
 };
 
 export const deleteObject = async (bucket: string, key: string): Promise<void> => {
