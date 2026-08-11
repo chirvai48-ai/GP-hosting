@@ -24,7 +24,7 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
           fill: "#fff",
           fontFamily: "Cormorant Garamond,sans-serif",
           fontSize: 40,
-          fontWeight: 100,
+          fontWeight: 300,
           letterSpacing: "7px",
           
         }}
