@@ -23,7 +23,6 @@ interface ApplicationStats {
   talentPoolCount: number;
   hiredThisMonth: number;
   totalApplications: number;
-  weeklyTrend: { weekStart: string; count: number }[];
 }
 
 interface JobStats {
@@ -120,7 +119,7 @@ export default function OverviewPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
         <PipelineChart stageCounts={app.stageCounts} />
-        <TrendChart weeklyTrend={app.weeklyTrend} />
+        <TrendChart />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

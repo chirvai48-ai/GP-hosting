@@ -124,7 +124,6 @@ export const cleanupRejectedApplications = async () => {
 export const fetchApplicationStats = async (adminId: string) => {
   const now = new Date();
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-  const trendCutoff = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
 
   const admin = await prisma.admin.findUnique({
     where: { id: adminId },
@@ -132,7 +131,7 @@ export const fetchApplicationStats = async (adminId: string) => {
   });
   const lastSeenApplicationsAt = admin?.lastSeenApplicationsAt ?? new Date(0);
 
-  const [stageGroups, talentPoolCount, hiredThisMonth, totalApplications, recentApplications, newApplicationsCount] =
+  const [stageGroups, talentPoolCount, hiredThisMonth, totalApplications, newApplicationsCount] =
     await Promise.all([
       prisma.application.groupBy({
         by: ["stage"],
@@ -142,10 +141,6 @@ export const fetchApplicationStats = async (adminId: string) => {
       prisma.application.count({ where: { status: "TalentPool" } }),
       prisma.application.count({ where: { stage: "Hired", updated_at: { gte: startOfMonth } } }),
       prisma.application.count(),
-      prisma.application.findMany({
-        where: { created_at: { gte: trendCutoff } },
-        select: { created_at: true },
-      }),
       prisma.application.count({
         where: { status: { not: "TalentPool" }, created_at: { gt: lastSeenApplicationsAt } },
       }),
@@ -155,25 +150,103 @@ export const fetchApplicationStats = async (adminId: string) => {
     stageGroups.map((g) => [g.stage, g._count])
   ) as Record<string, number>;
 
-  const weeklyTrend: Record<string, number> = {};
-  for (const { created_at } of recentApplications) {
-    const weekStart = new Date(created_at);
-    weekStart.setUTCHours(0, 0, 0, 0);
-    weekStart.setUTCDate(weekStart.getUTCDate() - weekStart.getUTCDay());
-    const key = weekStart.toISOString().slice(0, 10);
-    weeklyTrend[key] = (weeklyTrend[key] ?? 0) + 1;
-  }
-
   return {
     stageCounts,
     talentPoolCount,
     hiredThisMonth,
     totalApplications,
     newApplicationsCount,
-    weeklyTrend: Object.entries(weeklyTrend)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([weekStart, count]) => ({ weekStart, count })),
   };
+};
+
+export type TrendGranularity = "monthly" | "quarterly" | "yearly";
+
+function bucketKey(date: Date, granularity: TrendGranularity): string {
+  if (granularity === "monthly") {
+    return date.toISOString().slice(0, 10); // YYYY-MM-DD
+  }
+  if (granularity === "yearly") {
+    return date.toISOString().slice(0, 7); // YYYY-MM
+  }
+  // quarterly -> bucket by week (Sunday-start, UTC)
+  const weekStart = new Date(date);
+  weekStart.setUTCHours(0, 0, 0, 0);
+  weekStart.setUTCDate(weekStart.getUTCDate() - weekStart.getUTCDay());
+  return weekStart.toISOString().slice(0, 10);
+}
+
+// Zero-fills every bucket in [rangeStart, rangeEnd) so the chart shows a
+// realistic, gap-free time axis instead of only the days/weeks/months that
+// happen to have applications.
+function buildBucketLabels(
+  granularity: TrendGranularity,
+  rangeStart: Date,
+  rangeEnd: Date
+): string[] {
+  const labels: string[] = [];
+  if (granularity === "monthly") {
+    const d = new Date(rangeStart);
+    while (d < rangeEnd) {
+      labels.push(d.toISOString().slice(0, 10));
+      d.setUTCDate(d.getUTCDate() + 1);
+    }
+  } else if (granularity === "yearly") {
+    const d = new Date(rangeStart);
+    while (d < rangeEnd) {
+      labels.push(d.toISOString().slice(0, 7));
+      d.setUTCMonth(d.getUTCMonth() + 1);
+    }
+  } else {
+    const d = new Date(rangeStart);
+    d.setUTCDate(d.getUTCDate() - d.getUTCDay()); // snap back to the week's Sunday
+    while (d < rangeEnd) {
+      labels.push(d.toISOString().slice(0, 10));
+      d.setUTCDate(d.getUTCDate() + 7);
+    }
+  }
+  return labels;
+}
+
+export const fetchApplicationTrend = async (params: {
+  granularity: TrendGranularity;
+  year: number;
+  month?: number; // 1-12, required for "monthly"
+  quarter?: number; // 1-4, required for "quarterly"
+}) => {
+  const { granularity, year, month, quarter } = params;
+
+  let rangeStart: Date;
+  let rangeEnd: Date;
+
+  if (granularity === "monthly") {
+    rangeStart = new Date(Date.UTC(year, month! - 1, 1));
+    rangeEnd = new Date(Date.UTC(year, month!, 1));
+  } else if (granularity === "quarterly") {
+    const quarterStartMonth = (quarter! - 1) * 3;
+    rangeStart = new Date(Date.UTC(year, quarterStartMonth, 1));
+    rangeEnd = new Date(Date.UTC(year, quarterStartMonth + 3, 1));
+  } else {
+    rangeStart = new Date(Date.UTC(year, 0, 1));
+    rangeEnd = new Date(Date.UTC(year + 1, 0, 1));
+  }
+
+  const applications = await prisma.application.findMany({
+    where: { created_at: { gte: rangeStart, lt: rangeEnd } },
+    select: { created_at: true },
+  });
+
+  const counts: Record<string, number> = {};
+  for (const { created_at } of applications) {
+    const key = bucketKey(created_at, granularity);
+    counts[key] = (counts[key] ?? 0) + 1;
+  }
+
+  const trend = buildBucketLabels(granularity, rangeStart, rangeEnd).map((label) => ({
+    label,
+    count: counts[label] ?? 0,
+  }));
+
+  return { granularity, year, month, quarter, trend };
 };
 
 export const fetchNewApplicationCountsByJob = async (adminId: string) => {

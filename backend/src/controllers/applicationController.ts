@@ -7,7 +7,9 @@ import {
   patchApplication as patchApplicationService,
   fetchTalentPool,
   fetchApplicationStats,
+  fetchApplicationTrend,
   fetchNewApplicationCountsByJob,
+  type TrendGranularity,
 } from "../services/application.service";
 import {
   fetchApplicationForResume,
@@ -62,6 +64,54 @@ export const getApplicationStats = async (req: Request, res: Response, next: Nex
   try {
     const stats = await fetchApplicationStats(req.admin!.id);
     res.status(200).json({ message: "Application stats fetched successfully", data: stats });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const VALID_GRANULARITIES: TrendGranularity[] = ["monthly", "quarterly", "yearly"];
+
+export const getApplicationTrend = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const granularity = req.query.granularity as string | undefined;
+    if (!granularity || !VALID_GRANULARITIES.includes(granularity as TrendGranularity)) {
+      res.status(400).json({
+        message: `Invalid or missing granularity. Must be one of: ${VALID_GRANULARITIES.join(", ")}`,
+      });
+      return;
+    }
+
+    const currentYear = new Date().getUTCFullYear();
+    const yearRaw = req.query.year;
+    const year =
+      typeof yearRaw === "string" && /^\d{4}$/.test(yearRaw) ? Number(yearRaw) : currentYear;
+
+    if (granularity === "monthly") {
+      const monthRaw = req.query.month;
+      const month = typeof monthRaw === "string" ? Number(monthRaw) : NaN;
+      if (!Number.isInteger(month) || month < 1 || month > 12) {
+        res.status(400).json({ message: "month is required and must be 1-12 for monthly granularity" });
+        return;
+      }
+      const trend = await fetchApplicationTrend({ granularity: "monthly", year, month });
+      res.status(200).json({ message: "Application trend fetched successfully", data: trend });
+      return;
+    }
+
+    if (granularity === "quarterly") {
+      const quarterRaw = req.query.quarter;
+      const quarter = typeof quarterRaw === "string" ? Number(quarterRaw) : NaN;
+      if (!Number.isInteger(quarter) || quarter < 1 || quarter > 4) {
+        res.status(400).json({ message: "quarter is required and must be 1-4 for quarterly granularity" });
+        return;
+      }
+      const trend = await fetchApplicationTrend({ granularity: "quarterly", year, quarter });
+      res.status(200).json({ message: "Application trend fetched successfully", data: trend });
+      return;
+    }
+
+    const trend = await fetchApplicationTrend({ granularity: "yearly", year });
+    res.status(200).json({ message: "Application trend fetched successfully", data: trend });
   } catch (err) {
     next(err);
   }
