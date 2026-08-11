@@ -35,6 +35,9 @@ model Job {
   status             JobStatus     @default(Draft)
   image_key          String        @unique
   image_type         String
+
+  @@index([status])
+  @@index([created_at])
 }
 
 enum JobStatus {
@@ -132,6 +135,10 @@ model Application {
   japanese_ability   JapaneseAbility?
   working_days       Json?
   notes              Note[]
+
+  @@index([status])
+  @@index([stage])
+  @@index([created_at])
 }
 
 model Note {
@@ -199,6 +206,9 @@ model News {
   status       NewsStatus
   image_key    String?
   image_type   String?
+
+  @@index([status])
+  @@index([published_at])
 }
 
 model ContactRequest {
@@ -212,6 +222,9 @@ model ContactRequest {
   created_at      DateTime       @default(now())
   updated_at      DateTime       @updatedAt
   contact_replies ContactReply[]
+
+  @@index([status])
+  @@index([created_at])
 }
 
 model CandidateInquiry {
@@ -234,6 +247,8 @@ model CandidateInquiry {
   created_at         DateTime              @default(now())
   updated_at         DateTime              @updatedAt
 
+  @@index([state])
+  @@index([created_at])
   @@map("candidate_inquiry")
 }
 
