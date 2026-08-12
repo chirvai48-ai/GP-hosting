@@ -11,10 +11,12 @@ export type Stat = {
 export default function StatGraphic({
   eyebrow,
   heading,
+  headingNowrap,
   stats,
 }: {
   eyebrow?: string;
   heading?: string;
+  headingNowrap?: boolean;
   stats: Stat[];
 }) {
   return (
@@ -27,7 +29,11 @@ export default function StatGraphic({
             </p>
           )}
           {heading && (
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl leading-tight text-[color:var(--color-on-surface)]">
+            <h2
+              className={`font-display text-3xl md:text-4xl lg:text-5xl leading-tight text-[color:var(--color-on-surface)] ${
+                headingNowrap ? "whitespace-nowrap" : ""
+              }`}
+            >
               {heading}
             </h2>
           )}

@@ -10,6 +10,10 @@ export default function HeroSection() {
     const video = videoRef.current;
     if (!video) return;
 
+    // Safari/iOS gates autoplay on the `muted` IDL property, which the
+    // JSX `muted` attribute doesn't reliably set — force it imperatively.
+    video.muted = true;
+
     // Play only after metadata is ready to avoid layout shift
     const handleCanPlay = () => {
       setVideoLoaded(true);
@@ -47,10 +51,11 @@ export default function HeroSection() {
           videoLoaded ? "opacity-100" : "opacity-0"
         }`}
         poster="/hero-poster.jpg"
+        autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
         aria-hidden="true"
       >
         {/* WebM first — browsers pick the first format they support */}
@@ -89,22 +94,6 @@ export default function HeroSection() {
 
       {/* ── Content ── */}
       <div className="relative z-10 px-6 text-center max-w-5xl mx-auto">
-        {/* Eyebrow label */}
-        <div className="mb-6 inline-flex items-center gap-3">
-          <span className="h-px w-10" style={{ background: "#C9A84C" }} />
-          <span
-            className="text-xs tracking-[0.35em] uppercase font-medium"
-            style={{
-              color: "#C9A84C",
-              fontFamily: "var(--font-cormorant), Georgia, serif",
-              fontVariantNumeric: "lining-nums",
-            }}
-          >
-            東京設立 · 1987年
-          </span>
-          <span className="h-px w-10" style={{ background: "#C9A84C" }} />
-        </div>
-
         {/* Main headline */}
         <h1
           className="text-[8vw] sm:text-7xl lg:text-8xl font-light leading-[1.05] tracking-tight mb-6"

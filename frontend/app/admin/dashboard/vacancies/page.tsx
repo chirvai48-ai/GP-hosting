@@ -363,16 +363,16 @@ function AdminVacancy() {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-lg border border-[var(--color-container-low)]">
+      <div className="overflow-auto max-h-[75vh] rounded-lg border border-[var(--color-container-low)]">
         <table className="w-full text-sm border-collapse">
 
-          <thead>
+          <thead className="sticky top-0 z-10">
             {table.getHeaderGroups().map(headerGroup => (
               <tr key={headerGroup.id} className="bg-[var(--color-primary)]">
                 {headerGroup.headers.map(header => (
                   <th
                     key={header.id}
-                    className="px-4 py-3 text-left text-xs font-medium text-white font-[var(--font-label)] whitespace-nowrap border-r border-[var(--color-on-surface)] last:border-r-0"
+                    className="sticky top-0 px-4 py-3 text-left text-xs font-medium text-white font-[var(--font-label)] whitespace-nowrap border-r border-[var(--color-on-surface)] last:border-r-0 bg-[var(--color-primary)]"
                   >
                     {!header.isPlaceholder && flexRender(header.column.columnDef.header, header.getContext())}
                   </th>

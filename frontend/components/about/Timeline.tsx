@@ -15,7 +15,7 @@ const companyHistory = [
   {
     year: "2003/09/01",
     milestone: "事業開始",
-    title: "薬剤師の労働者派遣事業、有料職業紹介事業を開始",
+    title: "薬剤師の労働者派遣事業、\n有料職業紹介事業を開始",
     description: "",
     primary: false,
     icon: <Handshake size={20} />,
@@ -43,6 +43,7 @@ const companyHistory = [
     title: "派遣スタッフ数が50人を超える",
     description: "",
     primary: true,
+    nowrap: true,
     icon: <Zap size={20} />,
   },
   {
@@ -59,6 +60,7 @@ const companyHistory = [
     title: "派遣スタッフ数が100人を超える",
     description: "",
     primary: true,
+    nowrap: true,
     icon: <Star size={20} />,
   },
 ];
@@ -155,7 +157,11 @@ export default function Timeline() {
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2 mb-2">
-                          <h3 className="font-headline text-xl text-[color:var(--color-primary)] whitespace-pre-line">
+                          <h3
+                            className={`font-headline text-xl text-[color:var(--color-primary)] whitespace-pre-line ${
+                              "nowrap" in item && item.nowrap ? "sm:whitespace-nowrap" : ""
+                            }`}
+                          >
                             {item.title}
                           </h3>
                           <span className="font-label text-[10px] text-[color:var(--color-on-surface-variant)] bg-[color:var(--color-container-low)] px-2.5 py-1 rounded-full shrink-0">

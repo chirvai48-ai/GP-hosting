@@ -11,6 +11,7 @@ export default function Section({
   image2,
   imageAlt,
   reverse = false,
+  headingNowrap = false,
   children,
 }: {
   eyebrow?: string;
@@ -20,6 +21,7 @@ export default function Section({
   image2?: string;
   imageAlt?: string;
   reverse?: boolean;
+  headingNowrap?: boolean;
   children?: React.ReactNode;
 }) {
   const hasMedia = Boolean(image);
@@ -37,7 +39,11 @@ export default function Section({
               {eyebrow}
             </p>
           )}
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl leading-tight text-[color:var(--color-on-surface)]">
+          <h2
+            className={`font-display text-3xl md:text-4xl lg:text-5xl leading-tight text-[color:var(--color-on-surface)] ${
+              headingNowrap ? "whitespace-nowrap" : ""
+            }`}
+          >
             {heading}
           </h2>
           {body && (

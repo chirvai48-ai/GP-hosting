@@ -64,12 +64,12 @@ const navItems: NavItem[] = [
     href: "#",
     subItems: [
       {
-        label: "企業様からのお問い合わせ",
+        label: "企業様からの\nお問い合わせ",
         image: "/company.jpg",
         href: "/contact/company",
       },
       {
-        label: "求職者様からのお問い合わせ",
+        label: "求職者様からの\nお問い合わせ",
         image: "/customer.jpg",
         href: "/contact/customer",
       },
@@ -140,12 +140,15 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 flex items-center gap-3">
               <img
                 src="/logowhite.jpeg"
                 alt="ロゴ"
                 className="h-10 md:h-14 w-auto object-contain"
               />
+              <span className="font-display text-sm md:text-base font-black tracking-widest uppercase text-black whitespace-nowrap">
+                Glowing Partner
+              </span>
             </div>
 
             {/* Divider — desktop only */}
@@ -217,7 +220,7 @@ export default function Navbar() {
                             />
                             <div className="absolute inset-0 bg-[var(--color-primary)]/10 group-hover:bg-black/10 transition-colors duration-300" />
                             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent px-3 py-2">
-                              <p className="font-display text-white text-xs tracking-widest uppercase text-center leading-tight">
+                              <p className="font-display text-white text-xs tracking-widest uppercase text-center leading-tight whitespace-pre-line">
                                 {sub.label}
                               </p>
                             </div>
@@ -324,7 +327,7 @@ export default function Navbar() {
                                     backgroundImage: `url('${sub.image}')`,
                                   }}
                                 />
-                                <span className="font-[var(--font-label)] text-[11px] tracking-[0.3em] uppercase text-[color:var(--color-on-surface)] group-hover:text-[color:var(--color-primary)] transition-colors">
+                                <span className="font-[var(--font-label)] text-[11px] tracking-[0.3em] uppercase text-[color:var(--color-on-surface)] group-hover:text-[color:var(--color-primary)] transition-colors whitespace-pre-line">
                                   {sub.label}
                                 </span>
                               </a>

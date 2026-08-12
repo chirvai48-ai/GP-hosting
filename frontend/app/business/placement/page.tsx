@@ -52,6 +52,7 @@ export default function PlacementPage() {
       <StatGraphic
         eyebrow="仕組みと特徴"
         heading="初期費用ゼロの完全成功報酬型モデル。"
+        headingNowrap
         stats={[
           { value: "0", label: "初期費用", sub: "採用が決定するまでの着手金や掲載料などは一切かかりません。" },
           { value: "100%", label: "完全成功報酬制", sub: "紹介した候補者の入社が確定した段階で 初めて費用が発生します。" },
@@ -62,6 +63,7 @@ export default function PlacementPage() {
       <Section
         eyebrow="直接雇用のメリット"
         heading="長期的な活躍を見据えた、直接雇用の基盤づくり。"
+        headingNowrap
         body="弊社の有料職業紹介は、派遣スタッフではなく、自社のコアメンバーとして長期的に活躍する直接雇用枠での採用を目指す企業様に最適なサービスです。完全成功報酬制だからこそ、私たちは単に「枠を埋める」ための紹介はいたしません。貴社の要件や社風に本当にマッチする人材の厳選に徹底してこだわります。"
       />
 
