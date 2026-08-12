@@ -58,6 +58,16 @@ export const ApplicationStatus = {
 export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof ApplicationStatus]
 
 
+export const CvCreationStatus = {
+  Pending: 'Pending',
+  OnProgress: 'OnProgress',
+  Completed: 'Completed',
+  OnHold: 'OnHold'
+} as const
+
+export type CvCreationStatus = (typeof CvCreationStatus)[keyof typeof CvCreationStatus]
+
+
 export const Gender = {
   Male: 'Male',
   Female: 'Female',

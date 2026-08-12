@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Gender, ResidenceStatus, JapaneseAbility, Contract, ApplicationStatus, ApplicationStage } from "../generated/prisma/enums";
+import { Gender, ResidenceStatus, JapaneseAbility, Contract, ApplicationStatus, ApplicationStage, CvCreationStatus } from "../generated/prisma/enums";
 
 const workingDayEnum = z.enum([
   "Monday",
@@ -43,6 +43,8 @@ export const updateApplicationSchema = createApplicationSchema
   .extend({
     stage: z.enum(ApplicationStage),
     status: z.enum(ApplicationStatus),
+    starred: z.boolean(),
+    cv_creation_status: z.enum(CvCreationStatus),
   })
   .partial();
 

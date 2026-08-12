@@ -312,6 +312,13 @@ export type JsonNullableFilterBase<$PrismaModel = never> = {
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
 }
 
+export type EnumCvCreationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.CvCreationStatus | Prisma.EnumCvCreationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CvCreationStatus[]
+  notIn?: $Enums.CvCreationStatus[]
+  not?: Prisma.NestedEnumCvCreationStatusFilter<$PrismaModel> | $Enums.CvCreationStatus
+}
+
 export type EnumApplicationStageWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.ApplicationStage | Prisma.EnumApplicationStageFieldRefInput<$PrismaModel>
   in?: $Enums.ApplicationStage[]
@@ -387,6 +394,16 @@ export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedJsonNullableFilter<$PrismaModel>
   _max?: Prisma.NestedJsonNullableFilter<$PrismaModel>
+}
+
+export type EnumCvCreationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CvCreationStatus | Prisma.EnumCvCreationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CvCreationStatus[]
+  notIn?: $Enums.CvCreationStatus[]
+  not?: Prisma.NestedEnumCvCreationStatusWithAggregatesFilter<$PrismaModel> | $Enums.CvCreationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCvCreationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCvCreationStatusFilter<$PrismaModel>
 }
 
 export type EnumNewsStatusFilter<$PrismaModel = never> = {
@@ -731,6 +748,13 @@ export type NestedEnumJapaneseAbilityNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumJapaneseAbilityNullableFilter<$PrismaModel> | $Enums.JapaneseAbility | null
 }
 
+export type NestedEnumCvCreationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.CvCreationStatus | Prisma.EnumCvCreationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CvCreationStatus[]
+  notIn?: $Enums.CvCreationStatus[]
+  not?: Prisma.NestedEnumCvCreationStatusFilter<$PrismaModel> | $Enums.CvCreationStatus
+}
+
 export type NestedEnumApplicationStageWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.ApplicationStage | Prisma.EnumApplicationStageFieldRefInput<$PrismaModel>
   in?: $Enums.ApplicationStage[]
@@ -803,6 +827,16 @@ export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue
   gte?: runtime.InputJsonValue
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type NestedEnumCvCreationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CvCreationStatus | Prisma.EnumCvCreationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.CvCreationStatus[]
+  notIn?: $Enums.CvCreationStatus[]
+  not?: Prisma.NestedEnumCvCreationStatusWithAggregatesFilter<$PrismaModel> | $Enums.CvCreationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCvCreationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCvCreationStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumNewsStatusFilter<$PrismaModel = never> = {

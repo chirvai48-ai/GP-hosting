@@ -46,6 +46,7 @@ export const updateCandidateInquirySchema = createCandidateInquirySchema
   .omit({ resume_key: true, resume_type: true })
   .extend({
     state: z.enum(CandidateInquiryState),
+    starred: z.boolean(),
   })
   .partial();
 

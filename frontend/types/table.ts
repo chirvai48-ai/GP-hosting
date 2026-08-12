@@ -86,6 +86,7 @@ export type NewsResponse = {
 };
 
 export type ApplicationStatus = "Active" | "OnHold" | "TalentPool";
+export type CvCreationStatus = "Pending" | "OnProgress" | "Completed" | "OnHold";
 export type ApplicationStage =
   | "Pending"
   | "ApplicantCalled"
@@ -130,6 +131,8 @@ export type Application = {
   job?: Job;
   stage: ApplicationStage;
   status: ApplicationStatus;
+  starred: boolean;
+  cv_creation_status: CvCreationStatus;
   created_at: string;
   updated_at: string;
 };
@@ -215,6 +218,7 @@ export type CandidateInquiry = {
   state: CandidateInquiryState;
   moved_to_pool_at: string | null;
   rejected_at: string | null;
+  starred: boolean;
   created_at: string;
   updated_at: string;
 };

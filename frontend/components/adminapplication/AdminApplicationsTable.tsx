@@ -17,6 +17,7 @@ import type {
   ApplicationsResponse,
   ApplicationStage,
   ApplicationStatus,
+  CvCreationStatus,
   Job,
 } from "@/types/table";
 import { adminFetch } from "@/lib/adminFetch";
@@ -73,6 +74,22 @@ const STATUS_LABELS: Record<ApplicationStatus, string> = {
   TalentPool: "Talent pool",
 };
 
+const CV_CREATION_OPTIONS: CvCreationStatus[] = ["Pending", "OnProgress", "Completed", "OnHold"];
+
+const CV_CREATION_STYLES: Record<CvCreationStatus, string> = {
+  Pending: "bg-[#FAEEDA] text-[#854F0B]",
+  OnProgress: "bg-[#E6F1FB] text-[#185FA5]",
+  Completed: "bg-[#EAF3DE] text-[#3B6D11]",
+  OnHold: "bg-[#F0E8F4] text-[#6B1E6B]",
+};
+
+const CV_CREATION_LABELS: Record<CvCreationStatus, string> = {
+  Pending: "Pending",
+  OnProgress: "On progress",
+  Completed: "Completed",
+  OnHold: "On hold",
+};
+
 const RESIDENCE_LABELS: Record<string, string> = {
   Permanent_Resident: "Permanent Resident",
   Work_Visa: "Work Visa",
@@ -99,7 +116,11 @@ async function patchApplication({
   changes,
 }: {
   id: number;
-  changes: Partial<{ stage: ApplicationStage; status: ApplicationStatus }>;
+  changes: Partial<{
+    stage: ApplicationStage;
+    status: ApplicationStatus;
+    cv_creation_status: CvCreationStatus;
+  }>;
 }) {
   const res = await adminFetch(`${API_URL}/api/applications/${id}`, {
     method: "PATCH",
@@ -242,6 +263,32 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
           >
             View <ExternalLink size={12} />
           </a>
+        );
+      },
+    }),
+    columnHelper.accessor("cv_creation_status", {
+      header: "CV creation",
+      size: 130,
+      cell: ({ row, getValue }) => {
+        const current = getValue() as CvCreationStatus;
+        return (
+          <select
+            value={current}
+            disabled={patchMutation.isPending}
+            onChange={(e) =>
+              patchMutation.mutate({
+                id: row.original.id,
+                changes: { cv_creation_status: e.target.value as CvCreationStatus },
+              })
+            }
+            className={`${CV_CREATION_STYLES[current]} text-[11px] px-2 py-0.5 rounded font-medium font-[var(--font-label)] border-0 outline-none cursor-pointer disabled:opacity-50`}
+          >
+            {CV_CREATION_OPTIONS.map((s) => (
+              <option key={s} value={s}>
+                {CV_CREATION_LABELS[s]}
+              </option>
+            ))}
+          </select>
         );
       },
     }),

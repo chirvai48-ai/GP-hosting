@@ -3,14 +3,14 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   createColumnHelper,
   getCoreRowModel,
   useReactTable,
   flexRender,
 } from "@tanstack/react-table";
-import { ExternalLink, Search, MapPin, Briefcase, X } from "lucide-react";
+import { ExternalLink, Search, MapPin, Briefcase, X, Star } from "lucide-react";
 import type {
   Application,
   ApplicationsResponse,
@@ -50,6 +50,7 @@ type PoolRow = {
   added_at: string;
   source: string;
   source_href: string | null; // job link for applications, null for candidates
+  starred: boolean;
   _original: Application | CandidateInquiry;
 };
 
@@ -143,6 +144,17 @@ async function fetchCandidateTalentPool(): Promise<CandidateInquiriesResponse> {
   return res.json();
 }
 
+async function setStarred(type: "application" | "inquiry", id: number, starred: boolean) {
+  const path = type === "application" ? "applications" : "contacts/candidate-inquiries";
+  const res = await adminFetch(`${API_URL}/api/${path}/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ starred }),
+  });
+  if (!res.ok) throw new Error("Failed to update starred status");
+  return res.json();
+}
+
 // ── Column helper ─────────────────────────────────────────────────────────────
 
 const columnHelper = createColumnHelper<PoolRow>();
@@ -151,11 +163,13 @@ const columnHelper = createColumnHelper<PoolRow>();
 
 export default function TalentPoolPage() {
   const [viewing, setViewing] = useState<Viewing | null>(null);
+  const queryClient = useQueryClient();
 
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState("");
   const [japaneseAbility, setJapaneseAbility] = useState("");
   const [jobCategory, setJobCategory] = useState("");
+  const [starredOnly, setStarredOnly] = useState(false);
   const [debouncedFilters, setDebouncedFilters] = useState<Filters>(EMPTY_FILTERS);
   const prevJpRef = useRef(japaneseAbility);
 
@@ -169,14 +183,43 @@ export default function TalentPoolPage() {
     return () => clearTimeout(t);
   }, [search, location, japaneseAbility, jobCategory]);
 
-  const anyFilterActive = search || location || japaneseAbility || jobCategory;
+  const anyFilterActive = search || location || japaneseAbility || jobCategory || starredOnly;
 
   function clearAll() {
     setSearch("");
     setLocation("");
     setJapaneseAbility("");
     setJobCategory("");
+    setStarredOnly(false);
   }
+
+  const starMutation = useMutation({
+    mutationFn: ({ type, id, starred }: { type: "application" | "inquiry"; id: number; starred: boolean }) =>
+      setStarred(type, id, starred),
+    // Patch the cached row in place — refetching would re-sort by updated_at
+    // (which the PATCH also bumps) and jump the row to the top of the list.
+    onSuccess: (_data, { type, id, starred }) => {
+      if (type === "application") {
+        queryClient.setQueriesData<ApplicationsResponse>(
+          { queryKey: ["talent-pool"] },
+          (old) =>
+            old && {
+              ...old,
+              data: old.data.map((a) => (a.id === id ? { ...a, starred } : a)),
+            }
+        );
+      } else {
+        queryClient.setQueriesData<CandidateInquiriesResponse>(
+          { queryKey: ["candidate-talent-pool"] },
+          (old) =>
+            old && {
+              ...old,
+              data: old.data.map((c) => (c.id === id ? { ...c, starred } : c)),
+            }
+        );
+      }
+    },
+  });
 
   // ── Queries ─────────────────────────────────────────────────────────────────
 
@@ -210,6 +253,7 @@ export default function TalentPoolPage() {
       added_at: app.updated_at,
       source: app.job ? `Vacancy: ${app.job.title}` : "Vacancy",
       source_href: app.job ? `/admin/dashboard/applications/${app.job.id}` : null,
+      starred: app.starred,
       _original: app,
     }));
 
@@ -225,6 +269,7 @@ export default function TalentPoolPage() {
       added_at: inq.moved_to_pool_at ?? inq.updated_at,
       source: "Direct submission",
       source_href: null,
+      starred: inq.starred,
       _original: inq,
     }));
 
@@ -238,8 +283,10 @@ export default function TalentPoolPage() {
     if (jp) candRows = candRows.filter((r) => r.japanese_ability === jp);
     if (jc) candRows = []; // candidates have no job category
 
-    return [...appRows, ...candRows];
-  }, [appQuery.data, candQuery.data, debouncedFilters]);
+    let combined = [...appRows, ...candRows];
+    if (starredOnly) combined = combined.filter((r) => r.starred);
+    return combined;
+  }, [appQuery.data, candQuery.data, debouncedFilters, starredOnly]);
 
   // ── Columns ──────────────────────────────────────────────────────────────────
 
@@ -248,18 +295,34 @@ export default function TalentPoolPage() {
       columnHelper.accessor("full_name", {
         header: "Name",
         cell: ({ row, getValue }) => (
-          <button
-            onClick={() =>
-              setViewing(
-                row.original._type === "application"
-                  ? { type: "application", data: row.original._original as Application }
-                  : { type: "inquiry", data: row.original._original as CandidateInquiry }
-              )
-            }
-            className="text-left text-[var(--color-primary)] hover:underline font-[var(--font-label)]"
-          >
-            {getValue()}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() =>
+                starMutation.mutate({
+                  type: row.original._type,
+                  id: row.original.id,
+                  starred: !row.original.starred,
+                })
+              }
+              disabled={starMutation.isPending}
+              aria-label={row.original.starred ? "Unstar" : "Star"}
+              className="shrink-0 text-[var(--color-secondary)] hover:scale-110 transition-transform disabled:opacity-50"
+            >
+              <Star size={16} fill={row.original.starred ? "currentColor" : "none"} />
+            </button>
+            <button
+              onClick={() =>
+                setViewing(
+                  row.original._type === "application"
+                    ? { type: "application", data: row.original._original as Application }
+                    : { type: "inquiry", data: row.original._original as CandidateInquiry }
+                )
+              }
+              className="text-left text-[var(--color-primary)] hover:underline font-[var(--font-label)]"
+            >
+              {getValue()}
+            </button>
+          </div>
         ),
       }),
       columnHelper.accessor("email", { header: "Email", size: 200 }),
@@ -390,6 +453,19 @@ export default function TalentPoolPage() {
             onChange={setLocation}
             className="w-36"
           />
+
+          <button
+            onClick={() => setStarredOnly((v) => !v)}
+            aria-pressed={starredOnly}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-full border font-[var(--font-label)] transition-colors ${
+              starredOnly
+                ? "bg-[var(--color-secondary)] border-[var(--color-secondary)] text-white"
+                : "bg-white border-[var(--color-container-low)] text-gray-700 hover:border-[var(--color-secondary)]"
+            }`}
+          >
+            <Star size={14} fill={starredOnly ? "currentColor" : "none"} />
+            Starred
+          </button>
 
           <div className="relative">
             <select

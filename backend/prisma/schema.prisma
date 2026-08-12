@@ -135,10 +135,14 @@ model Application {
   japanese_ability   JapaneseAbility?
   working_days       Json?
   notes              Note[]
+  starred            Boolean           @default(false)
+  cv_creation_status CvCreationStatus  @default(Pending)
 
   @@index([status])
   @@index([stage])
+  @@index([cv_creation_status])
   @@index([created_at])
+  @@index([starred])
 }
 
 model Note {
@@ -169,6 +173,13 @@ enum ApplicationStatus {
   Active
   OnHold
   TalentPool
+}
+
+enum CvCreationStatus {
+  Pending
+  OnProgress
+  Completed
+  OnHold
 }
 
 enum Gender {
@@ -244,11 +255,13 @@ model CandidateInquiry {
   state              CandidateInquiryState @default(New)
   moved_to_pool_at   DateTime?
   rejected_at        DateTime?
+  starred            Boolean               @default(false)
   created_at         DateTime              @default(now())
   updated_at         DateTime              @updatedAt
 
   @@index([state])
   @@index([created_at])
+  @@index([starred])
   @@map("candidate_inquiry")
 }
 

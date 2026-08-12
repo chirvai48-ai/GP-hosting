@@ -178,7 +178,9 @@ export const ApplicationScalarFieldEnum = {
   nearest_station: 'nearest_station',
   residence_status: 'residence_status',
   japanese_ability: 'japanese_ability',
-  working_days: 'working_days'
+  working_days: 'working_days',
+  starred: 'starred',
+  cv_creation_status: 'cv_creation_status'
 } as const
 
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
@@ -245,6 +247,7 @@ export const CandidateInquiryScalarFieldEnum = {
   state: 'state',
   moved_to_pool_at: 'moved_to_pool_at',
   rejected_at: 'rejected_at',
+  starred: 'starred',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const

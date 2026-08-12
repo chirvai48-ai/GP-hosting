@@ -51,6 +51,7 @@ export type CandidateInquiryMinAggregateOutputType = {
   state: $Enums.CandidateInquiryState | null
   moved_to_pool_at: Date | null
   rejected_at: Date | null
+  starred: boolean | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -72,6 +73,7 @@ export type CandidateInquiryMaxAggregateOutputType = {
   state: $Enums.CandidateInquiryState | null
   moved_to_pool_at: Date | null
   rejected_at: Date | null
+  starred: boolean | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -93,6 +95,7 @@ export type CandidateInquiryCountAggregateOutputType = {
   state: number
   moved_to_pool_at: number
   rejected_at: number
+  starred: number
   created_at: number
   updated_at: number
   _all: number
@@ -124,6 +127,7 @@ export type CandidateInquiryMinAggregateInputType = {
   state?: true
   moved_to_pool_at?: true
   rejected_at?: true
+  starred?: true
   created_at?: true
   updated_at?: true
 }
@@ -145,6 +149,7 @@ export type CandidateInquiryMaxAggregateInputType = {
   state?: true
   moved_to_pool_at?: true
   rejected_at?: true
+  starred?: true
   created_at?: true
   updated_at?: true
 }
@@ -166,6 +171,7 @@ export type CandidateInquiryCountAggregateInputType = {
   state?: true
   moved_to_pool_at?: true
   rejected_at?: true
+  starred?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -274,6 +280,7 @@ export type CandidateInquiryGroupByOutputType = {
   state: $Enums.CandidateInquiryState
   moved_to_pool_at: Date | null
   rejected_at: Date | null
+  starred: boolean
   created_at: Date
   updated_at: Date
   _count: CandidateInquiryCountAggregateOutputType | null
@@ -318,6 +325,7 @@ export type CandidateInquiryWhereInput = {
   state?: Prisma.EnumCandidateInquiryStateFilter<"CandidateInquiry"> | $Enums.CandidateInquiryState
   moved_to_pool_at?: Prisma.DateTimeNullableFilter<"CandidateInquiry"> | Date | string | null
   rejected_at?: Prisma.DateTimeNullableFilter<"CandidateInquiry"> | Date | string | null
+  starred?: Prisma.BoolFilter<"CandidateInquiry"> | boolean
   created_at?: Prisma.DateTimeFilter<"CandidateInquiry"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"CandidateInquiry"> | Date | string
 }
@@ -339,6 +347,7 @@ export type CandidateInquiryOrderByWithRelationInput = {
   state?: Prisma.SortOrder
   moved_to_pool_at?: Prisma.SortOrderInput | Prisma.SortOrder
   rejected_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  starred?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _relevance?: Prisma.CandidateInquiryOrderByRelevanceInput
@@ -364,6 +373,7 @@ export type CandidateInquiryWhereUniqueInput = Prisma.AtLeast<{
   state?: Prisma.EnumCandidateInquiryStateFilter<"CandidateInquiry"> | $Enums.CandidateInquiryState
   moved_to_pool_at?: Prisma.DateTimeNullableFilter<"CandidateInquiry"> | Date | string | null
   rejected_at?: Prisma.DateTimeNullableFilter<"CandidateInquiry"> | Date | string | null
+  starred?: Prisma.BoolFilter<"CandidateInquiry"> | boolean
   created_at?: Prisma.DateTimeFilter<"CandidateInquiry"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"CandidateInquiry"> | Date | string
 }, "id" | "resume_key">
@@ -385,6 +395,7 @@ export type CandidateInquiryOrderByWithAggregationInput = {
   state?: Prisma.SortOrder
   moved_to_pool_at?: Prisma.SortOrderInput | Prisma.SortOrder
   rejected_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  starred?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.CandidateInquiryCountOrderByAggregateInput
@@ -414,6 +425,7 @@ export type CandidateInquiryScalarWhereWithAggregatesInput = {
   state?: Prisma.EnumCandidateInquiryStateWithAggregatesFilter<"CandidateInquiry"> | $Enums.CandidateInquiryState
   moved_to_pool_at?: Prisma.DateTimeNullableWithAggregatesFilter<"CandidateInquiry"> | Date | string | null
   rejected_at?: Prisma.DateTimeNullableWithAggregatesFilter<"CandidateInquiry"> | Date | string | null
+  starred?: Prisma.BoolWithAggregatesFilter<"CandidateInquiry"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"CandidateInquiry"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"CandidateInquiry"> | Date | string
 }
@@ -434,6 +446,7 @@ export type CandidateInquiryCreateInput = {
   state?: $Enums.CandidateInquiryState
   moved_to_pool_at?: Date | string | null
   rejected_at?: Date | string | null
+  starred?: boolean
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -455,6 +468,7 @@ export type CandidateInquiryUncheckedCreateInput = {
   state?: $Enums.CandidateInquiryState
   moved_to_pool_at?: Date | string | null
   rejected_at?: Date | string | null
+  starred?: boolean
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -475,6 +489,7 @@ export type CandidateInquiryUpdateInput = {
   state?: Prisma.EnumCandidateInquiryStateFieldUpdateOperationsInput | $Enums.CandidateInquiryState
   moved_to_pool_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  starred?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -496,6 +511,7 @@ export type CandidateInquiryUncheckedUpdateInput = {
   state?: Prisma.EnumCandidateInquiryStateFieldUpdateOperationsInput | $Enums.CandidateInquiryState
   moved_to_pool_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  starred?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -517,6 +533,7 @@ export type CandidateInquiryCreateManyInput = {
   state?: $Enums.CandidateInquiryState
   moved_to_pool_at?: Date | string | null
   rejected_at?: Date | string | null
+  starred?: boolean
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -537,6 +554,7 @@ export type CandidateInquiryUpdateManyMutationInput = {
   state?: Prisma.EnumCandidateInquiryStateFieldUpdateOperationsInput | $Enums.CandidateInquiryState
   moved_to_pool_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  starred?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -558,6 +576,7 @@ export type CandidateInquiryUncheckedUpdateManyInput = {
   state?: Prisma.EnumCandidateInquiryStateFieldUpdateOperationsInput | $Enums.CandidateInquiryState
   moved_to_pool_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejected_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  starred?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -585,6 +604,7 @@ export type CandidateInquiryCountOrderByAggregateInput = {
   state?: Prisma.SortOrder
   moved_to_pool_at?: Prisma.SortOrder
   rejected_at?: Prisma.SortOrder
+  starred?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -610,6 +630,7 @@ export type CandidateInquiryMaxOrderByAggregateInput = {
   state?: Prisma.SortOrder
   moved_to_pool_at?: Prisma.SortOrder
   rejected_at?: Prisma.SortOrder
+  starred?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -631,6 +652,7 @@ export type CandidateInquiryMinOrderByAggregateInput = {
   state?: Prisma.SortOrder
   moved_to_pool_at?: Prisma.SortOrder
   rejected_at?: Prisma.SortOrder
+  starred?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -662,6 +684,7 @@ export type CandidateInquirySelect<ExtArgs extends runtime.Types.Extensions.Inte
   state?: boolean
   moved_to_pool_at?: boolean
   rejected_at?: boolean
+  starred?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["candidateInquiry"]>
@@ -685,11 +708,12 @@ export type CandidateInquirySelectScalar = {
   state?: boolean
   moved_to_pool_at?: boolean
   rejected_at?: boolean
+  starred?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type CandidateInquiryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "full_name" | "email" | "phone_number" | "date_of_birth" | "gender" | "current_address" | "preferred_location" | "residence_status" | "japanese_ability" | "cover_letter" | "resume_key" | "resume_type" | "state" | "moved_to_pool_at" | "rejected_at" | "created_at" | "updated_at", ExtArgs["result"]["candidateInquiry"]>
+export type CandidateInquiryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "full_name" | "email" | "phone_number" | "date_of_birth" | "gender" | "current_address" | "preferred_location" | "residence_status" | "japanese_ability" | "cover_letter" | "resume_key" | "resume_type" | "state" | "moved_to_pool_at" | "rejected_at" | "starred" | "created_at" | "updated_at", ExtArgs["result"]["candidateInquiry"]>
 
 export type $CandidateInquiryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CandidateInquiry"
@@ -711,6 +735,7 @@ export type $CandidateInquiryPayload<ExtArgs extends runtime.Types.Extensions.In
     state: $Enums.CandidateInquiryState
     moved_to_pool_at: Date | null
     rejected_at: Date | null
+    starred: boolean
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["candidateInquiry"]>
@@ -1098,6 +1123,7 @@ export interface CandidateInquiryFieldRefs {
   readonly state: Prisma.FieldRef<"CandidateInquiry", 'CandidateInquiryState'>
   readonly moved_to_pool_at: Prisma.FieldRef<"CandidateInquiry", 'DateTime'>
   readonly rejected_at: Prisma.FieldRef<"CandidateInquiry", 'DateTime'>
+  readonly starred: Prisma.FieldRef<"CandidateInquiry", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"CandidateInquiry", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"CandidateInquiry", 'DateTime'>
 }
