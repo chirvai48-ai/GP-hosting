@@ -1,0 +1,97 @@
+# NOTE: this workflow is a template built while GP still lived on the
+# Actions-exhausted account. Move this file (plus Dockerfiles + deploy/)
+# into the dedicated hosting repo once it exists, and point `checkout`
+# there or add a second checkout step that pulls this app repo via a PAT.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build backend image
+        run: docker build -t glowing-partner-backend:latest ./backend
+
+      - name: Build frontend image
+        run: |
+          docker build \
+            --build-arg NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }} \
+            --build-arg NEXT_PUBLIC_R2_PUBLIC_URL=${{ secrets.R2_PUBLIC_URL }} \
+            -t glowing-partner-frontend:latest ./frontend
+
+      - name: Save and compress images
+        run: |
+          docker save glowing-partner-backend:latest | gzip > backend.tar.gz
+          docker save glowing-partner-frontend:latest | gzip > frontend.tar.gz
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-images
+          path: |
+            backend.tar.gz
+            frontend.tar.gz
+          retention-days: 90
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: app-images
+
+      - name: Render .env
+        run: |
+          {
+            echo "NODE_ENV=production"
+            echo "PORT=4000"
+            echo "DATABASE_URL=mysql://${{ secrets.DATABASE_USER }}:${{ secrets.DATABASE_PASSWORD }}@mariadb:3306/${{ secrets.DATABASE_NAME }}?allowPublicKeyRetrieval=true&ssl=false"
+            echo "DATABASE_USER=${{ secrets.DATABASE_USER }}"
+            echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}"
+            echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}"
+            echo "DATABASE_HOST=mariadb"
+            echo "DATABASE_PORT=3306"
+            echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}"
+            echo "BETTER_AUTH_SECRET=${{ secrets.BETTER_AUTH_SECRET }}"
+            echo "BETTER_AUTH_URL=${{ secrets.BETTER_AUTH_URL }}"
+            echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN }}"
+            echo "ACCESS_KEY_ID=${{ secrets.R2_ACCESS_KEY_ID }}"
+            echo "SECRET_ACCESS_KEY=${{ secrets.R2_SECRET_ACCESS_KEY }}"
+            echo "S3_ENDPOINT=${{ secrets.R2_ENDPOINT }}"
+            echo "S3_ACCOUNT_ID=${{ secrets.S3_ACCOUNT_ID }}"
+            echo "NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }}"
+          } > .env
+
+      - name: Prepare deploy files
+        run: |
+          cp deploy/docker-compose.yml docker-compose.yml
+          cp deploy/deploy.sh deploy.sh
+          chmod +x deploy.sh
+
+      - name: Copy files to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "backend.tar.gz,frontend.tar.gz,.env,docker-compose.yml,deploy.sh"
+          target: "/opt/apps/glowing-partner"
+
+      - name: Run deploy script on VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            chmod +x /opt/apps/glowing-partner/deploy.sh
+            bash /opt/apps/glowing-partner/deploy.sh

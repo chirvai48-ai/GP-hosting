@@ -1,0 +1,54 @@
+services:
+  frontend:
+    image: glowing-partner-frontend:latest
+    container_name: glowing-partner-frontend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3002:3000"
+    env_file:
+      - .env
+    depends_on:
+      - backend
+    networks:
+      - internal
+
+  backend:
+    image: glowing-partner-backend:latest
+    container_name: glowing-partner-backend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3003:4000"
+    env_file:
+      - .env
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    networks:
+      - internal
+
+  mariadb:
+    image: mariadb:11-jammy
+    container_name: glowing-partner-mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DATABASE_NAME}
+      MARIADB_USER: ${DATABASE_USER}
+      MARIADB_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  mariadb_data:
+    name: glowing-partner_mariadb_data

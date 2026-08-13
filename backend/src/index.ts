@@ -19,8 +19,12 @@ import { requireAuthUnlessNoAdmins } from './middlewares/requireAuth'
 const app = express();
 
 
+const corsOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(",")
+  : ["http://localhost:3000", "http://localhost:3001"];
+
 app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:3001"],
+  origin: corsOrigins,
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
 }))
