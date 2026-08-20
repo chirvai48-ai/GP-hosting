@@ -4,7 +4,11 @@ import type {
   createApplication as createApplicationInput,
   updateApplication as updateApplicationInput,
 } from "../schemas/application.schema";
-import { JapaneseAbility } from "../generated/prisma/enums";
+import { JapaneseAbility, ApplicationStage } from "../generated/prisma/enums";
+import {
+  DEFAULT_LIMIT,
+  type PaginationParams,
+} from "../utils/pagination";
 
 const BUCKET = "glowingpartner";
 const RESUME_PREFIX = "resume";
@@ -26,22 +30,36 @@ export const createApplication = async (data: createApplicationInput) => {
   return { ...result, signed_url };
 };
 
-export const fetchApplications = async (jobId?: number) => {
-  const applications = await prisma.application.findMany({
-    where: {
-      status: { not: "TalentPool" },
-      ...(jobId && { job_id: jobId }),
-    },
-    include: { job: true },
-    orderBy: { created_at: "desc" },
-  });
+export const fetchApplications = async (
+  jobId?: number,
+  stage?: ApplicationStage,
+  pagination: Pick<PaginationParams, "skip" | "take"> = { skip: 0, take: DEFAULT_LIMIT }
+) => {
+  const where = {
+    status: { not: "TalentPool" as const },
+    ...(jobId && { job_id: jobId }),
+    ...(stage && { stage }),
+  };
 
-  return Promise.all(
+  const [applications, total] = await prisma.$transaction([
+    prisma.application.findMany({
+      where,
+      include: { job: true },
+      orderBy: [{ created_at: "desc" }, { id: "desc" }],
+      skip: pagination.skip,
+      take: pagination.take,
+    }),
+    prisma.application.count({ where }),
+  ]);
+
+  const items = await Promise.all(
     applications.map(async (app) => {
       const resume_url = await getUrl(BUCKET, `${RESUME_PREFIX}/${app.resume_key}`);
       return { ...app, resume_url };
     })
   );
+
+  return { items, total };
 };
 
 interface TalentPoolFilters {
@@ -51,34 +69,46 @@ interface TalentPoolFilters {
   job_category?: string;
 }
 
-export const fetchTalentPool = async (filters: TalentPoolFilters = {}) => {
+export const fetchTalentPool = async (
+  filters: TalentPoolFilters = {},
+  pagination: Pick<PaginationParams, "skip" | "take"> = { skip: 0, take: DEFAULT_LIMIT }
+) => {
   const { search, location, japanese_ability, job_category } = filters;
 
-  const applications = await prisma.application.findMany({
-    where: {
-      status: "TalentPool",
-      ...(search && {
-        OR: [
-          { full_name: { contains: search } },
-          { email: { contains: search } },
-        ],
-      }),
-      ...(location && { current_address: { contains: location } }),
-      ...(japanese_ability && { japanese_ability: japanese_ability as JapaneseAbility }),
-      ...(job_category && {
-        job: { job_category: { name: { contains: job_category } } },
-      }),
-    },
-    include: { job: { include: { job_category: true } } },
-    orderBy: { updated_at: "desc" },
-  });
+  const where = {
+    status: "TalentPool" as const,
+    ...(search && {
+      OR: [
+        { full_name: { contains: search } },
+        { email: { contains: search } },
+      ],
+    }),
+    ...(location && { current_address: { contains: location } }),
+    ...(japanese_ability && { japanese_ability: japanese_ability as JapaneseAbility }),
+    ...(job_category && {
+      job: { job_category: { name: { contains: job_category } } },
+    }),
+  };
 
-  return Promise.all(
+  const [applications, total] = await prisma.$transaction([
+    prisma.application.findMany({
+      where,
+      include: { job: { include: { job_category: true } } },
+      orderBy: [{ updated_at: "desc" }, { id: "desc" }],
+      skip: pagination.skip,
+      take: pagination.take,
+    }),
+    prisma.application.count({ where }),
+  ]);
+
+  const items = await Promise.all(
     applications.map(async (app) => {
       const resume_url = await getUrl(BUCKET, `${RESUME_PREFIX}/${app.resume_key}`);
       return { ...app, resume_url };
     })
   );
+
+  return { items, total };
 };
 
 export const patchApplication = async (id: number, data: updateApplicationInput) => {
@@ -121,7 +151,7 @@ export const cleanupRejectedApplications = async () => {
   return stale.length;
 };
 
-export const fetchApplicationStats = async (adminId: string) => {
+export const fetchApplicationStats = async (adminId: string, jobId?: number) => {
   const now = new Date();
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
@@ -131,18 +161,22 @@ export const fetchApplicationStats = async (adminId: string) => {
   });
   const lastSeenApplicationsAt = admin?.lastSeenApplicationsAt ?? new Date(0);
 
+  const jobScope = jobId ? { job_id: jobId } : {};
+
   const [stageGroups, talentPoolCount, hiredThisMonth, totalApplications, newApplicationsCount] =
     await Promise.all([
       prisma.application.groupBy({
         by: ["stage"],
         _count: true,
-        where: { status: { not: "TalentPool" } },
+        where: { status: { not: "TalentPool" }, ...jobScope },
       }),
-      prisma.application.count({ where: { status: "TalentPool" } }),
-      prisma.application.count({ where: { stage: "Hired", updated_at: { gte: startOfMonth } } }),
-      prisma.application.count(),
+      prisma.application.count({ where: { status: "TalentPool", ...jobScope } }),
       prisma.application.count({
-        where: { status: { not: "TalentPool" }, created_at: { gt: lastSeenApplicationsAt } },
+        where: { stage: "Hired", updated_at: { gte: startOfMonth }, ...jobScope },
+      }),
+      prisma.application.count({ where: { ...jobScope } }),
+      prisma.application.count({
+        where: { status: { not: "TalentPool" }, created_at: { gt: lastSeenApplicationsAt }, ...jobScope },
       }),
     ]);
 

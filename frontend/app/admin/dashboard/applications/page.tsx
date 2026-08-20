@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import type { Job, JobsResponse } from "@/types/table";
@@ -11,11 +11,14 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import { adminFetch } from "@/lib/adminFetch";
+import { PaginationControls } from "@/components/Reusables/PaginationControls";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-async function getJobs(): Promise<JobsResponse> {
-  const res = await adminFetch(`${API_URL}/api/jobs`);
+async function getJobs(page = 1, limit = 20): Promise<JobsResponse> {
+  const res = await adminFetch(
+    `${API_URL}/api/jobs?status=Published&page=${page}&limit=${limit}`
+  );
   if (!res.ok) throw new Error("Failed to load jobs");
   return res.json();
 }
@@ -44,9 +47,12 @@ const STATUS_STYLES: Record<string, string> = {
 };
 
 export default function ApplicationsVacancyList() {
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(20);
+
   const { data, isPending, isError } = useQuery({
-    queryKey: ["jobs"],
-    queryFn: getJobs,
+    queryKey: ["jobs", page, limit],
+    queryFn: () => getJobs(page, limit),
   });
 
   const { data: newCounts = {} } = useQuery({
@@ -54,10 +60,8 @@ export default function ApplicationsVacancyList() {
     queryFn: getNewCountsByJob,
   });
 
-  const jobs = useMemo(
-    () => (data?.data ?? []).filter((j) => j.status === "Published"),
-    [data]
-  );
+  const jobs = useMemo(() => data?.data?.items ?? [], [data]);
+  const totalJobs = data?.data?.total ?? 0;
 
   const columns = useMemo(() => [
     columnHelper.accessor("id", { header: "ID", size: 60 }),
@@ -165,7 +169,7 @@ export default function ApplicationsVacancyList() {
           Applications
         </h1>
         <p className="text-sm text-[var(--color-on-surface-variant)] font-[var(--font-label)] mt-1 mb-4">
-          {jobs.length} published {jobs.length === 1 ? "vacancy" : "vacancies"} — pick one to see its applicants
+          {totalJobs} published {totalJobs === 1 ? "vacancy" : "vacancies"} — pick one to see its applicants
         </p>
       </div>
 
@@ -220,6 +224,17 @@ export default function ApplicationsVacancyList() {
           </tbody>
         </table>
       </div>
+
+      <PaginationControls
+        page={page}
+        limit={limit}
+        total={totalJobs}
+        onPageChange={setPage}
+        onLimitChange={(n) => {
+          setLimit(n);
+          setPage(1);
+        }}
+      />
     </div>
   );
 }

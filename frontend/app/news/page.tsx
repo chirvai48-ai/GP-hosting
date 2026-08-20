@@ -1,15 +1,18 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useState, Suspense } from "react";
+import { useState, Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 import { Newspaper, Clock, Sparkles, ArrowUpRight, Calendar } from "lucide-react";
+import { PaginationControls } from "@/components/Reusables/PaginationControls";
 import type { News, NewsResponse } from "@/types/table";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const DEFAULT_LIMIT = 10;
 
-async function getNews(): Promise<NewsResponse> {
-  const res = await fetch(`${API_URL}/api/news?status=published`);
+async function getNews(page: number, limit: number): Promise<NewsResponse> {
+  const res = await fetch(`${API_URL}/api/news?status=published&page=${page}&limit=${limit}`);
   if (!res.ok) throw new Error("Failed to fetch news");
   return res.json();
 }
@@ -49,10 +52,12 @@ function ArticleDetail({ article }: { article: News }) {
     <article className="bg-white rounded-2xl shadow-sm overflow-hidden border border-[rgba(20,86,82,0.08)]">
       <div className="relative w-full h-80 overflow-hidden">
         {article.image_url ? (
-          <img
+          <Image
             src={article.image_url}
             alt={article.title}
-            className="w-full h-full object-cover"
+            fill
+            sizes="(min-width: 1024px) 55vw, 100vw"
+            className="object-cover"
           />
         ) : (
           <ImageFallback title={article.title} />
@@ -104,12 +109,14 @@ function ArticleListItem({
           : "border-transparent bg-white/60 hover:bg-white hover:shadow-sm hover:-translate-y-0.5"
       }`}
     >
-      <div className="shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-[var(--color-container-low)]">
+      <div className="relative shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-[var(--color-container-low)]">
         {article.image_url ? (
-          <img
+          <Image
             src={article.image_url}
             alt=""
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            fill
+            sizes="4rem"
+            className="object-cover transition-transform duration-300 group-hover:scale-110"
           />
         ) : (
           <ImageFallback title={article.title} />
@@ -146,16 +153,25 @@ function NewsPageInner() {
   const searchParams = useSearchParams();
   const urlId = searchParams.get("id");
 
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(DEFAULT_LIMIT);
+
   const { data, isPending, isError } = useQuery({
-    queryKey: ["news-public"],
-    queryFn: getNews,
+    queryKey: ["news-public", page, limit],
+    queryFn: () => getNews(page, limit),
   });
 
-  const articles = data?.data ?? [];
+  const articles = data?.data?.items ?? [];
+  const totalCount = data?.data?.total ?? 0;
+  const totalPages = Math.ceil(totalCount / limit);
 
   const [selectedId, setSelectedId] = useState<number | null>(
     urlId ? Number(urlId) : null
   );
+
+  useEffect(() => {
+    setSelectedId(null);
+  }, [page]);
 
   const selected = articles.find((a) => a.id === selectedId) ?? articles[0];
 
@@ -218,7 +234,7 @@ function NewsPageInner() {
             </div>
             <div>
               <p className="font-headline text-2xl text-[var(--color-primary)] leading-none">
-                {articles.length}
+                {totalCount}
               </p>
               <p className="text-[10px] tracking-[0.16em] uppercase text-[var(--color-on-surface-variant)] font-headline mt-1">
                 総掲載記事数
@@ -240,7 +256,7 @@ function NewsPageInner() {
                 最新記事一覧
               </p>
               <p className="text-[10px] font-headline tracking-widest uppercase text-[var(--color-on-surface-variant)]">
-                全 {articles.length} 件
+                全 {totalCount} 件
               </p>
             </div>
             <div className="max-h-[calc(100vh-12rem)] overflow-y-auto space-y-2 pr-1">
@@ -253,6 +269,20 @@ function NewsPageInner() {
                 />
               ))}
             </div>
+            {totalPages > 1 && (
+              <div className="pt-4">
+                <PaginationControls
+                  page={page}
+                  limit={limit}
+                  total={totalCount}
+                  onPageChange={setPage}
+                  onLimitChange={(n) => {
+                    setLimit(n);
+                    setPage(1);
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -19,6 +19,7 @@ import type {
   JapaneseAbility,
 } from "@/types/table";
 import { adminFetch } from "@/lib/adminFetch";
+import { PaginationControls } from "@/components/Reusables/PaginationControls";
 
 const ApplicationDetailModal = dynamic(
   () => import("@/components/adminapplication/ApplicationDetailModal"),
@@ -126,22 +127,48 @@ function TextFilter({
 
 // ── Fetch functions ───────────────────────────────────────────────────────────
 
+// Talent pool merges two server-side sources into one view, then pages the
+// merged list client-side. Each source is fetched a page at a time at the
+// backend's max page size and looped until exhausted, so the merge always
+// covers every row — a single capped fetch would silently drop anything past
+// the cap once a pool grows past one page.
+const POOL_FETCH_LIMIT = 100;
+
 async function fetchTalentPool(filters: Filters): Promise<ApplicationsResponse> {
-  const params = new URLSearchParams();
-  if (filters.search) params.set("search", filters.search);
-  if (filters.location) params.set("location", filters.location);
-  if (filters.japaneseAbility) params.set("japanese_ability", filters.japaneseAbility);
-  if (filters.jobCategory) params.set("job_category", filters.jobCategory);
-  const qs = params.toString();
-  const res = await adminFetch(`${API_URL}/api/applications/talent-pool${qs ? `?${qs}` : ""}`);
-  if (!res.ok) throw new Error("Failed to load talent pool");
-  return res.json();
+  let page = 1;
+  let items: ApplicationsResponse["data"]["items"] = [];
+  let last: ApplicationsResponse | null = null;
+  for (;;) {
+    const params = new URLSearchParams({ page: String(page), limit: String(POOL_FETCH_LIMIT) });
+    if (filters.search) params.set("search", filters.search);
+    if (filters.location) params.set("location", filters.location);
+    if (filters.japaneseAbility) params.set("japanese_ability", filters.japaneseAbility);
+    if (filters.jobCategory) params.set("job_category", filters.jobCategory);
+    const res = await adminFetch(`${API_URL}/api/applications/talent-pool?${params.toString()}`);
+    if (!res.ok) throw new Error("Failed to load talent pool");
+    last = await res.json();
+    items = items.concat(last!.data.items);
+    if (!last!.data.hasNext) break;
+    page++;
+  }
+  return { ...last!, data: { ...last!.data, items, page: 1, limit: items.length, hasNext: false, hasPrev: false } };
 }
 
 async function fetchCandidateTalentPool(): Promise<CandidateInquiriesResponse> {
-  const res = await adminFetch(`${API_URL}/api/contacts/candidate-inquiries/talent-pool`);
-  if (!res.ok) throw new Error("Failed to load candidate submissions");
-  return res.json();
+  let page = 1;
+  let items: CandidateInquiriesResponse["data"]["items"] = [];
+  let last: CandidateInquiriesResponse | null = null;
+  for (;;) {
+    const res = await adminFetch(
+      `${API_URL}/api/contacts/candidate-inquiries/talent-pool?page=${page}&limit=${POOL_FETCH_LIMIT}`
+    );
+    if (!res.ok) throw new Error("Failed to load candidate submissions");
+    last = await res.json();
+    items = items.concat(last!.data.items);
+    if (!last!.data.hasNext) break;
+    page++;
+  }
+  return { ...last!, data: { ...last!.data, items, page: 1, limit: items.length, hasNext: false, hasPrev: false } };
 }
 
 async function setStarred(type: "application" | "inquiry", id: number, starred: boolean) {
@@ -170,6 +197,8 @@ export default function TalentPoolPage() {
   const [japaneseAbility, setJapaneseAbility] = useState("");
   const [jobCategory, setJobCategory] = useState("");
   const [starredOnly, setStarredOnly] = useState(false);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(20);
   const [debouncedFilters, setDebouncedFilters] = useState<Filters>(EMPTY_FILTERS);
   const prevJpRef = useRef(japaneseAbility);
 
@@ -182,6 +211,10 @@ export default function TalentPoolPage() {
     );
     return () => clearTimeout(t);
   }, [search, location, japaneseAbility, jobCategory]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedFilters, starredOnly]);
 
   const anyFilterActive = search || location || japaneseAbility || jobCategory || starredOnly;
 
@@ -205,7 +238,7 @@ export default function TalentPoolPage() {
           (old) =>
             old && {
               ...old,
-              data: old.data.map((a) => (a.id === id ? { ...a, starred } : a)),
+              data: { ...old.data, items: old.data.items.map((a) => (a.id === id ? { ...a, starred } : a)) },
             }
         );
       } else {
@@ -214,7 +247,7 @@ export default function TalentPoolPage() {
           (old) =>
             old && {
               ...old,
-              data: old.data.map((c) => (c.id === id ? { ...c, starred } : c)),
+              data: { ...old.data, items: old.data.items.map((c) => (c.id === id ? { ...c, starred } : c)) },
             }
         );
       }
@@ -241,7 +274,7 @@ export default function TalentPoolPage() {
     const sl = s.toLowerCase();
     const ll = l.toLowerCase();
 
-    const appRows: PoolRow[] = (appQuery.data?.data ?? []).map((app) => ({
+    const appRows: PoolRow[] = (appQuery.data?.data?.items ?? []).map((app) => ({
       _type: "application",
       id: app.id,
       full_name: app.full_name,
@@ -257,7 +290,7 @@ export default function TalentPoolPage() {
       _original: app,
     }));
 
-    let candRows: PoolRow[] = (candQuery.data?.data ?? []).map((inq) => ({
+    let candRows: PoolRow[] = (candQuery.data?.data?.items ?? []).map((inq) => ({
       _type: "inquiry",
       id: inq.id,
       full_name: inq.full_name,
@@ -287,6 +320,12 @@ export default function TalentPoolPage() {
     if (starredOnly) combined = combined.filter((r) => r.starred);
     return combined;
   }, [appQuery.data, candQuery.data, debouncedFilters, starredOnly]);
+
+  const totalRows = rows.length;
+  const pageRows = useMemo(
+    () => rows.slice((page - 1) * limit, page * limit),
+    [rows, page, limit]
+  );
 
   // ── Columns ──────────────────────────────────────────────────────────────────
 
@@ -413,7 +452,7 @@ export default function TalentPoolPage() {
   );
 
   const table = useReactTable({
-    data: rows,
+    data: pageRows,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -431,8 +470,8 @@ export default function TalentPoolPage() {
           Talent Pool
         </h1>
         <p className="text-sm text-[var(--color-on-surface-variant)] font-[var(--font-label)] mt-1 mb-4">
-          {rows.length}{" "}
-          {rows.length === 1 ? "person" : "people"}
+          {totalRows}{" "}
+          {totalRows === 1 ? "person" : "people"}
           {anyFilterActive ? " matching filters" : " kept for future roles"}
           {!anyFilterActive &&
             '. Open an entry to restore them or move to another state.'}
@@ -540,7 +579,7 @@ export default function TalentPoolPage() {
               ))}
             </thead>
             <tbody>
-              {rows.length === 0 ? (
+              {pageRows.length === 0 ? (
                 <tr>
                   <td
                     colSpan={columns.length}
@@ -576,6 +615,17 @@ export default function TalentPoolPage() {
           </table>
         </div>
       )}
+
+      <PaginationControls
+        page={page}
+        limit={limit}
+        total={totalRows}
+        onPageChange={setPage}
+        onLimitChange={(n) => {
+          setLimit(n);
+          setPage(1);
+        }}
+      />
 
       {viewing?.type === "application" && (
         <ApplicationDetailModal

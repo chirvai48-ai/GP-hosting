@@ -11,13 +11,14 @@ import {
 } from "@tanstack/react-table";
 import { useState, useRef } from "react";
 import { adminFetch } from "@/lib/adminFetch";
+import { PaginationControls } from "@/components/Reusables/PaginationControls";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const columnHelper = createColumnHelper<News>();
 
-async function getNews(): Promise<NewsResponse> {
-  const res = await adminFetch(`${API_URL}/api/news`);
+async function getNews(page = 1, limit = 20): Promise<NewsResponse> {
+  const res = await adminFetch(`${API_URL}/api/news?page=${page}&limit=${limit}`);
   if (!res.ok) throw new Error("Failed to fetch news");
   return res.json();
 }
@@ -43,14 +44,17 @@ function AdminBlogs() {
   const [editingRow, setEditingRow] = useState<News | null>(null);
   const [updatedFields, setUpdatedFields] = useState<Partial<News> | null>(null);
   const [deletingRowId, setDeletingRowId] = useState<number | null>(null);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(20);
   const imageFileRef = useRef<File | null>(null);
 
   const { data, isPending } = useQuery({
-    queryKey: ["news"],
-    queryFn: getNews,
+    queryKey: ["news", page, limit],
+    queryFn: () => getNews(page, limit),
   });
 
-  const news_data = data?.data ?? [];
+  const news_data = data?.data?.items ?? [];
+  const totalArticles = data?.data?.total ?? 0;
 
   const editMutation = useMutation({
     mutationFn: patchNews,
@@ -59,6 +63,7 @@ function AdminBlogs() {
   const deleteMutation = useMutation({
     mutationFn: deleteNews,
     onSuccess: () => {
+      if (news_data.length === 1 && page > 1) setPage((p) => p - 1);
       queryClient.invalidateQueries({ queryKey: ["news"] });
       setDeletingRowId(null);
     },
@@ -280,7 +285,7 @@ function AdminBlogs() {
           News
         </h1>
         <p className="text-sm text-[var(--color-on-surface-variant)] font-[var(--font-label)] mt-1 mb-4">
-          {news_data.length} articles total
+          {totalArticles} articles total
         </p>
         <AddNews />
       </div>
@@ -353,6 +358,17 @@ function AdminBlogs() {
           </tbody>
         </table>
       </div>
+
+      <PaginationControls
+        page={page}
+        limit={limit}
+        total={totalArticles}
+        onPageChange={setPage}
+        onLimitChange={(n) => {
+          setLimit(n);
+          setPage(1);
+        }}
+      />
     </div>
   );
 }

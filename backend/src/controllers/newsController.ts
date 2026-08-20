@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { createNews,fetchNews,fetchNewsById,patchNews,removeNews } from "../services/news.service";
 import { NewsStatus } from "../generated/prisma/enums";
+import { parsePagination, paginatedResponse } from "../utils/pagination";
 export const getNews = async (
   req: Request,
   res: Response,
@@ -14,11 +15,11 @@ export const getNews = async (
       return;
     }
     const status = typeof rawStatus === "string" ? rawStatus : undefined;
-    const news = await fetchNews(status)
-    res.status(200).json({
-        message : "News fetched successfully",
-        data : news
-    })
+    const { page, limit, skip } = parsePagination(req.query as Record<string, unknown>);
+    const { items, total } = await fetchNews(status, { skip, take: limit });
+    res.status(200).json(
+      paginatedResponse("News fetched successfully", items, total, page, limit)
+    );
   } catch (error) {
     next(error);
   }

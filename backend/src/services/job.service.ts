@@ -3,6 +3,10 @@ import { prisma } from "../lib/prisma";
 import type { createJob, updateJob } from "../schemas/job.schema";
 import { Job as PrismaJob } from "../generated/prisma/client";
 import { putUrl, deleteObject, getUrl } from "../configs/cloudflare";
+import {
+  DEFAULT_LIMIT,
+  type PaginationParams,
+} from "../utils/pagination";
 export const createJobs = async (jobs: createJob): Promise<PrismaJob& { signed_url: string }> => {
   const { languages, technical_skills, job_category, ...rest } = jobs;
 
@@ -41,25 +45,103 @@ export const createJobs = async (jobs: createJob): Promise<PrismaJob& { signed_u
   return {...result,signed_url:signed_url};
 };
 
-export const fetchJobs = async (status?: string) => {
-  const jobs = await prisma.job.findMany({
-    where: status ? { status: status as any } : undefined,
-    orderBy: { created_at: "desc" },
-    include: {
-      job_category: true,
-      languages: true,
-      technical_skills: true,
-      _count: { select: { applications: true } },
-    },
-  });
+export interface JobFilters {
+  keyword?: string;
+  city?: string;
+  exp?: number;
+  salaryMin?: number; // yen
+  salaryMax?: number; // yen
+  schedule?: string[]; // active schedule filter keys
+  employment?: string[]; // active employment filter keys
+}
 
-  return Promise.all(
+const SCHEDULE_CONTRACT_MAP: Record<string, string[]> = {
+  full_time: ["Full_time"],
+  part_time: ["Part_time"],
+  internship: ["Internship"],
+  contract: [], // no valid DB enum value — matches nothing
+};
+
+// Translates the public job-search filters (mirrored from the old client-side
+// applyJobFilters) into a Prisma where clause.
+function buildJobWhere(status?: string, filters?: JobFilters) {
+  const where: any = {};
+  if (status) where.status = status;
+  if (!filters) return where;
+
+  const tokens = filters.keyword?.trim().toLowerCase().split(/\s+/).filter(Boolean) ?? [];
+  const and: any[] = [];
+  if (tokens.length) {
+    and.push({
+      OR: tokens.map((token) => ({
+        OR: [
+          { title: { contains: token } },
+          { location: { contains: token } },
+          { job_category: { name: { contains: token } } },
+          { technical_skills: { some: { name: { contains: token } } } },
+          { languages: { some: { name: { contains: token } } } },
+        ],
+      })),
+    });
+  }
+
+  if (filters.city) where.location = { equals: filters.city };
+  if (filters.exp !== undefined) {
+    where.experience = filters.exp === 6 ? { gte: 5 } : filters.exp;
+  }
+  if (filters.salaryMin !== undefined || filters.salaryMax !== undefined) {
+    where.salary_max = { gte: filters.salaryMin ?? 0 };
+    where.salary_min = { lte: filters.salaryMax ?? Number.MAX_SAFE_INTEGER };
+  }
+
+  const contracts = (filters.schedule ?? []).flatMap((s) => SCHEDULE_CONTRACT_MAP[s] ?? []);
+  if (contracts.length) where.contract = { in: contracts };
+
+  const employment = (filters.employment ?? []).map((e) => {
+    if (e === "fivedays") return { workdays: 5 };
+    if (e === "sixdays") return { workdays: 6 };
+    if (e === "shift_based") return { shift_start: { not: null }, shift_end: { not: null } };
+    if (e === "flexible") return { workdays: null, shift_start: null };
+    return null;
+  }).filter(Boolean);
+  if (employment.length) and.push({ OR: employment });
+
+  if (and.length) where.AND = and;
+  return where;
+}
+
+export const fetchJobs = async (
+  status?: string,
+  filters: JobFilters | null = null,
+  pagination: Pick<PaginationParams, "skip" | "take"> = { skip: 0, take: DEFAULT_LIMIT }
+) => {
+  const where = buildJobWhere(status, filters ?? undefined);
+
+  const [jobs, total] = await prisma.$transaction([
+    prisma.job.findMany({
+      where,
+      orderBy: [{ created_at: "desc" }, { id: "desc" }],
+      include: {
+        job_category: true,
+        languages: true,
+        technical_skills: true,
+        _count: { select: { applications: true } },
+      },
+      skip: pagination.skip,
+      take: pagination.take,
+    }),
+    prisma.job.count({ where }),
+  ]);
+
+  const items = await Promise.all(
     jobs.map(async (job) => {
       if (!job.image_key) return job;
       const image_url = await getUrl("glowingpartner", `vacancy/${job.image_key}`);
       return { ...job, image_url };
     })
   );
+
+  return { items, total };
 };
 
 export const fetchJobsById = async (id: number): Promise<PrismaJob[]> => {

@@ -5,6 +5,7 @@ import {
   createAdminAgent,
   companyInquiryPayload,
   candidateInquiryPayload,
+  listItems,
   type AdminSession,
 } from "./helpers/harness";
 
@@ -22,7 +23,7 @@ describe("company inquiry form", () => {
     expect([200, 201], JSON.stringify(res.body)).toContain(res.status);
 
     const list = await admin.agent.get("/api/contacts/company-inquiries");
-    const rows: any[] = list.body.data ?? list.body;
+    const rows: any[] = listItems(list.body);
     expect(rows.some((r) => r.email === payload.email)).toBe(true);
   });
 
@@ -37,7 +38,7 @@ describe("company inquiry form", () => {
     const payload = companyInquiryPayload();
     await anon().post("/api/contacts/company-inquiries").send(payload);
     const list = await admin.agent.get("/api/contacts/company-inquiries");
-    const rows: any[] = list.body.data ?? list.body;
+    const rows: any[] = listItems(list.body);
     const id = rows.find((r) => r.email === payload.email)?.id;
     expect(id).toBeTruthy();
 
@@ -84,7 +85,7 @@ describe("candidate inquiry form", () => {
     const payload = candidateInquiryPayload();
     await anon().post("/api/contacts/candidate-inquiries").send(payload);
     const list = await admin.agent.get("/api/contacts/candidate-inquiries");
-    const rows: any[] = list.body.data ?? list.body;
+    const rows: any[] = listItems(list.body);
     const id = rows.find((r) => r.email === payload.email)?.id;
     expect(id).toBeTruthy();
 

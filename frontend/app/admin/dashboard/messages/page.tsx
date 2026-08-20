@@ -19,6 +19,7 @@ import type {
   CandidateInquiryState,
 } from "@/types/table";
 import { adminFetch } from "@/lib/adminFetch";
+import { PaginationControls } from "@/components/Reusables/PaginationControls";
 
 const CompanyInquiryDetailModal = dynamic(
   () => import("@/components/admincontact/CompanyInquiryDetailModal"),
@@ -59,14 +60,14 @@ const CANDIDATE_STATE_LABELS: Record<CandidateInquiryState, string> = {
 
 // ── Fetch functions ───────────────────────────────────────────────────────────
 
-async function fetchCompanyInquiries(): Promise<CompanyInquiriesResponse> {
-  const res = await adminFetch(`${API_URL}/api/contacts/company-inquiries`);
+async function fetchCompanyInquiries(page = 1, limit = 20): Promise<CompanyInquiriesResponse> {
+  const res = await adminFetch(`${API_URL}/api/contacts/company-inquiries?page=${page}&limit=${limit}`);
   if (!res.ok) throw new Error("Failed to load company inquiries");
   return res.json();
 }
 
-async function fetchCandidateInquiries(): Promise<CandidateInquiriesResponse> {
-  const res = await adminFetch(`${API_URL}/api/contacts/candidate-inquiries`);
+async function fetchCandidateInquiries(page = 1, limit = 20): Promise<CandidateInquiriesResponse> {
+  const res = await adminFetch(`${API_URL}/api/contacts/candidate-inquiries?page=${page}&limit=${limit}`);
   if (!res.ok) throw new Error("Failed to load candidate submissions");
   return res.json();
 }
@@ -80,6 +81,8 @@ const candidateHelper = createColumnHelper<CandidateInquiry>();
 
 export default function MessagesPage() {
   const [activeTab, setActiveTab] = useState<Tab>("company");
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(20);
   const [viewingCompany, setViewingCompany] = useState<CompanyInquiry | null>(null);
   const [viewingCandidate, setViewingCandidate] = useState<CandidateInquiry | null>(null);
   // undefined = not loaded yet (show no dots); null = loaded, never seen before (everything is new)
@@ -101,15 +104,22 @@ export default function MessagesPage() {
 
   // ── Company inquiries ──────────────────────────────────────────────────────
 
+  // Inactive tab only needs its total for the tab badge, so pin it to a cheap
+  // fixed page/limit instead of tracking the active tab's paging state —
+  // otherwise every page/limit change on one tab refetches the other tab too.
+  const companyPage = activeTab === "company" ? page : 1;
+  const companyLimit = activeTab === "company" ? limit : 1;
   const companyQuery = useQuery({
-    queryKey: ["company-inquiries"],
-    queryFn: fetchCompanyInquiries,
+    queryKey: ["company-inquiries", companyPage, companyLimit],
+    queryFn: () => fetchCompanyInquiries(companyPage, companyLimit),
   });
 
   const companyData = useMemo(
-    () => companyQuery.data?.data ?? [],
+    () => companyQuery.data?.data?.items ?? [],
     [companyQuery.data]
   );
+
+  const companyTotal = companyQuery.data?.data?.total ?? 0;
 
   const companyColumns = useMemo(
     () => [
@@ -178,15 +188,19 @@ export default function MessagesPage() {
 
   // ── Candidate inquiries ────────────────────────────────────────────────────
 
+  const candidatePage = activeTab === "candidate" ? page : 1;
+  const candidateLimit = activeTab === "candidate" ? limit : 1;
   const candidateQuery = useQuery({
-    queryKey: ["candidate-inquiries"],
-    queryFn: fetchCandidateInquiries,
+    queryKey: ["candidate-inquiries", candidatePage, candidateLimit],
+    queryFn: () => fetchCandidateInquiries(candidatePage, candidateLimit),
   });
 
   const candidateData = useMemo(
-    () => candidateQuery.data?.data ?? [],
+    () => candidateQuery.data?.data?.items ?? [],
     [candidateQuery.data]
   );
+
+  const candidateTotal = candidateQuery.data?.data?.total ?? 0;
 
   const candidateColumns = useMemo(
     () => [
@@ -277,11 +291,14 @@ export default function MessagesPage() {
       <div className="flex gap-1 mb-4 border-b border-[var(--color-container-low)]">
         {(["company", "candidate"] as Tab[]).map((tab) => {
           const count =
-            tab === "company" ? companyData.length : candidateData.length;
+            tab === "company" ? companyTotal : candidateTotal;
           return (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => {
+                setActiveTab(tab);
+                setPage(1);
+              }}
               className={`px-4 py-2 text-sm font-[var(--font-label)] border-b-2 -mb-px transition-colors ${
                 activeTab === tab
                   ? "border-[var(--color-primary)] text-[var(--color-primary)] font-medium"
@@ -369,6 +386,17 @@ export default function MessagesPage() {
           </table>
         </div>
       )}
+
+      <PaginationControls
+        page={page}
+        limit={limit}
+        total={activeTab === "company" ? companyTotal : candidateTotal}
+        onPageChange={setPage}
+        onLimitChange={(n) => {
+          setLimit(n);
+          setPage(1);
+        }}
+      />
 
       {viewingCompany && (
         <CompanyInquiryDetailModal

@@ -3,6 +3,10 @@ import type {updateNews as updateNewsType } from "../schemas/news.schema";
 import type {createNews as createNewsType } from "../schemas/news.schema";
 import { News as PrismaNews } from "../generated/prisma/client";
 import { putUrl, deleteObject,getUrl } from "../configs/cloudflare";
+import {
+  DEFAULT_LIMIT,
+  type PaginationParams,
+} from "../utils/pagination";
 
 export const createNews = async (data: createNewsType): Promise<PrismaNews & { signed_url?: string }> => {
   const { admin_id, ...rest } = data;
@@ -27,20 +31,32 @@ export const createNews = async (data: createNewsType): Promise<PrismaNews & { s
   return { ...result, ...(signed_url && { signed_url }) };
 };
 
-export const fetchNews = async (status?: string) => {
-  const news = await prisma.news.findMany({
-    where: status ? { status: status as any } : undefined,
-    include: { admin: true },
-    orderBy: { published_at: "desc" },
-  });
+export const fetchNews = async (
+  status?: string,
+  pagination: Pick<PaginationParams, "skip" | "take"> = { skip: 0, take: DEFAULT_LIMIT }
+) => {
+  const where = status ? { status: status as any } : undefined;
 
-  return Promise.all(
+  const [news, total] = await prisma.$transaction([
+    prisma.news.findMany({
+      where,
+      include: { admin: true },
+      orderBy: [{ published_at: "desc" }, { id: "desc" }],
+      skip: pagination.skip,
+      take: pagination.take,
+    }),
+    prisma.news.count({ where }),
+  ]);
+
+  const items = await Promise.all(
     news.map(async (item) => {
       if (!item.image_key) return item;
       const image_url = await getUrl("glowingpartner", `news/${item.image_key}`);
       return { ...item, image_url };
     })
   );
+
+  return { items, total };
 };
 
 export const fetchNewsById = async (id: number): Promise<PrismaNews | null> => {

@@ -14,6 +14,8 @@ export const TanStackProvider = ({ children }: TanStackProviderProps) => {
         defaultOptions: {
           queries: {
             staleTime: 60_000, // 1 min — none of the current lists need sub-minute freshness
+            refetchOnWindowFocus: false, // avoid refetch storms on tab switches
+            retry: 1,
           },
         },
       })

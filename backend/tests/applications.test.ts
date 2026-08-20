@@ -5,6 +5,7 @@ import {
   createAdminAgent,
   seedJob,
   applicationPayload,
+  listItems,
   MARKER,
   type AdminSession,
 } from "./helpers/harness";
@@ -25,7 +26,7 @@ describe("application form submission (public)", () => {
     expect([200, 201], JSON.stringify(res.body)).toContain(res.status);
 
     const list = await admin.agent.get("/api/applications");
-    const rows: any[] = list.body.data ?? list.body;
+    const rows: any[] = listItems(list.body);
     expect(rows.some((a) => a.email === payload.email)).toBe(true);
   });
 
@@ -86,7 +87,7 @@ describe("application admin lifecycle", () => {
   it("moving to TalentPool shows it in the talent pool", async () => {
     await admin.agent.patch(`/api/applications/${appId}`).send({ status: "TalentPool" });
     const pool = await admin.agent.get("/api/applications/talent-pool");
-    const rows: any[] = pool.body.data ?? pool.body;
+    const rows: any[] = listItems(pool.body);
     expect(rows.some((a) => a.id === appId)).toBe(true);
   });
 

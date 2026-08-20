@@ -15,6 +15,8 @@ import {
   fetchApplicationForResume,
   generateResumeXlsx,
 } from "../services/resume.service";
+import { parsePagination, paginatedResponse } from "../utils/pagination";
+import { ApplicationStage } from "../generated/prisma/enums";
 
 export const postApplication = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -32,8 +34,20 @@ export const getApplications = async (req: Request, res: Response, next: NextFun
       typeof jobIdRaw === "string" && /^\d+$/.test(jobIdRaw)
         ? parseInt(jobIdRaw, 10)
         : undefined;
-    const applications = await fetchApplications(jobId);
-    res.status(200).json({ message: "Applications fetched successfully", data: applications });
+
+    const rawStage = req.query.stage;
+    const validStages = Object.values(ApplicationStage);
+    if (rawStage !== undefined && !validStages.includes(rawStage as ApplicationStage)) {
+      res.status(400).json({ message: `Invalid stage. Must be one of: ${validStages.join(", ")}` });
+      return;
+    }
+    const stage = typeof rawStage === "string" ? (rawStage as ApplicationStage) : undefined;
+
+    const { page, limit, skip } = parsePagination(req.query as Record<string, unknown>);
+    const { items, total } = await fetchApplications(jobId, stage, { skip, take: limit });
+    res.status(200).json(
+      paginatedResponse("Applications fetched successfully", items, total, page, limit)
+    );
   } catch (err) {
     next(err);
   }
@@ -53,8 +67,14 @@ export const getTalentPool = async (req: Request, res: Response, next: NextFunct
   try {
     const { search, location, japanese_ability, job_category } =
       req.query as Record<string, string | undefined>;
-    const applications = await fetchTalentPool({ search, location, japanese_ability, job_category });
-    res.status(200).json({ message: "Talent pool fetched successfully", data: applications });
+    const { page, limit, skip } = parsePagination(req.query as Record<string, unknown>);
+    const { items, total } = await fetchTalentPool(
+      { search, location, japanese_ability, job_category },
+      { skip, take: limit }
+    );
+    res.status(200).json(
+      paginatedResponse("Talent pool fetched successfully", items, total, page, limit)
+    );
   } catch (err) {
     next(err);
   }
@@ -62,7 +82,12 @@ export const getTalentPool = async (req: Request, res: Response, next: NextFunct
 
 export const getApplicationStats = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const stats = await fetchApplicationStats(req.admin!.id);
+    const jobIdRaw = req.query.job_id;
+    const jobId =
+      typeof jobIdRaw === "string" && /^\d+$/.test(jobIdRaw)
+        ? parseInt(jobIdRaw, 10)
+        : undefined;
+    const stats = await fetchApplicationStats(req.admin!.id, jobId);
     res.status(200).json({ message: "Application stats fetched successfully", data: stats });
   } catch (err) {
     next(err);

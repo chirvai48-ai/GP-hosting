@@ -16,11 +16,13 @@ import type {
   Application,
   ApplicationsResponse,
   ApplicationStage,
+  ApplicationStatsResponse,
   ApplicationStatus,
   CvCreationStatus,
   Job,
 } from "@/types/table";
 import { adminFetch } from "@/lib/adminFetch";
+import { PaginationControls } from "@/components/Reusables/PaginationControls";
 
 const ApplicationDetailModal = dynamic(() => import("./ApplicationDetailModal"), {
   ssr: false,
@@ -98,9 +100,26 @@ const RESIDENCE_LABELS: Record<string, string> = {
   Other: "Other",
 };
 
-async function fetchApplications(jobId: number): Promise<ApplicationsResponse> {
-  const res = await adminFetch(`${API_URL}/api/applications?job_id=${jobId}`);
+async function fetchApplications(
+  jobId: number,
+  stage: ApplicationStage,
+  page: number,
+  limit: number
+): Promise<ApplicationsResponse> {
+  const params = new URLSearchParams({
+    job_id: String(jobId),
+    page: String(page),
+    limit: String(limit),
+  });
+  params.set("stage", stage);
+  const res = await adminFetch(`${API_URL}/api/applications?${params.toString()}`);
   if (!res.ok) throw new Error("Failed to load applications");
+  return res.json();
+}
+
+async function fetchApplicationStats(jobId: number): Promise<ApplicationStatsResponse> {
+  const res = await adminFetch(`${API_URL}/api/applications/stats?job_id=${jobId}`);
+  if (!res.ok) throw new Error("Failed to load application stats");
   return res.json();
 }
 
@@ -147,6 +166,8 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [viewing, setViewing] = useState<Application | null>(null);
   const [activeTab, setActiveTab] = useState<ApplicationStage>("Pending");
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(20);
   // undefined = not loaded yet (show no dots); null = loaded, never seen before (everything is new)
   const [lastSeenSnapshot, setLastSeenSnapshot] = useState<string | null | undefined>(undefined);
   const hasMarkedSeen = useRef(false);
@@ -161,8 +182,13 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
   }, []);
 
   const { data, isPending, isError } = useQuery({
-    queryKey: ["applications", jobId],
-    queryFn: () => fetchApplications(jobId),
+    queryKey: ["applications", jobId, activeTab, page, limit],
+    queryFn: () => fetchApplications(jobId, activeTab, page, limit),
+  });
+
+  const { data: statsData } = useQuery({
+    queryKey: ["applications-stats", jobId],
+    queryFn: () => fetchApplicationStats(jobId),
   });
 
   const { data: job } = useQuery({
@@ -170,22 +196,32 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
     queryFn: () => fetchJob(jobId),
   });
 
+  const stepBackIfPageDrained = () => {
+    if ((data?.data?.items?.length ?? 0) === 1 && page > 1) setPage((p) => p - 1);
+  };
+
   const patchMutation = useMutation({
     mutationFn: patchApplication,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["applications", jobId] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["applications", jobId] });
+      queryClient.invalidateQueries({ queryKey: ["applications-stats", jobId] });
+    },
     onError: (err) => alert((err as Error).message),
   });
 
   const deleteMutation = useMutation({
     mutationFn: deleteApplication,
     onSuccess: () => {
+      stepBackIfPageDrained();
       queryClient.invalidateQueries({ queryKey: ["applications", jobId] });
+      queryClient.invalidateQueries({ queryKey: ["applications-stats", jobId] });
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
     },
     onError: (err) => alert((err as Error).message),
   });
 
-  const allApplications = useMemo(() => data?.data ?? [], [data]);
+  const applications = data?.data?.items ?? [];
+  const totalApplications = data?.data?.total ?? 0;
 
   const stageCounts = useMemo(() => {
     const counts: Record<ApplicationStage, number> = {
@@ -195,13 +231,16 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
       Hired: 0,
       Rejected: 0,
     };
-    for (const a of allApplications) counts[a.stage] = (counts[a.stage] ?? 0) + 1;
+    const incoming = statsData?.data?.stageCounts ?? {};
+    for (const stage of Object.keys(counts) as ApplicationStage[]) {
+      counts[stage] = incoming[stage] ?? 0;
+    }
     return counts;
-  }, [allApplications]);
+  }, [statsData]);
 
-  const applications = useMemo(
-    () => allApplications.filter((a) => a.stage === activeTab),
-    [allApplications, activeTab]
+  const jobTotalApplicants = useMemo(
+    () => Object.values(stageCounts).reduce((sum, n) => sum + n, 0),
+    [stageCounts]
   );
 
   const columns = useMemo(() => [
@@ -446,7 +485,7 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
           {job?.title ?? "Applications"}
         </h1>
         <p className="text-sm text-[var(--color-on-surface-variant)] font-[var(--font-label)] mt-1 mb-4">
-          {allApplications.length} {allApplications.length === 1 ? "applicant" : "applicants"} total
+          {jobTotalApplicants} {jobTotalApplicants === 1 ? "applicant" : "applicants"} total
           {job?.location ? ` · ${job.location}` : ""}
         </p>
       </div>
@@ -458,7 +497,10 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
           return (
             <button
               key={stage}
-              onClick={() => setActiveTab(stage)}
+              onClick={() => {
+                setActiveTab(stage);
+                setPage(1);
+              }}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-[var(--font-label)] rounded-full border transition-colors ${
                 active
                   ? STAGE_TAB_STYLES[stage]
@@ -531,6 +573,17 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
           </tbody>
         </table>
       </div>
+
+      <PaginationControls
+        page={page}
+        limit={limit}
+        total={totalApplications}
+        onPageChange={setPage}
+        onLimitChange={(n) => {
+          setLimit(n);
+          setPage(1);
+        }}
+      />
 
       {viewing && (
         <ApplicationDetailModal

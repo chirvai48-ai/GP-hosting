@@ -15,7 +15,9 @@ const adapter = new PrismaMariaDb({
   user: getEnv("DATABASE_USER"),
   password: getEnv("DATABASE_PASSWORD"),
   database: getEnv("DATABASE_NAME"),
+  port: Number(getEnv("DATABASE_PORT")),
   connectionLimit: 5,
+  allowPublicKeyRetrieval: true,
 });
 
 const prisma = new PrismaClient({ adapter });

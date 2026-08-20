@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import request from "supertest";
-import { app, createAdminAgent, newsPayload, MARKER, type AdminSession } from "./helpers/harness";
+import { app, createAdminAgent, newsPayload, listItems, MARKER, type AdminSession } from "./helpers/harness";
 
 const anon = () => request(app);
 
@@ -62,7 +62,7 @@ describe("news (blogs)", () => {
 
     const res = await anon().get("/api/news?status=published");
     expect(res.status).toBe(200);
-    const ids = res.body.data.map((n: any) => n.id);
+    const ids = listItems(res.body).map((n: any) => n.id);
     expect(ids).toContain(published.body.data.id);
     expect(ids).not.toContain(closed.body.data.id);
   });
@@ -72,7 +72,7 @@ describe("news (blogs)", () => {
       .post("/api/news")
       .send(newsPayload({ status: "closed", admin_id: admin.adminId }));
     const res = await anon().get("/api/news");
-    const ids = res.body.data.map((n: any) => n.id);
+    const ids = listItems(res.body).map((n: any) => n.id);
     expect(ids).toContain(closed.body.data.id);
   });
 

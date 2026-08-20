@@ -90,6 +90,7 @@ export default function ApplicationDetailModal({
     onSuccess: () => {
       if (application) {
         queryClient.invalidateQueries({ queryKey: ["applications", application.job_id] });
+        queryClient.invalidateQueries({ queryKey: ["applications-stats", application.job_id] });
         queryClient.invalidateQueries({ queryKey: ["jobs"] });
         queryClient.invalidateQueries({ queryKey: ["talent-pool"] });
       }

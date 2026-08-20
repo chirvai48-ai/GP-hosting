@@ -158,6 +158,7 @@ export default function EditApplicationForm({
     try {
       await mutateAsync({ id: application.id, body });
       queryClient.invalidateQueries({ queryKey: ["applications", application.job_id] });
+      queryClient.invalidateQueries({ queryKey: ["applications-stats", application.job_id] });
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
       onSaved();
     } catch (err) {

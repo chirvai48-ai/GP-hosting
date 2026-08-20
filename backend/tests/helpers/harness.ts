@@ -178,6 +178,11 @@ export async function seedJob(admin: AdminSession): Promise<number> {
   return res.body.data?.id ?? res.body.id;
 }
 
+// Helper: extract a row array from any list response, paginated or legacy.
+export function listItems<T = any>(body: any): T[] {
+  return body?.data?.items ?? body?.data ?? [];
+}
+
 // ---- cleanup -------------------------------------------------------------
 
 export async function cleanupAll() {

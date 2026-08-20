@@ -6,6 +6,10 @@ import type {
   createCandidateInquiry as createCandidateInquiryInput,
   updateCandidateInquiry as updateCandidateInquiryInput,
 } from "../schemas/contact.schema";
+import {
+  DEFAULT_LIMIT,
+  type PaginationParams,
+} from "../utils/pagination";
 
 const BUCKET = "glowingpartner";
 const CANDIDATE_RESUME_PREFIX = "candidate-resume";
@@ -14,8 +18,18 @@ export const createCompanyInquiry = async (data: createCompanyInquiryInput) => {
   return prisma.contactRequest.create({ data });
 };
 
-export const fetchCompanyInquiries = async () => {
-  return prisma.contactRequest.findMany({ orderBy: { created_at: "desc" } });
+export const fetchCompanyInquiries = async (
+  pagination: Pick<PaginationParams, "skip" | "take"> = { skip: 0, take: DEFAULT_LIMIT }
+) => {
+  const [inquiries, total] = await prisma.$transaction([
+    prisma.contactRequest.findMany({
+      orderBy: [{ created_at: "desc" }, { id: "desc" }],
+      skip: pagination.skip,
+      take: pagination.take,
+    }),
+    prisma.contactRequest.count(),
+  ]);
+  return { items: inquiries, total };
 };
 
 export const fetchCompanyInquiryById = async (id: number) => {
@@ -49,12 +63,19 @@ export const createCandidateInquiry = async (data: createCandidateInquiryInput) 
   return { ...result, signed_url };
 };
 
-export const fetchCandidateInquiries = async () => {
-  const inquiries = await prisma.candidateInquiry.findMany({
-    orderBy: { created_at: "desc" },
-  });
+export const fetchCandidateInquiries = async (
+  pagination: Pick<PaginationParams, "skip" | "take"> = { skip: 0, take: DEFAULT_LIMIT }
+) => {
+  const [inquiries, total] = await prisma.$transaction([
+    prisma.candidateInquiry.findMany({
+      orderBy: [{ created_at: "desc" }, { id: "desc" }],
+      skip: pagination.skip,
+      take: pagination.take,
+    }),
+    prisma.candidateInquiry.count(),
+  ]);
 
-  return Promise.all(
+  const items = await Promise.all(
     inquiries.map(async (inquiry) => {
       const resume_url = await getUrl(
         BUCKET,
@@ -63,15 +84,26 @@ export const fetchCandidateInquiries = async () => {
       return { ...inquiry, resume_url };
     })
   );
+
+  return { items, total };
 };
 
-export const fetchCandidateTalentPool = async () => {
-  const inquiries = await prisma.candidateInquiry.findMany({
-    where: { state: "MovedToTalentPool" },
-    orderBy: { moved_to_pool_at: "desc" },
-  });
+export const fetchCandidateTalentPool = async (
+  pagination: Pick<PaginationParams, "skip" | "take"> = { skip: 0, take: DEFAULT_LIMIT }
+) => {
+  const where = { state: "MovedToTalentPool" as const };
 
-  return Promise.all(
+  const [inquiries, total] = await prisma.$transaction([
+    prisma.candidateInquiry.findMany({
+      where,
+      orderBy: [{ moved_to_pool_at: "desc" }, { id: "desc" }],
+      skip: pagination.skip,
+      take: pagination.take,
+    }),
+    prisma.candidateInquiry.count({ where }),
+  ]);
+
+  const items = await Promise.all(
     inquiries.map(async (inquiry) => {
       const resume_url = await getUrl(
         BUCKET,
@@ -80,6 +112,8 @@ export const fetchCandidateTalentPool = async () => {
       return { ...inquiry, resume_url };
     })
   );
+
+  return { items, total };
 };
 
 export const fetchCandidateInquiryById = async (id: number) => {

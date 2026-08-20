@@ -13,6 +13,7 @@ import {
   removeCandidateInquiry,
   fetchContactStats,
 } from "../services/contacts.service";
+import { parsePagination, paginatedResponse } from "../utils/pagination";
 
 // Company inquiries
 
@@ -29,10 +30,11 @@ export const postCompanyInquiry = async (req: Request, res: Response, next: Next
 
 export const getCompanyInquiries = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const inquiries = await fetchCompanyInquiries();
+    const { page, limit, skip } = parsePagination(req.query as Record<string, unknown>);
+    const { items, total } = await fetchCompanyInquiries({ skip, take: limit });
     res
       .status(200)
-      .json({ message: "Company inquiries fetched successfully", data: inquiries });
+      .json(paginatedResponse("Company inquiries fetched successfully", items, total, page, limit));
   } catch (err) {
     next(err);
   }
@@ -100,10 +102,11 @@ export const postCandidateInquiry = async (req: Request, res: Response, next: Ne
 
 export const getCandidateInquiries = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const inquiries = await fetchCandidateInquiries();
+    const { page, limit, skip } = parsePagination(req.query as Record<string, unknown>);
+    const { items, total } = await fetchCandidateInquiries({ skip, take: limit });
     res
       .status(200)
-      .json({ message: "Candidate inquiries fetched successfully", data: inquiries });
+      .json(paginatedResponse("Candidate inquiries fetched successfully", items, total, page, limit));
   } catch (err) {
     next(err);
   }
@@ -111,10 +114,11 @@ export const getCandidateInquiries = async (req: Request, res: Response, next: N
 
 export const getCandidateTalentPool = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const inquiries = await fetchCandidateTalentPool();
+    const { page, limit, skip } = parsePagination(req.query as Record<string, unknown>);
+    const { items, total } = await fetchCandidateTalentPool({ skip, take: limit });
     res
       .status(200)
-      .json({ message: "Candidate talent pool fetched successfully", data: inquiries });
+      .json(paginatedResponse("Candidate talent pool fetched successfully", items, total, page, limit));
   } catch (err) {
     next(err);
   }

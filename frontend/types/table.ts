@@ -13,6 +13,16 @@ type TechnicalSkill = {
   name: string;
 };
 
+export type Paginated<T> = {
+  items: T[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+};
+
 export type Job = {
   id: number;
   title: string;
@@ -46,7 +56,7 @@ export type Job = {
 
 export type JobsResponse = {
   message: string;
-  data: Job[];
+  data: Paginated<Job>;
 };
 
 
@@ -82,7 +92,7 @@ export type News = {
 
 export type NewsResponse = {
   message: string;
-  data: News[];
+  data: Paginated<News>;
 };
 
 export type ApplicationStatus = "Active" | "OnHold" | "TalentPool";
@@ -139,7 +149,20 @@ export type Application = {
 
 export type ApplicationsResponse = {
   message: string;
-  data: Application[];
+  data: Paginated<Application>;
+};
+
+export type ApplicationStats = {
+  stageCounts: Partial<Record<ApplicationStage, number>>;
+  talentPoolCount: number;
+  hiredThisMonth: number;
+  totalApplications: number;
+  newApplicationsCount: number;
+};
+
+export type ApplicationStatsResponse = {
+  message: string;
+  data: ApplicationStats;
 };
 
 export type ApplicationResponse = {
@@ -186,7 +209,7 @@ export type CompanyInquiry = {
 
 export type CompanyInquiriesResponse = {
   message: string;
-  data: CompanyInquiry[];
+  data: Paginated<CompanyInquiry>;
 };
 
 export type CompanyInquiryResponse = {
@@ -225,7 +248,7 @@ export type CandidateInquiry = {
 
 export type CandidateInquiriesResponse = {
   message: string;
-  data: CandidateInquiry[];
+  data: Paginated<CandidateInquiry>;
 };
 
 export type CandidateInquiryResponse = {

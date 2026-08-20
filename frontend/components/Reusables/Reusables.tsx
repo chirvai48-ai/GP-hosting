@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { KeyboardEvent } from "react";
+import { compressImage } from "@/lib/imageCompression";
 const tagBoxCls =
   "flex flex-wrap gap-1.5 items-center min-h-[42px] bg-[var(--color-container-low)] border-b-2 border-b-[#c0cbc9] rounded-t-sm px-2 py-1.5 focus-within:border-b-[var(--color-primary)]";
 
@@ -73,11 +74,12 @@ export function ImageUpload({
         type="file"
         accept="image/*"
         className="absolute inset-0 opacity-0 cursor-pointer"
-        onChange={(e) => {
+        onChange={async (e) => {
           const file = e.target.files?.[0];
           if (!file) return;
-          onChange(file);
-          setPreview(URL.createObjectURL(file));
+          const processed = await compressImage(file);
+          setPreview(URL.createObjectURL(processed));
+          onChange(processed);
         }}
       />
       {preview ? (
@@ -90,7 +92,7 @@ export function ImageUpload({
           </span>
 
           {type === "default"? <span className="text-xs text-[#9ab5b2]">
-            PNG, JPG, WEBP up to 5MB
+            PNG, JPG, WEBP — auto-resized & compressed
           </span>: <></>}
         </>
       )}

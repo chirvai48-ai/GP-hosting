@@ -10,6 +10,7 @@ import {
 } from "@tanstack/react-table";
 import { useState } from "react";
 import AddVacancy from "@/components/adminvacancy/AddVacancy";
+import { PaginationControls } from "@/components/Reusables/PaginationControls";
 import { adminFetch } from "@/lib/adminFetch";
 
 type transformedData = Omit<Partial<Job>, "job_category" | "languages" | "technical_skills"> & {
@@ -33,8 +34,10 @@ const TransformData = (updatedFields:Partial<Job> | null): transformedData => {
 
 const columnHelper = createColumnHelper<Job>();
 
-async function getJobs(): Promise<JobsResponse> {
-  const response = await adminFetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jobs`);
+async function getJobs(page = 1, limit = 20): Promise<JobsResponse> {
+  const response = await adminFetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jobs?page=${page}&limit=${limit}`
+  );
   if (!response.ok) throw new Error("Network response was not ok");
   return response.json();
 }
@@ -72,18 +75,25 @@ function AdminVacancy() {
 
   const deleteMutation = useMutation({
     mutationFn: deleteJob,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["jobs"] }),
+    onSuccess: () => {
+      // Deleting the last row on a page would land on an empty page — step back.
+      if (job_data.length === 1 && page > 1) setPage((p) => p - 1);
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+    },
   });
 
   const [editingRow, setEditingRow] = useState<Job | null>(null);
   const [updatedFields,setUpdatedFields] = useState<Partial<Job>|null>(null);
   const [deletingRowId, setDeletingRowId] = useState<number | null>(null);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(20);
   const { data, isPending } = useQuery({
-    queryKey: ["jobs"],
-    queryFn: getJobs,
+    queryKey: ["jobs", page, limit],
+    queryFn: () => getJobs(page, limit),
   });
 
-  const job_data = data?.data ?? [];
+  const job_data = data?.data?.items ?? [];
+  const totalJobs = data?.data?.total ?? 0;
 
   const startEdit = (row: Job) => setEditingRow({ ...row });
   const cancelEdit = () => setEditingRow(null);
@@ -357,7 +367,7 @@ function AdminVacancy() {
           Job Listings
         </h1>
         <p className="text-sm text-[var(--color-on-surface-variant)] font-[var(--font-label)] mt-1 mb-4">
-          {job_data.length} jobs total
+          {totalJobs} jobs total
         </p>
         <AddVacancy />
       </div>
@@ -425,6 +435,17 @@ function AdminVacancy() {
 
         </table>
       </div>
+
+      <PaginationControls
+        page={page}
+        limit={limit}
+        total={totalJobs}
+        onPageChange={setPage}
+        onLimitChange={(n) => {
+          setLimit(n);
+          setPage(1);
+        }}
+      />
     </div>
   );
 }

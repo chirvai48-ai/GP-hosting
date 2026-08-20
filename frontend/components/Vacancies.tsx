@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin, CalendarDays, X, Clock, Briefcase, Users, Star, Award, FileText, Send } from "lucide-react";
 import type { Job } from "@/types/table";
 
@@ -64,11 +65,18 @@ function JobDetailModal({ job, onClose }: { job: Job; onClose: () => void }) {
         </button>
 
         {/* Header image */}
-        <div className="relative w-full rounded-t-2xl overflow-hidden bg-black">
+        <div className="relative w-full h-[70vh] rounded-t-2xl overflow-hidden bg-black">
           {job.image_url ? (
-            <img src={job.image_url} alt={job.title} className="w-full h-auto max-h-[70vh] object-contain" />
+            <Image
+              src={job.image_url}
+              alt={job.title}
+              fill
+              sizes="(min-width: 768px) 60vw, 100vw"
+              priority
+              className="object-contain"
+            />
           ) : (
-            <div className="h-52 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center">
+            <div className="h-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center">
               <span className="text-white/50 text-8xl font-light font-headline select-none">
                 {job.job_category?.name?.[0] ?? "?"}
               </span>
@@ -216,10 +224,12 @@ function VacancyCard({ job, onClick }: { job: Job; onClick: () => void }) {
       {/* Image area */}
       <div className="relative aspect-square w-full overflow-hidden bg-[color:var(--color-container-low)]">
         {job.image_url ? (
-          <img
+          <Image
             src={job.image_url}
             alt={job.title}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
