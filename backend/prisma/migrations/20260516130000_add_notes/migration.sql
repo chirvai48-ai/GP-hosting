@@ -13,10 +13,10 @@ CREATE TABLE `note` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `note` ADD CONSTRAINT `note_application_id_fkey` FOREIGN KEY (`application_id`) REFERENCES `application`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `note` ADD CONSTRAINT `note_application_id_fkey` FOREIGN KEY (`application_id`) REFERENCES `Application`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `note` ADD CONSTRAINT `note_created_by_admin_id_fkey` FOREIGN KEY (`created_by_admin_id`) REFERENCES `Admin`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `note` ADD CONSTRAINT `note_created_by_admin_id_fkey` FOREIGN KEY (`created_by_admin_id`) REFERENCES `admin`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `note` ADD CONSTRAINT `note_last_edited_by_admin_id_fkey` FOREIGN KEY (`last_edited_by_admin_id`) REFERENCES `Admin`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `note` ADD CONSTRAINT `note_last_edited_by_admin_id_fkey` FOREIGN KEY (`last_edited_by_admin_id`) REFERENCES `admin`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE `application` ALTER COLUMN `updated_at` DROP DEFAULT;
+ALTER TABLE `Application` ALTER COLUMN `updated_at` DROP DEFAULT;

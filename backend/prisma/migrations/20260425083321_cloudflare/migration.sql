@@ -8,11 +8,11 @@
 
 */
 -- AlterTable
-ALTER TABLE `application` ADD COLUMN `cover_letter` TEXT NULL,
+ALTER TABLE `Application` ADD COLUMN `cover_letter` TEXT NULL,
     ADD COLUMN `resume_key` VARCHAR(191) NOT NULL;
 
 -- AlterTable
-ALTER TABLE `job` ADD COLUMN `image_key` VARCHAR(191) NOT NULL;
+ALTER TABLE `Job` ADD COLUMN `image_key` VARCHAR(191) NOT NULL;
 
 -- CreateIndex
 

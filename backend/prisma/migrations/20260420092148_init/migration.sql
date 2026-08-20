@@ -50,7 +50,7 @@ CREATE TABLE `JobCategory` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Admin` (
+CREATE TABLE `admin` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
@@ -167,13 +167,13 @@ ALTER TABLE `Job` ADD CONSTRAINT `Job_job_category_id_fkey` FOREIGN KEY (`job_ca
 ALTER TABLE `Application` ADD CONSTRAINT `Application_job_id_fkey` FOREIGN KEY (`job_id`) REFERENCES `Job`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `News` ADD CONSTRAINT `News_admin_id_fkey` FOREIGN KEY (`admin_id`) REFERENCES `Admin`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `News` ADD CONSTRAINT `News_admin_id_fkey` FOREIGN KEY (`admin_id`) REFERENCES `admin`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `ContactReply` ADD CONSTRAINT `ContactReply_contact_request_id_fkey` FOREIGN KEY (`contact_request_id`) REFERENCES `ContactRequest`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ContactReply` ADD CONSTRAINT `ContactReply_adminId_fkey` FOREIGN KEY (`adminId`) REFERENCES `Admin`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `ContactReply` ADD CONSTRAINT `ContactReply_adminId_fkey` FOREIGN KEY (`adminId`) REFERENCES `admin`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `_JobToLanguage` ADD CONSTRAINT `_JobToLanguage_A_fkey` FOREIGN KEY (`A`) REFERENCES `Job`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

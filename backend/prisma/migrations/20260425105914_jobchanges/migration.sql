@@ -5,7 +5,7 @@
 
 */
 -- AlterTable
-ALTER TABLE `job` ADD COLUMN `image_type` VARCHAR(191) NOT NULL;
+ALTER TABLE `Job` ADD COLUMN `image_type` VARCHAR(191) NOT NULL;
 
 
 

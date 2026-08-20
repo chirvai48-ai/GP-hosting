@@ -1,5 +1,5 @@
 -- AlterTable
-ALTER TABLE `application` ADD COLUMN `starred` BOOLEAN NOT NULL DEFAULT false;
+ALTER TABLE `Application` ADD COLUMN `starred` BOOLEAN NOT NULL DEFAULT false;
 
 -- AlterTable
 ALTER TABLE `candidate_inquiry` ADD COLUMN `starred` BOOLEAN NOT NULL DEFAULT false;
