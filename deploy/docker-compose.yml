@@ -7,6 +7,10 @@ services:
       - "127.0.0.1:3002:3000"
     env_file:
       - .env
+    environment:
+      # .env is shared with backend and sets PORT=4000 for it; override here
+      # so `next start` binds to the port docker-compose actually maps (3000).
+      - PORT=3000
     depends_on:
       - backend
     networks:
