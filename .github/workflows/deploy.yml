@@ -9,16 +9,36 @@ on:
     branches: [main]
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+            frontend:
+              - 'frontend/**'
+
   build:
+    needs: changes
+    if: needs.changes.outputs.backend == 'true' || needs.changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Build backend image
+        if: needs.changes.outputs.backend == 'true'
         run: docker build -t glowing-partner-backend:latest ./backend
 
       - name: Build frontend image
+        if: needs.changes.outputs.frontend == 'true'
         run: |
           docker build \
             --build-arg NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }} \
@@ -27,8 +47,12 @@ jobs:
 
       - name: Save and compress images
         run: |
-          docker save glowing-partner-backend:latest | gzip > backend.tar.gz
-          docker save glowing-partner-frontend:latest | gzip > frontend.tar.gz
+          if [ "${{ needs.changes.outputs.backend }}" = "true" ]; then
+            docker save glowing-partner-backend:latest | gzip > backend.tar.gz
+          fi
+          if [ "${{ needs.changes.outputs.frontend }}" = "true" ]; then
+            docker save glowing-partner-frontend:latest | gzip > frontend.tar.gz
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
@@ -37,9 +61,11 @@ jobs:
             backend.tar.gz
             frontend.tar.gz
           retention-days: 90
+          if-no-files-found: ignore
 
   deploy:
-    needs: build
+    needs: [changes, build]
+    if: needs.changes.outputs.backend == 'true' || needs.changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -83,7 +109,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "backend.tar.gz,frontend.tar.gz,.env,docker-compose.yml,deploy.sh"
+          source: "*.tar.gz,.env,docker-compose.yml,deploy.sh"
           target: "/opt/apps/glowing-partner"
 
       - name: Run deploy script on VPS

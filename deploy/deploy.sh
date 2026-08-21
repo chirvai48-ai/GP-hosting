@@ -4,8 +4,9 @@ set -euo pipefail
 APP_DIR=/opt/apps/glowing-partner
 
 echo "==> Loading Docker images"
-docker load < "$APP_DIR/frontend.tar.gz"
-docker load < "$APP_DIR/backend.tar.gz"
+for img in "$APP_DIR"/*.tar.gz; do
+  [ -e "$img" ] && docker load < "$img"
+done
 
 echo "==> Starting services"
 cd "$APP_DIR"
