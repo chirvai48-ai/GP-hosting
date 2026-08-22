@@ -11,9 +11,13 @@ const r2Hostname = process.env.NEXT_PUBLIC_R2_PUBLIC_URL
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    remotePatterns: r2Hostname
-      ? [{ protocol: "https", hostname: r2Hostname }]
-      : [{ protocol: "https", hostname: "**" }],
+    remotePatterns: [
+      ...(r2Hostname ? [{ protocol: "https" as const, hostname: r2Hostname }] : []),
+      // Backend serves presigned GetObject URLs from the R2 S3 endpoint
+      // (e.g. glowingpartner.<account-id>.r2.cloudflarestorage.com), not
+      // the public r2.dev domain above — both hosts need to be allowed.
+      { protocol: "https" as const, hostname: "*.r2.cloudflarestorage.com" },
+    ],
     formats: ["image/avif", "image/webp"],
   },
 };
