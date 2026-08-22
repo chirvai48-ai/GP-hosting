@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { createJobs,fetchJobs,fetchJobsById,removeJobs, patchJobs, fetchJobStats, JobFilters } from "../services/job.service";
+import { createJobs,fetchJobs,fetchJobsById,removeJobs, patchJobs, fetchJobStats, getJobImageUploadUrl, JobFilters } from "../services/job.service";
 import { JobStatus } from "../generated/prisma/enums";
 import {
   parsePagination,
@@ -44,6 +44,24 @@ export const getJobs = async (
     );
   } catch (error) {
     next(error);
+  }
+};
+
+export const getJobImageUploadUrlHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { image_key, image_type } = req.body as { image_key?: string; image_type?: string };
+    if (!image_key || !image_type) {
+      res.status(400).json({ message: "image_key and image_type are required" });
+      return;
+    }
+    const signed_url = await getJobImageUploadUrl(image_key, image_type);
+    res.status(200).json({ message: "Upload URL generated", data: { signed_url } });
+  } catch (err) {
+    next(err);
   }
 };
 

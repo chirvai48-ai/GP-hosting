@@ -7,10 +7,11 @@ import {
   DEFAULT_LIMIT,
   type PaginationParams,
 } from "../utils/pagination";
-export const createJobs = async (jobs: createJob): Promise<PrismaJob& { signed_url: string }> => {
-  const { languages, technical_skills, job_category, ...rest } = jobs;
+export const getJobImageUploadUrl = async (image_key: string, image_type: string) =>
+  putUrl("glowingpartner", `vacancy/${image_key}`, image_type);
 
-  const signed_url = await putUrl("glowingpartner",`vacancy/${jobs.image_key}`,`${jobs.image_type}`)
+export const createJobs = async (jobs: createJob): Promise<PrismaJob> => {
+  const { languages, technical_skills, job_category, ...rest } = jobs;
 
   const result = await prisma.job.create({
     data: {
@@ -42,7 +43,7 @@ export const createJobs = async (jobs: createJob): Promise<PrismaJob& { signed_u
     },
   });
 
-  return {...result,signed_url:signed_url};
+  return result;
 };
 
 export interface JobFilters {
@@ -144,15 +145,20 @@ export const fetchJobs = async (
   return { items, total };
 };
 
-export const fetchJobsById = async (id: number): Promise<PrismaJob[]> => {
-  const job = await prisma.job.findMany({
-    where: {
-      id: {
-        equals: id,
-      },
+export const fetchJobsById = async (id: number) => {
+  const job = await prisma.job.findUnique({
+    where: { id },
+    include: {
+      job_category: true,
+      languages: true,
+      technical_skills: true,
+      _count: { select: { applications: true } },
     },
   });
-  return job;
+  if (!job) return null;
+  if (!job.image_key) return job;
+  const image_url = await getUrl("glowingpartner", `vacancy/${job.image_key}`);
+  return { ...job, image_url };
 };
 
 export const fetchJobStats = async () => {

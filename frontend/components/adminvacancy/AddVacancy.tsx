@@ -77,9 +77,19 @@ function AddVacancy() {
 
   const onSubmit: SubmitHandler<CreateJobForm> = async (formData) => {
     try {
-      const result = await mutateAsync(formData);
-      const signedUrl = result?.data?.signed_url;
-      if (signedUrl && imageFileRef.current) {
+      if (imageFileRef.current) {
+        const urlRes = await adminFetch(`${API_URL}/api/jobs/image-upload-url`, {
+          method: "POST",
+          body: JSON.stringify({
+            image_key: formData.image_key,
+            image_type: formData.image_type,
+          }),
+          headers: { "Content-Type": "application/json" },
+        });
+        const urlBody = await urlRes.json().catch(() => ({}));
+        if (!urlRes.ok) throw new Error(urlBody?.message || "Failed to prepare image upload");
+        const signedUrl = urlBody?.data?.signed_url;
+
         const putRes = await fetch(signedUrl, {
           method: "PUT",
           body: imageFileRef.current,
@@ -87,6 +97,12 @@ function AddVacancy() {
         });
         if (!putRes.ok) throw new Error("Image upload failed");
       }
+
+      // Job row is only created after the image is safely in R2, so a failed
+      // upload never leaves an orphaned Job row behind (previously the row was
+      // created first, so a failed upload still consumed an autoincrement id).
+      await mutateAsync(formData);
+
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
       alert("Job has been successfully created");
       methods.reset();

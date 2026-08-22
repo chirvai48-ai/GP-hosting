@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getJobs,getJobsById,postJobs,deleteJobs,updateJobs,getJobStats } from "../controllers/jobController";
+import { getJobs,getJobsById,postJobs,deleteJobs,updateJobs,getJobStats,getJobImageUploadUrlHandler } from "../controllers/jobController";
 import {validateCreate,validateUpdate } from "../middlewares/validate";
 import { requireAuth } from "../middlewares/requireAuth";
 import { createJobSchema,updateJobSchema } from "../schemas/job.schema";
@@ -269,6 +269,7 @@ const jobsRouter = Router();
 jobsRouter.get("/", getJobs);
 jobsRouter.get("/stats", requireAuth, getJobStats);
 jobsRouter.get("/:id",getJobsById)
+jobsRouter.post("/image-upload-url", requireAuth, getJobImageUploadUrlHandler)
 jobsRouter.post("/", requireAuth, validateCreate(createJobSchema), postJobs)
 jobsRouter.delete("/:id", requireAuth, deleteJobs);
 jobsRouter.patch("/:id", requireAuth, validateUpdate(updateJobSchema), updateJobs)
