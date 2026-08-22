@@ -240,9 +240,15 @@ export default function DiagonalPanel({ data, index }: Props) {
           {data.number}
         </motion.span>
 
+        {/* Reserve the seam zone on the outer container so text can never cross
+            the diagonal golden line. The seam runs 62%->47% (photoLeft) / 53%->38%
+            (photo-right); starting text at 64% / ending at 36% clears its widest
+            point at every viewport width and zoom level. */}
         <div
           className={`absolute inset-0 z-10 flex items-center ${
-            photoLeft ? "justify-end" : "justify-start"
+            photoLeft
+              ? "justify-end pl-[64%] pr-[4%]"
+              : "justify-start pr-[64%] pl-[4%]"
           }`}
         >
           <motion.div
@@ -250,9 +256,7 @@ export default function DiagonalPanel({ data, index }: Props) {
             whileInView="visible"
             viewport={{ once: true, margin: "-15%" }}
             transition={{ staggerChildren: 0.1, delayChildren: 0.3 }}
-            className={`relative w-1/2 px-16 ${
-              photoLeft ? "pl-[7%] pr-10" : "pr-[7%] pl-10"
-            } max-w-2xl`}
+            className="relative w-full max-w-2xl"
           >
             <motion.div
               variants={{
@@ -262,7 +266,7 @@ export default function DiagonalPanel({ data, index }: Props) {
               transition={{ duration: 0.7, ease: easeOut }}
               className="flex items-baseline gap-4 mb-6"
             >
-              <span className="font-display italic text-5xl text-[color:var(--color-secondary)] leading-none">
+              <span className="font-display italic text-4xl lg:text-5xl text-[color:var(--color-secondary)] leading-none">
                 {data.number}
               </span>
               <span className="font-[var(--font-label)] text-[10px] tracking-[0.35em] uppercase text-[color:var(--color-on-surface-variant)]">
@@ -276,7 +280,7 @@ export default function DiagonalPanel({ data, index }: Props) {
                 visible: { opacity: 1, y: 0 },
               }}
               transition={{ duration: 0.9, ease: easeOut }}
-              className="font-display text-6xl leading-[1.02] text-[color:var(--color-on-surface)] mb-8"
+              className="font-display text-4xl lg:text-5xl xl:text-6xl leading-[1.05] xl:leading-[1.02] text-[color:var(--color-on-surface)] mb-8"
             >
               {data.headline}
             </motion.h2>
@@ -293,7 +297,7 @@ export default function DiagonalPanel({ data, index }: Props) {
                 visible: { opacity: 1, y: 0 },
               }}
               transition={{ duration: 0.8, ease: easeOut }}
-              className="font-display text-lg leading-relaxed text-[color:var(--color-on-surface-variant)]"
+              className="font-display text-base lg:text-lg leading-relaxed text-[color:var(--color-on-surface-variant)]"
             >
               {data.body}
             </motion.p>
