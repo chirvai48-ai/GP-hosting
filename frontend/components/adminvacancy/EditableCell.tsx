@@ -6,9 +6,10 @@ interface Props {
   isEditing: boolean;
   rowEdit: Partial<Job>;
   onFieldChange: (field: keyof Job, value: unknown) => void;
+  onImageFileChange?: (file: File) => void;
 }
 
-function EditableCell({ cell, isEditing, rowEdit, onFieldChange }: Props) {
+function EditableCell({ cell, isEditing, rowEdit, onFieldChange, onImageFileChange }: Props) {
   const meta = cell.column.columnDef.meta as
     | { editable?: boolean; inputType?: string; options?: string[] }
     | undefined;
@@ -141,8 +142,10 @@ function EditableCell({ cell, isEditing, rowEdit, onFieldChange }: Props) {
     case "image":
         return(
           <ImageUpload value={currentValue as string} onChange={(val:File) => {
-            onFieldChange(field,val.name)
-            onFieldChange(cell.row.original.image_type as keyof Job,val.type)
+            const ext = val.name.split(".").pop() ?? "bin";
+            onFieldChange(field, `${crypto.randomUUID()}.${ext}`)
+            onFieldChange("image_type" as keyof Job, val.type)
+            onImageFileChange?.(val)
           }} type="table" />
         )
       

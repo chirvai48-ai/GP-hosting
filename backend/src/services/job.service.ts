@@ -181,6 +181,15 @@ export const removeJobs = async (id: number) => {
 
 export const patchJobs = async (id: number, data: updateJob) => {
   const { job_category, languages, technical_skills, ...rest } = data;
+
+  let signed_url: string | undefined;
+  let previousImageKey: string | null | undefined;
+  if (data.image_key !== undefined) {
+    const existing = await prisma.job.findUnique({ where: { id }, select: { image_key: true } });
+    previousImageKey = existing?.image_key;
+    signed_url = await putUrl("glowingpartner", `vacancy/${data.image_key}`, `${data.image_type}`);
+  }
+
   const updatedJob = await prisma.job.update({
     where: {
       id: id,
@@ -215,5 +224,10 @@ export const patchJobs = async (id: number, data: updateJob) => {
       }),
     },
   });
-  return updatedJob;
+
+  if (previousImageKey && previousImageKey !== data.image_key) {
+    await deleteObject("glowingpartner", `vacancy/${previousImageKey}`);
+  }
+
+  return { ...updatedJob, signed_url };
 };

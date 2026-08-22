@@ -8,7 +8,7 @@ import {
   useReactTable,
   flexRender,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import AddVacancy from "@/components/adminvacancy/AddVacancy";
 import { PaginationControls } from "@/components/Reusables/PaginationControls";
 import { adminFetch } from "@/lib/adminFetch";
@@ -84,6 +84,7 @@ function AdminVacancy() {
 
   const [editingRow, setEditingRow] = useState<Job | null>(null);
   const [updatedFields,setUpdatedFields] = useState<Partial<Job>|null>(null);
+  const pendingImageFile = useRef<File | null>(null);
   const [deletingRowId, setDeletingRowId] = useState<number | null>(null);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(20);
@@ -285,10 +286,22 @@ function AdminVacancy() {
         if (isEditing) return (
           <div className="flex gap-2">
             <button
-              onClick={() => {
+              onClick={async () => {
                 const transformedData = TransformData(updatedFields);
-                if (transformedData.id)
-                  mutation.mutate({ id: transformedData.id, data: transformedData });
+                const file = pendingImageFile.current;
+                pendingImageFile.current = null;
+                if (transformedData.id) {
+                  const result = await mutation.mutateAsync({ id: transformedData.id, data: transformedData });
+                  const signedUrl = result?.data?.signed_url;
+                  if (signedUrl && file) {
+                    const putRes = await fetch(signedUrl, {
+                      method: "PUT",
+                      body: file,
+                      headers: { "Content-Type": file.type },
+                    });
+                    if (!putRes.ok) alert("Image upload failed");
+                  }
+                }
                 setEditingRow(null);
                 setUpdatedFields(null);
               }}
@@ -425,6 +438,7 @@ function AdminVacancy() {
                         isEditing={editingRow?.id === row.original.id}
                         rowEdit={editingRow ?? {}}
                         onFieldChange={(field, value) => updateEdit(row.original.id, field, value)}
+                        onImageFileChange={(file) => { pendingImageFile.current = file; }}
                       />
                     </td>
                   ))}
