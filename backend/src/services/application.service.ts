@@ -14,7 +14,9 @@ const BUCKET = "glowingpartner";
 const RESUME_PREFIX = "resume";
 
 export const createApplication = async (data: createApplicationInput) => {
-  const signed_url = await putUrl(BUCKET, `${RESUME_PREFIX}/${data.resume_key}`, data.resume_type);
+  const signed_url = data.resume_key
+    ? await putUrl(BUCKET, `${RESUME_PREFIX}/${data.resume_key}`, data.resume_type ?? "application/octet-stream")
+    : undefined;
 
   const { job_id, date_of_birth, ...rest } = data;
 
@@ -54,7 +56,9 @@ export const fetchApplications = async (
 
   const items = await Promise.all(
     applications.map(async (app) => {
-      const resume_url = await getUrl(BUCKET, `${RESUME_PREFIX}/${app.resume_key}`);
+      const resume_url = app.resume_key
+        ? await getUrl(BUCKET, `${RESUME_PREFIX}/${app.resume_key}`)
+        : null;
       return { ...app, resume_url };
     })
   );
@@ -103,7 +107,9 @@ export const fetchTalentPool = async (
 
   const items = await Promise.all(
     applications.map(async (app) => {
-      const resume_url = await getUrl(BUCKET, `${RESUME_PREFIX}/${app.resume_key}`);
+      const resume_url = app.resume_key
+        ? await getUrl(BUCKET, `${RESUME_PREFIX}/${app.resume_key}`)
+        : null;
       return { ...app, resume_url };
     })
   );
@@ -130,7 +136,9 @@ export const fetchApplicationById = async (id: number) => {
 
   if (!application) return null;
 
-  const resume_url = await getUrl(BUCKET, `${RESUME_PREFIX}/${application.resume_key}`);
+  const resume_url = application.resume_key
+    ? await getUrl(BUCKET, `${RESUME_PREFIX}/${application.resume_key}`)
+    : null;
   return { ...application, resume_url };
 };
 

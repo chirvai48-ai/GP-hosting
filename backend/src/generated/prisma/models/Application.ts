@@ -330,7 +330,7 @@ export type ApplicationGroupByOutputType = {
   phone_number: string
   email: string
   current_address: string
-  permanent_address: string
+  permanent_address: string | null
   preferred_location: string
   availability: $Enums.Contract
   school_college: string
@@ -342,7 +342,7 @@ export type ApplicationGroupByOutputType = {
   created_at: Date
   updated_at: Date
   cover_letter: string | null
-  resume_key: string
+  resume_key: string | null
   resume_type: string | null
   gender: $Enums.Gender | null
   facebook_url: string | null
@@ -385,7 +385,7 @@ export type ApplicationWhereInput = {
   phone_number?: Prisma.StringFilter<"Application"> | string
   email?: Prisma.StringFilter<"Application"> | string
   current_address?: Prisma.StringFilter<"Application"> | string
-  permanent_address?: Prisma.StringFilter<"Application"> | string
+  permanent_address?: Prisma.StringNullableFilter<"Application"> | string | null
   preferred_location?: Prisma.StringFilter<"Application"> | string
   availability?: Prisma.EnumContractFilter<"Application"> | $Enums.Contract
   school_college?: Prisma.StringFilter<"Application"> | string
@@ -397,7 +397,7 @@ export type ApplicationWhereInput = {
   created_at?: Prisma.DateTimeFilter<"Application"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Application"> | Date | string
   cover_letter?: Prisma.StringNullableFilter<"Application"> | string | null
-  resume_key?: Prisma.StringFilter<"Application"> | string
+  resume_key?: Prisma.StringNullableFilter<"Application"> | string | null
   resume_type?: Prisma.StringNullableFilter<"Application"> | string | null
   gender?: Prisma.EnumGenderNullableFilter<"Application"> | $Enums.Gender | null
   facebook_url?: Prisma.StringNullableFilter<"Application"> | string | null
@@ -421,7 +421,7 @@ export type ApplicationOrderByWithRelationInput = {
   phone_number?: Prisma.SortOrder
   email?: Prisma.SortOrder
   current_address?: Prisma.SortOrder
-  permanent_address?: Prisma.SortOrder
+  permanent_address?: Prisma.SortOrderInput | Prisma.SortOrder
   preferred_location?: Prisma.SortOrder
   availability?: Prisma.SortOrder
   school_college?: Prisma.SortOrder
@@ -433,7 +433,7 @@ export type ApplicationOrderByWithRelationInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   cover_letter?: Prisma.SortOrderInput | Prisma.SortOrder
-  resume_key?: Prisma.SortOrder
+  resume_key?: Prisma.SortOrderInput | Prisma.SortOrder
   resume_type?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
   facebook_url?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -462,7 +462,7 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   phone_number?: Prisma.StringFilter<"Application"> | string
   email?: Prisma.StringFilter<"Application"> | string
   current_address?: Prisma.StringFilter<"Application"> | string
-  permanent_address?: Prisma.StringFilter<"Application"> | string
+  permanent_address?: Prisma.StringNullableFilter<"Application"> | string | null
   preferred_location?: Prisma.StringFilter<"Application"> | string
   availability?: Prisma.EnumContractFilter<"Application"> | $Enums.Contract
   school_college?: Prisma.StringFilter<"Application"> | string
@@ -497,7 +497,7 @@ export type ApplicationOrderByWithAggregationInput = {
   phone_number?: Prisma.SortOrder
   email?: Prisma.SortOrder
   current_address?: Prisma.SortOrder
-  permanent_address?: Prisma.SortOrder
+  permanent_address?: Prisma.SortOrderInput | Prisma.SortOrder
   preferred_location?: Prisma.SortOrder
   availability?: Prisma.SortOrder
   school_college?: Prisma.SortOrder
@@ -509,7 +509,7 @@ export type ApplicationOrderByWithAggregationInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   cover_letter?: Prisma.SortOrderInput | Prisma.SortOrder
-  resume_key?: Prisma.SortOrder
+  resume_key?: Prisma.SortOrderInput | Prisma.SortOrder
   resume_type?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
   facebook_url?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -537,7 +537,7 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   phone_number?: Prisma.StringWithAggregatesFilter<"Application"> | string
   email?: Prisma.StringWithAggregatesFilter<"Application"> | string
   current_address?: Prisma.StringWithAggregatesFilter<"Application"> | string
-  permanent_address?: Prisma.StringWithAggregatesFilter<"Application"> | string
+  permanent_address?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   preferred_location?: Prisma.StringWithAggregatesFilter<"Application"> | string
   availability?: Prisma.EnumContractWithAggregatesFilter<"Application"> | $Enums.Contract
   school_college?: Prisma.StringWithAggregatesFilter<"Application"> | string
@@ -549,7 +549,7 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
   cover_letter?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
-  resume_key?: Prisma.StringWithAggregatesFilter<"Application"> | string
+  resume_key?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   resume_type?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   gender?: Prisma.EnumGenderNullableWithAggregatesFilter<"Application"> | $Enums.Gender | null
   facebook_url?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
@@ -568,7 +568,7 @@ export type ApplicationCreateInput = {
   phone_number: string
   email: string
   current_address: string
-  permanent_address: string
+  permanent_address?: string | null
   preferred_location: string
   availability: $Enums.Contract
   school_college: string
@@ -579,7 +579,7 @@ export type ApplicationCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   gender?: $Enums.Gender | null
   facebook_url?: string | null
@@ -603,7 +603,7 @@ export type ApplicationUncheckedCreateInput = {
   phone_number: string
   email: string
   current_address: string
-  permanent_address: string
+  permanent_address?: string | null
   preferred_location: string
   availability: $Enums.Contract
   school_college: string
@@ -615,7 +615,7 @@ export type ApplicationUncheckedCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   gender?: $Enums.Gender | null
   facebook_url?: string | null
@@ -637,7 +637,7 @@ export type ApplicationUpdateInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -648,7 +648,7 @@ export type ApplicationUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -672,7 +672,7 @@ export type ApplicationUncheckedUpdateInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -684,7 +684,7 @@ export type ApplicationUncheckedUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -707,7 +707,7 @@ export type ApplicationCreateManyInput = {
   phone_number: string
   email: string
   current_address: string
-  permanent_address: string
+  permanent_address?: string | null
   preferred_location: string
   availability: $Enums.Contract
   school_college: string
@@ -719,7 +719,7 @@ export type ApplicationCreateManyInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   gender?: $Enums.Gender | null
   facebook_url?: string | null
@@ -738,7 +738,7 @@ export type ApplicationUpdateManyMutationInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -749,7 +749,7 @@ export type ApplicationUpdateManyMutationInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -769,7 +769,7 @@ export type ApplicationUncheckedUpdateManyInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -781,7 +781,7 @@ export type ApplicationUncheckedUpdateManyInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1081,7 +1081,7 @@ export type ApplicationCreateWithoutJobInput = {
   phone_number: string
   email: string
   current_address: string
-  permanent_address: string
+  permanent_address?: string | null
   preferred_location: string
   availability: $Enums.Contract
   school_college: string
@@ -1092,7 +1092,7 @@ export type ApplicationCreateWithoutJobInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   gender?: $Enums.Gender | null
   facebook_url?: string | null
@@ -1115,7 +1115,7 @@ export type ApplicationUncheckedCreateWithoutJobInput = {
   phone_number: string
   email: string
   current_address: string
-  permanent_address: string
+  permanent_address?: string | null
   preferred_location: string
   availability: $Enums.Contract
   school_college: string
@@ -1126,7 +1126,7 @@ export type ApplicationUncheckedCreateWithoutJobInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   gender?: $Enums.Gender | null
   facebook_url?: string | null
@@ -1178,7 +1178,7 @@ export type ApplicationScalarWhereInput = {
   phone_number?: Prisma.StringFilter<"Application"> | string
   email?: Prisma.StringFilter<"Application"> | string
   current_address?: Prisma.StringFilter<"Application"> | string
-  permanent_address?: Prisma.StringFilter<"Application"> | string
+  permanent_address?: Prisma.StringNullableFilter<"Application"> | string | null
   preferred_location?: Prisma.StringFilter<"Application"> | string
   availability?: Prisma.EnumContractFilter<"Application"> | $Enums.Contract
   school_college?: Prisma.StringFilter<"Application"> | string
@@ -1190,7 +1190,7 @@ export type ApplicationScalarWhereInput = {
   created_at?: Prisma.DateTimeFilter<"Application"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Application"> | Date | string
   cover_letter?: Prisma.StringNullableFilter<"Application"> | string | null
-  resume_key?: Prisma.StringFilter<"Application"> | string
+  resume_key?: Prisma.StringNullableFilter<"Application"> | string | null
   resume_type?: Prisma.StringNullableFilter<"Application"> | string | null
   gender?: Prisma.EnumGenderNullableFilter<"Application"> | $Enums.Gender | null
   facebook_url?: Prisma.StringNullableFilter<"Application"> | string | null
@@ -1209,7 +1209,7 @@ export type ApplicationCreateWithoutTechnical_skillsInput = {
   phone_number: string
   email: string
   current_address: string
-  permanent_address: string
+  permanent_address?: string | null
   preferred_location: string
   availability: $Enums.Contract
   school_college: string
@@ -1220,7 +1220,7 @@ export type ApplicationCreateWithoutTechnical_skillsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   gender?: $Enums.Gender | null
   facebook_url?: string | null
@@ -1243,7 +1243,7 @@ export type ApplicationUncheckedCreateWithoutTechnical_skillsInput = {
   phone_number: string
   email: string
   current_address: string
-  permanent_address: string
+  permanent_address?: string | null
   preferred_location: string
   availability: $Enums.Contract
   school_college: string
@@ -1255,7 +1255,7 @@ export type ApplicationUncheckedCreateWithoutTechnical_skillsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   gender?: $Enums.Gender | null
   facebook_url?: string | null
@@ -1297,7 +1297,7 @@ export type ApplicationCreateWithoutLanguagesInput = {
   phone_number: string
   email: string
   current_address: string
-  permanent_address: string
+  permanent_address?: string | null
   preferred_location: string
   availability: $Enums.Contract
   school_college: string
@@ -1308,7 +1308,7 @@ export type ApplicationCreateWithoutLanguagesInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   gender?: $Enums.Gender | null
   facebook_url?: string | null
@@ -1331,7 +1331,7 @@ export type ApplicationUncheckedCreateWithoutLanguagesInput = {
   phone_number: string
   email: string
   current_address: string
-  permanent_address: string
+  permanent_address?: string | null
   preferred_location: string
   availability: $Enums.Contract
   school_college: string
@@ -1343,7 +1343,7 @@ export type ApplicationUncheckedCreateWithoutLanguagesInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   gender?: $Enums.Gender | null
   facebook_url?: string | null
@@ -1385,7 +1385,7 @@ export type ApplicationCreateWithoutNotesInput = {
   phone_number: string
   email: string
   current_address: string
-  permanent_address: string
+  permanent_address?: string | null
   preferred_location: string
   availability: $Enums.Contract
   school_college: string
@@ -1396,7 +1396,7 @@ export type ApplicationCreateWithoutNotesInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   gender?: $Enums.Gender | null
   facebook_url?: string | null
@@ -1419,7 +1419,7 @@ export type ApplicationUncheckedCreateWithoutNotesInput = {
   phone_number: string
   email: string
   current_address: string
-  permanent_address: string
+  permanent_address?: string | null
   preferred_location: string
   availability: $Enums.Contract
   school_college: string
@@ -1431,7 +1431,7 @@ export type ApplicationUncheckedCreateWithoutNotesInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   gender?: $Enums.Gender | null
   facebook_url?: string | null
@@ -1468,7 +1468,7 @@ export type ApplicationUpdateWithoutNotesInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1479,7 +1479,7 @@ export type ApplicationUpdateWithoutNotesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1502,7 +1502,7 @@ export type ApplicationUncheckedUpdateWithoutNotesInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1514,7 +1514,7 @@ export type ApplicationUncheckedUpdateWithoutNotesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1536,7 +1536,7 @@ export type ApplicationCreateManyJobInput = {
   phone_number: string
   email: string
   current_address: string
-  permanent_address: string
+  permanent_address?: string | null
   preferred_location: string
   availability: $Enums.Contract
   school_college: string
@@ -1547,7 +1547,7 @@ export type ApplicationCreateManyJobInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   gender?: $Enums.Gender | null
   facebook_url?: string | null
@@ -1566,7 +1566,7 @@ export type ApplicationUpdateWithoutJobInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1577,7 +1577,7 @@ export type ApplicationUpdateWithoutJobInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1600,7 +1600,7 @@ export type ApplicationUncheckedUpdateWithoutJobInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1611,7 +1611,7 @@ export type ApplicationUncheckedUpdateWithoutJobInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1634,7 +1634,7 @@ export type ApplicationUncheckedUpdateManyWithoutJobInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1645,7 +1645,7 @@ export type ApplicationUncheckedUpdateManyWithoutJobInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1664,7 +1664,7 @@ export type ApplicationUpdateWithoutTechnical_skillsInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1675,7 +1675,7 @@ export type ApplicationUpdateWithoutTechnical_skillsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1698,7 +1698,7 @@ export type ApplicationUncheckedUpdateWithoutTechnical_skillsInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1710,7 +1710,7 @@ export type ApplicationUncheckedUpdateWithoutTechnical_skillsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1732,7 +1732,7 @@ export type ApplicationUncheckedUpdateManyWithoutTechnical_skillsInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1744,7 +1744,7 @@ export type ApplicationUncheckedUpdateManyWithoutTechnical_skillsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1763,7 +1763,7 @@ export type ApplicationUpdateWithoutLanguagesInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1774,7 +1774,7 @@ export type ApplicationUpdateWithoutLanguagesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1797,7 +1797,7 @@ export type ApplicationUncheckedUpdateWithoutLanguagesInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1809,7 +1809,7 @@ export type ApplicationUncheckedUpdateWithoutLanguagesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1831,7 +1831,7 @@ export type ApplicationUncheckedUpdateManyWithoutLanguagesInput = {
   phone_number?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   current_address?: Prisma.StringFieldUpdateOperationsInput | string
-  permanent_address?: Prisma.StringFieldUpdateOperationsInput | string
+  permanent_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferred_location?: Prisma.StringFieldUpdateOperationsInput | string
   availability?: Prisma.EnumContractFieldUpdateOperationsInput | $Enums.Contract
   school_college?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1843,7 +1843,7 @@ export type ApplicationUncheckedUpdateManyWithoutLanguagesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
   facebook_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2000,7 +2000,7 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     phone_number: string
     email: string
     current_address: string
-    permanent_address: string
+    permanent_address: string | null
     preferred_location: string
     availability: $Enums.Contract
     school_college: string
@@ -2012,7 +2012,7 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     created_at: Date
     updated_at: Date
     cover_letter: string | null
-    resume_key: string
+    resume_key: string | null
     resume_type: string | null
     gender: $Enums.Gender | null
     facebook_url: string | null

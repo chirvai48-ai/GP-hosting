@@ -110,7 +110,7 @@ model Application {
   phone_number       String
   email              String
   current_address    String
-  permanent_address  String
+  permanent_address  String?
   preferred_location String
   availability       Contract
   school_college     String
@@ -125,7 +125,7 @@ model Application {
   created_at         DateTime          @default(now())
   updated_at         DateTime          @updatedAt
   cover_letter       String?           @db.Text
-  resume_key         String            @unique
+  resume_key         String?           @unique
   resume_type        String?
   gender             Gender?
   facebook_url       String?

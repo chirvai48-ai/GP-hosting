@@ -24,15 +24,17 @@ export const createApplicationSchema = z.object({
   japanese_ability: z.enum(JapaneseAbility),
   working_days: z.array(workingDayEnum).min(1),
   current_address: z.string().min(1),
-  permanent_address: z.string().min(1),
+  permanent_address: z.string().optional(),
   preferred_location: z.string().min(1),
   availability: z.enum(Contract),
   school_college: z.string().min(1),
   degree: z.string().min(1),
   soft_skills: z.string().min(1),
   cover_letter: z.string().optional(),
-  resume_key: z.string().min(1),
-  resume_type: z.string().min(1),
+  // Frontend sends "" (empty default) when no résumé is attached; coerce to
+  // undefined so the optional path is taken instead of failing min(1).
+  resume_key: z.string().min(1).optional().or(z.literal("").transform(() => undefined)),
+  resume_type: z.string().min(1).optional().or(z.literal("").transform(() => undefined)),
   job_id: z.number().int().positive(),
 });
 

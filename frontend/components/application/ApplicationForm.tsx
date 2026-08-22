@@ -336,7 +336,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
               </Field>
 
               <Field
-                label="本国住所（実家住所）"
+                label="本国住所（実家住所）（任意）"
                 error={errors.permanent_address?.message}
               >
                 <textarea
@@ -347,7 +347,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
               </Field>
 
               <Field
-                label="Facebook URL（任意）"
+                label="Facebook URL"
                 error={errors.facebook_url?.message}
               >
                 <input
@@ -427,7 +427,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
                 />
               </Field>
 
-              <Field label="就業可能時期（いつから働けるか）" error={errors.availability?.message}>
+              <Field label="勤務可能形態（どのような勤務形態で働けるか）" error={errors.availability?.message}>
                 <select
                   className={inputCls}
                   defaultValue=""
@@ -519,7 +519,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
               </Field>
 
               <Field
-                label="自己PR・志望動機（任意）"
+                label="自己PR・志望動機"
                 error={errors.cover_letter?.message}
               >
                 <textarea
@@ -530,7 +530,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
               </Field>
 
               <div className="flex flex-col gap-1">
-                <label className={labelCls}>履歴書・職務経歴書（PDF / DOC / DOCX形式、5MB以下）</label>
+                <label className={labelCls}>履歴書・職務経歴書（任意、PDF / DOC / DOCX形式、5MB以下）</label>
                 <label className="flex items-center gap-3 px-3 py-3 rounded border border-dashed border-[#c0cbc9] bg-[var(--color-container-low)] cursor-pointer hover:border-[var(--color-primary)]">
                   <Upload size={18} className="text-[color:var(--color-secondary)]" />
                   <span className="text-sm text-[color:var(--color-on-surface-variant)]">
@@ -667,7 +667,7 @@ function Summary({ values }: { values: CreateApplicationForm }) {
     ["性別", values.gender ? GENDER_LABELS[values.gender] : ""],
     ["国籍", values.country],
     ["現住所", values.current_address],
-    ["住所", values.permanent_address],
+    ["住所", values.permanent_address ?? ""],
     ["最寄り駅", values.nearest_station],
     [
       "在留資格",
@@ -681,7 +681,7 @@ function Summary({ values }: { values: CreateApplicationForm }) {
     ],
     ["勤務希望地", values.preferred_location],
     [
-      "就業可能時期",
+      "勤務可能形態",
       values.availability ? CONTRACT_LABELS[values.availability] : "",
     ],
     ["学校名", values.school_college],
