@@ -20,7 +20,7 @@ const panels: DiagonalPanelData[] = [
   {
     number: "02",
     label: "カウンセリング・選考対策",
-    headline: "GPNAと、1対1の個別コンサルティング。",
+    headline: "スクール形式と個別形式での就職・転職コンサルティング",
     body:
       "Glowing Partner Naitei Academy（GPNA）を通じ、就職活動を行う学生向けに体系的な選考対策プログラムを実施しています。また、中途採用やブランクのある方向けには、国家資格を持つキャリアコンサルタントとチームで個別相談を承ります。10年にわたる実績に基づき、秘密厳守でじっくりと時間をかけてサポートします。",
     image: "/Seminar2.jpg",
