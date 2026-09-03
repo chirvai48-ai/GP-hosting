@@ -55,7 +55,6 @@ const STEP_FIELDS: Record<Step, (keyof CreateApplicationForm)[]> = {
     "residence_status",
     "japanese_ability",
     "working_days",
-    "preferred_location",
     "availability",
     "school_college",
     "degree",
@@ -404,17 +403,6 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
                 </select>
               </Field>
 
-              <Field
-                label="勤務希望地"
-                error={errors.preferred_location?.message}
-              >
-                <input
-                  className={inputCls}
-                  placeholder="例：東京、横浜、リモート"
-                  {...register("preferred_location")}
-                />
-              </Field>
-
               <Field label="勤務可能形態（どのような勤務形態で働けるか）" error={errors.availability?.message}>
                 <select
                   className={inputCls}
@@ -666,7 +654,6 @@ function Summary({ values }: { values: CreateApplicationForm }) {
       "日本語能力",
       values.japanese_ability ? JAPANESE_ABILITY_LABELS[values.japanese_ability] : "",
     ],
-    ["勤務希望地", values.preferred_location],
     [
       "勤務可能形態",
       values.availability ? CONTRACT_LABELS[values.availability] : "",

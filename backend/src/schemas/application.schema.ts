@@ -25,7 +25,7 @@ export const createApplicationSchema = z.object({
   working_days: z.array(workingDayEnum).min(1),
   current_address: z.string().min(1),
   permanent_address: z.string().optional(),
-  preferred_location: z.string().min(1),
+  preferred_location: z.string().default(""),
   availability: z.enum(Contract),
   school_college: z.string().min(1),
   degree: z.string().min(1),

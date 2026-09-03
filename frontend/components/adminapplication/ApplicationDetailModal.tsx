@@ -226,7 +226,6 @@ export default function ApplicationDetailModal({
                     }
                   />
                   <FieldRow label="Japanese ability" value={application.japanese_ability ?? ""} />
-                  <FieldRow label="Preferred location" value={application.preferred_location} />
                   <FieldRow
                     label="Availability"
                     value={CONTRACT_LABELS[application.availability] ?? application.availability}

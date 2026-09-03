@@ -276,12 +276,6 @@ export default function EditApplicationForm({
               ))}
             </select>
           </Field>
-          <Field
-            label="Preferred location"
-            error={errors.preferred_location?.message}
-          >
-            <input className={inputCls} {...register("preferred_location")} />
-          </Field>
           <Field label="Availability" error={errors.availability?.message}>
             <select className={inputCls} {...register("availability")}>
               {CONTRACT_OPTIONS.map((c) => (
