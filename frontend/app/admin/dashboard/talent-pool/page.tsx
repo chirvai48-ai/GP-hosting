@@ -47,7 +47,7 @@ type PoolRow = {
   phone_number: string;
   japanese_ability: string | null;
   residence_status: string | null;
-  resume_url: string | undefined;
+  resume_url: string | null | undefined;
   added_at: string;
   source: string;
   source_href: string | null; // job link for applications, null for candidates
