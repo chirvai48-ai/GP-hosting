@@ -236,15 +236,6 @@ export default function EditApplicationForm({
               {...register("current_address")}
             />
           </Field>
-          <Field
-            label="Permanent address"
-            error={errors.permanent_address?.message}
-          >
-            <textarea
-              className={`${inputCls} resize-y min-h-[56px]`}
-              {...register("permanent_address")}
-            />
-          </Field>
         </div>
       </section>
 

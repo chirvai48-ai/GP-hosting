@@ -210,7 +210,6 @@ export default function ApplicationDetailModal({
                     }
                   />
                   <FieldRow label="Current address" value={application.current_address} />
-                  <FieldRow label="Permanent address" value={application.permanent_address} />
                 </div>
               </section>
 

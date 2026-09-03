@@ -49,7 +49,6 @@ const STEP_FIELDS: Record<Step, (keyof CreateApplicationForm)[]> = {
     "country",
     "facebook_url",
     "current_address",
-    "permanent_address",
   ],
   2: [
     "nearest_station",
@@ -332,17 +331,6 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
                   className={`${inputCls} resize-y min-h-[60px]`}
                   placeholder="現在お住まいの住所"
                   {...register("current_address")}
-                />
-              </Field>
-
-              <Field
-                label="本国住所（実家住所）（任意）"
-                error={errors.permanent_address?.message}
-              >
-                <textarea
-                  className={`${inputCls} resize-y min-h-[60px]`}
-                  placeholder="本国の住所または実家の住所"
-                  {...register("permanent_address")}
                 />
               </Field>
 
@@ -667,7 +655,6 @@ function Summary({ values }: { values: CreateApplicationForm }) {
     ["性別", values.gender ? GENDER_LABELS[values.gender] : ""],
     ["国籍", values.country],
     ["現住所", values.current_address],
-    ["住所", values.permanent_address ?? ""],
     ["最寄り駅", values.nearest_station],
     [
       "在留資格",
