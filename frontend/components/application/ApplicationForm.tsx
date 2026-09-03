@@ -486,7 +486,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
                 書類添付・入力内容の確認
               </legend>
 
-              <Field label="特徴・自身の強み（ソフトスキル）" error={errors.soft_skills?.message}>
+              <Field label="特徴・自身の強み（ソフトスキル）（任意）" error={errors.soft_skills?.message}>
                 <textarea
                   className={`${inputCls} resize-y min-h-[80px]`}
                   placeholder="例：コミュニケーション力、チームワーク、問題解決力など"
