@@ -250,7 +250,7 @@ model CandidateInquiry {
   residence_status   ResidenceStatus?
   japanese_ability   JapaneseAbility?
   cover_letter       String?               @db.Text
-  resume_key         String                @unique
+  resume_key         String?               @unique
   resume_type        String?
   state              CandidateInquiryState @default(New)
   moved_to_pool_at   DateTime?

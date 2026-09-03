@@ -36,8 +36,8 @@ export const createCandidateInquirySchema = z.object({
   residence_status: z.enum(ResidenceStatus).optional(),
   japanese_ability: z.enum(JapaneseAbility).optional(),
   cover_letter: z.string().optional(),
-  resume_key: z.string().min(1),
-  resume_type: z.string().min(1),
+  resume_key: z.string().optional(),
+  resume_type: z.string().optional(),
 });
 
 export type createCandidateInquiry = z.infer<typeof createCandidateInquirySchema>;

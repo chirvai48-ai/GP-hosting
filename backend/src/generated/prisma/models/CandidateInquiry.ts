@@ -275,7 +275,7 @@ export type CandidateInquiryGroupByOutputType = {
   residence_status: $Enums.ResidenceStatus | null
   japanese_ability: $Enums.JapaneseAbility | null
   cover_letter: string | null
-  resume_key: string
+  resume_key: string | null
   resume_type: string | null
   state: $Enums.CandidateInquiryState
   moved_to_pool_at: Date | null
@@ -320,7 +320,7 @@ export type CandidateInquiryWhereInput = {
   residence_status?: Prisma.EnumResidenceStatusNullableFilter<"CandidateInquiry"> | $Enums.ResidenceStatus | null
   japanese_ability?: Prisma.EnumJapaneseAbilityNullableFilter<"CandidateInquiry"> | $Enums.JapaneseAbility | null
   cover_letter?: Prisma.StringNullableFilter<"CandidateInquiry"> | string | null
-  resume_key?: Prisma.StringFilter<"CandidateInquiry"> | string
+  resume_key?: Prisma.StringNullableFilter<"CandidateInquiry"> | string | null
   resume_type?: Prisma.StringNullableFilter<"CandidateInquiry"> | string | null
   state?: Prisma.EnumCandidateInquiryStateFilter<"CandidateInquiry"> | $Enums.CandidateInquiryState
   moved_to_pool_at?: Prisma.DateTimeNullableFilter<"CandidateInquiry"> | Date | string | null
@@ -342,7 +342,7 @@ export type CandidateInquiryOrderByWithRelationInput = {
   residence_status?: Prisma.SortOrderInput | Prisma.SortOrder
   japanese_ability?: Prisma.SortOrderInput | Prisma.SortOrder
   cover_letter?: Prisma.SortOrderInput | Prisma.SortOrder
-  resume_key?: Prisma.SortOrder
+  resume_key?: Prisma.SortOrderInput | Prisma.SortOrder
   resume_type?: Prisma.SortOrderInput | Prisma.SortOrder
   state?: Prisma.SortOrder
   moved_to_pool_at?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -390,7 +390,7 @@ export type CandidateInquiryOrderByWithAggregationInput = {
   residence_status?: Prisma.SortOrderInput | Prisma.SortOrder
   japanese_ability?: Prisma.SortOrderInput | Prisma.SortOrder
   cover_letter?: Prisma.SortOrderInput | Prisma.SortOrder
-  resume_key?: Prisma.SortOrder
+  resume_key?: Prisma.SortOrderInput | Prisma.SortOrder
   resume_type?: Prisma.SortOrderInput | Prisma.SortOrder
   state?: Prisma.SortOrder
   moved_to_pool_at?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -420,7 +420,7 @@ export type CandidateInquiryScalarWhereWithAggregatesInput = {
   residence_status?: Prisma.EnumResidenceStatusNullableWithAggregatesFilter<"CandidateInquiry"> | $Enums.ResidenceStatus | null
   japanese_ability?: Prisma.EnumJapaneseAbilityNullableWithAggregatesFilter<"CandidateInquiry"> | $Enums.JapaneseAbility | null
   cover_letter?: Prisma.StringNullableWithAggregatesFilter<"CandidateInquiry"> | string | null
-  resume_key?: Prisma.StringWithAggregatesFilter<"CandidateInquiry"> | string
+  resume_key?: Prisma.StringNullableWithAggregatesFilter<"CandidateInquiry"> | string | null
   resume_type?: Prisma.StringNullableWithAggregatesFilter<"CandidateInquiry"> | string | null
   state?: Prisma.EnumCandidateInquiryStateWithAggregatesFilter<"CandidateInquiry"> | $Enums.CandidateInquiryState
   moved_to_pool_at?: Prisma.DateTimeNullableWithAggregatesFilter<"CandidateInquiry"> | Date | string | null
@@ -441,7 +441,7 @@ export type CandidateInquiryCreateInput = {
   residence_status?: $Enums.ResidenceStatus | null
   japanese_ability?: $Enums.JapaneseAbility | null
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   state?: $Enums.CandidateInquiryState
   moved_to_pool_at?: Date | string | null
@@ -463,7 +463,7 @@ export type CandidateInquiryUncheckedCreateInput = {
   residence_status?: $Enums.ResidenceStatus | null
   japanese_ability?: $Enums.JapaneseAbility | null
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   state?: $Enums.CandidateInquiryState
   moved_to_pool_at?: Date | string | null
@@ -484,7 +484,7 @@ export type CandidateInquiryUpdateInput = {
   residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
   japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.EnumCandidateInquiryStateFieldUpdateOperationsInput | $Enums.CandidateInquiryState
   moved_to_pool_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -506,7 +506,7 @@ export type CandidateInquiryUncheckedUpdateInput = {
   residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
   japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.EnumCandidateInquiryStateFieldUpdateOperationsInput | $Enums.CandidateInquiryState
   moved_to_pool_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -528,7 +528,7 @@ export type CandidateInquiryCreateManyInput = {
   residence_status?: $Enums.ResidenceStatus | null
   japanese_ability?: $Enums.JapaneseAbility | null
   cover_letter?: string | null
-  resume_key: string
+  resume_key?: string | null
   resume_type?: string | null
   state?: $Enums.CandidateInquiryState
   moved_to_pool_at?: Date | string | null
@@ -549,7 +549,7 @@ export type CandidateInquiryUpdateManyMutationInput = {
   residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
   japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.EnumCandidateInquiryStateFieldUpdateOperationsInput | $Enums.CandidateInquiryState
   moved_to_pool_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -571,7 +571,7 @@ export type CandidateInquiryUncheckedUpdateManyInput = {
   residence_status?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
   japanese_ability?: Prisma.NullableEnumJapaneseAbilityFieldUpdateOperationsInput | $Enums.JapaneseAbility | null
   cover_letter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resume_key?: Prisma.StringFieldUpdateOperationsInput | string
+  resume_key?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resume_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.EnumCandidateInquiryStateFieldUpdateOperationsInput | $Enums.CandidateInquiryState
   moved_to_pool_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -730,7 +730,7 @@ export type $CandidateInquiryPayload<ExtArgs extends runtime.Types.Extensions.In
     residence_status: $Enums.ResidenceStatus | null
     japanese_ability: $Enums.JapaneseAbility | null
     cover_letter: string | null
-    resume_key: string
+    resume_key: string | null
     resume_type: string | null
     state: $Enums.CandidateInquiryState
     moved_to_pool_at: Date | null

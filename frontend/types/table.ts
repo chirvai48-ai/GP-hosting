@@ -235,9 +235,9 @@ export type CandidateInquiry = {
   residence_status: ResidenceStatus | null;
   japanese_ability: JapaneseAbility | null;
   cover_letter: string | null;
-  resume_key: string;
+  resume_key: string | null;
   resume_type: string | null;
-  resume_url?: string;
+  resume_url?: string | null;
   state: CandidateInquiryState;
   moved_to_pool_at: string | null;
   rejected_at: string | null;

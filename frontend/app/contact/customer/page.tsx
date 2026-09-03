@@ -395,7 +395,7 @@ export default function CustomerContactPage() {
               </Field>
 
               <div className="flex flex-col gap-1">
-                <label className={labelCls}>履歴書・職務経歴書（PDF / DOC / DOCX形式、5MB以下）</label>
+                <label className={labelCls}>履歴書・職務経歴書（任意、PDF / DOC / DOCX形式、5MB以下）</label>
                 <label className="cursor-pointer">
                   <div
                     className={`flex items-center gap-3 px-4 py-3 border-2 border-dashed rounded transition-colors ${

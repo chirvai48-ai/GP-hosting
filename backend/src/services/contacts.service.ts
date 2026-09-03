@@ -45,11 +45,11 @@ export const removeCompanyInquiry = async (id: number) => {
 };
 
 export const createCandidateInquiry = async (data: createCandidateInquiryInput) => {
-  const signed_url = await putUrl(
-    BUCKET,
-    `${CANDIDATE_RESUME_PREFIX}/${data.resume_key}`,
-    data.resume_type
-  );
+  const { resume_key, resume_type } = data;
+  const signed_url =
+    resume_key && resume_type
+      ? await putUrl(BUCKET, `${CANDIDATE_RESUME_PREFIX}/${resume_key}`, resume_type)
+      : undefined;
 
   const { date_of_birth, ...rest } = data;
 
@@ -77,10 +77,9 @@ export const fetchCandidateInquiries = async (
 
   const items = await Promise.all(
     inquiries.map(async (inquiry) => {
-      const resume_url = await getUrl(
-        BUCKET,
-        `${CANDIDATE_RESUME_PREFIX}/${inquiry.resume_key}`
-      );
+      const resume_url = inquiry.resume_key
+        ? await getUrl(BUCKET, `${CANDIDATE_RESUME_PREFIX}/${inquiry.resume_key}`)
+        : null;
       return { ...inquiry, resume_url };
     })
   );
@@ -105,10 +104,9 @@ export const fetchCandidateTalentPool = async (
 
   const items = await Promise.all(
     inquiries.map(async (inquiry) => {
-      const resume_url = await getUrl(
-        BUCKET,
-        `${CANDIDATE_RESUME_PREFIX}/${inquiry.resume_key}`
-      );
+      const resume_url = inquiry.resume_key
+        ? await getUrl(BUCKET, `${CANDIDATE_RESUME_PREFIX}/${inquiry.resume_key}`)
+        : null;
       return { ...inquiry, resume_url };
     })
   );
@@ -120,10 +118,9 @@ export const fetchCandidateInquiryById = async (id: number) => {
   const inquiry = await prisma.candidateInquiry.findUnique({ where: { id } });
   if (!inquiry) return null;
 
-  const resume_url = await getUrl(
-    BUCKET,
-    `${CANDIDATE_RESUME_PREFIX}/${inquiry.resume_key}`
-  );
+  const resume_url = inquiry.resume_key
+    ? await getUrl(BUCKET, `${CANDIDATE_RESUME_PREFIX}/${inquiry.resume_key}`)
+    : null;
   return { ...inquiry, resume_url };
 };
 

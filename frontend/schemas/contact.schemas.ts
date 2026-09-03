@@ -29,8 +29,8 @@ export const createCandidateInquirySchema = z.object({
   residence_status: z.enum(RESIDENCE_STATUS_OPTIONS).optional(),
   japanese_ability: z.enum(JAPANESE_ABILITY_OPTIONS).optional(),
   cover_letter: z.string().optional(),
-  resume_key: z.string().min(1, "履歴書ファイルを添付してください"),
-  resume_type: z.string().min(1),
+  resume_key: z.string().optional(),
+  resume_type: z.string().optional(),
 });
 
 export type CreateCandidateInquiryForm = z.infer<typeof createCandidateInquirySchema>;

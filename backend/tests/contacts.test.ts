@@ -74,11 +74,12 @@ describe("candidate inquiry form", () => {
     expect(res.status).toBe(400);
   });
 
-  it("rejects a candidate inquiry missing resume_key (400)", async () => {
-    const bad = candidateInquiryPayload() as any;
-    delete bad.resume_key;
-    const res = await anon().post("/api/contacts/candidate-inquiries").send(bad);
-    expect(res.status).toBe(400);
+  it("accepts a candidate inquiry without a resume (200/201)", async () => {
+    const payload = candidateInquiryPayload() as any;
+    delete payload.resume_key;
+    delete payload.resume_type;
+    const res = await anon().post("/api/contacts/candidate-inquiries").send(payload);
+    expect([200, 201], JSON.stringify(res.body)).toContain(res.status);
   });
 
   it("admin can list, update state, and delete", async () => {
