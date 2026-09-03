@@ -47,7 +47,7 @@ export default function DiagonalPanel({ data, index }: Props) {
   return (
     <section
       ref={ref}
-      className={`relative w-full overflow-hidden bg-[color:var(--color-surface)] md:h-[100vh] md:min-h-[640px] ${
+      className={`relative w-full overflow-hidden bg-[color:var(--color-surface)] md:min-h-[100vh] ${
         index === 0 ? "mt-14 md:mt-16" : ""
       }`}
     >
@@ -170,7 +170,7 @@ export default function DiagonalPanel({ data, index }: Props) {
       </div>
 
       {/* ── DESKTOP: side-by-side diagonal split ── */}
-      <div className="hidden md:block absolute inset-0">
+      <div className="hidden md:block relative w-full">
         <div
           className="absolute inset-0"
           style={{
@@ -245,7 +245,7 @@ export default function DiagonalPanel({ data, index }: Props) {
             (photo-right); starting text at 64% / ending at 36% clears its widest
             point at every viewport width and zoom level. */}
         <div
-          className={`absolute inset-0 z-10 flex items-center ${
+          className={`relative z-10 flex items-center min-h-[100vh] py-24 ${
             photoLeft
               ? "justify-end pl-[64%] pr-[4%]"
               : "justify-start pr-[64%] pl-[4%]"
