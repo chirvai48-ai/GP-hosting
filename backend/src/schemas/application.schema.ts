@@ -26,10 +26,14 @@ export const createApplicationSchema = z.object({
   current_address: z.string().min(1),
   permanent_address: z.string().optional(),
   preferred_location: z.string().default(""),
-  availability: z.enum(Contract),
-  school_college: z.string().min(1),
+  availability: z
+    .enum(Contract)
+    .optional()
+    .or(z.literal("").transform(() => undefined))
+    .transform((v) => v ?? "Flexible"),
+  school_college: z.string().default(""),
   degree: z.string().min(1),
-  soft_skills: z.string().min(1),
+  soft_skills: z.string().default(""),
   cover_letter: z.string().optional(),
   // Frontend sends "" (empty default) when no résumé is attached; coerce to
   // undefined so the optional path is taken instead of failing min(1).

@@ -403,15 +403,15 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
                 </select>
               </Field>
 
-              <Field label="勤務可能形態（どのような勤務形態で働けるか）" error={errors.availability?.message}>
+              <Field label="勤務可能形態（どのような勤務形態で働けるか）（任意）" error={errors.availability?.message}>
                 <select
                   className={inputCls}
                   defaultValue=""
-                  {...register("availability")}
+                  {...register("availability", {
+                    setValueAs: (v) => (v === "" ? undefined : v),
+                  })}
                 >
-                  <option value="" disabled>
-                    選択してください
-                  </option>
+                  <option value="">選択してください</option>
                   {CONTRACT_OPTIONS.map((c) => (
                     <option key={c} value={c}>
                       {CONTRACT_LABELS[c]}
@@ -422,7 +422,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <Field
-                  label="学校名・出身校"
+                  label="学校名・出身校（任意）"
                   error={errors.school_college?.message}
                 >
                   <input
@@ -658,7 +658,7 @@ function Summary({ values }: { values: CreateApplicationForm }) {
       "勤務可能形態",
       values.availability ? CONTRACT_LABELS[values.availability] : "",
     ],
-    ["学校名", values.school_college],
+    ["学校名", values.school_college ?? ""],
     ["学位・専攻", values.degree],
     [
       "勤務可能な曜日・日数",
