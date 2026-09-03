@@ -317,7 +317,7 @@ export default function CustomerContactPage() {
                 <Field label="生年月日" error={errors.date_of_birth?.message}>
                   <input type="date" className={inputCls} {...register("date_of_birth")} />
                 </Field>
-                <Field label="性別（任意）" error={errors.gender?.message}>
+                <Field label="性別" error={errors.gender?.message}>
                   <select className={inputCls} defaultValue="" {...register("gender")}>
                     <option value="">選択してください</option>
                     {GENDER_OPTIONS.map((g) => (
@@ -364,7 +364,7 @@ export default function CustomerContactPage() {
               </Field>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <Field label="在留資格 / ビザの種類（任意）" error={errors.residence_status?.message}>
+                <Field label="在留資格 / ビザの種類" error={errors.residence_status?.message}>
                   <select className={inputCls} defaultValue="" {...register("residence_status")}>
                     <option value="">選択してください</option>
                     {RESIDENCE_STATUS_OPTIONS.map((r) => (
@@ -374,7 +374,7 @@ export default function CustomerContactPage() {
                     ))}
                   </select>
                 </Field>
-                <Field label="日本語能力（任意）" error={errors.japanese_ability?.message}>
+                <Field label="日本語能力" error={errors.japanese_ability?.message}>
                   <select className={inputCls} defaultValue="" {...register("japanese_ability")}>
                     <option value="">選択してください</option>
                     {JAPANESE_ABILITY_OPTIONS.map((j) => (
