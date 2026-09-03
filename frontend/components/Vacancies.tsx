@@ -23,6 +23,10 @@ function formatSalary(min: number, max: number, currency: string) {
   return `${symbol}${min.toLocaleString()} – ${symbol}${max.toLocaleString()}`;
 }
 
+function salaryLabel(contract: string) {
+  return contract === "Part_time" ? "時給" : "年収";
+}
+
 const CONTRACT_LABEL: Record<string, string> = {
   Full_time: "正社員",
   Part_time: "パート・アルバイト",
@@ -130,7 +134,7 @@ function JobDetailModal({ job, onClose }: { job: Job; onClose: () => void }) {
           {/* Salary */}
           <div className="bg-[#f2f4f3] rounded-xl px-5 py-4">
             <p className="font-[family-name:var(--font-label)] text-[10px] font-semibold tracking-widest uppercase text-[color:var(--color-secondary)] mb-1">
-              年収
+              {salaryLabel(job.contract)}
             </p>
             <p className="font-[family-name:var(--font-headline)] text-2xl text-[color:var(--color-primary)]">
               {formatSalary(job.salary_min, job.salary_max, job.currency)}
@@ -262,7 +266,7 @@ function VacancyCard({ job, onClick }: { job: Job; onClick: () => void }) {
         </div>
         <div className="border-t border-[rgba(20,86,82,0.1)] mb-2" />
         <div className="flex items-baseline gap-1.5 mb-1">
-          <span className="font-[family-name:var(--font-label)] text-[11px] font-semibold text-[color:var(--color-secondary)]">年収</span>
+          <span className="font-[family-name:var(--font-label)] text-[11px] font-semibold text-[color:var(--color-secondary)]">{salaryLabel(job.contract)}</span>
           <span className="font-[family-name:var(--font-display)] text-[16px] font-medium text-[color:var(--color-primary)] leading-none tracking-tight">
             {formatSalary(job.salary_min, job.salary_max, job.currency)}
           </span>
