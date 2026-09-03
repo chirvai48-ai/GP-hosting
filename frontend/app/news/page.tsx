@@ -224,7 +224,7 @@ function NewsPageInner() {
             </h1>
             <div className="w-16 h-0.5 bg-[var(--color-secondary)] mb-3" />
             <p className="text-sm md:text-base font-headline italic text-[var(--color-on-surface-variant)] max-w-md">
-              最新情報、採用実績、 tobacco そして私たちのネットワークから届くストーリーをお届けします。
+              最新情報、採用実績、そして私たちのネットワークから届くストーリーをお届けします。
             </p>
           </div>
 
