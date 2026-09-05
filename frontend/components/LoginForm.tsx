@@ -71,7 +71,7 @@ export function LoginForm() {
     })
     setIsLoading(false);
     if (error) {
-    setError(error.message || "Invalid credentials. Please try again.");
+    setError("メールアドレスまたはパスワードが正しくありません。 / Invalid credentials. Please try again.");
     return;
   }
   };

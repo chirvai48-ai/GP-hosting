@@ -36,8 +36,10 @@ export const createCandidateInquirySchema = z.object({
   residence_status: z.enum(ResidenceStatus).optional(),
   japanese_ability: z.enum(JapaneseAbility).optional(),
   cover_letter: z.string().optional(),
-  resume_key: z.string().optional(),
-  resume_type: z.string().optional(),
+  // Frontend sends "" (empty default) when no résumé is attached; coerce to
+  // undefined so it doesn't hit the unique constraint on resume_key.
+  resume_key: z.string().min(1).optional().or(z.literal("").transform(() => undefined)),
+  resume_type: z.string().min(1).optional().or(z.literal("").transform(() => undefined)),
 });
 
 export type createCandidateInquiry = z.infer<typeof createCandidateInquirySchema>;

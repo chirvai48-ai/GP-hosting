@@ -46,7 +46,7 @@ async function postCompanyInquiry(payload: CreateCompanyInquiryForm) {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body?.error?.formErrors?.[0] || body?.message || "送信に失敗しました");
+    throw new Error(body?.error?.formErrors?.[0] || body?.message || "送信に失敗しました。 / Failed to submit. Please try again.");
   }
   return res.json();
 }
@@ -145,7 +145,7 @@ export default function CompanyContactPage() {
               </p>
             </div>
 
-            <div className="hidden lg:flex flex-col gap-2 text-sm text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-body)]">
+            <div className="flex flex-col gap-2 text-sm text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-body)]">
               <div className="flex items-start gap-2"><MapPin size={14} className="mt-1 shrink-0 text-[var(--color-primary)]" /> 〒171-0014 東京都豊島区池袋2-36-1 6階</div>
               <div className="flex items-center gap-2"><Mail size={14} className="text-[var(--color-primary)]" /> info@glowing-partner.jp</div>
               <div className="flex items-center gap-2"><Phone size={14} className="text-[var(--color-primary)]" /> <a href="tel:0366946943" className="hover:text-[var(--color-primary)]">03-6694-6943</a></div>

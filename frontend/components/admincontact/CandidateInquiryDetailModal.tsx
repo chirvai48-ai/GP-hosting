@@ -82,7 +82,7 @@ export default function CandidateInquiryDetailModal({
       queryClient.invalidateQueries({ queryKey: ["candidate-inquiries"] });
       queryClient.invalidateQueries({ queryKey: ["candidate-talent-pool"] });
     },
-    onError: (err) => alert((err as Error).message),
+    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
   });
 
   const deleteMutation = useMutation({
@@ -92,7 +92,7 @@ export default function CandidateInquiryDetailModal({
       queryClient.invalidateQueries({ queryKey: ["candidate-talent-pool"] });
       onClose();
     },
-    onError: (err) => alert((err as Error).message),
+    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
   });
 
   const handleDelete = () => {

@@ -38,7 +38,7 @@ async function getJobs(page = 1, limit = 20): Promise<JobsResponse> {
   const response = await adminFetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jobs?page=${page}&limit=${limit}`
   );
-  if (!response.ok) throw new Error("Network response was not ok");
+  if (!response.ok) throw new Error("リクエストに失敗しました。 / Request failed. Please try again.");
   return response.json();
 }
 
@@ -52,7 +52,7 @@ async function patchJobs({id,data}:{id:number,data:transformedData}) {
       body: JSON.stringify(data)
     }
   )
-  if (!response.ok) throw new Error("Network response was not ok");
+  if (!response.ok) throw new Error("リクエストに失敗しました。 / Request failed. Please try again.");
   return response.json();
 }
 
@@ -60,7 +60,7 @@ async function deleteJob(id: number) {
   const response = await adminFetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/jobs/${id}`, {
     method: 'DELETE',
   });
-  if (!response.ok) throw new Error("Network response was not ok");
+  if (!response.ok) throw new Error("リクエストに失敗しました。 / Request failed. Please try again.");
   return response.json();
 }
 
@@ -299,7 +299,7 @@ function AdminVacancy() {
                       body: file,
                       headers: { "Content-Type": file.type },
                     });
-                    if (!putRes.ok) alert("Image upload failed");
+                    if (!putRes.ok) alert("画像のアップロードに失敗しました。 / Image upload failed.");
                   }
                 }
                 setEditingRow(null);

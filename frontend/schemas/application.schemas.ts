@@ -53,7 +53,7 @@ export const createApplicationSchema = z.object({
   preferred_location: z.string().optional(),
   availability: z.enum(CONTRACT_OPTIONS).optional(),
   school_college: z.string().optional(),
-  degree: z.string().min(1, "学位・専攻を入力してください"),
+  degree: z.string().optional(),
   soft_skills: z.string().optional(),
   cover_letter: z.string().optional(),
   resume_key: z.string().optional(),

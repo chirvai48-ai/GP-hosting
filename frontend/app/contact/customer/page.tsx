@@ -98,7 +98,7 @@ async function postCandidateInquiry(payload: CreateCandidateInquiryForm) {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body?.error?.formErrors?.[0] || body?.message || "送信に失敗しました");
+    throw new Error(body?.error?.formErrors?.[0] || body?.message || "送信に失敗しました。 / Failed to submit. Please try again.");
   }
   return res.json();
 }
@@ -146,7 +146,7 @@ export default function CustomerContactPage() {
         body: resumeFileRef.current,
         headers: { "Content-Type": resumeFileRef.current.type },
       });
-      if (!putRes.ok) throw new Error("履歴書のアップロードに失敗しました。お手数ですが、もう一度お試しください。");
+      if (!putRes.ok) throw new Error("履歴書のアップロードに失敗しました。お手数ですが、もう一度お試しください。 / Failed to upload your resume. Please try again.");
     }
     setSubmitted(true);
   };

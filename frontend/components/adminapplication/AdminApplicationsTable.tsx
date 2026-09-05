@@ -206,7 +206,7 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
       queryClient.invalidateQueries({ queryKey: ["applications", jobId] });
       queryClient.invalidateQueries({ queryKey: ["applications-stats", jobId] });
     },
-    onError: (err) => alert((err as Error).message),
+    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
   });
 
   const deleteMutation = useMutation({
@@ -217,7 +217,7 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
       queryClient.invalidateQueries({ queryKey: ["applications-stats", jobId] });
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
     },
-    onError: (err) => alert((err as Error).message),
+    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
   });
 
   const applications = data?.data?.items ?? [];

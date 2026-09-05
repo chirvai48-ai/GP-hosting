@@ -95,7 +95,7 @@ export default function ApplicationDetailModal({
         queryClient.invalidateQueries({ queryKey: ["talent-pool"] });
       }
     },
-    onError: (err) => alert((err as Error).message),
+    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
   });
 
   const handleAction = (

@@ -34,7 +34,7 @@ const MAX_RESUME_BYTES = 5 * 1024 * 1024;
 const inputCls =
   "w-full bg-[var(--color-container-low)] border-b border-b-[#c0cbc9] rounded-t-sm px-3 py-2 font-[var(--font-body)] text-base text-[var(--color-on-surface)] outline-none focus:border-b-[var(--color-secondary)]";
 const labelCls =
-  "text-[0.7rem] tracking-widest uppercase text-[var(--color-on-surface-variant)] font-medium";
+  "text-[0.85rem] md:text-[0.75rem] tracking-widest uppercase text-[var(--color-on-surface-variant)] font-medium";
 const errorCls = "text-xs text-red-500 mt-0.5 min-h-[16px]";
 
 type Step = 1 | 2 | 3;
@@ -79,9 +79,8 @@ async function postApplication(payload: CreateApplicationForm) {
     const body = await res.json().catch(() => ({}));
     throw new Error(
       body?.error?.formErrors?.[0] ||
-        body?.messagge ||
         body?.message ||
-        "応募の送信に失敗しました。"
+        "応募の送信に失敗しました。 / Failed to submit your application."
     );
   }
   return res.json();
@@ -155,7 +154,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
         headers: { "Content-Type": resumeFileRef.current.type },
       });
       if (!putRes.ok) {
-        throw new Error("履歴書のアップロードに失敗しました。お手数ですがサポートまでお問い合わせください。");
+        throw new Error("履歴書のアップロードに失敗しました。お手数ですがサポートまでお問い合わせください。 / Failed to upload your resume. Please contact support.");
       }
     }
     setSubmitted(true);
@@ -550,6 +549,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
 
             {step < 3 ? (
               <button
+                key="next-button"
                 type="button"
                 onClick={next}
                 className="inline-flex items-center gap-1 px-4 py-2 rounded bg-[var(--color-primary)] text-white font-[family-name:var(--font-label)] text-sm hover:opacity-90"
@@ -558,6 +558,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
               </button>
             ) : (
               <button
+                key="submit-button"
                 type="submit"
                 disabled={isPending}
                 className="inline-flex items-center gap-1 px-5 py-2 rounded bg-[var(--color-secondary)] text-white font-[family-name:var(--font-label)] text-sm hover:opacity-90 disabled:opacity-50"

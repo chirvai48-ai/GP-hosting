@@ -35,7 +35,7 @@ async function postNews(data: CreateNewsForm) {
       firstFieldErr ||
       formErrs?.[0] ||
       body?.message ||
-      `Request failed (HTTP ${res.status})`;
+      `リクエストに失敗しました。 / Request failed (HTTP ${res.status}).`;
     throw new Error(msg);
   }
   return res.json();

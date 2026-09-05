@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 type SubItem = {
   label: string;
@@ -140,16 +141,16 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}
-            <div className="flex-shrink-0 flex items-center gap-3">
+            <Link href="/" className="flex-shrink-0 flex items-center gap-3">
               <img
                 src="/logowhite.jpeg"
                 alt="ロゴ"
                 className="h-10 md:h-14 w-auto object-contain"
               />
-              <span className="font-display text-sm md:text-base font-black tracking-widest uppercase text-black whitespace-nowrap">
+              <span className="font-display text-sm md:text-base font-black tracking-widest uppercase text-[var(--color-primary)] whitespace-nowrap">
                 Glowing Partner
               </span>
-            </div>
+            </Link>
 
             {/* Divider — desktop only */}
             <div className="hidden lg:block w-px h-7 bg-black/25 mx-4" />
