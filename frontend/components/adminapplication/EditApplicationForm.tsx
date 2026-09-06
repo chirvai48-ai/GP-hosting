@@ -82,7 +82,7 @@ async function patchApplication({
       const first = Object.entries(fe)[0];
       if (first) throw new Error(`${first[0]}: ${first[1][0]}`);
     }
-    throw new Error(errBody?.message || `Update failed (${res.status})`);
+    throw new Error(errBody?.message || `更新に失敗しました。 / Update failed (${res.status}).`);
   }
   return res.json();
 }
@@ -162,7 +162,7 @@ export default function EditApplicationForm({
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
       onSaved();
     } catch (err) {
-      alert((err as Error).message);
+      alert((err as Error).message || "更新に失敗しました。 / Failed to save changes.");
     }
   };
 

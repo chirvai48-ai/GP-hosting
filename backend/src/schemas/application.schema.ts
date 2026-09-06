@@ -32,7 +32,7 @@ export const createApplicationSchema = z.object({
     .or(z.literal("").transform(() => undefined))
     .transform((v) => v ?? "Flexible"),
   school_college: z.string().default(""),
-  degree: z.string().min(1),
+  degree: z.string().default(""),
   soft_skills: z.string().default(""),
   cover_letter: z.string().optional(),
   // Frontend sends "" (empty default) when no résumé is attached; coerce to

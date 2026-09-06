@@ -66,7 +66,7 @@ function AddVacancy() {
         const first = Object.entries(fieldErrors)[0];
         if (first) throw new Error(`${first[0]}: ${first[1][0]}`);
       }
-      throw new Error(body?.messagge || body?.message || `Request failed (${res.status})`);
+      throw new Error(body?.message || `求人の作成に失敗しました。 / Request failed (${res.status}).`);
     }
     return body;
   };
@@ -87,7 +87,7 @@ function AddVacancy() {
           headers: { "Content-Type": "application/json" },
         });
         const urlBody = await urlRes.json().catch(() => ({}));
-        if (!urlRes.ok) throw new Error(urlBody?.message || "Failed to prepare image upload");
+        if (!urlRes.ok) throw new Error(urlBody?.message || "画像のアップロード準備に失敗しました。 / Failed to prepare image upload.");
         const signedUrl = urlBody?.data?.signed_url;
 
         const putRes = await fetch(signedUrl, {
@@ -95,7 +95,7 @@ function AddVacancy() {
           body: imageFileRef.current,
           headers: { "Content-Type": imageFileRef.current.type },
         });
-        if (!putRes.ok) throw new Error("Image upload failed");
+        if (!putRes.ok) throw new Error("画像のアップロードに失敗しました。 / Image upload failed.");
       }
 
       // Job row is only created after the image is safely in R2, so a failed
@@ -104,15 +104,15 @@ function AddVacancy() {
       await mutateAsync(formData);
 
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
-      alert("Job has been successfully created");
+      alert("求人を作成しました。 / Job has been successfully created.");
       methods.reset();
       setActiveStep(0);
       setOpen(false);
     } catch (err) {
-      alert((err as Error).message || "Failed to create job");
+      alert((err as Error).message || "求人の作成に失敗しました。 / Failed to create job.");
     }
   };
-  
+
 
   const onError = (errors: FieldErrors) => {
     const firstEntry = Object.entries(errors)[0];
@@ -121,7 +121,7 @@ function AddVacancy() {
     alert(
       error?.message
         ? `${fieldName}: ${error.message}`
-        : `${fieldName}: Something went wrong`,
+        : `${fieldName}: 入力内容をご確認ください。 / Something went wrong.`,
     );
   };
 

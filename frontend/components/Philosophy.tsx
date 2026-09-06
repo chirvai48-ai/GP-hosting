@@ -99,7 +99,7 @@ export default function PhilosophySection() {
               ref={(el) => {
                 sectionRefs.current[i] = el;
               }}
-              className="min-h-screen flex flex-col justify-center px-10 md:px-16 py-24"
+              className="md:min-h-screen flex flex-col justify-center px-10 md:px-16 py-12 md:py-24"
             >
               {/* Label */}
               <p

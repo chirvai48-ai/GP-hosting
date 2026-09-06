@@ -92,13 +92,13 @@ function NoteRow({
       setEditing(false);
       onChanged();
     },
-    onError: (err) => alert((err as Error).message),
+    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
   });
 
   const removeMutation = useMutation({
     mutationFn: deleteNote,
     onSuccess: () => onChanged(),
-    onError: (err) => alert((err as Error).message),
+    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
   });
 
   const edited = note.updated_at !== note.created_at;
@@ -196,7 +196,7 @@ export default function NotesPanel({ applicationId }: { applicationId: number })
       setDraft("");
       invalidate();
     },
-    onError: (err) => alert((err as Error).message),
+    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
   });
 
   const notes = data?.data ?? [];

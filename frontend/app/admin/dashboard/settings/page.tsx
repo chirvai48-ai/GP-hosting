@@ -36,7 +36,7 @@ export default function SettingsPage() {
     setLoading(false);
 
     if (err) {
-      setError(err.message || "Failed to create account.");
+      setError("アカウントを作成できませんでした。 / Failed to create account. Please try again.");
       return;
     }
 

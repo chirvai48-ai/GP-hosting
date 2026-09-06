@@ -38,7 +38,7 @@ async function patchStatus(id: number, status: ContactStatus) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ status }),
   });
-  if (!res.ok) throw new Error("Failed to update status");
+  if (!res.ok) throw new Error("ステータスの更新に失敗しました。 / Failed to update status.");
   return res.json();
 }
 
@@ -46,7 +46,7 @@ async function deleteInquiry(id: number) {
   const res = await adminFetch(`${API_URL}/api/contacts/company-inquiries/${id}`, {
     method: "DELETE",
   });
-  if (!res.ok) throw new Error("Failed to delete inquiry");
+  if (!res.ok) throw new Error("削除に失敗しました。 / Failed to delete inquiry.");
   return res.json();
 }
 
@@ -68,7 +68,7 @@ export default function CompanyInquiryDetailModal({
       setLocalStatus(status);
       queryClient.invalidateQueries({ queryKey: ["company-inquiries"] });
     },
-    onError: (err) => alert((err as Error).message),
+    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
   });
 
   const deleteMutation = useMutation({
@@ -77,7 +77,7 @@ export default function CompanyInquiryDetailModal({
       queryClient.invalidateQueries({ queryKey: ["company-inquiries"] });
       onClose();
     },
-    onError: (err) => alert((err as Error).message),
+    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
   });
 
   const handleDelete = () => {
