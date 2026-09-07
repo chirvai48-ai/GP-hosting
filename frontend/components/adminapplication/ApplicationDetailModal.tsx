@@ -8,6 +8,7 @@ import type { Application, ApplicationStatus, ApplicationStage } from "@/types/t
 import NotesPanel from "./NotesPanel";
 import EditApplicationForm from "./EditApplicationForm";
 import { adminFetch } from "@/lib/adminFetch";
+import { GENERIC_ACTION_FAILED } from "@/lib/errorMessages";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -95,7 +96,7 @@ export default function ApplicationDetailModal({
         queryClient.invalidateQueries({ queryKey: ["talent-pool"] });
       }
     },
-    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
+    onError: (err) => alert((err as Error).message || GENERIC_ACTION_FAILED),
   });
 
   const handleAction = (

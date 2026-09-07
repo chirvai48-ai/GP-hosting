@@ -23,11 +23,11 @@ export const createCandidateInquirySchema = z.object({
     .string()
     .min(1, "生年月日を入力してください")
     .regex(/^\d{4}-\d{2}-\d{2}$/, "日付は YYYY-MM-DD（年-月-日）の形式で入力してください"),
-  gender: z.enum(GENDER_OPTIONS).optional(),
+  gender: z.enum(GENDER_OPTIONS, { message: "性別を選択してください" }),
   current_address: z.string().min(1, "現住所を入力してください"),
   preferred_location: z.string().min(1, "勤務希望地を入力してください"),
-  residence_status: z.enum(RESIDENCE_STATUS_OPTIONS).optional(),
-  japanese_ability: z.enum(JAPANESE_ABILITY_OPTIONS).optional(),
+  residence_status: z.enum(RESIDENCE_STATUS_OPTIONS, { message: "在留資格を選択してください" }),
+  japanese_ability: z.enum(JAPANESE_ABILITY_OPTIONS, { message: "日本語能力を選択してください" }),
   cover_letter: z.string().optional(),
   resume_key: z.string().optional(),
   resume_type: z.string().optional(),

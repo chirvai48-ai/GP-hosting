@@ -1,20 +1,18 @@
 import { Request,Response, NextFunction } from "express"
 import { Schema, ZodError } from "zod"
+import { GENERIC_VALIDATION_ERROR } from "../lib/messages"
 
 // Zod's default flatten() messages are raw/technical English (e.g. "Invalid
 // input: expected string, received undefined"). Replace them with one
 // friendly bilingual message per field instead of forwarding zod internals.
-const FRIENDLY_MESSAGE =
-    "入力内容をご確認ください。 / Please check this field and try again.";
-
 const friendlyFlatten = (error: ZodError) => {
     const flat = error.flatten();
     const fieldErrors: Record<string, string[]> = {};
     for (const key of Object.keys(flat.fieldErrors)) {
-        fieldErrors[key] = [FRIENDLY_MESSAGE];
+        fieldErrors[key] = [GENERIC_VALIDATION_ERROR];
     }
     return {
-        formErrors: flat.formErrors.length ? [FRIENDLY_MESSAGE] : [],
+        formErrors: flat.formErrors.length ? [GENERIC_VALIDATION_ERROR] : [],
         fieldErrors,
     };
 };

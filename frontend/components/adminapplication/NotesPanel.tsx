@@ -6,6 +6,7 @@ import { Pencil, Trash2, Check, X } from "lucide-react";
 import { useSession } from "@/lib/auth-client";
 import type { Note, NotesResponse } from "@/types/table";
 import { adminFetch } from "@/lib/adminFetch";
+import { GENERIC_ACTION_FAILED } from "@/lib/errorMessages";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -92,13 +93,13 @@ function NoteRow({
       setEditing(false);
       onChanged();
     },
-    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
+    onError: (err) => alert((err as Error).message || GENERIC_ACTION_FAILED),
   });
 
   const removeMutation = useMutation({
     mutationFn: deleteNote,
     onSuccess: () => onChanged(),
-    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
+    onError: (err) => alert((err as Error).message || GENERIC_ACTION_FAILED),
   });
 
   const edited = note.updated_at !== note.created_at;
@@ -196,7 +197,7 @@ export default function NotesPanel({ applicationId }: { applicationId: number })
       setDraft("");
       invalidate();
     },
-    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
+    onError: (err) => alert((err as Error).message || GENERIC_ACTION_FAILED),
   });
 
   const notes = data?.data ?? [];

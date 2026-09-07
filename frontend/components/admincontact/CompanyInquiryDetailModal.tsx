@@ -6,6 +6,7 @@ import { X, Trash2 } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { CompanyInquiry, ContactStatus } from "@/types/table";
 import { adminFetch } from "@/lib/adminFetch";
+import { GENERIC_ACTION_FAILED } from "@/lib/errorMessages";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -68,7 +69,7 @@ export default function CompanyInquiryDetailModal({
       setLocalStatus(status);
       queryClient.invalidateQueries({ queryKey: ["company-inquiries"] });
     },
-    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
+    onError: (err) => alert((err as Error).message || GENERIC_ACTION_FAILED),
   });
 
   const deleteMutation = useMutation({
@@ -77,7 +78,7 @@ export default function CompanyInquiryDetailModal({
       queryClient.invalidateQueries({ queryKey: ["company-inquiries"] });
       onClose();
     },
-    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
+    onError: (err) => alert((err as Error).message || GENERIC_ACTION_FAILED),
   });
 
   const handleDelete = () => {

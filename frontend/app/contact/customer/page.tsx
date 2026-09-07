@@ -12,6 +12,7 @@ import {
   type CreateCandidateInquiryForm,
   CANDIDATE_STEP_FIELDS,
 } from "@/schemas/contact.schemas";
+import { GENERIC_SUBMIT_FAILED } from "@/lib/errorMessages";
 import {
   GENDER_OPTIONS,
   RESIDENCE_STATUS_OPTIONS,
@@ -98,7 +99,7 @@ async function postCandidateInquiry(payload: CreateCandidateInquiryForm) {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body?.error?.formErrors?.[0] || body?.message || "送信に失敗しました。 / Failed to submit. Please try again.");
+    throw new Error(body?.error?.formErrors?.[0] || body?.message || GENERIC_SUBMIT_FAILED);
   }
   return res.json();
 }

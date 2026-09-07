@@ -11,6 +11,7 @@ import {
   createCompanyInquirySchema,
   type CreateCompanyInquiryForm,
 } from "@/schemas/contact.schemas";
+import { GENERIC_SUBMIT_FAILED } from "@/lib/errorMessages";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -46,7 +47,7 @@ async function postCompanyInquiry(payload: CreateCompanyInquiryForm) {
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body?.error?.formErrors?.[0] || body?.message || "送信に失敗しました。 / Failed to submit. Please try again.");
+    throw new Error(body?.error?.formErrors?.[0] || body?.message || GENERIC_SUBMIT_FAILED);
   }
   return res.json();
 }

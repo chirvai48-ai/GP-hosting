@@ -23,6 +23,7 @@ import type {
 } from "@/types/table";
 import { adminFetch } from "@/lib/adminFetch";
 import { PaginationControls } from "@/components/Reusables/PaginationControls";
+import { GENERIC_ACTION_FAILED } from "@/lib/errorMessages";
 
 const ApplicationDetailModal = dynamic(() => import("./ApplicationDetailModal"), {
   ssr: false,
@@ -206,7 +207,7 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
       queryClient.invalidateQueries({ queryKey: ["applications", jobId] });
       queryClient.invalidateQueries({ queryKey: ["applications-stats", jobId] });
     },
-    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
+    onError: (err) => alert((err as Error).message || GENERIC_ACTION_FAILED),
   });
 
   const deleteMutation = useMutation({
@@ -217,7 +218,7 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
       queryClient.invalidateQueries({ queryKey: ["applications-stats", jobId] });
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
     },
-    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
+    onError: (err) => alert((err as Error).message || GENERIC_ACTION_FAILED),
   });
 
   const applications = data?.data?.items ?? [];

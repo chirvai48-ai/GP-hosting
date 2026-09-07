@@ -430,7 +430,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
                     {...register("school_college")}
                   />
                 </Field>
-                <Field label="学位・専攻" error={errors.degree?.message}>
+                <Field label="学位・専攻（任意）" error={errors.degree?.message}>
                   <input
                     className={inputCls}
                     placeholder="例：学士（コンピュータサイエンス）"
@@ -660,7 +660,7 @@ function Summary({ values }: { values: CreateApplicationForm }) {
       values.availability ? CONTRACT_LABELS[values.availability] : "",
     ],
     ["学校名", values.school_college ?? ""],
-    ["学位・専攻", values.degree],
+    ["学位・専攻", values.degree ?? ""],
     [
       "勤務可能な曜日・日数",
       (values.working_days ?? [])

@@ -6,6 +6,7 @@ import { X, ExternalLink, Archive, XCircle, Eye, Trash2 } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { CandidateInquiry, CandidateInquiryState } from "@/types/table";
 import { adminFetch } from "@/lib/adminFetch";
+import { GENERIC_ACTION_FAILED } from "@/lib/errorMessages";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -82,7 +83,7 @@ export default function CandidateInquiryDetailModal({
       queryClient.invalidateQueries({ queryKey: ["candidate-inquiries"] });
       queryClient.invalidateQueries({ queryKey: ["candidate-talent-pool"] });
     },
-    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
+    onError: (err) => alert((err as Error).message || GENERIC_ACTION_FAILED),
   });
 
   const deleteMutation = useMutation({
@@ -92,7 +93,7 @@ export default function CandidateInquiryDetailModal({
       queryClient.invalidateQueries({ queryKey: ["candidate-talent-pool"] });
       onClose();
     },
-    onError: (err) => alert((err as Error).message || "操作に失敗しました。 / Something went wrong. Please try again."),
+    onError: (err) => alert((err as Error).message || GENERIC_ACTION_FAILED),
   });
 
   const handleDelete = () => {
