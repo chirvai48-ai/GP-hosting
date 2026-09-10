@@ -104,7 +104,7 @@ export default async function ApplyPage({
             "@type": "QuantitativeValue",
             minValue: job.salary_min,
             maxValue: job.salary_max,
-            unitText: "MONTH",
+            unitText: job.contract === "Part_time" ? "HOUR" : "MONTH",
           },
         },
       }

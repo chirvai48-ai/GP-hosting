@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ArrowLeft, ArrowRight, CheckCircle2, Upload } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, MessageCircle, Upload } from "lucide-react";
 import {
   createApplicationSchema,
   CreateApplicationForm,
@@ -102,7 +102,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
     size: number;
   } | null>(null);
 
-  const { data: job } = useQuery({
+  const { data: job, isSuccess: jobLoaded } = useQuery({
     queryKey: ["job-public", jobId],
     queryFn: () => fetchJob(jobId),
   });
@@ -194,6 +194,40 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
     resumeFileRef.current = file;
     setResumeFileMeta({ name: file.name, size: file.size });
   };
+
+  if (jobLoaded && job?.status === "Closed") {
+    return (
+      <main className="min-h-screen flex items-center justify-center px-6 py-10 bg-[color:var(--color-surface)]">
+        <div className="max-w-md w-full text-center bg-white rounded-2xl shadow-sm border border-[rgba(20,86,82,0.1)] p-10">
+          <MessageCircle
+            size={48}
+            className="mx-auto text-red-400 mb-4"
+          />
+          <h1 className="font-[family-name:var(--font-headline)] text-2xl text-[color:var(--color-on-surface)] mb-2">
+            この求人の募集は終了しました
+          </h1>
+          <p className="font-[family-name:var(--font-body)] text-sm text-[color:var(--color-on-surface-variant)] mb-6">
+            {job.title && <><strong>{job.title}</strong>{" "}</>}
+            大変申し訳ございませんが、募集は締め切らせていただきました。今後の求人のご案内やお仕事探しのご相談は随時承っておりますので、よろしければ下記よりお気軽にご連絡ください。
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href="/contact/customer"
+              className="inline-block px-4 py-2 rounded bg-[var(--color-primary)] text-white hover:opacity-90 transition-opacity font-[family-name:var(--font-label)] text-sm"
+            >
+              お問い合わせはこちら
+            </Link>
+            <Link
+              href="/vacancy"
+              className="inline-block px-4 py-2 rounded border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white transition-colors font-[family-name:var(--font-label)] text-sm"
+            >
+              求人一覧に戻る
+            </Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   if (submitted) {
     return (

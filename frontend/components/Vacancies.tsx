@@ -24,7 +24,7 @@ function formatSalary(min: number, max: number, currency: string) {
 }
 
 function salaryLabel(contract: string) {
-  return contract === "Part_time" ? "時給" : "年収";
+  return contract === "Part_time" ? "時給" : "月給";
 }
 
 const CONTRACT_LABEL: Record<string, string> = {
@@ -101,6 +101,11 @@ function JobDetailModal({ job, onClose }: { job: Job; onClose: () => void }) {
                 <span className={`${CONTRACT_STYLES[job.contract] ?? "bg-gray-100 text-gray-600"} font-[family-name:var(--font-label)] text-[10px] font-medium px-2.5 py-1 rounded`}>
                   {CONTRACT_LABEL[job.contract] ?? job.contract}
                 </span>
+                {job.status === "Closed" && (
+                  <span className="bg-red-500/90 text-white font-[family-name:var(--font-label)] text-[10px] font-semibold tracking-widest uppercase px-2.5 py-1 rounded">
+                    募集終了
+                  </span>
+                )}
               </div>
               <h2 className="font-[family-name:var(--font-headline)] text-2xl font-medium leading-snug text-[color:var(--color-on-surface)]">
                 {job.title}
@@ -249,6 +254,11 @@ function VacancyCard({ job, onClick }: { job: Job; onClick: () => void }) {
         <span className={`absolute bottom-3 right-3 ${CONTRACT_STYLES[job.contract] ?? "bg-gray-100 text-gray-600"} font-[family-name:var(--font-label)] text-[10px] font-medium px-2.5 py-1 rounded`}>
           {CONTRACT_LABEL[job.contract] ?? job.contract}
         </span>
+        {job.status === "Closed" && (
+          <span className="absolute top-3 right-3 bg-red-500/90 text-white font-[family-name:var(--font-label)] text-[10px] font-semibold tracking-widest uppercase px-2.5 py-1 rounded">
+            募集終了
+          </span>
+        )}
       </div>
 
       {/* Card body */}

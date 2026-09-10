@@ -15,7 +15,7 @@ const DEFAULT_LIMIT = 12;
 
 function buildParams(search: Searchtype, filters: Filterstype, page: number, limit: number): string {
   const params = new URLSearchParams();
-  params.set("status", "Published");
+  params.set("status", "Published,Closed");
   params.set("page", String(page));
   params.set("limit", String(limit));
 

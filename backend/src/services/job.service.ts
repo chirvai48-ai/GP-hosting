@@ -65,9 +65,13 @@ const SCHEDULE_CONTRACT_MAP: Record<string, string[]> = {
 
 // Translates the public job-search filters (mirrored from the old client-side
 // applyJobFilters) into a Prisma where clause.
-function buildJobWhere(status?: string, filters?: JobFilters) {
+function buildJobWhere(status?: string | string[], filters?: JobFilters) {
   const where: any = {};
-  if (status) where.status = status;
+  if (Array.isArray(status)) {
+    if (status.length) where.status = { in: status };
+  } else if (status) {
+    where.status = status;
+  }
   if (!filters) return where;
 
   const tokens = filters.keyword?.trim().toLowerCase().split(/\s+/).filter(Boolean) ?? [];
@@ -112,7 +116,7 @@ function buildJobWhere(status?: string, filters?: JobFilters) {
 }
 
 export const fetchJobs = async (
-  status?: string,
+  status?: string | string[],
   filters: JobFilters | null = null,
   pagination: Pick<PaginationParams, "skip" | "take"> = { skip: 0, take: DEFAULT_LIMIT }
 ) => {

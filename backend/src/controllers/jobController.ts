@@ -31,11 +31,12 @@ export const getJobs = async (
   try {
     const rawStatus = req.query.status;
     const validStatuses = Object.values(JobStatus);
-    if (rawStatus !== undefined && !validStatuses.includes(rawStatus as JobStatus)) {
+    const statusList = typeof rawStatus === "string" ? rawStatus.split(",").filter(Boolean) : undefined;
+    if (statusList && statusList.some((s) => !validStatuses.includes(s as JobStatus))) {
       res.status(400).json({ message: `Invalid status. Must be one of: ${validStatuses.join(", ")}` });
       return;
     }
-    const status = typeof rawStatus === "string" ? rawStatus : undefined;
+    const status = statusList && statusList.length > 1 ? statusList : statusList?.[0];
     const { page, limit, skip } = parsePagination(req.query as Record<string, unknown>);
     const filters = parseJobFilters(req.query as Record<string, unknown>);
     const { items, total } = await fetchJobs(status, filters, { skip, take: limit });
