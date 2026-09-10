@@ -1,10 +1,10 @@
-import { useFormContext, Controller } from "react-hook-form";
+import { useFormContext, useWatch, Controller } from "react-hook-form";
 import { TagInput,ImageUpload } from "../Reusables/Reusables";
 import { Button } from "@mui/material";
 import { Plus } from "lucide-react";
 const CURRENCIES = ["YEN", "USD", "EUR", "GBP", "SGD"];
 
-const EXPERIENCE_OPTIONS = [
+export const EXPERIENCE_OPTIONS = [
   { label: "Any", value: -1 },
   { label: "Entry level", value: 0 },
   { label: "0–1 years", value: 1 },
@@ -22,7 +22,9 @@ const labelCls =
   "text-[0.7rem] tracking-widest uppercase text-[var(--color-on-surface-variant)] font-medium";
 
 export function JobPostingForm1() {
-  const { register,formState:{errors}} = useFormContext();
+  const { register,formState:{errors},control} = useFormContext();
+  const contract = useWatch({ control, name: "contract" });
+  const salaryUnit = contract === "Part_time" ? "Hourly" : "Monthly";
   return (
     <div className="max-w-xl mx-auto p-8 bg-[var(--color-surface)] font-[var(--font-body)]">
       <div className="flex flex-col gap-5">
@@ -48,7 +50,7 @@ export function JobPostingForm1() {
             <p className="text-xs text-red-500 mt-0.5 min-h-[16px]">{errors.currency?.message as string}</p>
           </div>
           <div className="flex flex-col gap-1">
-            <label className={labelCls}>Min Salary</label>
+            <label className={labelCls}>Min Salary ({salaryUnit})</label>
             <input
               className={inputCls}
               type="number"
@@ -57,7 +59,7 @@ export function JobPostingForm1() {
             <p className="text-xs text-red-500 mt-0.5 min-h-[16px]">{errors.salary_min?.message as string}</p>
           </div>
           <div className="flex flex-col gap-1">
-            <label className={labelCls}>Max Salary</label>
+            <label className={labelCls}>Max Salary ({salaryUnit})</label>
             <input
               className={inputCls}
               type="number"

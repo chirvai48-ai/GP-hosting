@@ -12,6 +12,11 @@ import { useState, useRef } from "react";
 import AddVacancy from "@/components/adminvacancy/AddVacancy";
 import { PaginationControls } from "@/components/Reusables/PaginationControls";
 import { adminFetch } from "@/lib/adminFetch";
+import { EXPERIENCE_OPTIONS } from "@/components/adminvacancy/Forms";
+
+const EXPERIENCE_LABELS: Record<number, string> = Object.fromEntries(
+  EXPERIENCE_OPTIONS.map((o) => [o.value, o.label])
+);
 
 type transformedData = Omit<Partial<Job>, "job_category" | "languages" | "technical_skills"> & {
   job_category?:string,
@@ -143,11 +148,11 @@ function AdminVacancy() {
       meta: { editable: true, inputType: "select", options: ["YEN", "USD", "EUR"] },
     }),
     columnHelper.accessor("experience", {
-      header: "Exp (yrs)",
-      size: 90,
+      header: "Experience",
+      size: 110,
       enableSorting: true,
-      cell: ({ getValue }) => `${getValue()} yrs`,
-      meta: { editable: true, inputType: "number" },
+      cell: ({ getValue }) => EXPERIENCE_LABELS[getValue() as number] ?? `${getValue()} yrs`,
+      meta: { editable: true, inputType: "number_select", selectOptions: EXPERIENCE_OPTIONS },
     }),
     columnHelper.accessor("contract", {
       header: "Contract",

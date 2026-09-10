@@ -11,7 +11,12 @@ interface Props {
 
 function EditableCell({ cell, isEditing, rowEdit, onFieldChange, onImageFileChange }: Props) {
   const meta = cell.column.columnDef.meta as
-    | { editable?: boolean; inputType?: string; options?: string[] }
+    | {
+        editable?: boolean;
+        inputType?: string;
+        options?: string[];
+        selectOptions?: { label: string; value: number }[];
+      }
     | undefined;
 
   const toTagOptions = (
@@ -98,6 +103,21 @@ function EditableCell({ cell, isEditing, rowEdit, onFieldChange, onImageFileChan
           {meta.options?.map((opt) => (
             <option key={opt} value={opt}>
               {opt}
+            </option>
+          ))}
+        </select>
+      );
+
+    case "number_select":
+      return (
+        <select
+          value={currentValue as number}
+          onChange={(e) => onFieldChange(field, Number(e.target.value))}
+          className={inputClass}
+        >
+          {meta.selectOptions?.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
             </option>
           ))}
         </select>
