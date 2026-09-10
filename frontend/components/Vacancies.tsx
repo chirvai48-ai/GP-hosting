@@ -23,6 +23,8 @@ function formatSalary(min: number, max: number, currency: string) {
   return `${symbol}${min.toLocaleString()} – ${symbol}${max.toLocaleString()}`;
 }
 
+// Part-time jobs display an hourly wage (時給); all other contract types
+// display a monthly salary (月給).
 function salaryLabel(contract: string) {
   return contract === "Part_time" ? "時給" : "月給";
 }
