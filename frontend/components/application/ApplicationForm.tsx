@@ -204,11 +204,10 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
             className="mx-auto text-red-400 mb-4"
           />
           <h1 className="font-[family-name:var(--font-headline)] text-2xl text-[color:var(--color-on-surface)] mb-2">
-            この求人の募集は終了しました
+            本求人の募集は終了いたしました。
           </h1>
           <p className="font-[family-name:var(--font-body)] text-sm text-[color:var(--color-on-surface-variant)] mb-6">
-            {job.title && <><strong>{job.title}</strong>{" "}</>}
-            大変申し訳ございませんが、募集は締め切らせていただきました。今後の求人のご案内やお仕事探しのご相談は随時承っておりますので、よろしければ下記よりお気軽にご連絡ください。
+            ご興味をお持ちいただきありがとうございます。今後の求人のご案内やお仕事探しのご相談は、下記よりお気軽にお問い合わせください。
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
