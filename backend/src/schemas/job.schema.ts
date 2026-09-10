@@ -3,12 +3,12 @@ import { Contract, JobStatus } from "../generated/prisma/enums";
 
 const baseJobSchema = z
   .object({
-    title: z.string(),
+    title: z.string().max(191),
     salary_min: z.number().int().nonnegative(),
     salary_max: z.number().int().nonnegative(),
     currency: z.string().default("YEN"),
 
-    location: z.string().min(1),
+    location: z.string().min(1).max(191),
 
     experience: z.number().int().min(-1),
 
@@ -21,14 +21,14 @@ const baseJobSchema = z
 
     workdays: z.number().int().min(1).max(7),
 
-    gender: z.string(),
+    gender: z.string().max(191),
 
     benefits: z.string(),
     requirements: z.string(),
 
     application_method: z.string(),
 
-    job_category: z.string().min(1),
+    job_category: z.string().min(1).max(191),
 
     languages: z.array(z.string().min(1)),
     technical_skills: z.array(z.string().min(1)),

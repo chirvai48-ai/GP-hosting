@@ -1,7 +1,7 @@
 import * as z from "zod";
 
 const baseJobSchema = z.object({
-  title: z.string().min(1, "Job title is required"),
+  title: z.string().min(1, "Job title is required").max(191, "Max 191 characters"),
   salary_min: z.coerce
     .number({ error: "Enter a valid number" })
     .int()
@@ -11,7 +11,7 @@ const baseJobSchema = z.object({
     .int()
     .nonnegative("Maximum salary cannot be negative"),
   currency: z.string().default("YEN"),
-  location: z.string().min(1, "Please enter a location"),
+  location: z.string().min(1, "Please enter a location").max(191, "Max 191 characters"),
   experience: z.coerce
     .number({ error: "Select an experience level" })
     .int()
@@ -30,11 +30,11 @@ const baseJobSchema = z.object({
     .int()
     .min(1, "Minimum 1 workday required")
     .max(7, "Cannot exceed 7 workdays"),
-  gender: z.string().min(1, "Please select a gender"),
+  gender: z.string().min(1, "Please select a gender").max(191, "Max 191 characters"),
   benefits: z.string().min(1, "Please describe the benefits"),
   requirements: z.string().min(1, "Please list the requirements"),
   application_method: z.string().min(1, "Please specify how to apply"),
-  job_category: z.string().min(1, "Please enter a job category"),
+  job_category: z.string().min(1, "Please enter a job category").max(191, "Max 191 characters"),
   languages: z.array(z.string().min(1)).min(1, "Add at least one language"),
   technical_skills: z
     .array(z.string().min(1))

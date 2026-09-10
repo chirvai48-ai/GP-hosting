@@ -21,9 +21,9 @@ model Job {
   shift_end          DateTime      @db.Time
   workdays           Int
   gender             String
-  benefits           String
-  requirements       String
-  application_method String
+  benefits           String        @db.Text
+  requirements       String        @db.Text
+  application_method String        @db.Text
   job_category_id    Int?
   job_category       JobCategory?  @relation(fields: [job_category_id], references: [id])
   created_at         DateTime      @default(now())
@@ -31,7 +31,7 @@ model Job {
   applications       Application[]
   languages          Language[]
   technical_skills   Skill[]
-  soft_skills        String
+  soft_skills        String        @db.Text
   status             JobStatus     @default(Draft)
   image_key          String        @unique
   image_type         String
