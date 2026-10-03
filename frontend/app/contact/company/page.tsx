@@ -12,6 +12,7 @@ import {
   type CreateCompanyInquiryForm,
 } from "@/schemas/contact.schemas";
 import { GENERIC_SUBMIT_FAILED } from "@/lib/errorMessages";
+import PolicyModal from "@/components/PolicyModal";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -55,6 +56,7 @@ async function postCompanyInquiry(payload: CreateCompanyInquiryForm) {
 export default function CompanyContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [agreed, setAgreed] = useState(false);
+  const [policyOpen, setPolicyOpen] = useState(false);
 
   const {
     register,
@@ -207,14 +209,24 @@ export default function CompanyContactPage() {
               </p>
             )}
 
-            <label className="flex items-center gap-2 text-sm text-[color:var(--color-on-surface)] font-[family-name:var(--font-body)]">
-              <input
-                type="checkbox"
-                checked={agreed}
-                onChange={(e) => setAgreed(e.target.checked)}
-              />
-              利用規約およびプライバシーポリシーに同意します。
-            </label>
+            <div className="flex items-center gap-2 text-sm text-[color:var(--color-on-surface)] font-[family-name:var(--font-body)]">
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                />
+                利用規約およびプライバシーポリシーに同意します。
+              </label>
+              <button
+                type="button"
+                onClick={() => setPolicyOpen(true)}
+                className="text-[11px] underline text-[var(--color-secondary)] whitespace-nowrap transition-all duration-200 hover:opacity-70 hover:tracking-wide hover:text-xs"
+              >
+                利用規約
+              </button>
+            </div>
+            <PolicyModal open={policyOpen} onClose={() => setPolicyOpen(false)} />
 
             <button
               type="submit"

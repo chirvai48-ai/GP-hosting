@@ -13,6 +13,7 @@ import {
   CANDIDATE_STEP_FIELDS,
 } from "@/schemas/contact.schemas";
 import { GENERIC_SUBMIT_FAILED } from "@/lib/errorMessages";
+import PolicyModal from "@/components/PolicyModal";
 import {
   GENDER_OPTIONS,
   RESIDENCE_STATUS_OPTIONS,
@@ -108,6 +109,7 @@ export default function CustomerContactPage() {
   const [step, setStep] = useState<1 | 2>(1);
   const [submitted, setSubmitted] = useState(false);
   const [agreed, setAgreed] = useState(false);
+  const [policyOpen, setPolicyOpen] = useState(false);
   const [resumeError, setResumeError] = useState<string | null>(null);
   const resumeFileRef = useRef<File | null>(null);
   const [resumeFileMeta, setResumeFileMeta] = useState<{ name: string; size: number } | null>(
@@ -446,14 +448,24 @@ export default function CustomerContactPage() {
                 </p>
               )}
 
-              <label className="flex items-center gap-2 text-sm text-[color:var(--color-on-surface)] font-[family-name:var(--font-body)]">
-                <input
-                  type="checkbox"
-                  checked={agreed}
-                  onChange={(e) => setAgreed(e.target.checked)}
-                />
-                利用規約およびプライバシーポリシーに同意します。
-              </label>
+              <div className="flex items-center gap-2 text-sm text-[color:var(--color-on-surface)] font-[family-name:var(--font-body)]">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={agreed}
+                    onChange={(e) => setAgreed(e.target.checked)}
+                  />
+                  利用規約およびプライバシーポリシーに同意します。
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setPolicyOpen(true)}
+                  className="text-[11px] underline text-[var(--color-secondary)] whitespace-nowrap transition-all duration-200 hover:opacity-70 hover:tracking-wide hover:text-xs"
+                >
+                  利用規約
+                </button>
+              </div>
+              <PolicyModal open={policyOpen} onClose={() => setPolicyOpen(false)} />
 
               <div className="flex justify-between pt-2">
                 <button
