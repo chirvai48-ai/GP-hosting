@@ -291,7 +291,8 @@ export function JobPostingForm3({ onFileChange }: { onFileChange: (file: File) =
               <ImageUpload
                 value={field.value}
                 onChange={(file: File) => {
-                  field.onChange(file.name);
+                  const ext = file.name.split(".").pop() ?? "bin";
+                  field.onChange(`${crypto.randomUUID()}.${ext}`);
                   setValue("image_type", file.type);
                   onFileChange(file);
                 }}
