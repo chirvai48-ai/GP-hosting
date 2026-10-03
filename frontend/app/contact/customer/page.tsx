@@ -152,6 +152,7 @@ export default function CustomerContactPage() {
       if (!putRes.ok) throw new Error("履歴書のアップロードに失敗しました。お手数ですが、もう一度お試しください。 / Failed to upload your resume. Please try again.");
     }
     setSubmitted(true);
+    window.scrollTo(0, 0);
   };
 
   const next = async () => {
@@ -189,7 +190,7 @@ export default function CustomerContactPage() {
 
   if (submitted) {
     return (
-      <main className="min-h-screen flex items-center justify-center px-6 py-10 bg-[color:var(--color-surface)]">
+      <main className="min-h-[calc(100dvh-3.5rem)] md:min-h-[calc(100vh-4rem)] mt-14 md:mt-16 flex items-center justify-center px-6 py-10 bg-[color:var(--color-surface)]">
         <div className="max-w-md w-full text-center bg-white rounded-2xl shadow-sm border border-[rgba(20,86,82,0.1)] p-10">
           <CheckCircle2 size={48} className="mx-auto text-[color:var(--color-primary)] mb-4" />
           <h1 className="font-[family-name:var(--font-headline)] text-2xl text-[color:var(--color-on-surface)] mb-2">

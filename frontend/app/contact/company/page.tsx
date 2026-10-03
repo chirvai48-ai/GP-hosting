@@ -73,11 +73,12 @@ export default function CompanyContactPage() {
   const onSubmit = async (data: CreateCompanyInquiryForm) => {
     await mutateAsync(data);
     setSubmitted(true);
+    window.scrollTo(0, 0);
   };
 
   if (submitted) {
     return (
-      <main className="min-h-screen flex items-center justify-center px-6 py-10 bg-[color:var(--color-surface)]">
+      <main className="min-h-[calc(100dvh-3.5rem)] md:min-h-[calc(100vh-4rem)] mt-14 md:mt-16 flex items-center justify-center px-6 py-10 bg-[color:var(--color-surface)]">
         <div className="max-w-md w-full text-center bg-white rounded-2xl shadow-sm border border-[rgba(20,86,82,0.1)] p-10">
           <CheckCircle2 size={48} className="mx-auto text-[color:var(--color-primary)] mb-4" />
           <h1 className="font-[family-name:var(--font-headline)] text-2xl text-[color:var(--color-on-surface)] mb-2">

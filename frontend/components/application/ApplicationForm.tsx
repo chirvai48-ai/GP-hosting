@@ -158,6 +158,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
       }
     }
     setSubmitted(true);
+    window.scrollTo(0, 0);
   };
 
   const next = async () => {
@@ -197,7 +198,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
 
   if (jobLoaded && job?.status === "Closed") {
     return (
-      <main className="min-h-screen flex items-center justify-center px-6 py-10 bg-[color:var(--color-surface)]">
+      <main className="min-h-[calc(100dvh-3.5rem)] md:min-h-[calc(100vh-4rem)] mt-14 md:mt-16 flex items-center justify-center px-6 py-10 bg-[color:var(--color-surface)]">
         <div className="max-w-md w-full text-center bg-white rounded-2xl shadow-sm border border-[rgba(20,86,82,0.1)] p-10">
           <MessageCircle
             size={48}
@@ -230,7 +231,7 @@ export default function ApplicationForm({ jobId }: { jobId: number }) {
 
   if (submitted) {
     return (
-      <main className="min-h-screen flex items-center justify-center px-6 py-10 bg-[color:var(--color-surface)]">
+      <main className="min-h-[calc(100dvh-3.5rem)] md:min-h-[calc(100vh-4rem)] mt-14 md:mt-16 flex items-center justify-center px-6 py-10 bg-[color:var(--color-surface)]">
         <div className="max-w-md w-full text-center bg-white rounded-2xl shadow-sm border border-[rgba(20,86,82,0.1)] p-10">
           <CheckCircle2
             size={48}
