@@ -147,7 +147,7 @@ export default function Navbar() {
                 alt="ロゴ"
                 className="h-10 md:h-14 w-auto object-contain"
               />
-              <span className="font-display text-sm md:text-base font-black tracking-widest uppercase text-[var(--color-primary)] whitespace-nowrap">
+              <span className="font-display text-sm md:text-base font-black tracking-widest text-[var(--color-primary)] whitespace-nowrap">
                 Glowing Partner
               </span>
             </Link>

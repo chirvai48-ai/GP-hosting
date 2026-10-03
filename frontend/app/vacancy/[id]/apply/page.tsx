@@ -66,7 +66,7 @@ export default async function ApplyPage({
 
   if (!Number.isInteger(jobId) || jobId <= 0) {
     return (
-      <main className="min-h-screen flex items-center justify-center px-6 py-10 bg-[color:var(--color-surface)]">
+      <main className="min-h-[calc(100dvh-3.5rem)] md:min-h-[calc(100vh-4rem)] mt-14 md:mt-16 flex items-center justify-center px-6 py-10 bg-[color:var(--color-surface)]">
         <p className="text-[color:var(--color-on-surface-variant)] font-[family-name:var(--font-label)]">
           無効な求人IDです。
         </p>

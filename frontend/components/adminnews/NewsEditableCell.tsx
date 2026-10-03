@@ -64,7 +64,8 @@ function NewsEditableCell({ cell, isEditing, rowEdit, onFieldChange, onFileChang
           <ImageUpload
             value={currentValue as string}
             onChange={(val: File) => {
-              onFieldChange(field, val.name);
+              const ext = val.name.split(".").pop() ?? "bin";
+              onFieldChange(field, `${crypto.randomUUID()}.${ext}`);
               onFieldChange("image_type", val.type);
               onFileChange?.(val);
             }}

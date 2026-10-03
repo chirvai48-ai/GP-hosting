@@ -13,6 +13,7 @@ import {
   CANDIDATE_STEP_FIELDS,
 } from "@/schemas/contact.schemas";
 import { GENERIC_SUBMIT_FAILED } from "@/lib/errorMessages";
+import PolicyModal from "@/components/PolicyModal";
 import {
   GENDER_OPTIONS,
   RESIDENCE_STATUS_OPTIONS,
@@ -108,6 +109,7 @@ export default function CustomerContactPage() {
   const [step, setStep] = useState<1 | 2>(1);
   const [submitted, setSubmitted] = useState(false);
   const [agreed, setAgreed] = useState(false);
+  const [policyOpen, setPolicyOpen] = useState(false);
   const [resumeError, setResumeError] = useState<string | null>(null);
   const resumeFileRef = useRef<File | null>(null);
   const [resumeFileMeta, setResumeFileMeta] = useState<{ name: string; size: number } | null>(
@@ -150,6 +152,7 @@ export default function CustomerContactPage() {
       if (!putRes.ok) throw new Error("履歴書のアップロードに失敗しました。お手数ですが、もう一度お試しください。 / Failed to upload your resume. Please try again.");
     }
     setSubmitted(true);
+    window.scrollTo(0, 0);
   };
 
   const next = async () => {
@@ -187,7 +190,7 @@ export default function CustomerContactPage() {
 
   if (submitted) {
     return (
-      <main className="min-h-screen flex items-center justify-center px-6 py-10 bg-[color:var(--color-surface)]">
+      <main className="min-h-[calc(100dvh-3.5rem)] md:min-h-[calc(100vh-4rem)] mt-14 md:mt-16 flex items-center justify-center px-6 py-10 bg-[color:var(--color-surface)]">
         <div className="max-w-md w-full text-center bg-white rounded-2xl shadow-sm border border-[rgba(20,86,82,0.1)] p-10">
           <CheckCircle2 size={48} className="mx-auto text-[color:var(--color-primary)] mb-4" />
           <h1 className="font-[family-name:var(--font-headline)] text-2xl text-[color:var(--color-on-surface)] mb-2">
@@ -446,14 +449,24 @@ export default function CustomerContactPage() {
                 </p>
               )}
 
-              <label className="flex items-center gap-2 text-sm text-[color:var(--color-on-surface)] font-[family-name:var(--font-body)]">
-                <input
-                  type="checkbox"
-                  checked={agreed}
-                  onChange={(e) => setAgreed(e.target.checked)}
-                />
-                利用規約およびプライバシーポリシーに同意します。
-              </label>
+              <div className="flex items-center gap-2 text-sm text-[color:var(--color-on-surface)] font-[family-name:var(--font-body)]">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={agreed}
+                    onChange={(e) => setAgreed(e.target.checked)}
+                  />
+                  利用規約およびプライバシーポリシーに同意します。
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setPolicyOpen(true)}
+                  className="text-[11px] underline text-[var(--color-secondary)] whitespace-nowrap transition-all duration-200 hover:opacity-70 hover:tracking-wide hover:text-xs"
+                >
+                  利用規約
+                </button>
+              </div>
+              <PolicyModal open={policyOpen} onClose={() => setPolicyOpen(false)} />
 
               <div className="flex justify-between pt-2">
                 <button
