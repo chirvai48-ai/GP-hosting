@@ -14,6 +14,7 @@ import {
   fetchContactStats,
 } from "../services/contacts.service";
 import { parsePagination, paginatedResponse } from "../utils/pagination";
+import { notifyInBackground } from "../lib/notifier";
 
 // Company inquiries
 
@@ -23,6 +24,8 @@ export const postCompanyInquiry = async (req: Request, res: Response, next: Next
     res
       .status(201)
       .json({ message: "Company inquiry submitted successfully", data: inquiry });
+
+    notifyInBackground({ type: "inquiry.company_created", inquiry });
   } catch (err) {
     next(err);
   }
@@ -95,6 +98,8 @@ export const postCandidateInquiry = async (req: Request, res: Response, next: Ne
     res
       .status(201)
       .json({ message: "Candidate inquiry submitted successfully", data: inquiry });
+
+    notifyInBackground({ type: "inquiry.candidate_created", inquiry });
   } catch (err) {
     next(err);
   }

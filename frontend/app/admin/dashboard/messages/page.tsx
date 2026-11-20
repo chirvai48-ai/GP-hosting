@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useQuery } from "@tanstack/react-query";
 import { getLastSeen, markSeen } from "@/lib/lastSeen";
@@ -80,7 +81,13 @@ const candidateHelper = createColumnHelper<CandidateInquiry>();
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function MessagesPage() {
-  const [activeTab, setActiveTab] = useState<Tab>("company");
+  // Google Chat inquiry cards link to ?tab=candidate|company so the recruiter
+  // lands on the right tab instead of always on "company".
+  const searchParams = useSearchParams();
+  const requestedTab = searchParams.get("tab");
+  const [activeTab, setActiveTab] = useState<Tab>(
+    requestedTab === "candidate" ? "candidate" : "company"
+  );
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(20);
   const [viewingCompany, setViewingCompany] = useState<CompanyInquiry | null>(null);

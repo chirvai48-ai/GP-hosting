@@ -74,6 +74,10 @@ jobs:
             echo "S3_ENDPOINT=${{ secrets.R2_ENDPOINT }}"
             echo "S3_ACCOUNT_ID=${{ secrets.S3_ACCOUNT_ID }}"
             echo "NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }}"
+            echo "ADMIN_BASE_URL=${{ secrets.ADMIN_BASE_URL }}"
+            echo "GOOGLE_CHAT_WEBHOOK_APPLICATIONS=${{ secrets.GOOGLE_CHAT_WEBHOOK_APPLICATIONS }}"
+            echo "GOOGLE_CHAT_WEBHOOK_INQUIRIES=${{ secrets.GOOGLE_CHAT_WEBHOOK_INQUIRIES }}"
+            echo "GOOGLE_CHAT_WEBHOOK_DIGEST=${{ secrets.GOOGLE_CHAT_WEBHOOK_DIGEST }}"
           } > .env
 
       - name: Prepare deploy files
