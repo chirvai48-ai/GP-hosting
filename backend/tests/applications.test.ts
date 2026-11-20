@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect, beforeAll, afterEach, vi } from "vitest";
 import request from "supertest";
 import {
   app,
@@ -207,5 +207,41 @@ describe("application admin lifecycle", () => {
     expect(res.status).toBe(200);
     const total = res.body.data.trend.reduce((sum: number, b: { count: number }) => sum + b.count, 0);
     expect(total).toBeGreaterThan(0);
+  });
+});
+
+// The Google Chat notification is fired after the response is sent, precisely so
+// that a Chat outage can never present itself to a candidate as a failed
+// submission. Guard that with a webhook configured and fetch blown up.
+describe("google chat notification never breaks the public form", () => {
+  let admin: AdminSession;
+  let jobId: number;
+
+  beforeAll(async () => {
+    admin = await createAdminAgent();
+    jobId = await seedJob(admin);
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+    delete process.env.GOOGLE_CHAT_WEBHOOK_APPLICATIONS;
+  });
+
+  it("still accepts an application when Chat is unreachable", async () => {
+    process.env.GOOGLE_CHAT_WEBHOOK_APPLICATIONS =
+      "https://chat.googleapis.com/v1/spaces/TEST/messages?key=k&token=t";
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    vi.stubGlobal("fetch", vi.fn(async () => {
+      throw new Error("ECONNREFUSED");
+    }));
+
+    const payload = applicationPayload(jobId);
+    const res = await anon().post("/api/applications").send(payload);
+    expect([200, 201], JSON.stringify(res.body)).toContain(res.status);
+
+    const list = await admin.agent.get("/api/applications");
+    const rows = listItems<{ email: string }>(list.body);
+    expect(rows.some((a) => a.email === payload.email)).toBe(true);
   });
 });

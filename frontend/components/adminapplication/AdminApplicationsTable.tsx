@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -124,6 +125,16 @@ async function fetchApplicationStats(jobId: number): Promise<ApplicationStatsRes
   return res.json();
 }
 
+// Deep-link target for Google Chat notifications: the card links to
+// ?application=<id>, and the applicant may sit on any page of any stage tab, so
+// fetch the one row directly instead of hunting for it in the paginated list.
+async function fetchApplicationById(id: number): Promise<Application | null> {
+  const res = await adminFetch(`${API_URL}/api/applications/${id}`);
+  if (!res.ok) return null;
+  const json = await res.json();
+  return (json?.data ?? null) as Application | null;
+}
+
 async function fetchJob(id: number): Promise<Job | null> {
   const res = await adminFetch(`${API_URL}/api/jobs/${id}`);
   if (!res.ok) return null;
@@ -172,6 +183,27 @@ export default function AdminApplicationsTable({ jobId }: { jobId: number }) {
   // undefined = not loaded yet (show no dots); null = loaded, never seen before (everything is new)
   const [lastSeenSnapshot, setLastSeenSnapshot] = useState<string | null | undefined>(undefined);
   const hasMarkedSeen = useRef(false);
+
+  const searchParams = useSearchParams();
+  const deepLinkedId = searchParams.get("application");
+  const hasOpenedDeepLink = useRef(false);
+
+  // Open the applicant named in ?application=<id> once, on arrival from a
+  // Google Chat card. Also switches to their stage tab so closing the modal
+  // leaves the table on the list they actually belong to.
+  useEffect(() => {
+    if (hasOpenedDeepLink.current) return;
+    const id = Number(deepLinkedId);
+    if (!Number.isInteger(id) || id <= 0) return;
+    hasOpenedDeepLink.current = true;
+    fetchApplicationById(id)
+      .then((application) => {
+        if (!application) return;
+        setActiveTab(application.stage);
+        setViewing(application);
+      })
+      .catch(() => {});
+  }, [deepLinkedId]);
 
   useEffect(() => {
     if (hasMarkedSeen.current) return;

@@ -16,12 +16,19 @@ import {
   generateResumeXlsx,
 } from "../services/resume.service";
 import { parsePagination, paginatedResponse } from "../utils/pagination";
+import { notifyInBackground } from "../lib/notifier";
 import { ApplicationStage } from "../generated/prisma/enums";
 
 export const postApplication = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const application = await createApplication(req.body);
     res.status(201).json({ message: "Application submitted successfully", data: application });
+
+    // After the response: a Google Chat outage must never surface to the
+    // candidate as a failed submission. The résumé is uploaded by the browser
+    // against the presigned URL *after* this point, so the card links to the
+    // dashboard rather than to R2 directly.
+    notifyInBackground({ type: "application.created", application });
   } catch (err) {
     next(err);
   }
